@@ -1,0 +1,26 @@
+
+******** Main Menu ********
+* 0.exit 1.JavaBasic(ch2) *
+***************************
+menu item? 1
+
+************* Ch2 Menu ***********
+* 0.exit 1.output 2.readToken    *
+* 3.readLine 4.operator 5.switch *
+**********************************
+menu item? 2
+person information(name id weight married :address:):
+p 1234567890 55.5 true :41-1, Daechi-dong, Gangnam-gu, Seoul:
+
+************* Ch2 Menu ***********
+* 0.exit 1.output 2.readToken    *
+* 3.readLine 4.operator 5.switch *
+**********************************
+menu item? 0
+
+******** Main Menu ********
+* 0.exit 1.JavaBasic(ch2) *
+***************************
+menu item? 0
+
+Good bye!!

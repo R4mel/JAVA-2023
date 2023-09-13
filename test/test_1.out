@@ -1,0 +1,30 @@
+
+******** Main Menu ********
+* 0.exit 1.JavaBasic(ch2) *
+***************************
+menu item? 1
+
+************* Ch2 Menu ***********
+* 0.exit 1.output 2.readToken    *
+* 3.readLine 4.operator 5.switch *
+**********************************
+menu item? 1
+JDK1.8is released.
+JDK 1.8 is released.
+6
+123
+6 123
+true false 1.2
+
+************* Ch2 Menu ***********
+* 0.exit 1.output 2.readToken    *
+* 3.readLine 4.operator 5.switch *
+**********************************
+menu item? 0
+
+******** Main Menu ********
+* 0.exit 1.JavaBasic(ch2) *
+***************************
+menu item? 0
+
+Good bye!!

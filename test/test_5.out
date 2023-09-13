@@ -1,0 +1,74 @@
+
+******** Main Menu ********
+* 0.exit 1.JavaBasic(ch2) *
+***************************
+menu item? 1
+
+************* Ch2 Menu ***********
+* 0.exit 1.output 2.readToken    *
+* 3.readLine 4.operator 5.switch *
+**********************************
+menu item? 5
+
+********* Switch Menu *********
+* 0.exit 1.output 2.readToken *
+* 3.readLine 4.operator       *
+*******************************
+menu item string? output
+JDK1.8is released.
+JDK 1.8 is released.
+6
+123
+6 123
+true false 1.2
+
+********* Switch Menu *********
+* 0.exit 1.output 2.readToken *
+* 3.readLine 4.operator       *
+*******************************
+menu item string? readToken
+person information(name id weight married :address:):
+p 1234567890 55.5 true :41-1, Daechi-dong, Gangnam-gu, Seoul:
+
+********* Switch Menu *********
+* 0.exit 1.output 2.readToken *
+* 3.readLine 4.operator       *
+*******************************
+menu item string? readLine
+name? p
+name: p
+id? 1234567890
+id: 1234567890
+address? 41-1, Daechi-dong, Gangnam-gu, Seoul
+address :41-1, Daechi-dong, Gangnam-gu, Seoul:
+
+********* Switch Menu *********
+* 0.exit 1.output 2.readToken *
+* 3.readLine 4.operator       *
+*******************************
+menu item string? operator
+11111111000000001111111111111111
+11110000000011111111111111110000
+
+11111111000000000000000011111111
+11111111111100000000000000001111
+00001111111100000000000000001111
+
+********* Switch Menu *********
+* 0.exit 1.output 2.readToken *
+* 3.readLine 4.operator       *
+*******************************
+menu item string? exit
+
+************* Ch2 Menu ***********
+* 0.exit 1.output 2.readToken    *
+* 3.readLine 4.operator 5.switch *
+**********************************
+menu item? 0
+
+******** Main Menu ********
+* 0.exit 1.JavaBasic(ch2) *
+***************************
+menu item? 0
+
+Good bye!!

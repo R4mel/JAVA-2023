@@ -1,0 +1,15 @@
+1
+5
+output
+readToken
+p 1234567890 55.5 true :41-1, Daechi-dong, Gangnam-gu, Seoul:
+
+readLine
+p 
+1234567890
+41-1, Daechi-dong, Gangnam-gu, Seoul
+
+operator
+exit
+0
+0
