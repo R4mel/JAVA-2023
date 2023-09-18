@@ -1,6 +1,6 @@
 package algorithm;
 
-public class BubbleSort {
+public class Sort {
     public static void bubble_sort(int[] a) {
         for (int i = 0; i < a.length; i++) {
             for (int j = 0; j < a.length - i - 1; j++) {
@@ -8,6 +8,18 @@ public class BubbleSort {
                     swap(a, j, j + 1);
                 }
             }
+        }
+    }
+
+    public static void selection_sort(int[] a) {
+        for (int i = 0; i < a.length - 1; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < a.length; j++) {
+                if (a[j] < a[minIndex]) {
+                    minIndex = j;
+                }
+            }
+            swap(a, minIndex, i);
         }
     }
 
