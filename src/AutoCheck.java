@@ -124,9 +124,6 @@ class AutoCheck {
 
 }
 
-/******************************************************************************
- * class TokenReader
- ******************************************************************************/
 class TokenReader {
     private String lines[];
     private String line;
