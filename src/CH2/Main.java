@@ -1,3 +1,5 @@
+package CH2;
+
 import java.util.*;
 
 public class Main {
@@ -7,7 +9,7 @@ public class Main {
         // chk: 1(자동 오류 체크), 0(키보드에서 직접 입력하여 프로그램 실행)
         // trace: true(오류발생한 곳 출력), false(단순히 O, X만 표시)
         //--------------------------------
-        //int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
+        int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
 
         // TODO: System.in을 인자로 하는 Scanner 객체를 생성한 후
         //       해당 객체를 아래 run() 함수의 인자로 넘겨 주어라. (null 대신에 넘겨 줄 것)
@@ -17,23 +19,23 @@ public class Main {
     }
 
     public static void run(Scanner scan) {
-        // UI 클래스의 setScanner() 함수를 호출함; setScanner()가 static 함수라 이렇게 호출 가능함
-        UI.setScanner(scan); // UI 클래스 내의 static 함수 호출
-        MainMenu.run(); // MainMenu 클래스 내의 static 함수 호출방법: 클래스이름.함수이름();
+        // CH2.UI 클래스의 setScanner() 함수를 호출함; setScanner()가 static 함수라 이렇게 호출 가능함
+        UI.setScanner(scan); // CH2.UI 클래스 내의 static 함수 호출
+        MainMenu.run(); // CH2.MainMenu 클래스 내의 static 함수 호출방법: 클래스이름.함수이름();
         // TODO: scan이 더 이상 필요없으므로 닫아라.
         scan.close();
     }
 }
 
 //===============================================================================
-// Main Menu
+// CH2.Main Menu
 //===============================================================================
 class MainMenu {
     final static int MENU_COUNT = 2;
 
     public static void run() {
         String menuStr =
-                "******** Main Menu ********\n" +
+                "******** CH2.Main Menu ********\n" +
                         "* 0.exit 1.JavaBasic(ch2) *\n" +
                         "***************************\n";
 
@@ -50,7 +52,7 @@ class MainMenu {
             // TODO: 입력 받은 memnuItem 값을 프로그램 실행결과처럼 출력하라. 예) menu item: 1
         }
     }
-} // class MainMenu
+} // class CH2.MainMenu
 
 //===============================================================================
 // User Interface
@@ -146,13 +148,13 @@ class UI {
 }
 
 //===============================================================================
-// class Ch2
+// class CH2.Ch2
 //===============================================================================
 class Ch2 {
     public static void run() {
         final int MENU_COUNT = 6;
         String menuStr =
-                "************* Ch2 Menu ***********\n" +
+                "************* CH2.Ch2 Menu ***********\n" +
                         "* 0.exit 1.output 2.readToken    *\n" +
                         "* 3.readLine 4.operator 5.switch *\n" +
                         "**********************************\n";
@@ -221,7 +223,7 @@ class Ch2 {
         weight = UI.scan.nextDouble();
         married = UI.scan.nextBoolean();
         // TODO: 아래 실행결과를 참고하여 "person ... ):" 문자열을 출력하라.
-        // TODO: UI.scan을 이용하여 name, id, weight, married 값을 입력 받아라.
+        // TODO: CH2.UI.scan을 이용하여 name, id, weight, married 값을 입력 받아라.
 
         // 주소의 패턴 ":address:"을 읽어 들임: 이미 완성된 코드이므로 아래 address를 바로 활용하면 됨
         while ((address = UI.scan.findInLine(":.*:")) == null)
@@ -298,7 +300,7 @@ class Ch2 {
                     operator();
                     break;
             }
-            // TODO: Ch2.run()을 참조하여 switch 문장을 이용하여 상응하는 함수를 호출하라.
+            // TODO: CH2.Ch2.run()을 참조하여 switch 문장을 이용하여 상응하는 함수를 호출하라.
             //      단, 입력된 메뉴항목이 정수가 아니라 문자열(menu)임을 명심하라.
             //      즉, case 문장이 정수가 아니라 문자열과 비교 되어야 한다.
         }

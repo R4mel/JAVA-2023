@@ -1,3 +1,5 @@
+package CH3;
+
 import java.util.*;
 import java.io.*;
 import java.nio.file.*;
@@ -14,7 +16,7 @@ class AutoCheck {
     private int autoCheck;
     private Scanner inScan;
     private String output;
-    private final String TEST_DIR = "test";
+    private final String TEST_DIR = "test_ch3";
     private final String OJ_DIR = "oj";
 
 
@@ -175,4 +177,3 @@ class TokenReader {
             System.out.println(line);
     }
 }
-

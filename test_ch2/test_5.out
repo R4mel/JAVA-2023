@@ -1,10 +1,10 @@
 
-******** Main Menu ********
+******** CH2.Main Menu ********
 * 0.exit 1.JavaBasic(ch2) *
 ***************************
 menu item? 1
 
-************* Ch2 Menu ***********
+************* CH2.Ch2 Menu ***********
 * 0.exit 1.output 2.readToken    *
 * 3.readLine 4.operator 5.switch *
 **********************************
@@ -60,13 +60,13 @@ menu item string? operator
 *******************************
 menu item string? exit
 
-************* Ch2 Menu ***********
+************* CH2.Ch2 Menu ***********
 * 0.exit 1.output 2.readToken    *
 * 3.readLine 4.operator 5.switch *
 **********************************
 menu item? 0
 
-******** Main Menu ********
+******** CH2.Main Menu ********
 * 0.exit 1.JavaBasic(ch2) *
 ***************************
 menu item? 0
