@@ -1,0 +1,49 @@
+
+***** Main Menu ******
+* 0.exit 1.ch2 2.ch3 *
+**********************
+menu item? 2
+
+************* Ch3 Menu **************
+* 0.Exit 1.array 2.exception 3.game *
+*************************************
+menu item? 1
+arr length: 3
+arr[0] 0.0 
+arr[1] 1.0 2.0 
+arr[2] 3.0 4.0 5.0 
+
+arr length: 4
+arr[0] 0.0 1.0 2.0 3.0 
+arr[1] 4.0 5.0 6.0 
+arr[2] 7.0 8.0 
+arr[3] 9.0 
+
+array rows? 5
+input 1 doubles for row 0: input 2 doubles for row 1: input 3 doubles for row 2: input 4 doubles for row 3: input 5 doubles for row 4: 
+arr length: 5
+arr[0] 1.2 
+arr[1] 2.3 3.4 
+arr[2] 4.5 5.6 6.7 
+arr[3] 7.8 8.9 9.1 10.1 
+arr[4] 11.2 12.3 13.4 14.5 15.6 
+
+array rows? 3
+input 1 doubles for row 0: input 2 doubles for row 1: input 3 doubles for row 2: 
+arr length: 3
+arr[0] 10.1 
+arr[1] 20.2 30.3 
+arr[2] 40.4 50.5 60.6 
+
+
+************* Ch3 Menu **************
+* 0.Exit 1.array 2.exception 3.game *
+*************************************
+menu item? 0
+
+***** Main Menu ******
+* 0.exit 1.ch2 2.ch3 *
+**********************
+menu item? 0
+
+Good bye!!

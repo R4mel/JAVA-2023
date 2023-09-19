@@ -1,0 +1,53 @@
+
+***** Main Menu ******
+* 0.exit 1.ch2 2.ch3 *
+**********************
+menu item? 2
+
+************* Ch3 Menu **************
+* 0.Exit 1.array 2.exception 3.game *
+*************************************
+menu item? 2
+seed for random number? 1
+array[] size? a10b
+java.lang.NumberFormatException: For input string: "a10b"
+array[] size? 2.3
+java.lang.NumberFormatException: For input string: "2.3"
+array[] size? -1
+java.lang.NegativeArraySizeException: -1
+array[] size? 20
+array[]: { 0 1 1 0 2 1 2 1 1 1 1 1 1 0 0 1 2 0 0 2 }
+array[] index? 20
+java.lang.ArrayIndexOutOfBoundsException: Index 20 out of bounds for length 20
+array[] index? -1
+Input a positive INTEGER. Try again!!
+array[] index? 19
+array[19] = 2
+numerator   index? 16
+denominator index? 14
+java.lang.ArithmeticException: / by zero
+denominator index? 13
+java.lang.ArithmeticException: / by zero
+denominator index? 12
+2 / 1 = 2
+makeArray(): first
+makeArray tag[0,1,2]? 0
+java.lang.OutOfMemoryError: Requested array size exceeds VM limit
+makeArray tag[0,1,2]? 2
+makeArray(): second
+makeArray tag[0,1,2]? 1
+NullPointerException
+makeArray tag[0,1,2]? 2
+array length = 10
+
+************* Ch3 Menu **************
+* 0.Exit 1.array 2.exception 3.game *
+*************************************
+menu item? 0
+
+***** Main Menu ******
+* 0.exit 1.ch2 2.ch3 *
+**********************
+menu item? 0
+
+Good bye!!

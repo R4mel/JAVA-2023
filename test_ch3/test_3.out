@@ -1,0 +1,123 @@
+
+***** Main Menu ******
+* 0.exit 1.ch2 2.ch3 *
+**********************
+menu item? 2
+
+************* Ch3 Menu **************
+* 0.Exit 1.array 2.exception 3.game *
+*************************************
+menu item? 3
+Start the MUK-JJI-BBA game.
+seed for random number? 1
+
+USER has the higher priority.
+m(muk), j(jji), b(bba) or stop? k
+Select one among m, j, b.
+
+USER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = m, USER WINs.
+
+USER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = j, SAME.
+
+USER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = j, SAME.
+
+USER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = m, USER WINs.
+
+USER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = b, SAME.
+
+COMPUTER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = j, SAME.
+
+USER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = b, SAME.
+
+COMPUTER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = j, SAME.
+
+USER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = j, SAME.
+
+USER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = j, SAME.
+
+USER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = j, SAME.
+
+USER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = j, SAME.
+
+USER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = j, SAME.
+
+USER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = m, USER WINs.
+
+USER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = m, USER WINs.
+
+USER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = j, SAME.
+
+USER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = b, SAME.
+
+COMPUTER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = m, COMPUTER WINs.
+
+COMPUTER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = m, COMPUTER WINs.
+
+COMPUTER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = b, SAME.
+
+COMPUTER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = b, SAME.
+
+COMPUTER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = b, SAME.
+
+COMPUTER has the higher priority.
+m(muk), j(jji), b(bba) or stop? m
+User = m, Computer = j, SAME.
+
+USER has the higher priority.
+m(muk), j(jji), b(bba) or stop? stop
+
+************* Ch3 Menu **************
+* 0.Exit 1.array 2.exception 3.game *
+*************************************
+menu item? 0
+
+***** Main Menu ******
+* 0.exit 1.ch2 2.ch3 *
+**********************
+menu item? 0
+
+Good bye!!
