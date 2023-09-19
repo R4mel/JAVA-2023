@@ -1,16 +1,18 @@
 package algorithm;
 
-public class Sort {
+class BubbleSort {
     public static void bubble_sort(int[] a) {
         for (int i = 0; i < a.length; i++) {
             for (int j = 0; j < a.length - i - 1; j++) {
                 if (a[j] > a[j + 1]) {
-                    swap(a, j, j + 1);
+                    Sort.swap(a, j, j + 1);
                 }
             }
         }
     }
+}
 
+class SelectionSort{
     public static void selection_sort(int[] a) {
         for (int i = 0; i < a.length - 1; i++) {
             int minIndex = i;
@@ -19,10 +21,12 @@ public class Sort {
                     minIndex = j;
                 }
             }
-            swap(a, minIndex, i);
+            Sort.swap(a, minIndex, i);
         }
     }
+}
 
+public class Sort {
     public static void swap(int[] arr, int source, int target) {
         int tmp = arr[source];
         arr[source] = arr[target];
@@ -40,7 +44,7 @@ public class Sort {
         int[] item = new int[]{9, 7, 4, 6, 12, 8, 1};
         System.out.println("before");
         printArray(item);
-        bubble_sort(item);
+        SelectionSort.selection_sort(item);
         System.out.println("after");
         printArray(item);
     }
