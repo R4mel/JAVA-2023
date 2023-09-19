@@ -9,7 +9,7 @@ public class Main {
         // chk: 1(자동 오류 체크), 0(키보드에서 직접 입력하여 프로그램 실행)
         // trace: true(오류발생한 곳 출력), false(단순히 O, X만 표시)
         //--------------------------------
-//        int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
+        int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
 
         // TODO: System.in을 인자로 하는 Scanner 객체를 생성한 후
         //       해당 객체를 아래 run() 함수의 인자로 넘겨 주어라. (null 대신에 넘겨 줄 것)
@@ -202,7 +202,7 @@ class Ch3 {
     }
 
     public static void printArray(double[][] arr) {
-        int value = UI.getPosInt("arr length: ");
+        System.out.println("arr length: " + arr.length);
         for (int i = 0; i < arr.length; i++) {
             System.out.print("arr[" + i + "] ");
             for (int j = 0; j < arr[i].length; j++) {
@@ -214,7 +214,7 @@ class Ch3 {
     }
 
     public static double[][] inputArray() {
-        int value = UI.getPosInt("arrays row? ");
+        int value = UI.getPosInt("array rows? ");
         double[][] arr = new double[value][];
         for (int i = 0; i < value; i++) {
             arr[i] = new double[i + 1];
