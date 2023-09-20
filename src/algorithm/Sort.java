@@ -12,7 +12,7 @@ class BubbleSort {
     }
 }
 
-class SelectionSort{
+class SelectionSort {
     public static void selection_sort(int[] a) {
         for (int i = 0; i < a.length - 1; i++) {
             int minIndex = i;
@@ -26,9 +26,34 @@ class SelectionSort{
     }
 }
 
-class MergeSort{
-    public static void merge_sort(int[] a){
-        
+class MergeSort {
+    public static void merge_sort(int[] a, int p, int r) {
+        if (p < r) {
+            int q = (p + r) / 2;
+            merge_sort(a, p, q);
+            merge_sort(a, q + 1, r);
+            merge(a, p, q, r);
+        }
+    }
+
+    public static void merge(int[] a, int p, int q, int r) {
+        int i = p, j = q + 1, k = p;
+        int[] tmp = new int[a.length];
+        while (i <= q && j <= r) {
+            if (a[i] < a[j]) {
+                tmp[k++] = a[i++];
+            } else tmp[k++] = a[j++];
+        }
+        while (i <= q) {
+            tmp[k++] = a[i++];
+        }
+        while (j <= r) {
+            tmp[k++] = a[j++];
+        }
+        for (i = p; i <= r; i++) {
+            a[i] = tmp[i];
+        }
+
     }
 }
 
