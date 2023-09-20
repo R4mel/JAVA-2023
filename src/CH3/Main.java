@@ -9,13 +9,13 @@ public class Main {
         // chk: 1(자동 오류 체크), 0(키보드에서 직접 입력하여 프로그램 실행)
         // trace: true(오류발생한 곳 출력), false(단순히 O, X만 표시)
         //--------------------------------
-        int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
+//        int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
 
         // TODO: System.in을 인자로 하는 Scanner 객체를 생성한 후
         //       해당 객체를 아래 run() 함수의 인자로 넘겨 주어라. (null 대신에 넘겨 줄 것)
         //       위 기능을 반드시 하나의 문장으로 완성해야 한다. 변수 선언하지 말고 바로 넘겨 줌
         //       즉, run( Scanner 객체를 생성 ); 형태가 되어야 한다.
-            run(new Scanner(System.in));
+        run(new Scanner(System.in));
     }
 
     public static void run(Scanner scan) {
@@ -309,19 +309,36 @@ class Ch3 {
     public static void game() {
         final int USER = 0;     // 상수 정의
         final int COMPUTER = 1;
-        String MJBarray[] = { "m", "j", "b" }; // 묵(m) 찌(j) 빠(b) 문자열을 가진 배열
+        String MJBarray[] = {"m", "j", "b"}; // 묵(m) 찌(j) 빠(b) 문자열을 가진 배열
         System.out.println("Start the MUK-JJI-BBA game.");
         // 난수 발생기
         random = new Random(UI.getInt("seed for random number? "));
         // 누가 우선권을 가졌는지 저장하고 있음, USER:사용자 우선권, COMPUTER:computer 우선권
         int priority = USER;
-        String priStr[] = { "USER", "COMPUTER"}; // 우선권을 화면에 출력할 때 사용할 문자열
+        String priStr[] = {"USER", "COMPUTER"}; // 우선권을 화면에 출력할 때 사용할 문자열
+        String user;
+        while (true) {
+            while (true) {
+                System.out.println();
+                System.out.println(priStr[priority] + " has the higher priority.");
+                user = UI.getNext("m(muk), j(jji), b(bba) or stop? ");
+                if (user.equals("stop")) return;
+                if (user.equals("m") || user.equals("j") || user.equals("b")) break;
+                else System.out.println("Select one among m, j, b.");
+                }
 
-        while(true) {
-            System.out.println();
-            System.out.println(priStr[priority] + " has the higher priority.");
-            String user = UI.getNext("m(muk), j(jji), b(bba) or stop? ");
-            if(user.equals("stop")) return;
+            String computer = MJBarray[random.nextInt(MJBarray.length)];
+            System.out.print("User = " + user + ", Computer = " + computer + ", ");
+            if (user.equals(computer)) System.out.println(priStr[priority] + " WINs.");
+            else {
+                System.out.println(" SAME.");
+                if (user.equals("m") && computer.equals("b")) priority = COMPUTER;
+                else if (user.equals("j") && computer.equals("m")) priority = COMPUTER;
+                else if (user.equals("b") && computer.equals("j")) priority = COMPUTER;
+                else if (user.equals("m") && computer.equals("j")) priority = USER;
+                else if (user.equals("b") && computer.equals("j")) priority = USER;
+                else if (user.equals("j") && computer.equals("b")) priority = USER;
+            }
         }
     }
 
