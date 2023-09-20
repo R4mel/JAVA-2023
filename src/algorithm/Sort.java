@@ -26,6 +26,12 @@ class SelectionSort{
     }
 }
 
+class MergeSort{
+    public static void merge_sort(int[] a){
+        
+    }
+}
+
 public class Sort {
     public static void swap(int[] arr, int source, int target) {
         int tmp = arr[source];

@@ -15,7 +15,7 @@ public class Main {
         //       해당 객체를 아래 run() 함수의 인자로 넘겨 주어라. (null 대신에 넘겨 줄 것)
         //       위 기능을 반드시 하나의 문장으로 완성해야 한다. 변수 선언하지 말고 바로 넘겨 줌
         //       즉, run( Scanner 객체를 생성 ); 형태가 되어야 한다.
-        run(new Scanner(System.in));
+            run(new Scanner(System.in));
     }
 
     public static void run(Scanner scan) {
@@ -309,40 +309,24 @@ class Ch3 {
     public static void game() {
         final int USER = 0;     // 상수 정의
         final int COMPUTER = 1;
-        String MJBarray[] = {"m", "j", "b"}; // 묵(m) 찌(j) 빠(b) 문자열을 가진 배열
+        String MJBarray[] = { "m", "j", "b" }; // 묵(m) 찌(j) 빠(b) 문자열을 가진 배열
         System.out.println("Start the MUK-JJI-BBA game.");
         // 난수 발생기
         random = new Random(UI.getInt("seed for random number? "));
         // 누가 우선권을 가졌는지 저장하고 있음, USER:사용자 우선권, COMPUTER:computer 우선권
         int priority = USER;
-        String priStr[] = {"USER", "COMPUTER"}; // 우선권을 화면에 출력할 때 사용할 문자열
+        String priStr[] = { "USER", "COMPUTER"}; // 우선권을 화면에 출력할 때 사용할 문자열
 
-        while (true) {
+        while(true) {
             System.out.println();
             System.out.println(priStr[priority] + " has the higher priority.");
             String user = UI.getNext("m(muk), j(jji), b(bba) or stop? ");
-            if (user.equals("stop")) return;
-            for (String mjb : MJBarray) {
-                if (user.equals(mjb)) break;
-            }
-
-            String computer = MJBarray[random.nextInt(MJBarray.length)];
-            System.out.print("User = " + user + ", Comuputer = " + computer);
-            if (user.equals(computer)) System.out.println(", " + priStr[priority] + " WINs.");
-            else {
-                System.out.println(", SAME.");
-            }
-            if ((user == "m" && computer == "j") || (user == "j" && computer == "b") || (user == "b" && computer == "m"))
-                priority = USER;
-            if ((user == "b" && computer == "j") || (user == "m" && computer == "b") || (user == "j" && computer == "m"))
-                priority = COMPUTER;
+            if(user.equals("stop")) return;
         }
     }
+
 }
 
-//===============================================================================
-// class Ch2
-//===============================================================================
 class Ch2 {
     public static void run() {
         final int MENU_COUNT = 6;
