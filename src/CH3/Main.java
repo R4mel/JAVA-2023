@@ -325,7 +325,7 @@ class Ch3 {
                 if (user.equals("stop")) return;
                 if (user.equals("m") || user.equals("j") || user.equals("b")) break;
                 else System.out.println("Select one among m, j, b.");
-                }
+            }
 
             String computer = MJBarray[random.nextInt(MJBarray.length)];
             System.out.print("User = " + user + ", Computer = " + computer + ", ");
