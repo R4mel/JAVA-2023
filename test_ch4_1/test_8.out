@@ -1,0 +1,81 @@
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3            *
+**************************
+menu item? 1
+Person(): p0 0 70.0 false :Gwangju Nam-gu 21:
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 7
+input person information:
+user 100 65.0 true :426 hakdong-ro, Gangnam-gu, Seoul:
+user 100 65.0 true :426 hakdong-ro, Gangnam-gu, Seoul:
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 1
+user 100 65.0 true :426 hakdong-ro, Gangnam-gu, Seoul:
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 2
+name:user, id:100, weight:65.0, married:true, address:426 hakdong-ro, Gangnam-gu, Seoul
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 3
+Person(): p 0 0.0 false ::
+p.set(): p 100 65.0 true :426 hakdong-ro, Gangnam-gu, Seoul:
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 4
+user: user 100 65.0 true :426 hakdong-ro, Gangnam-gu, Seoul:
+Person::clone()
+Person(): user 100 65.0 true :426 hakdong-ro, Gangnam-gu, Seoul:
+p: user 100 65.0 true :426 hakdong-ro, Gangnam-gu, Seoul:
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 5
+user is taking a rest.
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 6
+user: user 100 65.0 true :426 hakdong-ro, Gangnam-gu, Seoul:
+Person(): user 0 0.0 false ::
+p: user 1 0.0 false ::
+p.equals(user): false
+p.assign(user): user 100 65.0 true :426 hakdong-ro, Gangnam-gu, Seoul:
+p.equals(user): true
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 0
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3            *
+**************************
+menu item? 0
+
+Good bye!!

@@ -1,0 +1,33 @@
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3            *
+**************************
+menu item? 1
+Person(): p0 0 70.0 false :Gwangju Nam-gu 21:
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 6
+user: p0 0 70.0 false :Gwangju Nam-gu 21:
+Person(): user 0 0.0 false ::
+p: user 1 0.0 false ::
+p.equals(user): false
+p.assign(user): p0 0 70.0 false :Gwangju Nam-gu 21:
+p.equals(user): true
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 0
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3            *
+**************************
+menu item? 0
+
+Good bye!!
