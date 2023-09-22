@@ -1,0 +1,225 @@
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3            *
+**************************
+menu item? 1
+Person(): p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+Person(): p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+Person(): p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+Person(): p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+Person(): p4 14 64.4 false :88 Gongpyeong-ro, Jung-gu, Daegu:
+PersonManager::run() starts
+PersonManager(array[])
+VectorPerson::VectorPerson(10)
+Person::clone()
+Person(): p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+Person::clone()
+Person(): p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+Person::clone()
+Person(): p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+Person::clone()
+Person(): p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+Person::clone()
+Person(): p4 14 64.4 false :88 Gongpyeong-ro, Jung-gu, Daegu:
+display(): count 5
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[3] p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[4] p4 14 64.4 false :88 Gongpyeong-ro, Jung-gu, Daegu:
+empty():false, size():5, capacity():10
+
+=========== Person Management Menu ==========
+= 0.exit 1.display 2.clear 3.reset 4.remove =
+= 5.copy 6.append 7.insert 8.login          =
+=============================================
+menu item? 1
+display(): count 5
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[3] p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[4] p4 14 64.4 false :88 Gongpyeong-ro, Jung-gu, Daegu:
+empty():false, size():5, capacity():10
+
+=========== Person Management Menu ==========
+= 0.exit 1.display 2.clear 3.reset 4.remove =
+= 5.copy 6.append 7.insert 8.login          =
+=============================================
+menu item? 5
+Person::clone()
+Person(): p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+Person::clone()
+Person(): p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+Person::clone()
+Person(): p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+Person::clone()
+Person(): p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+Person::clone()
+Person(): p4 14 64.4 false :88 Gongpyeong-ro, Jung-gu, Daegu:
+display(): count 10
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[3] p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[4] p4 14 64.4 false :88 Gongpyeong-ro, Jung-gu, Daegu:
+[5] pp0 30 71.0 true :Gwangju Nam-gu Bongseon-dong 21:
+[6] pp1 31 62.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[7] pp2 32 53.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[8] pp3 33 84.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[9] pp4 34 65.4 true :88 Gongpyeong-ro, Jung-gu, Daegu:
+empty():false, size():10, capacity():10
+
+=========== Person Management Menu ==========
+= 0.exit 1.display 2.clear 3.reset 4.remove =
+= 5.copy 6.append 7.insert 8.login          =
+=============================================
+menu item? 5
+Person::clone()
+Person(): p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+VectorPerson: capacity extended to 20
+Person::clone()
+Person(): p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+Person::clone()
+Person(): p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+Person::clone()
+Person(): p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+Person::clone()
+Person(): p4 14 64.4 false :88 Gongpyeong-ro, Jung-gu, Daegu:
+Person::clone()
+Person(): pp0 30 71.0 true :Gwangju Nam-gu Bongseon-dong 21:
+Person::clone()
+Person(): pp1 31 62.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+Person::clone()
+Person(): pp2 32 53.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+Person::clone()
+Person(): pp3 33 84.3 false :100 Dunsan-ro Seo-gu Daejeon:
+Person::clone()
+Person(): pp4 34 65.4 true :88 Gongpyeong-ro, Jung-gu, Daegu:
+display(): count 20
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[3] p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[4] p4 14 64.4 false :88 Gongpyeong-ro, Jung-gu, Daegu:
+[5] pp0 30 71.0 true :Gwangju Nam-gu Bongseon-dong 21:
+[6] pp1 31 62.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[7] pp2 32 53.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[8] pp3 33 84.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[9] pp4 34 65.4 true :88 Gongpyeong-ro, Jung-gu, Daegu:
+[10] ppp0 50 72.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[11] ppp1 51 63.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[12] ppp2 52 54.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[13] ppp3 53 85.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[14] ppp4 54 66.4 false :88 Gongpyeong-ro, Jung-gu, Daegu:
+[15] pppp0 70 73.0 true :Gwangju Nam-gu Bongseon-dong 21:
+[16] pppp1 71 64.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[17] pppp2 72 55.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[18] pppp3 73 86.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[19] pppp4 74 67.4 true :88 Gongpyeong-ro, Jung-gu, Daegu:
+empty():false, size():20, capacity():20
+
+=========== Person Management Menu ==========
+= 0.exit 1.display 2.clear 3.reset 4.remove =
+= 5.copy 6.append 7.insert 8.login          =
+=============================================
+menu item? 5
+Person::clone()
+Person(): p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+VectorPerson: capacity extended to 40
+Person::clone()
+Person(): p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+Person::clone()
+Person(): p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+Person::clone()
+Person(): p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+Person::clone()
+Person(): p4 14 64.4 false :88 Gongpyeong-ro, Jung-gu, Daegu:
+Person::clone()
+Person(): pp0 30 71.0 true :Gwangju Nam-gu Bongseon-dong 21:
+Person::clone()
+Person(): pp1 31 62.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+Person::clone()
+Person(): pp2 32 53.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+Person::clone()
+Person(): pp3 33 84.3 false :100 Dunsan-ro Seo-gu Daejeon:
+Person::clone()
+Person(): pp4 34 65.4 true :88 Gongpyeong-ro, Jung-gu, Daegu:
+Person::clone()
+Person(): ppp0 50 72.0 false :Gwangju Nam-gu Bongseon-dong 21:
+Person::clone()
+Person(): ppp1 51 63.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+Person::clone()
+Person(): ppp2 52 54.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+Person::clone()
+Person(): ppp3 53 85.3 true :100 Dunsan-ro Seo-gu Daejeon:
+Person::clone()
+Person(): ppp4 54 66.4 false :88 Gongpyeong-ro, Jung-gu, Daegu:
+Person::clone()
+Person(): pppp0 70 73.0 true :Gwangju Nam-gu Bongseon-dong 21:
+Person::clone()
+Person(): pppp1 71 64.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+Person::clone()
+Person(): pppp2 72 55.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+Person::clone()
+Person(): pppp3 73 86.3 false :100 Dunsan-ro Seo-gu Daejeon:
+Person::clone()
+Person(): pppp4 74 67.4 true :88 Gongpyeong-ro, Jung-gu, Daegu:
+display(): count 40
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[3] p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[4] p4 14 64.4 false :88 Gongpyeong-ro, Jung-gu, Daegu:
+[5] pp0 30 71.0 true :Gwangju Nam-gu Bongseon-dong 21:
+[6] pp1 31 62.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[7] pp2 32 53.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[8] pp3 33 84.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[9] pp4 34 65.4 true :88 Gongpyeong-ro, Jung-gu, Daegu:
+[10] ppp0 50 72.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[11] ppp1 51 63.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[12] ppp2 52 54.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[13] ppp3 53 85.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[14] ppp4 54 66.4 false :88 Gongpyeong-ro, Jung-gu, Daegu:
+[15] pppp0 70 73.0 true :Gwangju Nam-gu Bongseon-dong 21:
+[16] pppp1 71 64.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[17] pppp2 72 55.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[18] pppp3 73 86.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[19] pppp4 74 67.4 true :88 Gongpyeong-ro, Jung-gu, Daegu:
+[20] pppp0 70 73.0 true :Gwangju Nam-gu Bongseon-dong 21:
+[21] pppp1 71 64.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[22] pppp2 72 55.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[23] pppp3 73 86.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[24] pppp4 74 67.4 true :88 Gongpyeong-ro, Jung-gu, Daegu:
+[25] ppppp0 90 74.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[26] ppppp1 91 65.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[27] ppppp2 92 56.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[28] ppppp3 93 87.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[29] ppppp4 94 68.4 false :88 Gongpyeong-ro, Jung-gu, Daegu:
+[30] pppppp0 110 75.0 true :Gwangju Nam-gu Bongseon-dong 21:
+[31] pppppp1 111 66.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[32] pppppp2 112 57.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[33] pppppp3 113 88.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[34] pppppp4 114 69.4 true :88 Gongpyeong-ro, Jung-gu, Daegu:
+[35] ppppppp0 130 76.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[36] ppppppp1 131 67.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[37] ppppppp2 132 58.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[38] ppppppp3 133 89.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[39] ppppppp4 134 70.4 false :88 Gongpyeong-ro, Jung-gu, Daegu:
+empty():false, size():40, capacity():40
+
+=========== Person Management Menu ==========
+= 0.exit 1.display 2.clear 3.reset 4.remove =
+= 5.copy 6.append 7.insert 8.login          =
+=============================================
+menu item? 0
+PersonManager::run() returned
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3            *
+**************************
+menu item? 0
+
+Good bye!!

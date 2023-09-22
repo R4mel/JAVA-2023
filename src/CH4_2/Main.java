@@ -1,8 +1,6 @@
 package CH4_2;
 
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,7 +10,7 @@ public class Main {
         // trace: true(오류발생한 곳 출력), false(단순히 O, X만 표시)
         //--------------------------------
         int chk = 1;
-//        if (chk != 0) new AutoCheck(chk, true).run(); else
+        if (chk != 0) new AutoCheck(chk, true).run(); else
 
         run(new Scanner(System.in));
     }
@@ -60,18 +58,25 @@ class Person {
     private double weight;  // 체중
     private boolean married; // 결혼여부
     private String address; // 주소
+    private String passwd = ""; // 비밀번호
 
     // 생성자 함수들
     public Person(String name, int id, double weight, boolean married, String address) {
-        set(name, id, weight, married, address);
-        println("Person(): ");
+        set(name, "", id, weight, married, address);
+        System.out.print("Person(): ");
+        printMembers();
+        System.out.println();
     }
 
     public Person(String name) {
         this(name, 0, 0.0, false, "");
     }
 
-    public void set(String name, int id, double weight, boolean married, String address) {
+    public Person(Scanner sc) {
+        inputMembers(sc);
+    }
+
+    public void set(String name, String passwd, int id, double weight, boolean married, String address) {
         this.name = name;
         this.id = id;
         this.weight = weight;
@@ -92,7 +97,7 @@ class Person {
 
     // assign() 함수
     public void assign(Person user) {
-        set(user.getName(), user.getId(), user.getWeight(), user.getMarried(), user.getAddress());
+        set(user.getName(), user.getPasswd(), user.getId(), user.getWeight(), user.getMarried(), user.getAddress());
     }
 
     // Getter: getXXX() 관련 함수들
@@ -116,6 +121,10 @@ class Person {
         return address;
     }
 
+    public String getPasswd() {
+        return passwd;
+    }
+
     // Setter: overloading: set() 함수 중복
     public void set(String name) {
         this.name = name;
@@ -137,34 +146,48 @@ class Person {
         this.address = address;
     }
 
-    // Candidates for virtual functions and overriding
-    // print(), clone(), whatAreYouDoing(), equals(), input() 함수
-    public void print() {
-        System.out.print(name + " " + id + " " + weight + " " + married + " :" + address + ":");
+    public void setPasswd(String passwd) {
+        this.passwd = passwd;
     }
 
-    public Person clone() {
-        System.out.println("Person::clone()");
-        return new Person(name, id, weight, married, address);
+    // Candidates for virtual functions and overriding
+    // print(), clone(), whatAreYouDoing(), equals(), input() 함수
+    public boolean equals(Person user) {
+        return (user.getName() == getName() && user.getId() == getId());
+    }
+
+    void print() {
+        printMembers();
+    }
+
+    void input(Scanner sc) {
+        inputMembers(sc);
     }
 
     public void whatAreYouDoing() {
         System.out.println(name + " is taking a rest.");
     }
 
-    public boolean equals(Person user) {
-        return (user.getName() == getName() && user.getId() == getId());
+    public Person clone() {
+        System.out.println("Person::clone()");
+        Person p = new Person(name, id, weight, married, address);
+        p.setPasswd(getPasswd());
+        return p;
     }
 
-    public void input(Scanner s) {
-        name = s.next();
-        id = s.nextInt();
-        weight = s.nextDouble();
-        married = s.nextBoolean();
-        while ((address = s.findInLine(":.*:")) == null)
-            s.nextLine();
+    private void inputMembers(Scanner sc) {
+        name = sc.next();
+        id = sc.nextInt();
+        weight = sc.nextDouble();
+        married = sc.nextBoolean();
+        while ((address = sc.findInLine(":.*:")) == null)
+            sc.nextLine();
         address = address.substring(1, address.length() - 1);
-        set(name, id, weight, married, address);
+        set(name, "", id, weight, married, address);
+    }
+
+    private void printMembers() {
+        System.out.print(name + " " + id + " " + weight + " " + married + " :" + address + ":");
     }
 }
 
@@ -232,12 +255,13 @@ class UI {
         return token;
     }
 
-    public static String getLine(String msg) {
+    public static String getNextLine(String msg) {
         System.out.print(msg);
         String line = scan.nextLine();
         if (echo_input) System.out.println(line);
         return line;
     }
+
 }
 
 class CurrentUser {
@@ -251,9 +275,9 @@ class CurrentUser {
         String menuStr =
                 "++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++\n" +
                         "+ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +\n" +
-                        "+ 6.equals 7.update                                             +\n" +
+                        "+ 6.isSame 7.update 8.chPasswd(4_2)                             +\n" +
                         "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-        final int MENU_COUNT = 8;
+        final int MENU_COUNT = 9;
         while (true) {
             int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
             switch (menuItem) {
@@ -278,10 +302,19 @@ class CurrentUser {
                 case 7:
                     update();
                     break;
+                case 8:
+                    chPasswd();
+                    break;
                 case 0:
                     return;
             }
         }
+    }
+
+    void chPasswd() {
+        String passwd = UI.getNext("new password: ");
+        user.setPasswd(passwd);
+        System.out.println("password changed");
     }
 
     void display() {
@@ -333,11 +366,296 @@ class CurrentUser {
     }
 }
 
-class MultiManager {
-    private Person person = new Person("p0", 0, 70.0, false, "Gwangju Nam-gu 21");
+class VectorPerson {
+    static final int DEFAULT_SIZE = 10;
 
-    void run() {
-        new CurrentUser(person).run();
+    private Person[] persons; // Person 객체 참조들의 배열, 즉 배열에 저장된 값이 Person 객체의 주소이다.
+    private int count;        // persons 배열에 현재 삽입된 객체의 개수
+
+    public VectorPerson() {
+        this(DEFAULT_SIZE);
+    }
+
+    public VectorPerson(int capacity) {
+        count = 0; // persons 배열에 현재 삽입된 객체의 개수는 0
+        System.out.println("VectorPerson::VectorPerson(" + capacity + ")");
+        persons = new Person[capacity]; // 객체 참조 배열 할당
+    }
+
+    // persons[index]의 값을 반환
+    public Person get(int index) {
+        return persons[index];
+    }
+
+    // 할당 받은 persons 배열의 전체 길이를 반환함 (count가 아님)
+    public int capacity() {
+        return persons.length;
+    }
+
+    // persons 배열에 현재 삽입된 객체의 개수를 0으로 설정
+    public void clear() {
+        count = 0;
+    }
+
+    // 현재 삽입된 객체 참조가 하나도 없으면 true, 있으면 false를 반환한다.
+    // if 문장을 사용하지 말고 한 문장(return 비교연산자)으로 완셩할 것
+    public boolean isEmpty() {
+        return count == 0;
+    }
+
+    // 현재 삽입된 객체의 개수를 반환
+    public int size() {
+        return count;
+    }
+
+    // index 위치의 객체 p를 삭제한다. 즉, index+1부터 끝까지 객체들을 한칸씩 왼쪽으로 밀어 주어야 한다.
+    // 자바에는 객체를 삭제하는 delete 명령어가 없다. 따라서 객체를 별도로 삭제할 필요는 없고 무시하라.
+    void remove(int index) {
+        for (int i = index; i < count; i++) {
+            persons[i] = persons[i + 1];
+        }
+        count--;
+    }
+
+    // persons 배열에 마지막 삽입된 원소 뒤에 새로운 원소 p를 삽입하고 현재 삽입된 객체 개수 증가
+    // persons[]의 배열 크기가 작으면 extend_capacity()를 호출하여 먼저 배열을 확장한다.
+    public void add(Person p) {
+        if (count >= persons.length)
+            extend_capacity();
+        persons[count++] = p;
+    }
+
+    // 먼저 index부터 끝까지 객체들을 한칸씩 뒤로 밀어 준 후 index 위치에 객체 p를 삽입한다.
+    // persons[]의 배열 크기가 작으면 extend_capacity()를 호출하여 먼저 배열을 확장한다.
+    public void add(int index, Person p) {
+        for (int i = count; i >= index; i--) {
+            if (count >= persons.length) {
+                extend_capacity();
+            }
+            persons[i + 1] = persons[i];
+        }
+        count++;
+        persons[index] = p;
+    }
+
+    // persons[]의 배열 크기를 두배로 확장한다.
+    // 기존 persons 변수를 다른 배열 변수에 임시로 저장한 후
+    // 현재의 두배 크기의 배열을 새로 할당 받아 persons에 저장한다.
+    // 임시 변수에 있던 기존 값들을 모두 persons[]에 복사한다.
+    public void extend_capacity() {
+        int personsLength = persons.length;
+        Person[] tmp = new Person[personsLength * 2];
+        for (int i = 0; i < personsLength; i++) {
+            tmp[i] = persons[i];
+        }
+        persons = new Person[tmp.length];
+        for (int i = 0; i < personsLength; i++) {
+            persons[i] = tmp[i];
+        }
+        System.out.println("VectorPerson: capacity extended to " + persons.length);
+    }
+}
+
+class Factory {
+    public void printInputNotice(String preMsg, String postMsg) {
+        System.out.println("input" + preMsg + " [person information]" + postMsg + ":");
+    }
+
+    public Person inputPerson(Scanner sc) {
+        // user 100 65 true :426 hakdong-ro, Gangnam-gu, Seoul:
+        var p = new Person(sc); // 위 행처럼 입력된 사람 정보를 입력 받음
+        if (UI.echo_input) p.println(); // 자동오류체크시 출력됨
+        return p;
+    }
+}
+
+class PersonManager {
+    static int cpCount = 0;
+    private VectorPerson pVector;
+    private Factory factory;
+    private Person array[];
+
+    public PersonManager(Person array[], Factory factory) {
+        System.out.println("PersonManager(array[])");
+        pVector = new VectorPerson();
+        this.factory = factory;
+        this.array = array;
+        addArray();
+        display();
+    }
+
+    public void run() {
+        String menuStr =
+                "=========== Person Management Menu ==========\n" +
+                        "= 0.exit 1.display 2.clear 3.reset 4.remove =\n" +
+                        "= 5.copy 6.append 7.insert 8.login          =\n" +
+                        "=============================================\n";
+        final int MENU_COUNT = 9; // 상수 정의
+        while (true) {
+            int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
+            switch (menuItem) {
+                case 1:
+                    display();
+                    break;
+                case 2:
+                    clear();
+                    break;
+                case 3:
+                    reset();
+                    break;
+                case 4:
+                    remove();
+                    break;
+                case 5:
+                    copy();
+                    break;
+                case 6:
+                    append();
+                    break;
+                case 7:
+                    insert();
+                    break;
+                case 8:
+                    login();
+                    break;
+                case 0:
+                    return;
+            }
+        }
+    }
+
+    public void display() { // Menu item 1
+        int count = pVector.size();
+        System.out.println("display(): count " + count);
+        for (int i = 0; i < count; ++i) {
+            System.out.print("[" + i + "] ");
+            pVector.get(i).println();
+        }
+        System.out.println("empty():" + pVector.isEmpty() + ", size():" + pVector.size()
+                + ", capacity():" + pVector.capacity());
+    }
+
+    public void clear() {  // Menu item 2
+        pVector.clear();
+        display();
+    }
+
+    public void reset() { // Menu item 3
+        pVector.clear();
+        addArray();
+        display();
+    }
+
+    public void remove() { // Menu item 4
+        if (pVector.size() == 0) {
+            System.out.println("no entry to remove");
+            return;
+        }
+        int index = UI.getIndex("index to delete? ", pVector.size());
+        pVector.remove(index);
+        display();
+    }
+
+    public void copy() { // Menu item 5
+        cpCount++;
+        for (int i = 0, size = pVector.size(); i < size; ++i) {
+            Person p = pVector.get(i).clone();
+            String name = p.getName();
+            for (int j = 0; j < cpCount; ++j)
+                name = name.charAt(0) + name;
+            p.set(name);
+            p.set(p.getId() + 20 * cpCount);
+            p.set(p.getWeight() + cpCount);
+            if (cpCount % 2 == 1)
+                p.set(!p.getMarried());
+            pVector.add(p);
+        }
+        display();
+    }
+
+    // 아래 함수는 사용자로부터 새로 추가할 Person 객체의 수를 입력 받고 for문을 이용하여
+    // 그 개수만큼의 Person 객체를 생성하고 인적정보를 입력받은 후 (factory.inputPerson()을 통해)
+    // VectorPerson pVector의 맨 끝에 추가한다.
+    /* append() 실행 시 아래 항목들을 복사해서 순서적으로 입력하면 편하게 인적정보를 입력할 수 있음
+    3
+    HongGilDong 0 71.5 false :Gwangju Nam-gu Bongseon-dong 21:
+    LeeMongRyong 1 65 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+    LeeSoonShin 2 80 true :1001, Jungang-daero, Yeonje-gu, Busan:
+    */
+    public void append() { // Menu item 6
+        int count = UI.getPosInt("number of persons to append? ");
+        factory.printInputNotice(" " + Integer.toString(count), " to append");
+        for (int i = 0; i < count; ++i) {
+            Person p = factory.inputPerson(UI.scan); // 한 사람의 정보를 입력 받음
+            if (p != null) pVector.add(p);
+        }
+        display();
+    }
+
+    public void insert() { // Menu item 7
+        int index = 0;
+        if (pVector.size() > 0) {
+            index = UI.getIndex("index to insert in front? ", pVector.size() + 1);
+            if (index < 0) return;
+        }
+        factory.printInputNotice("", " to insert");
+        Person p = factory.inputPerson(UI.scan);
+        if (p == null) return;
+        pVector.add(index, p);
+        display();
+    }
+
+    // 사용자로부터 VectorPerson pVector에 저장된 사람들 중에서 로그인할 사람의 이름(name)과 비번을 입력받고
+    // 해당 비번이 맞으면 CurrentUser의 객체를 생성하고 이 객체의 run() 멤버 함수를 호출한다.
+    // 초기 비번은 설정되어 있지 않기에 그냥 엔터치면 된다.
+    public void login() {  // Menu item 8
+        String name = UI.getNext("user name: ");
+        Person p = findByName(name);
+        if (p == null) return;
+        String passwd = UI.getNextLine("password: ");
+        //passwd.strip();
+        if (passwd.equals(p.getPasswd()))
+            new CurrentUser(p).run();
+        else
+            System.out.println("WRONG password!!");
+    }
+
+    // pVector에 삽입되어 있는 Person 객체들 중 사용자가 입력한 이름 name과
+    // 동일한 이름을 가진 객체를 찾아 리턴한다.
+    private Person findByName(String name) {
+        int i, count = pVector.size();
+        for (i = 0; i < count; ++i)
+            if (name.equals(pVector.get(i).getName()))
+                return pVector.get(i);
+        System.out.println(name + ": NOT found");
+        return null;
+    }
+
+    private void addArray() {
+        for (Person p : array)
+            pVector.add(p.clone()); // 배열의 각 원소를 복사한 후 pVector에  삽입함
+    }
+}
+
+class MultiManager {
+    private Person persons[] = {
+            new Person("p0", 10, 70.0, false, "Gwangju Nam-gu Bongseon-dong 21"),
+            new Person("p1", 11, 61.1, true, "Jong-ro 1-gil, Jongno-gu, Seoul"),
+            new Person("p2", 12, 52.2, false, "1001, Jungang-daero, Yeonje-gu, Busan"),
+            new Person("p3", 13, 83.3, true, "100 Dunsan-ro Seo-gu Daejeon"),
+            new Person("p4", 14, 64.4, false, "88 Gongpyeong-ro, Jung-gu, Daegu"),
+    };
+    // new를 이용해 동적으로 할당할 경우 소멸자 함수를 만들어 거기서 delete 해 주어야 함
+
+    private Person allPersons[] = {
+            persons[0], persons[1], persons[2], persons[3], persons[4],
+    };
+
+    public void run() {
+        System.out.println("PersonManager::run() starts");
+        var pm = new PersonManager(allPersons, new Factory());
+        pm.run();
+        System.out.println("PersonManager::run() returned");
     }
 }
 
@@ -597,7 +915,7 @@ class Ch2 {
         System.out.println("name: " + name);
         int id = UI.getInt("id? ");         // "id? "을 출력한 후 id을 입력 받음
         System.out.println("id: " + id);
-        String address = UI.getLine("address? ");// "address? " 출력 후 한줄 전체 입력받음
+        String address = UI.getNextLine("address? ");// "address? " 출력 후 한줄 전체 입력받음
         System.out.println("address :" + address + ":");
     }
 

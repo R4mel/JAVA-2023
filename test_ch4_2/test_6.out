@@ -1,0 +1,69 @@
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3            *
+**************************
+menu item? 1
+Person(): p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+Person(): p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+Person(): p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+Person(): p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+Person(): p4 14 64.4 false :88 Gongpyeong-ro, Jung-gu, Daegu:
+PersonManager::run() starts
+PersonManager(array[])
+VectorPerson::VectorPerson(10)
+Person::clone()
+Person(): p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+Person::clone()
+Person(): p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+Person::clone()
+Person(): p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+Person::clone()
+Person(): p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+Person::clone()
+Person(): p4 14 64.4 false :88 Gongpyeong-ro, Jung-gu, Daegu:
+display(): count 5
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[3] p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[4] p4 14 64.4 false :88 Gongpyeong-ro, Jung-gu, Daegu:
+empty():false, size():5, capacity():10
+
+=========== Person Management Menu ==========
+= 0.exit 1.display 2.clear 3.reset 4.remove =
+= 5.copy 6.append 7.insert 8.login          =
+=============================================
+menu item? 6
+number of persons to append? -1
+Input a positive INTEGER. Try again!!
+number of persons to append? 3
+input 3 [person information] to append:
+HongGilDong 0 71.5 false :Gwangju Nam-gu Bongseon-dong 21:
+LeeMongRyong 1 65.0 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+LeeSoonShin 2 80.0 true :1001, Jungang-daero, Yeonje-gu, Busan:
+display(): count 8
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[3] p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[4] p4 14 64.4 false :88 Gongpyeong-ro, Jung-gu, Daegu:
+[5] HongGilDong 0 71.5 false :Gwangju Nam-gu Bongseon-dong 21:
+[6] LeeMongRyong 1 65.0 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[7] LeeSoonShin 2 80.0 true :1001, Jungang-daero, Yeonje-gu, Busan:
+empty():false, size():8, capacity():10
+
+=========== Person Management Menu ==========
+= 0.exit 1.display 2.clear 3.reset 4.remove =
+= 5.copy 6.append 7.insert 8.login          =
+=============================================
+menu item? 0
+PersonManager::run() returned
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3            *
+**************************
+menu item? 0
+
+Good bye!!
