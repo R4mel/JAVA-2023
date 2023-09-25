@@ -1,5 +1,7 @@
 package algorithm;
 
+import java.util.*;
+
 class BubbleSort {
     public static void bubble_sort(int[] a) {
         for (int i = 0; i < a.length; i++) {
@@ -63,6 +65,18 @@ class QuickSort {
     // q = pivot를 배열의 맞는 위치에 넣어준 뒤 배열의 시작부터 q-1까지, q+1부터 배열의 끝까지 recursion으로 정렬
 
 
+}
+
+class HeapSort {
+    // O(logN)
+}
+
+class RadixSort {
+    // 배열의 인덱스값을 일의자리를 기준으로 정렬해주고 인덱스값에 맞춰서 정렬
+}
+
+class CountingSort {
+    // 배열의 값을 인덱스로 생각하고 카운팅해서 배열에 넣기
 }
 
 public class Sort {
