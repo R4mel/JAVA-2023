@@ -21,7 +21,6 @@ public class Main {
         scan.close();
     }
 }
-
 class MainMenu {
     final static int MENU_COUNT = 5;
 
