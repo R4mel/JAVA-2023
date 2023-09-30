@@ -10,9 +10,7 @@ public class Main {
         // trace: true(오류발생한 곳 출력), false(단순히 O, X만 표시)
         //--------------------------------
         int chk = 1;
-        if (chk != 0) new AutoCheck(chk, true).run(); else
-
-        run(new Scanner(System.in));
+        new AutoCheck(chk, true).run();
     }
 
     public static void run(Scanner scan) {
