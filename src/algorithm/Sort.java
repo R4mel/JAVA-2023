@@ -68,8 +68,6 @@ class QuickSort {
 
 class HeapSort {
     // O(logN)
-    // test
-    // asdf
 }
 
 class RadixSort {
