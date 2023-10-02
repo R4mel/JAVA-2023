@@ -63,7 +63,7 @@ class MergeSort {
 class QuickSort {
     // 배열 마지막 값을 pivot으로 설정, 작은 값들, 피봇, 큰 값들로 분할
     // q = pivot를 배열의 맞는 위치에 넣어준 뒤 배열의 시작부터 q-1까지, q+1부터 배열의 끝까지 recursion으로 정렬
-    
+    // test
 }
 
 class HeapSort {
