@@ -5,7 +5,7 @@ import java.io.*;
 import java.nio.file.*;
 
 /******************************************************************************
- * ÀÚµ¿ Ã¼Å© ¼Ò½º ÄÚµå 
+ * ï¿½Úµï¿½ Ã¼Å© ï¿½Ò½ï¿½ ï¿½Úµï¿½ 
  ******************************************************************************/
 
 /******************************************************************************
@@ -16,7 +16,7 @@ class AutoCheck {
     private int autoCheck;
     private Scanner inScan;
     private String output;
-    private final String TEST_DIR = "test_ch2";
+    private final String TEST_DIR = "test/test_ch2";
     private final String OJ_DIR = "oj";
 
 
@@ -152,7 +152,7 @@ class TokenReader {
         idx = 0;
         while (curLine < lines.length) {
             line = lines[curLine++];
-            // ³¡ÀÇ '\r' ¹®ÀÚ Á¦°Å
+            // ï¿½ï¿½ï¿½ï¿½ '\r' ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (printMode) System.out.println(line.stripTrailing());
             if (line.isEmpty()) continue;
             tokens = line.split("\\s");
