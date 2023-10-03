@@ -1,0 +1,73 @@
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3 4.ch5      *
+**************************
+menu item? 4
+Person(): s1 1 65.4 true :Jongno-gu Seoul:
+Student(): Physics 3.8 1
+Person(): w1 3 33.3 false :Kangnam-gu Seoul:
+Worker(): Samsung Director
+
+***** Inheritance Menu ******
+* 0.exit 1.Student 2.Worker *
+*****************************
+menu item? 2
+Person(p): w1 3 33.3 false :Kangnam-gu Seoul:
+Worker(w): Samsung Director
+Person(p): w1 3 33.3 false :Kangnam-gu Seoul:
+Worker(w): Samsung Director
+--------------------
+p1: w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+p2: w2 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+p1.equals(p2) : false
+--------------------
+p1: w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+p2: w1 3 33.3 false :Kangnam-gu Seoul: Samsung-Hyundai Director
+p1.equals(p2) : false
+--------------------
+p1: w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+p2: w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director-Manager
+p1.equals(p2) : false
+--------------------
+p1: w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+p2: w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+p1.equals(p2) : true
+--------------------
+!!!!!!!!!!!!!!!! Worker::whatAreYouDoing()!!!!!!!!!!!!!!!!!
+w2 works in Samsung as Director
+w2 is now enjoying his(her) vacation.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+!!!!!!!!!!!!!!!! Worker::whatAreYouDoing()!!!!!!!!!!!!!!!!!
+w2 works in Samsung as Director
+w2 is now enjoying his(her) vacation.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Worker::clone()
+Person(p): w2 3 33.3 false :Kangnam-gu Seoul:
+Worker(w): Samsung Director
+w3: w2 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+--------------------
+w2: w2 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+Person():  0 0.0 false ::
+Worker():  
+w2:  0 0.0 false ::  
+--------------------
+input worker: w2 3 44.4 true :Jongno-gu Seoul: Samsung Director
+w2: w2 3 44.4 true :Jongno-gu Seoul: Samsung Director
+--------------------
+input new worker: w4 3 44.4 true :Jongno-gu Seoul: Samsung Director
+w4: w4 3 44.4 true :Jongno-gu Seoul: Samsung Director
+
+***** Inheritance Menu ******
+* 0.exit 1.Student 2.Worker *
+*****************************
+menu item? 0
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3 4.ch5      *
+**************************
+menu item? 0
+
+Good bye!!

@@ -1,0 +1,77 @@
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3 4.ch5      *
+**************************
+menu item? 4
+Person(): s1 1 65.4 true :Jongno-gu Seoul:
+Student(): Physics 3.8 1
+Person(): w1 3 33.3 false :Kangnam-gu Seoul:
+Worker(): Samsung Director
+
+***** Inheritance Menu ******
+* 0.exit 1.Student 2.Worker *
+*****************************
+menu item? 1
+Person(p): s1 1 65.4 true :Jongno-gu Seoul:
+Student(s): Physics 3.8 1
+Person(p): s1 1 65.4 true :Jongno-gu Seoul:
+Student(s): Physics 3.8 1
+--------------------
+p1: s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+p2: s2 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+p1.equals(p2) : false
+--------------------
+p1: s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+p2: s1 1 65.4 true :Jongno-gu Seoul: Physics 2.8 1
+p1.equals(p2) : true
+--------------------
+p1: s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+p2: s1 1 65.4 true :Jongno-gu Seoul: Physics-Electronics 2.8 1
+p1.equals(p2) : false
+--------------------
+p1: s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+p2: s1 1 65.4 true :Jongno-gu Seoul: Physics 2.8 2
+p1.equals(p2) : false
+--------------------
+p1: s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+p2: s1 1 65.4 true :Jongno-gu Seoul: Physics 2.8 1
+p1.equals(p2) : true
+--------------------
+~~~~~~~~~~~~~~~~ Student::whatAreYouDoing() ~~~~~~~~~~~~~~~~
+s2 is studying as a 1-year student in Physics
+s2 took several courses and got GPA 2.8
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~ Student::whatAreYouDoing() ~~~~~~~~~~~~~~~~
+s2 is studying as a 1-year student in Physics
+s2 took several courses and got GPA 2.8
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Student::clone()
+Person(p): s2 1 65.4 true :Jongno-gu Seoul:
+Student(s): Physics 2.8 1
+s3: s2 1 65.4 true :Jongno-gu Seoul: Physics 2.8 1
+--------------------
+s2: s2 1 65.4 true :Jongno-gu Seoul: Physics 2.8 1
+Person():  0 0.0 false ::
+Student():  0.0 0
+s2:  0 0.0 false ::  0.0 0
+--------------------
+input student: s2 1 56.9 false :Gangnam-gu Seoul: Physics 2.0 1
+s2: s2 1 56.9 false :Gangnam-gu Seoul: Physics 2.0 1
+--------------------
+input new student: s4 1 56.9 false :Gangnam-gu Seoul: Physics 2.0 1
+s4: s4 1 56.9 false :Gangnam-gu Seoul: Physics 2.0 1
+
+***** Inheritance Menu ******
+* 0.exit 1.Student 2.Worker *
+*****************************
+menu item? 0
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3 4.ch5      *
+**************************
+menu item? 0
+
+Good bye!!

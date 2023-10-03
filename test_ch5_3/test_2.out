@@ -1,0 +1,41 @@
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3 4.ch5      *
+**************************
+menu item? 1
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+=============== Person Management Menu ================
+= 0.exit 1.display 2.clear 3.reset 4.remove           =
+= 5.copy 6.append 7.insert 8.login 9.dispStudent(5_3) =
+= 10.dispPhone(5_3)                                   =
+=======================================================
+menu item? 10
+dispPhones(): count 6
+[0] p0's Phone: Apple
+[1] p1's Phone: SAMSUNG
+[2] s1's Phone: SAMSUNG
+[3] s2's Phone: Apple
+[4] w1's Phone: SAMSUNG
+[5] w2's Phone: Apple
+
+=============== Person Management Menu ================
+= 0.exit 1.display 2.clear 3.reset 4.remove           =
+= 5.copy 6.append 7.insert 8.login 9.dispStudent(5_3) =
+= 10.dispPhone(5_3)                                   =
+=======================================================
+menu item? 0
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3 4.ch5      *
+**************************
+menu item? 0
+
+Good bye!!
