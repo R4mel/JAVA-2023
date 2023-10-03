@@ -16,7 +16,7 @@ class AutoCheck {
     private int autoCheck;
     private Scanner inScan;
     private String output;
-    private final String TEST_DIR = "test_ch4_1";
+    private final String TEST_DIR = "test/test_ch4_1";
     private final String OJ_DIR = "oj";
 
 
