@@ -1,0 +1,511 @@
+/******************************************************************************
+ * [코드 추가 1]
+ ******************************************************************************/
+// 1) 기존의 프로젝트 CH3::Main.java의 내용을 모두 복사해서 프로젝트 CH4-1::Main.java에 삽입하라.
+// 2) 프로그램의 맨 앞쪽 주석 부분의 "Author: " 행 다음의 내용을 아래 내용으로 교체하라.
+//----------------------------------------------------------------------------
+
+//
+//  + CurrentUser, MultiManager, Person 클래스 추가
+//  + MainMenu 수정
+//
+                 
+/******************************************************************************
+ * [코드 추가 2] 아래 Person 클래스를 MainMenu 클래스 아래에 배치하라.
+ ******************************************************************************/
+
+//===============================================================================
+// class Person: ch4_1
+//===============================================================================
+class Person 
+{
+    private String  name;    // 이름
+    private int     id;      // Identifier
+    private double  weight;  // 체중
+    private boolean married; // 결혼여부
+    private String  address; // 주소
+
+    // 생성자 함수들
+    public Person(String name, int id, double weight, boolean married, String address) { 
+    }
+     
+    public void println() { 
+        print(); System.out.println(); 
+    }
+     
+    public void println(String msg) { 
+         System.out.print(msg); print(); System.out.println(); 
+    }
+    // assign() 함수
+
+    // Getter: getXXX() 관련 함수들
+     
+    // Setter: overloading: set() 함수 중복
+
+    // Candidates for virtual functions and overriding 
+    // print(), clone(), whatAreYouDoing(), equals(), input() 함수
+    public void print() { 
+        System.out.print(name+" "+id+" "+weight+" "+married+" :"+address+":");
+    }
+    public void input(Scanner s) { 
+        // TODO: 스캐너 s로부터 name, id, weight, married 멤버를 입력 받을 것
+
+        // 아래는 주소 필드를 입력 받는 부분이며 수정없이 그대로 사용하면 된다.
+        // :로 시작하고 :로 끝나는 부분의 서브 문자열을 읽어 냄
+        while ((address = s.findInLine(":.*:")) == null)
+            s.nextLine();
+        address = address.substring(1, address.length()-1); 
+        // 양쪽의 : :를 제거한 서브 문자열을 넘겨 받음
+    }
+}
+
+/******************************************************************************
+ * [코드 추가 3] 아래 CurrentUser, MultiManager 클래스를 UI 클래스 아래에 배치하라.
+ ******************************************************************************/
+
+//===============================================================================
+// CurrentUser class: ch4_1
+//===============================================================================
+class CurrentUser
+{
+    Person user;
+
+    CurrentUser(Person user) { 
+        this.user = user; 
+    }
+
+    public void run() {
+        String menuStr =
+            "++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++\n" +
+            "+ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +\n" +
+            "+ 6.equals 7.update                                             +\n" +
+            "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+        final int MENU_COUNT = 8; // 상수 정의
+        while (true) {
+            int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
+            switch(menuItem) {
+            case 1: display();         break;
+            case 2: getter();          break;
+            case 3: setter();          break;
+            case 4: copy();            break;
+            case 5: whatAreYouDoing(); break;
+            case 6: equals();          break;
+            case 7: update();          break;
+            case 0:                    return;
+            }
+        }
+    }
+    void display() { 
+        user.println(); 
+    } // Menu item 1
+
+    void getter() { // Menu item 2
+    }
+    void setter() { // Menu item 3
+    }
+    void copy() { // Menu item 4
+    }
+    void whatAreYouDoing() {  // Menu item 5
+    }
+    void equals() { // Menu item 6
+    }
+    void update() { // Menu item 7
+    }
+} // CurrentUser class: ch4_1
+
+//===============================================================================
+// class MultiManager: ch4_1
+//===============================================================================
+class MultiManager
+{
+    private Person person = new Person("p0", 0, 70.0, false, "Gwangju Nam-gu 21");
+
+    void run() {
+        new CurrentUser(person).run();
+    }
+} // class MultiManager: ch4_1
+
+
+/******************************************************************************
+ * [코드 추가 4]
+ ******************************************************************************/
+// 1) 기존의 MainMenu 클래스의 menuStr을 아래 문자열로 대체하라.
+
+        String menuStr =
+                "******* Main Menu ********\n" +
+                "* 0.exit 1.PersonManager *\n" +
+                "* 2.ch2 3.ch3            *\n" +
+                "**************************\n";
+
+// 2) MainMenu 클래스의 MENU_COUNT의 값을 수정하라.
+// 3) MainMenu 클래스의 switch 문장의 case 1, 2, 3 문을 적절히 수정하라.
+// 4) case 1의 경우 new MultiManager().run();을 호출하도록 하라.
+//----------------------------------------------------------------------------
+
+===============================================================================
+== 프로그램 실행 결과: 프로그램을 실행하면 아래와 같이 출력되어야 한다.
+=============================================================================== 
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3            *
+**************************
+menu item? 1
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 1
+null 0 0.0 false :null:
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 
+
+/******************************************************************************
+ * 문제: 1-1
+ * 요점: 생성자 함수, 객체 생성
+ ******************************************************************************/
+//-----------------------------------------------------------------------------
+// 위 Person 클래스는 사람의 기본정보(이름, ID, 체중 등등)를 저장하고 있는 클래스이다. 
+// 아래 [프로그램 실행 결과 1-1]를 참고하여 Person 클래스의 Person(...) 생성자를 완성하라.
+===============================================================================
+==  프로그램 실행 결과 1-1
+=============================================================================== 
+...
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 1
+p0 0 70.0 false :Gwangju Nam-gu 21:
+
+
+/******************************************************************************
+ * 문제: 1-1-1
+ * 요점: set() 멤버함수 작성
+ ******************************************************************************/
+// Person 클래스의 Person(...) 생성자를 아래와 같이 수정하고
+// set(...) 멤버함수를 추가하라. 이 함수의 접근지정자는 public으로 하라.
+// 이후 특별한 지시가 없으면 멤버함수의 접근지정자는 항상 public으로 하라.
+//-----------------------------------------------------------------------------
+
+    public Person(String name, int id, double weight, boolean married, String address) { 
+        set(name, id, weight, married, address);
+        println("Person(): ");
+    }
+
+===============================================================================
+==  프로그램 실행 결과 1-1-1
+=============================================================================== 
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3            *
+**************************
+menu item? 1
+Person(): p0 0 70.0 false :Gwangju Nam-gu 21:             // 생성자에서 출력한 내용
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 1
+p0 0 70.0 false :Gwangju Nam-gu 21:
+
+++++++++++++++++++++++ Current User Menu ...
+
+
+/******************************************************************************
+ * 문제: 1-2
+ * 요점: 다양한 get....()
+ ******************************************************************************/
+// CurrentUser 클래스의 getter() 함수에 아래 내용을 추가하고
+// Person 클래스에 적절한 getXXXX() 함수들을 구현하라.
+//-----------------------------------------------------------------------------
+
+        System.out.println("name:" + user.getName() + ", id:" + user.getId() + ", weight:" +
+                user.getWeight() + ", married:" + user.getMarried() +
+                ", address:" + user.getAddress());
+
+===============================================================================
+==  프로그램 실행 결과 1-2
+=============================================================================== 
+...
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 2
+name:p0, id:0, weight:70.0, married:false, address:Gwangju Nam-gu 21
+
+++++++++++++++++++++++ Current User Menu ...
+
+
+/******************************************************************************
+ * 문제: 1-3
+ * 요점: this() 를 이용한 기존 생성자 호출하기
+ ******************************************************************************/
+// CurrentUser 클래스의 setter() 함수에 아래 내용을 추가하고
+// Person 클래스에 적절한 생성자를 구현하라. 
+// 이 생성자를 구현할 때 직접 각 멤버를 초기화하거나 기존 set(...) 멤버함수를 호출하지 말고 
+// this()를 이용하여 기존 Person 생성자를 호출하여 구현하라.
+// "p"는 Person 클래스의 name 멤버의 초기값이며, 나머지 멤버의 값은 출력결과를 참고하라.
+//-----------------------------------------------------------------------------
+
+         var p = new Person("p");
+
+===============================================================================
+==  프로그램 실행 결과 1-3
+=============================================================================== 
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 3
+Person(): p 0 0.0 false ::
+
+
+/******************************************************************************
+ * 문제: 1-3-1
+ * 요점: set() 메소드 오버로딩 (함수 중복)
+ ******************************************************************************/
+// CurrentUser 클래스의 setter() 함수의 마지막에 아래 내용을 추가하고
+// Person 클래스에 적절한 set() 멤버 함수들을 구현하라. 함수 중복 기능을 구현하는 것이다.
+//-----------------------------------------------------------------------------
+
+        p.set(p.getName());
+        p.set(user.getId());
+        p.set(user.getWeight());
+        p.set(user.getMarried());
+        p.setAddress(user.getAddress());
+        p.println("p.set(): ");
+
+===============================================================================
+==  프로그램 실행 결과 1-3-1
+=============================================================================== 
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter ...
+menu item? 3
+Person(): p 0 0.0 false ::
+p.set(): p 0 70.0 false :Gwangju Nam-gu 21:
+
+
+/******************************************************************************
+ * 문제: 1-4
+ * 요점: clone 객체 생성하기
+ ******************************************************************************/
+// CurrentUser 클래스의 copy() 함수에 아래 내용을 추가하고
+// 아래 실행결과를 참고하여 Person 클래스에 clone() 멤버 함수를 구현하여 삽입하라. 
+// 이 함수는 현재 객체의 각 멤버 값을 복사한 새로운 Person 객체를 생성한 후 그 새 객체를 반환한다.
+//-----------------------------------------------------------------------------
+        user.println("user: ");
+        var p = user.clone();
+        p.println("p: ");
+
+===============================================================================
+==  프로그램 실행 결과 1-4
+=============================================================================== 
+
+******* Main Menu ...
+menu item? 1
+Person(): p0 0 70.0 false :Gwangju Nam-gu 21:
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy ...
+menu item? 4
+user: p0 0 70.0 false :Gwangju Nam-gu 21:        // user.println("user: ")
+Person::clone()                                  // clone()에서 출력
+Person(): p0 0 70.0 false :Gwangju Nam-gu 21:    // 생성자에서 출력
+p: p0 0 70.0 false :Gwangju Nam-gu 21:           // p.println("p: ")
+
+
+/******************************************************************************
+ * 문제: 1-5
+ * 요점: 기본 클래스의 함수(추후 상속한 클래스에서 이 함수를 오버라이딩할 계획임)
+ ******************************************************************************/
+// CurrentUser 클래스의 whatAreYouDoing() 함수에 아래 내용을 추가하고
+// Person 클래스에 whatAreYouDoing() 멤버 함수를 구현하여 삽입하라.
+// 이 함수는 아래 실행결과와 같이 출력하면 된다. 출력에서 p0는 객체의 name 멤버 값이다. 
+//-----------------------------------------------------------------------------
+        user.whatAreYouDoing();
+
+===============================================================================
+==  프로그램 실행 결과 1-5
+=============================================================================== 
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing ...
+menu item? 5
+p0 is taking a rest.
+
+
+/******************************************************************************
+ * 문제: 1-6
+ * 요점: 객체 내용 비교 함수
+ ******************************************************************************/
+// CurrentUser 클래스의 equals() 함수에 아래 내용을 추가하고 Person 클래스에 equals()  
+// 멤버함수를 새로 구현해 삽입하라.(사실 Object로부터 상속받은 기존 equals() 함수를 오버라이딩하는 것임)
+// p.equals(user)는 객체 p의 name과 id 멤버가 매개변수인 user 객체의 name과 id와 각각 서로 
+// 동일하면 true를, 아니면 false를 반환한다. 아래 실행 결과와 같게 출력되어야 한다.
+//-----------------------------------------------------------------------------
+        user.println("user: ");
+        var p = new Person("user"); p.set(1);
+        p.println("p: ");
+        System.out.println("p.equals(user): " + p.equals(user));
+
+===============================================================================
+==  프로그램 실행 결과 1-6
+=============================================================================== 
+
+++++++++++++++++++++++ Current User Menu ...
++ 6.equals ...
+menu item? 6
+user: p0 0 70.0 false :Gwangju Nam-gu 21:     // user.println("user: ")
+Person(): user 0 0.0 false ::                 // 생성자에서 출력
+p: user 1 0.0 false ::                        // p.println("p: ")
+p.equals(user): false
+
+
+/******************************************************************************
+ * 문제: 1-6-1
+ * 요점: 객체 멤버 복사
+ ******************************************************************************/
+// CurrentUser 클래스의 기존 equals() 함수의 맨 마지막 부분에 아래 내용을 추가하고
+// Person 클래스에 assign() 멤버 함수를 새로 구현해 삽입하라.
+// 아래 코드에서 p.assign(user)는 매개변수인 user 객체의 모든 멤버 내용을 그대로 p 객체에 복사한다.
+// 따라서 수행 후 p 객체는 user 객체와 동일한 멤버 값을 가지게 된다. 구현시 기존 set() 함수를 활용하라.
+//-----------------------------------------------------------------------------
+         p.assign(user);
+         p.println("p.assign(user): ");
+         System.out.println("p.equals(user): " + p.equals(user));
+
+===============================================================================
+==  프로그램 실행 결과 1-6-1
+=============================================================================== 
+
+++++++++++++++++++++++ Current User Menu ...
++ 6.equals 7.update ...
+menu item? 6
+user: p0 0 70.0 false :Gwangju Nam-gu 21:
+Person(): user 0 0.0 false ::
+p: user 1 0.0 false ::
+p.equals(user): false
+p.assign(user): p0 0 70.0 false :Gwangju Nam-gu 21:
+p.equals(user): true
+
+
+/******************************************************************************
+ * 문제: 1-7
+ * 요점: Scanner로부터 클래스 멤버 읽어 들이기
+ ******************************************************************************/
+// CurrentUser 클래스의 update() 함수에 아래 내용을 추가하고   
+// Person 클래스에 input() 멤버함수의 TODO 부분을 완성하라.
+// 이 함수는 매개변수로 넘겨 받은 Scanner 객체를 통해 Person의 인적정보를 키보드로부터 입력받는다.
+// 이 함수 구현 시 class Ch2::readToken() 함수를 참고하라.
+//-----------------------------------------------------------------------------
+        System.out.println("input person information:");
+        user.input(UI.scan); // user 100 65 true :426 hakdong-ro, Gangnam-gu, Seoul:
+        if (UI.echo_input) user.println(); // 자동오류체크시 출력됨
+        display();
+
+===============================================================================
+==  프로그램 실행 결과 1-7
+=============================================================================== 
+
+++++++++++++++++++++++ Current User Menu ...
++ 6.equals 7.update  ...
+menu item? 7
+input person information:
+user 100 65 true :426 hakdong-ro, Gangnam-gu, Seoul:       // 복사해서 입력할 것
+user 100 65.0 true :426 hakdong-ro, Gangnam-gu, Seoul:     // display()
+
+
+===============================================================================
+==  프로그램 실행 결과 1-8
+==  지금까지 정상적으로 잘 구현되었다면 연속적으로 실행했을 때 아래와 같게 출력되어야 한다.
+=============================================================================== 
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3            *
+**************************
+menu item? 1
+Person(): p0 0 70.0 false :Gwangju Nam-gu 21:
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 7
+input person information:
+user 100 65 true :426 hakdong-ro, Gangnam-gu, Seoul:
+user 100 65.0 true :426 hakdong-ro, Gangnam-gu, Seoul:
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 1
+user 100 65.0 true :426 hakdong-ro, Gangnam-gu, Seoul:
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 2
+name:user, id:100, weight:65.0, married:true, address:426 hakdong-ro, Gangnam-gu, Seoul
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 3
+Person(): p 0 0.0 false ::
+p.set(): p 100 65.0 true :426 hakdong-ro, Gangnam-gu, Seoul:
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 4
+user: user 100 65.0 true :426 hakdong-ro, Gangnam-gu, Seoul:
+Person::clone()
+Person(): user 100 65.0 true :426 hakdong-ro, Gangnam-gu, Seoul:
+p: user 100 65.0 true :426 hakdong-ro, Gangnam-gu, Seoul:
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 5
+user is taking a rest.
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 6
+user: user 100 65.0 true :426 hakdong-ro, Gangnam-gu, Seoul:
+Person(): user 0 0.0 false ::
+p: user 1 0.0 false ::
+p.equals(user): false
+p.assign(user): user 100 65.0 true :426 hakdong-ro, Gangnam-gu, Seoul:
+p.equals(user): true
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.equals 7.update                                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 0
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3            *
+**************************
+menu item? 0
+
+Good bye!!

@@ -1,0 +1,728 @@
+/******************************************************************************
+ * [코드 추가 1]
+ ******************************************************************************/
+// 1) 기존의 프로젝트 CH5-2::Main.java의 내용을 모두 복사해서 프로젝트 CH5-3::Main.java에 삽입하라.
+// 2) 프로그램의 맨 앞쪽 주석 부분의 "Author: " 행 다음의 내용을 아래 내용으로 교체하라.
+//----------------------------------------------------------------------------
+
+//  + interface Phone, Calculator, SmartPhone, BaseStation 추가
+//  + 추상 클래스 BaseStation을 PersonManager에서 상속하여 구현
+//  + Person::smartPhone 멤버 및 관련 멤버 함수 추가
+//  + CurrentUser::changeSmartPhone(), calculate(), phoneCall() 추가, 
+//                 메뉴 수정, display() 수정
+//  + PersonManager: 생성자 수정, dispStudent(), dispPhone() 추가, 메뉴 수정
+
+            
+/******************************************************************************
+ * [코드 추가 2] 아래 BaseStation, Phone, Calculator 인터페이스와 
+ *             SmartPhone 추상 클래스를 기존의 Person 클래스 앞쪽에 배치하라. 
+ ******************************************************************************/
+interface BaseStation
+{
+    boolean connectTo(String caller, String callee);
+    // 이 메소드는 Phone::sendCall(String caller)에서 호출되어야 한다.
+    // callee라는 사람이 존재할 경우
+    //     System.out.println("base station: sends a call signal of "+caller+
+    //               " to "+callee)를 출력하고
+    //     이 사람의 등록된 Phone의 receiveCall(caller, callee)을 호출하고 true를 리턴
+    // 존재하지 않을 경우 "callee_name: NOT found"라는 에러 메시지 출력하고 false 리턴
+}
+
+interface Phone {
+    void sendCall(String callee);
+    // 이 메소드는 "made a call to 수신자_이름(callee)"라고 출력해야 하며 이 출력의 앞 또는 뒤에 
+    // 발신자 이름도 함께 출력하되 메이커가 알아서 적절히 회사명, 모델명 등과 함께 표시하면 된다. 
+    // 그런 후 baseStation.connectTo(caller, callee)를 호출해야 한다.
+    void receiveCall(String caller);
+    // 이 메소드는 "received a call from 송신자_이름(caller)"라고 출력해야 하며 이 출력의 앞 또는 뒤에 
+    // 수신자 이름도 함께 출력하되 메이커가 알아서 적절히 회사명, 모델명 등과 함께 표시하면 된다. 
+}
+
+interface Calculator {
+    // +, -, *, / 사칙연산만 지원하고 그 외의 연산자일 경우 "NOT supported operator" 에러 메시지 출력
+    // 수식과 계산 결과 또는 에러 메시지를 출력해야 하며 이 출력의 앞 또는 뒤에 
+    // 계산기 소유주 이름도 함께 출력하되 메이커가 알아서 적절히 회사명, 모델명 등과 함께 표시하면 된다. 
+    void calculate(double oprd1, String op, double oprd2); // 예: (3, "+", 2.0)
+}
+
+abstract class SmartPhone { // TODO: 이 클래스는 Phone, Calculator를 구현한다. 
+    protected static BaseStation baseStation;
+    public static void setBaseStation(BaseStation bs) { baseStation = bs; }
+    
+    protected String owner;  // 스마트폰 소유주 이름
+
+    public SmartPhone(String owner) { this.owner = owner; }
+    public abstract String getMaker();
+    public void setOwner(String owner) { this.owner = owner; }
+    public void print() { System.out.print(owner+"'s Phone: "+getMaker()); }
+    public void println() { print(); System.out.println(); }
+}
+
+/******************************************************************************
+ * [코드 추가 3] 추상 클래스인 SmartPhone를 상속 받아 이를 서로 다르게 구현하는 GalaxyPhone과
+ *            IPhone 클래스를 기존의 SmartPhone 클래스 뒤쪽에 배치하라. 
+ ******************************************************************************/
+class GalaxyPhone { // TODO: 이 클래스는 SmartPhone 클래스를 상속한다.
+    private void printTradeMark(String appName) {
+        //System.out.println(" @ "+owner+"'s Galaxy "+appName);
+    }
+    public GalaxyPhone(String owner) { }
+    //@Override
+    public void sendCall(String callee)        { 
+    }
+    //@Override
+    public void receiveCall(String caller)     { 
+    }
+    //@Override
+    public void calculate(double oprd1, String op, double oprd2) {
+    }
+    //@Override
+    public String getMaker() { return null; }
+}
+
+class IPhone { // TODO: 이 클래스는 SmartPhone 클래스를 상속한다.
+    String model;
+    public IPhone(String owner, String model) { this.model = model; };
+    
+    //@Override
+    public void sendCall(String callee)        { 
+    }
+    //@Override
+    public void receiveCall(String caller)     { 
+    }
+
+    //@Override
+    public void calculate(double oprd1, String op, double oprd2) {
+    }
+    //@Override
+    public String getMaker() { return null; }
+}
+
+/******************************************************************************
+ * 문제: 0
+ * 요점: 상속, 구현, @Override
+ ******************************************************************************/
+// 1) SmartPhone, GalaxyPhone, IPhone의 "TODO:"의 설명을 참고하여 코드를 적절히 수정하라.
+// 2) GalaxyPhone과 IPhone의 생성자에서 슈퍼클래스의 생성자를 호출하라.
+// 3) GalaxyPhone과 IPhone의 "//@Override"의 주석을 해제하라.
+// 4) GalaxyPhone::printTradeMark(appName) 내의 주석을 해제하라.
+// 이상을 정상적으로 구현했다면 에러 없이 정상 컴파일되어야 한다.
+//-----------------------------------------------------------------------------
+
+/******************************************************************************
+ * [코드 추가 4] 기존 Person 클래스에 아래 내용을 반영하라. 
+ ******************************************************************************/
+// 1) 아래 멤버를 새로 추가하라.
+    private SmartPhone smartPhone; // 스마트폰: 5_3에서 추가
+
+// 2) 기존 set(String name) 함수를 아래와 같이 수정하라.
+    public void set(String name)           { this.name = name; smartPhone.setOwner(name); } // 5_3: smartPhone
+
+// 3) 기존 setXxxx(...) 함수들 맨 뒤에 아래 함수를 새로 추가하라.
+//    이 함수는 smPhone이 null인 경우 id에 따라 GalaxyPhone 또는 IPhone 객체를 생성한다.
+    public void setSmartPhone(SmartPhone smPhone) { // 5_3
+        if (smPhone != null) {
+            smartPhone = smPhone;
+            smartPhone.setOwner(name);
+        }
+        else
+            smartPhone = ((id % 2) == 1)? new GalaxyPhone(name) : // id가 홀수인 경우
+                                          new IPhone(name, "13"); // id가 짝수인 경우
+    }
+
+// 4) 기존 set(name, passwd, id, weight, married, address) 함수의
+//    매개변수 맨 끝에 아래처럼 SmartPhone 매개변수를 추가하고 아래처럼 코드를 추가하라.
+    public void set(String name, String passwd, int id, double weight, // 5_3: smartPhone
+                    boolean married, String address, SmartPhone smartPhone) {
+        ...
+        setSmartPhone(smartPhone);
+    }
+
+// 5) 아래 생성자를 새로 추가하라.
+    public Person(String name, int id, double weight,  // 5_3
+            boolean married, String address, SmartPhone smartPhone) {
+        // 위 4) set(...) 함수를 호출하라.;
+    }
+
+// 6) 기존의 Person(name, id, weight, married, address)은 this()를 이용하여
+//    위 5) 생성자를 호출하되 smartPhone 값은 null(이 경우 자동 생성함)로 지정하라.
+
+// 7) 기존의 assign(Person p)에서 위 변경된 4) set(...) 함수를 호출하도록 적절히 수정하라.
+
+/******************************************************************************
+ * [코드 추가 5] 기존 PersonManager 클래스에 아래 내용을 반영하라. 
+ ******************************************************************************/
+// 1) run() 함수의 menuStr을 아래 내용으로 수정하고 MENU_COUN도 적절히 수정하라.
+        String menuStr =
+            "=============== Person Management Menu ================\n" +
+            "= 0.exit 1.display 2.clear 3.reset 4.remove           =\n" +
+            "= 5.copy 6.append 7.insert 8.login 9.dispStudent(5_3) =\n" +
+            "= 10.dispPhone(5_3)                                   =\n" +
+            "=======================================================\n";
+
+// 2) 아래 두 멤버 함수를 login() 함수 다음에 추가하고 
+//    9번과 10번 메뉴항목이 선택되었을 때 이들이 호출되도록 switch 문장에 코드를 삽입하라.
+    public void dispStudent() { // Menu item 9: ch5_3
+    }
+    public void dispPhone() { // Menu item 10: ch5_3
+    }
+
+===============================================================================
+== 프로그램 실행 결과: 프로그램을 실행하면 아래와 같이 출력되어야 한다.
+=============================================================================== 
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3 4.ch5      *
+**************************
+menu item? 1
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+=============== Person Management Menu ================
+= 0.exit 1.display 2.clear 3.reset 4.remove           =
+= 5.copy 6.append 7.insert 8.login 9.dispStudent(5_3) =
+= 10.dispPhone(5_3)                                   =
+=======================================================
+menu item? 
+
+
+/******************************************************************************
+ * 문제: 1
+ * 요점: instanceof
+ ******************************************************************************/
+// 1) 아래 프로그램 실행 결과를 참고하여 PersonManager::dispStudent() 함수를 완성하라.
+//    이 함수는 pVector에 저장된 모든 객체 중에 instanceof 연산잘ㄹ 사용하여 Student 객체를  
+//    찾은 다음 pVector의 인덱스 [i]를 출력한 후 객체를 출력하라.
+//    이 함수 구현 시 아래 문제 2의 dispPhone() 코드를 참고하라.
+//-----------------------------------------------------------------------------
+
+===============================================================================
+==  프로그램 실행 결과 1
+=============================================================================== 
+...
+=============== Person Management Menu ...
+= 5.copy 6.append 7.insert 8.login 9.dispStudent(5_3) ...
+=======================================================
+menu item? 9
+dispStudent(): 
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+
+
+/******************************************************************************
+ * 문제: 2
+ * 요점: getMaker() 함수 오버라딩
+ ******************************************************************************/
+// 1) PersonManager::dispPhone() 함수에 아래 코드를 삽입하라.
+//    이 함수는 pVector의 저장된 각 객체가 소지한 SmartPhone 객체를 출력한다.
+//    아래 코드가 정상작동하도록 적절한 함수를 구현하라. 
+//    Person::getSmartPhone(), GalaxyPhone::getMaker(), IPhone::getMaker()
+//-----------------------------------------------------------------------------
+        int count = pVector.size();
+        System.out.println("dispPhones(): count " + count);
+        for (int i = 0; i < count; ++i) {
+            System.out.print("[" + i + "] "); pVector.get(i).getSmartPhone().println();
+        }
+
+===============================================================================
+==  프로그램 실행 결과 2
+=============================================================================== 
+...
+=============== Person Management Menu ...
+= 10.dispPhone(5_3)                                   =
+=======================================================
+menu item? 10
+dispPhones(): count 6
+[0] p0's Phone: Apple
+[1] p1's Phone: SAMSUNG
+[2] s1's Phone: SAMSUNG
+[3] s2's Phone: Apple
+[4] w1's Phone: SAMSUNG
+[5] w2's Phone: Apple
+
+
+/******************************************************************************
+ * [코드 추가 6] 기존 CurrentUser 클래스에 아래 내용을 반영하라. 
+ ******************************************************************************/
+// 1) run() 함수의 menuStr을 아래 내용으로 수정하고 MENU_COUN도 적절히 수정하라.
+        String menuStr =
+                "++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++\n" +
+                "+ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +\n" +
+                "+ 6.isSame 7.update 8.chPasswd(4_2) 9.chSmartPhone(5_3)         +\n" +
+                "+ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3)                  +\n" +
+                "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+
+// 2) 아래 두 멤버 함수를 chPasswd() 함수 다음에 추가하고 
+//    9, 10, 11, 12번 메뉴항목이 선택되었을 때 이들이 호출되도록 switch 문장에 코드를 삽입하라.
+    void chSmartPhone() { // Menu item 9
+    }
+    void userClone() { // Menu item 10
+    }
+    void calc() { // Menu item 11: 연산자와 피연산자는 스페이스로 분리되어 있어야 함
+    }
+    void phoneCall() { // Menu item 12
+    }
+
+===============================================================================
+== 프로그램 실행 결과: 프로그램을 실행하면 아래와 같이 출력되어야 한다.
+=============================================================================== 
+...
+=============== Person Management Menu ...
+= 5.copy 6.append 7.insert 8.login 9.dispStudent(5_3) =
+=======================================================
+menu item? 8
+user name: s1
+password: 
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.isSame 7.update 8.chPasswd(4_2) 9.chSmartPhone(5_3)         +
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3)                  +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 1
+s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+
+++++++++++++++++++++++ Current User Menu ... 
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) ...
+menu item? 12
+
+++++++++++++++++++++++ Current User Menu ...
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3)                  +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 13
+13: OUT of selection range(0 ~ 12) Try again!!
+
+
+/******************************************************************************
+ * 문제: 3
+ ******************************************************************************/
+// 1) 기존의 CurrentUser::display()는 user 객체만을 출력한다. 아래 실행 결과를 참고하여 
+//    user 객체가 소지한 smartPhone 객체를 출력하는 코드를 추가적으로 삽입하라.
+//-----------------------------------------------------------------------------
+
+===============================================================================
+==  프로그램 실행 결과 3
+=============================================================================== 
+... 
+=============== Person Management Menu ...
+= 10.dispPhone(5_3)  ...
+menu item? 10
+dispPhones(): count 6
+...
+[2] s1's Phone: SAMSUNG
+...
+[5] w2's Phone: Apple
+
+=============== Person Management Menu ...
+= 5.copy 6.append 7.insert 8.login ...
+menu item? 8
+user name: s1
+password: 
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing ...
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 1
+s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+s1's Phone: SAMSUNG
+
+
+/******************************************************************************
+ * 문제: 4
+ * 요점: 현재 사용자의 스마트폰을 새것으로 교체
+ ******************************************************************************/
+// 1) CurrentUser::chSmartPhone() 멤버 함수에 아래 코드를 추가하라.
+//    아래 코드는 현재 login한 사용자의 스마트폰을 사용자가 입력한 새로운 Samsung or Apple 폰으로 
+//    교체하는 코드이다. TODO 부분을 완성하라.
+//-----------------------------------------------------------------------------
+        String maker = UI.getNext("maker of phone to change(ex: Samsung or Apple)? ");
+        TODO: 사용자가 입력한 maker를 참고하여 적절한 스마트폰을 생성하여 교체한다.
+              이때 스마트폰의 소유주는 사용자의 이름으로 설정하고 IPhone의 경우 모델을 "14"로 하라.
+              여기서 직접 스마트폰 객체를 생성한 후 setSmartPhone(..)을 호출하여 교체하라.
+              메이커를 잘못 입력한 경우 아래 display()를 호출하지 않게 바로 리턴하라.
+        display();
+
+===============================================================================
+==  프로그램 실행 결과 4
+=============================================================================== 
+... // 프로그램 실행 결과 3과 동일: s1으로 login한 후
+
+++++++++++++++++++++++ Current User Menu ...
++ 6.isSame 7.update 8.chPasswd(4_2) 9.chSmartPhone(5_3)         +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 9
+maker of phone to change(ex: Samsung or Apple)? App    // 사용자 입력
+App: WRONG phone's maker
+
+++++++++++++++++++++++ Current User Menu ...
++ 6.isSame 7.update 8.chPasswd(4_2) 9.chSmartPhone(5_3) ...
+menu item? 9
+maker of phone to change(ex: Samsung or Apple)? Apple
+s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+s1's Phone: Apple
+
+++++++++++++++++++++++ Current User Menu ...
++ 6.isSame 7.update 8.chPasswd(4_2) 9.chSmartPhone(5_3) ...
+menu item? 9
+maker of phone to change(ex: Samsung or Apple)? Samsung
+s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+s1's Phone: SAMSUNG
+
+
+/******************************************************************************
+ * [코드 추가 6]  
+ ******************************************************************************/
+// 1) CurrentUser::userClone() 멤버 함수에 아래 코드를 추가하라.
+//    아래 코드는 기존의 user 객체를 복사 생성(clone())한 후 복사된 객체의 이름을 c1으로 변경함
+//    복사된 clone 객체의 이름이 변경되었으므로 소유한 스마트폰의 소유주도 c1으로 변경되어야 함
+//-----------------------------------------------------------------------------
+    	display();
+    	Person c = user.clone();
+        System.out.println("------------------\nclone:");
+        c.println(); 
+        c.getSmartPhone().println();
+        System.out.println("\nchange clone's name "+c.getName()+" to c1\n");
+        c.set("c1"); // clone의 이름을 c1으로 변경함: 스마트폰의 소유주도 c1으로 변경됨
+   	    display();
+        System.out.println("------------------\nclone:");
+        c.println(); 
+        c.getSmartPhone().println();
+
+===============================================================================
+== 프로그램 실행 결과: 프로그램을 실행하면 아래와 같이 출력되어야 한다.
+=============================================================================== 
+... // s1으로 login한 후
+++++++++++++++++++++++ Current User Menu ...
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3)                  +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 10
+s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+s1's Phone: SAMSUNG
+------------------
+clone:
+s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+s1's Phone: SAMSUNG
+
+change clone's name s1 to c1
+
+s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+c1's Phone: SAMSUNG         // 오류: 원본 스마트폰의 소유주도 변경되었음(s1이어야 함)
+------------------
+clone:                      // 복제 후 이름을 c1으로 변경하였음
+c1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+c1's Phone: SAMSUNG         // 정상적으로 소유주가 c1으로 변경되었음
+
+
+/******************************************************************************
+ * 문제: 5
+ * 요점: SmartPhone::clone()
+ ******************************************************************************/
+// 1) 위 실행결과의 오류는 왜 그럴까? 먼저 user.clone()은 
+//    Person::clone() -> new Person(this) -> assign(p) ->
+//    set(p.name, p.passwd, p.id, p.weight, p.married, p.address, p.smartPhone);
+//    순서로 호출된다. 이때 set()의 마지막 인자를 p.smartPhone로 설정하는데
+//    이는 복제된 Person 객체가 원본의 스마트폰 객체를 서로 공유한다는 것을 의미한다.
+//    자바에서 객체 변수는 레퍼런스 변수(포인터 개념)라는 사실을 주지하기 바람.
+//    이 문제를 해결하기 위해선 스마트폰 객체를 복제하여 별개의 객체를 생성한 후 set() 설정해야 함. 즉,
+//    set(..., p.address, p.smartPhone.clone());
+//-----------------------------------------------------------------------------
+// 2) Person::assign()의 set() 함수를 위처럼 수정하고 SmartPhone, GalaxyPhone, 
+//    IPhone 클래스에 clone() 멤버 함수를 구현하라. 구현 시 Person::clone()을 참고하고 또한 
+//    SmartPhone::getMaker() 함수(abstract 함수로 할 것)와 오버라이딩된 함수들을 참고하되 
+//    리턴 데이타 타입은 항상 SmartPhone으로 해야 한다. 리턴 타입이 SmartPhone이고 이는
+//    GalaxyPhone, IPhone 클래스의 슈퍼 클래스이기 때문에 GalaxyPhone, IPhone의
+//    clone()에서 새로 생성된 복제 객체를 바로 리턴해도 자동으로 SmartPhone으로 업캐스팅된다.
+//-----------------------------------------------------------------------------
+
+===============================================================================
+==  프로그램 실행 결과 5
+=============================================================================== 
+... // s1으로 login한 후
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing ...
+menu item? 1
+s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+s1's Phone: SAMSUNG
+
+++++++++++++++++++++++ Current User Menu ...
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) ...
+menu item? 10
+s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+s1's Phone: SAMSUNG
+------------------
+clone:
+s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+s1's Phone: SAMSUNG
+
+change clone's name s1 to c1
+
+s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+s1's Phone: SAMSUNG
+------------------
+clone:
+c1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+c1's Phone: SAMSUNG
+
+++++++++++++++++++++++ Current User Menu ...
++ 6.isSame 7.update 8.chPasswd(4_2) 9.chSmartPhone(5_3) ...
+menu item? 9
+maker of phone to change(ex: Samsung or Apple)? Apple
+s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+s1's Phone: Apple
+
+++++++++++++++++++++++ Current User Menu ...
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) ...
+menu item? 10
+s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+s1's Phone: Apple
+------------------
+clone:
+s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+s1's Phone: Apple
+
+change clone's name s1 to c1
+
+s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+s1's Phone: Apple
+------------------
+clone:
+c1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+c1's Phone: Apple
+
+
+/******************************************************************************
+ * 문제: 6
+ * 요점: GalaxyPhone::calculate(), Person::getCalculator() 구현
+ ******************************************************************************/
+// 1) 아래 코드를 GalaxyPhone::calculate(...) 함수에 추가하라.
+//-----------------------------------------------------------------------------
+        System.out.print(oprd1+" "+op+" "+oprd2+" = ");
+        switch (op) {
+        case "+": System.out.print(oprd1 + oprd2); break;
+        case "-": System.out.print(oprd1 - oprd2); break;
+        case "*": System.out.print(oprd1 * oprd2); break;
+        case "/": System.out.print(oprd1 / oprd2); break;
+        default:  System.out.print("NOT supported operator"); break;
+        }
+        printTradeMark("Calculator");
+//-----------------------------------------------------------------------------
+// 2) 아래 코드를 CurrentUser::calc(...) 함수에 추가하라.
+//-----------------------------------------------------------------------------
+        TODO: "expression: "을 출력하고 연산자와 두개의 피연산자를 스캐너로부터 입력 받아라. 
+        if (UI.echo_input) System.out.println(d1+" "+op+" "+d2); // 자동오류체크시 출력됨
+        user.getCalculator().calculate(d1, op, d2);
+//-----------------------------------------------------------------------------
+// 3) 위 TODO 부분의 코드를 완성하고 Person::getCalculator()를 getSmartPhone() 다음에
+//    배치하고 구현하라. 리턴 타입은 Calculator이어야 한다. 
+//    참고: getSmartPhone()과 똑같이 구현하면 된다. 이유는
+//    SmartPhone 클래스는 interface Calculator를 구현(상속)하였으므로 
+//    smartPhone 객체를 리턴해도 자동으로 Calculator 타입으로 업캐스딩된다.
+//-----------------------------------------------------------------------------
+
+===============================================================================
+== 프로그램 실행 결과 6
+=============================================================================== 
+... // s1으로 login한 후
+++++++++++++++++++++++ Current User Menu ...
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3)                  +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 11
+expression: 2 * 3.5
+2.0 * 3.5 = 7.0 @ s1's Galaxy Calculator
+
+++++++++++++++++++++++ Current User Menu ...
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) ...
+menu item? 11 
+expression: 3.6 / 3
+3.6 / 3.0 = 1.2 @ s1's Galaxy Calculator
+
+++++++++++++++++++++++ Current User Menu ...
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) ...
+menu item? 11
+expression: 1 % 2
+1.0 % 2.0 = NOT supported operator @ s1's Galaxy Calculator
+
+
+/******************************************************************************
+ * 문제: 7
+ * 요점: Calculator::calculate() 구현
+ ******************************************************************************/
+// 1) 아래 코드를 IPhone::calculate(...) 함수 앞쪽에 배치하라.
+//-----------------------------------------------------------------------------
+    private double add(double oprd1, double oprd2) { return oprd1 + oprd2; }
+    private double sub(double oprd1, double oprd2) { return oprd1 - oprd2; }
+    private double mul(double oprd1, double oprd2) { return oprd1 * oprd2; }
+    private double div(double oprd1, double oprd2) { return oprd1 / oprd2; }
+//-----------------------------------------------------------------------------
+// 2) interface Calculator::calculate(...)는 인터페이스이므로 연산 기능은 동일하게 
+//    제공하되 구현은 제조사마다 다르게 구현할 수 있다. 앞서 GalaxyPhone::calculate(...)는
+//    switch 문장 내에서 직접 사칙연산을 했다. 그러나 IPhone에서는 위에 제공된 사칙연산 함수를  
+//    호출하여 사칙연산을 계산하도록 코딩하라. (GalaxyPhone과 다르게 구현하기 위해서)  
+//    또한 IPhone에서는 GalaxyPhone에서처럼 printTradeMark(appName) 함수를 만들지 말고 
+//    매번 "소유주이름's IPhone 모델명: "을 직접 출력하도록 하라.
+//    잘못된 연산자일 경우 "연사자 = NOT supported operator"를 출력하라.
+
+===============================================================================
+==  프로그램 실행 결과 7
+=============================================================================== 
+
+... // s1이 아닌 s2로 login해야 함
+
+++++++++++++++++++++++ Current User Menu ...
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) ...
+menu item? 11
+expression: 2 + 3.0
+s2's IPhone 13: 2.0 + 3.0 = 5.0
+
+++++++++++++++++++++++ Current User Menu ...
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) ...
+menu item? 11
+expression: 3.0 - 2
+s2's IPhone 13: 3.0 - 2.0 = 1.0
+
+++++++++++++++++++++++ Current User Menu ...
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) ...
+menu item? 11
+expression: 3 % 1
+s2's IPhone 13: % = NOT supported operator
+
+
+/******************************************************************************
+ * 문제: 8
+ * 요점: interface Phone::sendCall(callee), receiveCall(caller) 구현
+ *      PersonManager::connectTo(caller, callee)
+ ******************************************************************************/
+// 1) 아래 코드를 GalaxyPhone::calculate(...) 함수 앞쪽에 배치하라.
+//    interface Phone에 있는 두 함수의 스펙(기능)을 먼저 읽고 이해한 다음 이 인터페이스를 구현한
+//    GalaxyPhone의 아래 코드를 분석하기 바란다.
+//-----------------------------------------------------------------------------
+    @Override
+    public void sendCall(String callee)        { 
+        System.out.print("made a call to "+callee); printTradeMark("Phone");
+        baseStation.connectTo(owner, callee);
+    }
+    @Override
+    public void receiveCall(String caller)     { 
+        System.out.print("received a call from "+caller); printTradeMark("Phone");
+    }
+//-----------------------------------------------------------------------------
+// 2) 아래 코드를 CurrentUser::phoneCall() 함수에 삽입하라. 
+//-----------------------------------------------------------------------------
+        // PersonManager에 등록되어 있는 사용자 중 한명의 이름을 입력하라.
+        String callee = UI.getNext("name to call? ");
+        user.getPhone().sendCall(callee);
+//-----------------------------------------------------------------------------
+// 3) Person::getCalculator() 뒤에 Person::getPhone()을 배치하고 구현하라. 
+//    getSmartPhone(), getCalculator()를 참조하되 리턴 타입은 Phone이어야 한다.
+//    smartPhone은 인터페이스 Calculator와 Phone을 구현(상속)하였으므로 
+//    리턴 타입이 Phone이면 자동으로 슈퍼 클래스(인터페이스)로 업캐스팅된다.
+//-----------------------------------------------------------------------------
+// 4) 아래 프로그램 실행 결과에서 12번 메뉴를 선택하면 위 CurrentUser::phoneCall()이 수행된다.
+//    여기서 수신할 사람의 이름을 입력 받고(callee:w1) login한 user(s1)의 스마트폰인 
+//    GalaxyPhone의 위 1)의 sendCall(callee:w1)을 호출한다.
+//    여기서 baseStation.connectTo(owner, callee)을 호출하게 되며 이 함수에서 수신자인 w1을
+//    찾고 w1의 스마트폰인 GalaxyPhone의 위 1)의 receiveCall(caller:s1)을 호출하게 된다.
+//-----------------------------------------------------------------------------
+// 5) baseStation은 SmartPhone 클래스에 선언된 static 전역변수이므로 SmartPhone을 상속한
+//    GalaxyPhone과 IPhone 클래스의 모든 객체에서 공유(전역) 변수로 사용할 수 있다.
+//    이 변수는 SmartPhone::setBaseStation(bs) 함수에 의해 초기화된다.
+//    문제는 BaseStation은 인터페이스이고 객체를 생성할 수 없는데, 어떻게 setBaseStation(bs)을
+//    통해 객체를 초기화할 수 있을까? (업캐스팅에 의해 가능함: 8)에서 소개됨)
+//    baseStation.connectTo(owner, callee)는 PersonManager에 등록되어 있는 
+//    사용자 중에서 수신자(여기선 w1)를 찾는다. 사실 CurrentUser::phoneCall()에서 전화를 
+//    거는 사람도 PersonManager에 등록되어 있는 사람(여기선 login한 s1)이다.
+//    따라서 baseStation.connectTo(owner, callee)는 PersonManager와 연관이 있다.
+//-----------------------------------------------------------------------------
+// 6) 기존의 PersonManager가 아래처럼 BaseStation을 구현할 수 있도록 수정하라.
+//-----------------------------------------------------------------------------
+class PersonManager // TODO: 인터페이스 BaseStation을 구현(상속)하게끔 수정하라.
+{
+//-----------------------------------------------------------------------------
+// 7) PersonManager 클래스에 BaseStation의 connectTo(caller, callee)를 
+//    dispPhone() 다음에 배치하고 구현하라. 함수 앞줄에 "@Override"를 추가하라.
+//    이 함수 구현시 login()에서처럼 findByName(callee)를 호출해서 수신자가 
+//    PersonManager의 pVector에 존재하는지 검색한 후 없을 경우 false를 반환하라.
+//    반대로 수신자가 존재할 경우 "base station: ..." 메시지를 출력하고, 수신자의 폰의 
+//    receiveCall(caller)을 호출하라.(위 2)의 sendCall(callee) 참조)
+//    그런 후 true 반환하라.
+//-----------------------------------------------------------------------------
+// 8) PersonManager의 생성자에서 SmartPhone의 setBaseStation(bs)을 호출하여(static 함수)
+//    SmartPhone::baseStation을 초기화하라. setBaseStation(bs)을 호출할 때
+//    함수 인자로 this를 넘겨 주어라. 여기서 this는 PersonManager의 현재 객체를 의미하며
+//    PersonManager가 BaseStation을 구현하였으므로 BaseStation은 PersonManager의
+//    슈퍼 인터페이스(클래스)이다. 따라서 함수 호출시 인자로 this를 지정하면 자동으로 
+//    BaseStation 타입으로 업캐스팅되어 함수에 전달된다. 이것이 interface의 객체는 직접 생성하지 
+//    못하지만 다른 클래스에 구현되었을 경우 구현된 클래스의 객체가 interface 변수로 사용할 수 있는 
+//    이유이다. 같은 맥락으로 GalaxyPhone이나 IPhone의 객체는 슈퍼 인터페이스인 Phone이나 
+//    Calculator의 변수로 업캐스팅해서 사용할 수 있다.
+//-----------------------------------------------------------------------------
+
+===============================================================================
+==  프로그램 실행 결과 8
+=============================================================================== 
+
+... // Person Management Menu에서 s1으로 login 한 후
+
+++++++++++++++++++++++ Current User Menu ...
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3)                  +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 12
+name to call? w1
+made a call to w1 @ s1's Galaxy Phone
+base station: sends a call signal of s1 to w1
+received a call from s1 @ w1's Galaxy Phone
+
+++++++++++++++++++++++ Current User Menu ...
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) ...
+menu item? 12
+name to call? k1
+made a call to k1 @ s1's Galaxy Phone
+k1: NOT found
+
+
+/******************************************************************************
+ * 문제: 9
+ * 요점: IPhone::sendCall(callee), receiveCall(caller) 구현
+ ******************************************************************************/
+// 1) 아래 프로그램 실행 결과를 참고하여 IPhone::sendCall(callee), receiveCall(caller)를
+//    구현하라. 구현 시 IPhone::calculate()처럼 printTradeMark()를 사용하지 말고
+//    매번 "소유주이름's IPhone 모델명: "을 직접 출력하도록 하라.
+
+===============================================================================
+==  프로그램 실행 결과 9
+=============================================================================== 
+
+... // s2으로 login 한 후 (s1이 아님)
+
+++++++++++++++++++++++ Current User Menu ...
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3)                  +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 12
+name to call? w2
+s2's IPhone 13: made a call to w2
+base station: sends a call signal of s2 to w2
+w2's IPhone 13: received a call from s2
+
+++++++++++++++++++++++ Current User Menu ...
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) ...
+menu item? 12
+name to call? s1
+s2's IPhone 13: made a call to s1
+base station: sends a call signal of s2 to s1
+received a call from s2 @ s1's Galaxy Phone
+
+... // logout 한 후 s1으로 login한 후
+
+++++++++++++++++++++++ Current User Menu ...
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) ...
+menu item? 12
+name to call? w2
+made a call to w2 @ s1's Galaxy Phone
+base station: sends a call signal of s1 to w2
+w2's IPhone 13: received a call from s1

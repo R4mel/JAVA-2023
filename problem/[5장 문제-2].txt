@@ -1,0 +1,363 @@
+/******************************************************************************
+ * [코드 추가 1]
+ ******************************************************************************/
+// 1) 기존의 프로젝트 CH5-1::Main.java의 내용을 모두 복사해서 프로젝트 CH5-2::Main.java에 삽입하라.
+// 2) 프로그램의 맨 앞쪽 주석 부분의 "Author: " 행 다음의 내용을 아래 내용으로 교체하라.
+//----------------------------------------------------------------------------
+
+//  + VectorPerson의 생성자 및 메모리 확장 함수에서 출력 문장 주석처리
+//  + Person, Student, Worker, PersonManager의 생성자, clone() 내의 출력 문장 주석 처리
+//  + PersonManager::display(), MultiManager::run() 내의 출력 문장 주석처리
+//  + Factory 수정
+//  + MultiManager 수정
+//  + PersonManager의 append(), insert() 수정
+
+/******************************************************************************
+ * [코드 추가 2]
+ ******************************************************************************/
+// 1) VectorPerson 클래스의 생성자, extend_capacity()에 있는 출력 문장들을 모두 주석 처리하라.
+// 2) Person, Student, Worker, PersonManager들의 모든 생성자와 모든 clone() 내에서
+//    printMembers() 호출 문장 및 System.out.println() 문장들을 모두 주석 처리하라.
+// 3) PersonManager의 생성자 및 display() 그리고 MultiManager::run() 내의 
+//    System.out.println() 출력 문장들을 모두 주석 처리하라.
+
+/******************************************************************************
+ * [코드 추가 3]
+ ******************************************************************************/
+// 1) MultiManager 클래스의 기존의 allPersons[] 배열을 삭제하라.
+// 2) Person persons[] 배열 밑에 아래의 배열들을 추가하라.
+//-----------------------------------------------------------------------------
+
+    private Student students[] = {
+        new Student("s1", 1, 65.4, true,  "Jongno-gu Seoul", "Physics", 3.8, 1),
+        new Student("s2", 2, 54.3, false, "Yeonje-gu Busan", "Electronics", 2.5, 4),
+    };
+
+    private Worker workers[] = {
+        new Worker("w1", 3, 33.3, false, "Kangnam-gu Seoul",  "Samsung", "Director"),
+        new Worker("w2", 4, 44.4, true,  "Dobong-gu Kwangju", "Hyundai", "Manager"),
+    };
+
+    private Person allPersons[] = {
+        persons[0], persons[1], students[0], students[1], workers[0], workers[1],
+    };
+
+
+===============================================================================
+== 프로그램 실행 결과 1
+=============================================================================== 
+// 프로그램을 실행하면 아래와 같이 출력되어야 한다. Main Menu의 1번 항목을 실행하면 
+// allPersons[] 배열의 원소들이 PersonManager 생성자에게 넘겨져 PersonManager::pVector에
+// 저장되며 이 내용이 출력된 것이다. 
+//-----------------------------------------------------------------------------
+// 지금까지의 프로그램이 정상이라면 아래 메뉴를 계속 따라 했을 때 같은 결과가 나와야 한다.
+// 여기서 중요한 것은 PersonManager, Factory, VectorPerson, CurrentUser 클래스들은
+// 모두 Person 클래스만 취급하고 상속 받은 Student, Worker 클래스의 존재를 모르지만  
+// 오버라이딩된 함수들로 인해 아래와 같이 실행될 수 있다는 것이다.
+//-----------------------------------------------------------------------------
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3 4.ch5      *
+**************************
+menu item? 1
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+=========== Person Management Menu ==========
+= 0.exit 1.display 2.clear 3.reset 4.remove =
+= 5.copy 6.append 7.insert 8.login          =
+=============================================
+menu item? 1
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+=========== Person Management Menu ==========
+= 0.exit 1.display 2.clear ...
+menu item? 2
+
+=========== Person Management Menu ==========
+= 0.exit 1.display ...
+menu item? 1
+
+=========== Person Management Menu ==========
+= 0.exit 1.display 2.clear 3.reset ...
+menu item? 3
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+=========== Person Management Menu ==========
+= 0.exit 1.display 2.clear 3.reset 4.remove ...
+menu item? 4
+index to delete? 1
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[2] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[3] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[4] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+=========== Person Management Menu ...
+menu item? 4
+index to delete? 2
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[2] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[3] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+=========== Person Management Menu ...
+menu item? 4
+index to delete? 3
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[2] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+
+=========== Person Management Menu ...
+= 5.copy 6.append 7.insert 8.login ...
+menu item? 5
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[2] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[3] pp0 30 71.0 true :Gwangju Nam-gu Bongseon-dong 21:
+[4] ss1 21 66.4 false :Jongno-gu Seoul: Physics 3.8 1
+[5] ww1 23 34.3 true :Kangnam-gu Seoul: Samsung Director
+
+=========== Person Management Menu ...
+= 5.copy 6.append 7.insert 8.login ...
+menu item? 8
+user name: s1
+password:         // 비번 없음: 그냥 엔터
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.isSame 7.update 8.chPasswd(4_2)                             +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 1
+s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+
++ 0.logout 1.display 2.getter ...
+menu item? 2
+name:s1, id:1, weight:65.4, married:true, address:Jongno-gu Seoul
+
++ 0.logout 1.display 2.getter 3.setter ...
+menu item? 3
+p.set(): p 1 65.4 true :Jongno-gu Seoul:
+
++ 0.logout 1.display 2.getter 3.setter 4.copy ...
+menu item? 4
+user: s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+p: s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
+menu item? 5
+~~~~~~~~~~~~~~~~ Student::whatAreYouDoing() ~~~~~~~~~~~~~~~~
+s1 is studying as a 1-year student in Physics
+s1 took several courses and got GPA 3.8
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
++ 6.isSame 7.update 8.chPasswd(4_2)                             +
+menu item? 6
+user: s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+p: user 1 0.0 false ::
+p.equals(user): false
+p.assign(user): s1 1 65.4 true :Jongno-gu Seoul:
+p.equals(user): true
+
++ 6.isSame 7.update 8.chPasswd(4_2)                             +
+menu item? 7
+input person information:
+s2 2 56.3 false :Jongno-gu Busan: Physics 2.8 2    // 사용자가 입력
+s2 2 56.3 false :Jongno-gu Busan: Physics 2.8 2
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
+menu item? 0
+
+=========== Person Management Menu ==========
+= 0.exit 1.display 2.clear 3.reset 4.remove =
+= 5.copy 6.append 7.insert 8.login          =
+=============================================
+menu item? 1
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] s2 2 56.3 false :Jongno-gu Busan: Physics 2.8 2      // 앞전에 수정한 내용임
+[2] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[3] pp0 30 71.0 true :Gwangju Nam-gu Bongseon-dong 21:
+[4] ss1 21 66.4 false :Jongno-gu Seoul: Physics 3.8 1
+[5] ww1 23 34.3 true :Kangnam-gu Seoul: Samsung Director
+
+=========== Person Management Menu ...
+= 5.copy 6.append 7.insert 8.login ...
+menu item? 8
+user name: w1
+password:        // 그냥 엔터
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
+menu item? 1
+w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+
++ 6.isSame 7.update 8.chPasswd(4_2)                             +
+menu item? 7
+input person information:
+w2 4 44.4 true :Nowon-gu Seoul: Hyundai Director
+w2 4 44.4 true :Nowon-gu Seoul: Hyundai Director
+
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
+menu item? 0
+
+=========== Person Management Menu ==========
+= 0.exit 1.display 2.clear 3.reset 4.remove =
+menu item? 1
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] s2 2 56.3 false :Jongno-gu Busan: Physics 2.8 2
+[2] w2 4 44.4 true :Nowon-gu Seoul: Hyundai Director      // 앞전에 수정한 내용임
+[3] pp0 30 71.0 true :Gwangju Nam-gu Bongseon-dong 21:
+[4] ss1 21 66.4 false :Jongno-gu Seoul: Physics 3.8 1
+[5] ww1 23 34.3 true :Kangnam-gu Seoul: Samsung Director
+
+
+/******************************************************************************
+ * [코드 추가 4]
+ ******************************************************************************/
+// 아래 Person Management Menu의 6번과 7번 항목은 새로운 Person 객체를 추가하는 기능이다.
+
+=========== Person Management Menu ...
+= 5.copy 6.append 7.insert 8.login          =
+=============================================
+
+// 기존에는 Person 객체만 입력하면 되었지만 지금은 Person, Student, Worker 등의 객체들도 
+// 입력할 수 있어야 한다. 이들의 입력은 Factory::inputPerson(UI.scan)이 담당한다. 
+//-----------------------------------------------------------------------------
+// 1) 객체를 입력할 때 제일 먼저 어떤 객체 정보를 입력할지 구분자를 먼저 입력하고 객체 정보를 입력해야 한다.
+//    아래 /* */ 내용을 PersonManager::append() 함수 앞쪽에 복사해서 삽입하라.
+//    이 내용은 5명의 객체를 입력할 것이며 맨 첫 칸의 P, S, W는 입력할 객체의 종류가 
+//    각각 Person, Student, Worker 객체임을 의미한다.
+//-----------------------------------------------------------------------------
+    /*
+    5
+    K p3 11 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+    P p3 11 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+    S s3 12 71.5 false :Gwangju Nam-gu Bongseon-dong 21: Computer 3.3 2
+    W w3 13 65 true :Jong-ro 1-gil, Jongno-gu, Seoul: Kia CEO
+    S s4 15 80 true :1001, Jungang-daero, Yeonje-gu, Busan: Biology 3.8 3
+    W w4 16 77 false :Buk-ro 3, Kangdong-gu, Seoul: Naver Department-Head
+    */
+//-----------------------------------------------------------------------------
+// 2) Factory::printInputNotice()를 아래 함수로 교체하라.
+//-----------------------------------------------------------------------------
+    public void printInputNotice(String preMsg, String postMsg) {
+        System.out.println("input"+preMsg+" [delimiter(P,S,or W)]"+
+                           " [person information]"+postMsg+":");
+    }
+//-----------------------------------------------------------------------------
+//    위 함수는 Person Management Menu의 6.append 7.insert 메뉴 항목 선택 시
+//    아래와 같은 메시지를 출력하는 문장이다.
+//-----------------------------------------------------------------------------
+input 5 [delimiter(P,S,or W)] [person information] to append:    // 6번 항목
+input [delimiter(P,S,or W)] [person information] to insert:      // 7번 항목
+//-----------------------------------------------------------------------------
+// 3) Factory::inputPerson(Scanner sc)를 아래 함수로 교체하라.
+//    이 함수는 먼저 첫칸의 구분자(delimiter)를 입력 받고 구분자에 따라 
+//    각각 해당 객체를 생성하고 스캐너로부터 객체 정보를 입력 받는다.
+//-----------------------------------------------------------------------------
+    public Person inputPerson(Scanner sc) { 
+        Person p = null;
+        String delimiter = sc.next();
+        switch (delimiter) {
+        case "S": p = new Student(sc); break;
+        case "W": p = new Worker (sc); break;
+        case "P": p = new Person (sc); break;
+        default : 
+            String nextLn = sc.nextLine();
+            if (UI.echo_input) System.out.println(delimiter+nextLn);
+            System.out.println(delimiter+": WRONG delimiter");
+            return null;
+        }
+        if (UI.echo_input) p.println(delimiter.equals("") ? "" : delimiter+" ");
+        return p; 
+    }
+//-----------------------------------------------------------------------------
+// 다시 한번 강조하지만 PersonManager, VectorPerson, CurrentUser 클래스들은 전혀 수정하지
+// 않은채 Factory 함수만 수정함으로써 다양한 [종류]의 객체를 입력 받고 수정할 수 있다는 것이다.
+// 이것이 오버라이딩 함수의 진정한 위력이다.
+// PersonManager는 오직 Person 클래스만 취급할 수 있도록 하기 위해 여러 종류의 객체를 전적으로 
+// 입력 받는 Factory 클래스를 PersonManager에서 분리하여 별도의 클래스로 독립시켰다.
+//-----------------------------------------------------------------------------
+
+===============================================================================
+== 프로그램 실행 결과 2
+=============================================================================== 
+
+=========== Person Management Menu ==========
+= 0.exit 1.display 2.clear 3.reset 4.remove =
+= 5.copy 6.append 7.insert 8.login          =
+=============================================
+menu item? 6
+number of persons to append? 5
+input 5 [delimiter(P,S,or W)] [person information] to append:
+    K p3 11 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+K: WRONG delimiter                                     // 객체 구분자 오류
+    P p3 11 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+    S s3 12 71.5 false :Gwangju Nam-gu Bongseon-dong 21: Computer 3.3 2
+    W w3 13 65 true :Jong-ro 1-gil, Jongno-gu, Seoul: Kia CEO
+    S s4 15 80 true :1001, Jungang-daero, Yeonje-gu, Busan: Biology 3.8 3
+    W w4 16 77 false :Buk-ro 3, Kangdong-gu, Seoul: Naver Department-Head
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+...
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+[6] p3 11 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[7] s3 12 71.5 false :Gwangju Nam-gu Bongseon-dong 21: Computer 3.3 2
+[8] w3 13 65.0 true :Jong-ro 1-gil, Jongno-gu, Seoul: Kia CEO
+[9] s4 15 80.0 true :1001, Jungang-daero, Yeonje-gu, Busan: Biology 3.8 3
+[10] w4 16 77.0 false :Buk-ro 3, Kangdong-gu, Seoul: Naver Department-Head
+
+=========== Person Management Menu ==========
+= 0.exit 1.display 2.clear 3.reset 4.remove ...
+menu item? 3
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+...
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+= 5.copy 6.append 7.insert 8.login          =
+menu item? 7
+index to insert in front? 0
+input [delimiter(P,S,or W)] [person information] to insert:
+S s3 12 71.5 false :Gwangju Nam-gu Bongseon-dong 21: Computer 3.3 2
+[0] s3 12 71.5 false :Gwangju Nam-gu Bongseon-dong 21: Computer 3.3 2
+[1] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+...
+[6] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+= 5.copy 6.append 7.insert 8.login          =
+menu item? 7
+index to insert in front? 1
+input [delimiter(P,S,or W)] [person information] to insert:
+W w3 13 65 true :Jong-ro 1-gil, Jongno-gu, Seoul: Kia CEO
+[0] s3 12 71.5 false :Gwangju Nam-gu Bongseon-dong 21: Computer 3.3 2
+[1] w3 13 65.0 true :Jong-ro 1-gil, Jongno-gu, Seoul: Kia CEO
+[2] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+...
+[7] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+= 5.copy 6.append 7.insert 8.login          =
+menu item? 7
+index to insert in front? 0
+input [delimiter(P,S,or W)] [person information] to insert:
+P p3 11 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[0] p3 11 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[1] s3 12 71.5 false :Gwangju Nam-gu Bongseon-dong 21: Computer 3.3 2
+[2] w3 13 65.0 true :Jong-ro 1-gil, Jongno-gu, Seoul: Kia CEO
+[3] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+...
+[8] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
