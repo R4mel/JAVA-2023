@@ -59,25 +59,6 @@ class MergeSort {
     }
 }
 
-
-class QuickSort {
-    // 배열 마지막 값을 pivot으로 설정, 작은 값들, 피봇, 큰 값들로 분할
-    // q = pivot를 배열의 맞는 위치에 넣어준 뒤 배열의 시작부터 q-1까지, q+1부터 배열의 끝까지 recursion으로 정렬
-    // test
-}
-
-class HeapSort {
-    // O(logN)
-}
-
-class RadixSort {
-    // 배열의 인덱스값을 일의자리를 기준으로 정렬해주고 인덱스값에 맞춰서 정렬
-}
-
-class CountingSort {
-    // 배열의 값을 인덱스로 생각하고 카운팅해서 배열에 넣기
-}
-
 public class Sort {
     public static void swap(int[] arr, int source, int target) {
         int tmp = arr[source];
