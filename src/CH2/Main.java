@@ -9,13 +9,8 @@ public class Main {
         // chk: 1(자동 오류 체크), 0(키보드에서 직접 입력하여 프로그램 실행)
         // trace: true(오류발생한 곳 출력), false(단순히 O, X만 표시)
         //--------------------------------
-        int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
-
-        // TODO: System.in을 인자로 하는 Scanner 객체를 생성한 후
-        //       해당 객체를 아래 run() 함수의 인자로 넘겨 주어라. (null 대신에 넘겨 줄 것)
-        //       위 기능을 반드시 하나의 문장으로 완성해야 한다. 변수 선언하지 말고 바로 넘겨 줌
-        //       즉, run( Scanner 객체를 생성 ); 형태가 되어야 한다.
-        run(new Scanner(System.in));
+        int chk = 1;
+        new AutoCheck(chk, true).run();
     }
 
     public static void run(Scanner scan) {
