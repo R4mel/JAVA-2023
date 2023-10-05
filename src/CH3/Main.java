@@ -68,14 +68,10 @@ class UI {
         scan = s;
     }
 
-    // 사용자에게 메뉴("\n"+menuStr+"menu item? ")를 보여주고
-    // 사용자가 선택한 메뉴항목의 인덱스(0 ~ (menuCount-1))를 리턴함
-    // menuCount: 메뉴항목의 개수임
     public static int selectMenu(String menuStr, int menuCount) {
         return getIndex("\n" + menuStr + "menu item? ", menuCount);
     }
 
-    // 입력을 받기 위해 static Scanner scan 멤버를 활용하라. 즉, scan.함수() 형식으로 호출
     public static int getInt(String msg) {
         int value;
         while (true) {
@@ -92,23 +88,11 @@ class UI {
             }
         }
 
-        // TODO: msg를 화면에 출력한 후 정수 값을 입력 받아 지역 변수 value에 저장함 (변수 선언할 것)
-        //       입력 시 이 클래스의 scan 멤버 변수를 활용하라.
-        //       (이 변수는 setScanner(Scanner s)에 의해 이미 초기화 되었음)
-
-        if (echo_input) System.out.println(value); // 자동오류체크 시 입력 값을 출력함
-        // 위 문장은 자동오류체크 시에 사용되는 문장임; 일반적으로 키보드로부터 입력받을 경우
-        // 화면에 자동 echo되지만, 자동오류체크 시에는 입력파일에서 입력받은 값이 자동 echo 되지
-        // 않으므로 명시적으로 출력 버퍼에 출력(echo) 해 주어야 한다.
-
-        // (지시가 있을 때 구현할 것) 입력 버퍼에 남아 있는 '\n'를 제거하지 않으면 다음번 getLine()에서
-        // '\n'만 빈 줄이 입력될 수 있으므로 입력 버퍼에 남아 있는 '\n'를 사전에 제거함
+        if (echo_input) System.out.println(value);
         scan.nextLine();
-        return value; // TODO: 입력 받은 정수 value를 리턴할 것
+        return value;
     }
 
-    // [0, (size-1)] 사이의 인덱스 값을 리턴함
-    // 존재하지 않는 메뉴항목을 선택한 경우 에러 출력
     public static int getIndex(String msg, int size) {
         int value;
         for (; ; ) {
@@ -119,13 +103,9 @@ class UI {
             }
             break;
         }
-        // TODO: 위 적절한 함수를 호출해 0 또는 양수를 입력 받은 후 적절하지 않은 인덱스(index)일 경우
-        //       에러("index: OUT of selection range(0 ~ size-1) Try again!!")를
-        //       출력하고 다시 입력 받는다.
-        return value; // TODO: 입력 받은 값 리턴
+        return value;
     }
 
-    // 0 또는 양의 정수 값을 입력 받아 리턴함
     public static int getPosInt(String msg) {
         int value;
         for (; ; ) {
