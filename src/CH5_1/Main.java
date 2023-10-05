@@ -1,4 +1,4 @@
-package CH4_2;
+package CH5_1;
 
 import java.util.*;
 
@@ -9,8 +9,8 @@ public class Main {
         // chk: 1(자동 오류 체크), 0(키보드에서 직접 입력하여 프로그램 실행)
         // trace: true(오류발생한 곳 출력), false(단순히 O, X만 표시)
         //--------------------------------
-        int chk = 1;
-        new AutoCheck(chk, true).run();
+//        int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
+        run(new Scanner(System.in));
     }
 
     public static void run(Scanner scan) {
@@ -19,6 +19,7 @@ public class Main {
         scan.close();
     }
 }
+
 class MainMenu {
     final static int MENU_COUNT = 5;
 
@@ -26,7 +27,7 @@ class MainMenu {
         String menuStr =
                 "******* Main Menu ********\n" +
                         "* 0.exit 1.PersonManager *\n" +
-                        "* 2.ch2 3.ch3            *\n" +
+                        "* 2.ch2 3.ch3 4.ch5      *\n" +
                         "**************************\n";
 
         while (true) {
@@ -43,6 +44,9 @@ class MainMenu {
                     break;
                 case 3:
                     Ch3.run();
+                    break;
+                case 4:
+                    new Inheritance().run();
                     break;
             }
         }
@@ -185,6 +189,56 @@ class Person {
 
     private void printMembers() {
         System.out.print(name + " " + id + " " + weight + " " + married + " :" + address + ":");
+    }
+}
+
+class Student { // TODO: Person 클래스를 상속하라.
+    private String department; // 학과
+    private double GPA;        // 평균평점
+    private int year;          // 학년
+
+    public Student(String name, int id, double weight, boolean married, String address,
+                   String department, double GPA, int year) {
+        // TODO: 수퍼(부모)클래스의 생성자를 호출하여 수퍼 클래스 멤버들을 초기화하라.
+        //set(department, GPA, year);
+        //System.out.print("Student():"); printMembers(); System.out.println();
+    }
+    // getter and setter
+
+    // Overriding
+
+    // printMembers(), inputMembers(Scanner sc)
+
+    // 새로 추가된 메소드
+    public void study() {
+        //System.out.println(getName()+" is studying as a "+year+"-year student in "+department);
+    }
+
+    public void takeClass() {
+        //System.out.println(getName()+" took several courses and got GPA "+GPA);
+    }
+}
+
+class Worker { // TODO: Person 클래스를 상속하라.
+    private String company;    // 회사명
+    private String position;   // 직급
+
+    public Worker(String name, int id, double weight, boolean married, String address,
+                  String company, String position) {
+    }
+    // getter and setter
+
+    // Overriding
+
+    // printMembers(), inputMembers(Scanner sc)
+
+    // 새로 추가된 메소드
+    public void work() {
+        //System.out.println(getName()+" works in "+company+" as "+position);
+    }
+
+    public void goOnVacation() {
+        //System.out.println(getName()+" is now enjoying his(her) vacation.");
     }
 }
 
@@ -653,6 +707,61 @@ class MultiManager {
         var pm = new PersonManager(allPersons, new Factory());
         pm.run();
         System.out.println("PersonManager::run() returned");
+    }
+}
+
+class Inheritance {
+    Student s;
+    Worker w;
+
+    public Inheritance() {
+        s = new Student("s1", 1, 65.4, true, "Jongno-gu Seoul", "Physics", 3.8, 1);
+        w = new Worker("w1", 3, 33.3, false, "Kangnam-gu Seoul", "Samsung", "Director");
+    }
+
+    public void run() {
+        String menuStr =
+                "***** Inheritance Menu ******\n" +
+                        "* 0.exit 1.Student 2.Worker *\n" +
+                        "*****************************\n";
+        final int MENU_COUNT = 3; // 상수 정의
+        while (true) {
+            int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
+            switch (menuItem) {
+                case 1:
+                    student();
+                    break;
+                case 2:
+                    worker();
+                    break;
+                case 0:
+                    return;
+            }
+        }
+    }
+
+    void compare(Person p1, Person p2) {
+        p1.println("p1: ");
+        p2.println("p2: ");
+        System.out.println("p1.equals(p2) : " + p1.equals(p2));
+        System.out.println("--------------------");
+    }
+
+    Person whatAreYouDoing(Person p) {
+        p.whatAreYouDoing();
+        return p;
+    }
+
+    void input(Person p, String msg) {
+        System.out.print("input " + msg + ": ");
+        p.input(UI.scan);
+        if (UI.echo_input) p.println(); // 자동체크에서 사용됨
+    }
+
+    void student() {
+    }
+
+    void worker() {
     }
 }
 
