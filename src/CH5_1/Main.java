@@ -227,6 +227,11 @@ class Student extends Person {
     }
 
     // Overriding
+    @Override
+    public void print(){
+        super.print();
+        printMembers();
+    }
 
     // printMembers(), inputMembers(Scanner sc)
     public void printMembers() {
