@@ -96,11 +96,6 @@ class Person {
         System.out.println();
     }
 
-    // assign() 함수
-    public void assign(Person user) {
-        set(user.getName(), user.getPasswd(), user.getId(), user.getWeight(), user.getMarried(), user.getAddress());
-    }
-
     // Getter: getXXX() 관련 함수들
     public String getName() {
         return name;
@@ -151,7 +146,20 @@ class Person {
         this.passwd = passwd;
     }
 
+    public Person(Person p) { // 복사 생성자
+        assign(p);
+        System.out.print("Person(p): ");
+        printMembers();
+        System.out.println();
+    }
+
     // Candidates for virtual functions and overriding
+
+    // assign() 함수
+    public void assign(Person user) {
+        set(user.getName(), user.getPasswd(), user.getId(), user.getWeight(), user.getMarried(), user.getAddress());
+    }
+
     // print(), clone(), whatAreYouDoing(), equals(), input() 함수
     public boolean equals(Person user) {
         return (user.getName() == getName() && user.getId() == getId());
@@ -171,9 +179,7 @@ class Person {
 
     public Person clone() {
         System.out.println("Person::clone()");
-        Person p = new Person(name, id, weight, married, address);
-        p.setPasswd(getPasswd());
-        return p;
+        return new Person(this);
     }
 
     private void inputMembers(Scanner sc) {
@@ -192,34 +198,52 @@ class Person {
     }
 }
 
-class Student { // TODO: Person 클래스를 상속하라.
-    private String department; // 학과
+class Student extends Person {
+    private String department = ""; // 학과
     private double GPA;        // 평균평점
     private int year;          // 학년
 
-    public Student(String name, int id, double weight, boolean married, String address,
-                   String department, double GPA, int year) {
+    public Student(String name, int id, double weight, boolean married, String address, String department, double GPA, int year) {
+        super(name, id, weight, married, address);
         // TODO: 수퍼(부모)클래스의 생성자를 호출하여 수퍼 클래스 멤버들을 초기화하라.
-        //set(department, GPA, year);
-        //System.out.print("Student():"); printMembers(); System.out.println();
+        set(department, GPA, year);
+        System.out.print("Student(): ");
+        printMembers();
+        System.out.println();
     }
+
+    public Student(Student s){
+        super(s);
+        set(s.department, s.GPA, s.year);
+        System.out.print("Student(s): ");
+        printMembers();
+    }
+
     // getter and setter
+    public void set(String department, double GPA, int year) {
+        this.department = department;
+        this.GPA = GPA;
+        this.year = year;
+    }
 
     // Overriding
 
     // printMembers(), inputMembers(Scanner sc)
+    public void printMembers() {
+        System.out.println(department + " " + GPA + " " + year);
+    }
 
     // 새로 추가된 메소드
     public void study() {
-        //System.out.println(getName()+" is studying as a "+year+"-year student in "+department);
+        System.out.println(getName() + " is studying as a " + year + "-year student in " + department);
     }
 
     public void takeClass() {
-        //System.out.println(getName()+" took several courses and got GPA "+GPA);
+        System.out.println(getName() + " took several courses and got GPA " + GPA);
     }
 }
 
-class Worker { // TODO: Person 클래스를 상속하라.
+class Worker {
     private String company;    // 회사명
     private String position;   // 직급
 
@@ -759,6 +783,11 @@ class Inheritance {
     }
 
     void student() {
+        var s1 = new Student(s);
+        var s2 = new Student(s1);
+        System.out.println("--------------------");
+        s2.set("s2");
+        compare(s1, s2); // 업캐스팅
     }
 
     void worker() {
