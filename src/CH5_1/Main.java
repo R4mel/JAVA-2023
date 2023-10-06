@@ -316,7 +316,24 @@ class Student extends Person {
 
 class Worker extends Person{
     private String company;    // 회사명
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
     private String position;   // 직급
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
 
     public Worker(String name, int id, double weight, boolean married, String address,
                   String company, String position) {
