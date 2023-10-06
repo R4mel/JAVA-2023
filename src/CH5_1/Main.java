@@ -9,7 +9,7 @@ public class Main {
         // chk: 1(자동 오류 체크), 0(키보드에서 직접 입력하여 프로그램 실행)
         // trace: true(오류발생한 곳 출력), false(단순히 O, X만 표시)
         //--------------------------------
-//        int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
+        int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
         run(new Scanner(System.in));
     }
 
@@ -93,7 +93,6 @@ class Person {
     public void println(String msg) {
         System.out.print(msg);
         print();
-        System.out.println();
     }
 
     // Getter: getXXX() 관련 함수들
@@ -209,10 +208,9 @@ class Student extends Person {
         set(department, GPA, year);
         System.out.print("Student(): ");
         printMembers();
-        System.out.println();
     }
 
-    public Student(Student s){
+    public Student(Student s) {
         super(s);
         set(s.department, s.GPA, s.year);
         System.out.print("Student(s): ");
@@ -226,11 +224,79 @@ class Student extends Person {
         this.year = year;
     }
 
+    public String getDepartment() {
+        return department;
+    }
+
+    public double getGPA() {
+        return GPA;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public void setGPA(double GPA) {
+        this.GPA = GPA;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
     // Overriding
     @Override
-    public void print(){
+    public void print() {
         super.print();
         printMembers();
+    }
+
+    @Override
+    public boolean equals(Person p) {
+        Student s = (Student) p;
+        return (super.equals(s) && s.getDepartment() == getDepartment() && s.getYear() == getYear());
+    }
+
+    @Override
+    public void whatAreYouDoing(){
+        System.out.println("~~~~~~~~~~~~~~~~ Student::whatAreYouDoing() ~~~~~~~~~~~~~~~~");
+        study();
+        takeClass();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    }
+
+    @Override
+    public Person clone() {
+        System.out.println("Student::clone()");
+        return new Student(this);
+    }
+
+    @Override
+    public void assign(Person user) {
+        Student s = (Student)user;
+        super.assign(s);
+        set(s.getDepartment(), s.getGPA(), s.getYear());
+    }
+
+    void input(Scanner sc) {
+        super.input(sc);
+        inputMembers(sc);
+    }
+
+    private void inputMembers(Scanner sc) {
+        department = sc.next();
+        GPA = sc.nextDouble();
+        year = sc.nextInt();
+        set(department, GPA, year);
+    }
+
+    public Student(Scanner sc) {
+        super(sc);
+        inputMembers(sc);
     }
 
     // printMembers(), inputMembers(Scanner sc)
@@ -248,18 +314,29 @@ class Student extends Person {
     }
 }
 
-class Worker {
+class Worker extends Person{
     private String company;    // 회사명
     private String position;   // 직급
 
     public Worker(String name, int id, double weight, boolean married, String address,
                   String company, String position) {
+        super(name, id, weight, married, address);
+        set(company, position);
+        System.out.print("Worker(): ");
+        printMembers();
     }
     // getter and setter
+    public void set(String company, String positon){
+        this.company = company;
+        this.position = positon;
+    }
 
     // Overriding
 
     // printMembers(), inputMembers(Scanner sc)
+    public void printMembers() {
+        System.out.println(company + " " + position);
+    }
 
     // 새로 추가된 메소드
     public void work() {
@@ -787,12 +864,68 @@ class Inheritance {
         if (UI.echo_input) p.println(); // 자동체크에서 사용됨
     }
 
+    Person clone(Person p) {
+        Person c = p.clone();
+        return c;
+    }
+
+    void assign(Person d, Person s) {
+        d.assign(s); // s를 d에 복사
+    }
+
+    Person newInput(Boolean isStudent, String msg) {
+        Person p = null;
+        System.out.print("input new "+msg+": ");
+        if (isStudent)
+            p = new Student(UI.scan);
+        //else
+        //    p = new Worker(UI.scan);
+        if (UI.echo_input) p.println(); // 자동체크에서 사용됨
+        return p;
+    }
+
     void student() {
         var s1 = new Student(s);
         var s2 = new Student(s1);
         System.out.println("--------------------");
         s2.set("s2");
         compare(s1, s2); // 업캐스팅
+        s2.set(s1.getName());
+        s2.setGPA(s2.getGPA() - 1.0);
+        compare(s1, s2);
+
+        s2.setDepartment(s1.getDepartment() + "-Electronics");
+        compare(s1, s2);
+
+        s2.setDepartment(s1.getDepartment());
+        s2.setYear(s1.getYear() + 1);
+        compare(s1, s2);
+
+        s2.setYear(s1.getYear());
+        compare(s1, s2);
+
+        s2.set("s2");
+        Student s3 = (Student)whatAreYouDoing(s2); // 함수호출:다운캐스팅 & 리턴:업캐스팅
+        System.out.println();
+        s3.whatAreYouDoing();
+
+        s3 = (Student)clone(s2);
+        s3.println("s3: ");
+        System.out.println("--------------------");
+
+        s2.println("s2: ");
+        s1 = new Student("", 0, 0.0, false, "", "", 0.0, 0);
+        assign(s2, s1); // (destination, source): destination = source
+        s2.println("s2: ");
+        System.out.println("--------------------");
+
+        input(s2, "student"); // s2 1 56.9 false :Gangnam-gu Seoul: Physics 2.0 1
+        s2.println("s2: ");
+        System.out.println("--------------------");
+
+        Student s4 = (Student)newInput(true, "student");
+        // s4 1 56.9 false :Gangnam-gu Seoul: Physics 2.0 1
+        s4.println("s4: ");
     }
 
     void worker() {
