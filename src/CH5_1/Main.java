@@ -315,7 +315,7 @@ class Student extends Person {
 }
 
 class Worker extends Person{
-    private String company;    // 회사명
+    private String company = "";    // 회사명
 
     public String getCompany() {
         return company;
@@ -325,7 +325,7 @@ class Worker extends Person{
         this.company = company;
     }
 
-    private String position;   // 직급
+    private String position = "";   // 직급
 
     public String getPosition() {
         return position;
@@ -335,33 +335,86 @@ class Worker extends Person{
         this.position = position;
     }
 
-    public Worker(String name, int id, double weight, boolean married, String address,
-                  String company, String position) {
+    public Worker(Worker s) {
+        super(s);
+        set(s.company, s.position);
+        System.out.print("Worker(w): ");
+        printMembers();
+    }
+    public Worker(String name, int id, double weight, boolean married, String address, String company, String position) {
         super(name, id, weight, married, address);
         set(company, position);
         System.out.print("Worker(): ");
         printMembers();
     }
     // getter and setter
-    public void set(String company, String positon){
+    public void set(String company, String position){
         this.company = company;
-        this.position = positon;
+        this.position = position;
     }
 
     // Overriding
+    @Override
+    public boolean equals(Person p) {
+        Worker s = (Worker) p;
+        return (super.equals(s) && s.getCompany() == getCompany() && s.getPosition() == getPosition());
+    }
+
+    @Override
+    public void whatAreYouDoing(){
+        System.out.println("!!!!!!!!!!!!!!!! Worker::whatAreYouDoing()!!!!!!!!!!!!!!!!!");
+        work();
+        goOnVacation();
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
+
+    @Override
+    public Person clone() {
+        System.out.println("Worker::clone()");
+        return new Worker(this);
+    }
+
+    @Override
+    public void assign(Person user) {
+        Worker s = (Worker) user;
+        super.assign(s);
+        set(s.getCompany(),s.getPosition());
+    }
+
+    @Override
+    public void print() {
+        super.print();
+        printMembers();
+    }
 
     // printMembers(), inputMembers(Scanner sc)
+    void input(Scanner sc) {
+        super.input(sc);
+        inputMembers(sc);
+    }
+
+    private void inputMembers(Scanner sc) {
+        company = sc.next();
+        position = sc.next();
+        set(company, position);
+    }
+
+    public Worker(Scanner sc) {
+        super(sc);
+        inputMembers(sc);
+    }
+
     public void printMembers() {
         System.out.println(company + " " + position);
     }
 
     // 새로 추가된 메소드
     public void work() {
-        //System.out.println(getName()+" works in "+company+" as "+position);
+        System.out.println(getName()+" works in "+company+" as "+position);
     }
 
     public void goOnVacation() {
-        //System.out.println(getName()+" is now enjoying his(her) vacation.");
+        System.out.println(getName()+" is now enjoying his(her) vacation.");
     }
 }
 
@@ -895,8 +948,8 @@ class Inheritance {
         System.out.print("input new "+msg+": ");
         if (isStudent)
             p = new Student(UI.scan);
-        //else
-        //    p = new Worker(UI.scan);
+        else
+            p = new Worker(UI.scan);
         if (UI.echo_input) p.println(); // 자동체크에서 사용됨
         return p;
     }
@@ -946,6 +999,45 @@ class Inheritance {
     }
 
     void worker() {
+        var w1 = new Worker(w);
+        var w2 = new Worker(w1);
+
+        System.out.println("--------------------");
+        w2.set("w2");
+        compare(w1, w2); // 업캐스팅
+
+        w2.set(w1.getName());
+        w2.setCompany(w1.getCompany()+"-Hyundai");
+        w2.setPosition(w1.getPosition());
+        compare(w1, w2);
+        w2.setCompany(w1.getCompany());
+        w2.setPosition(w1.getPosition()+"-Manager");
+        compare(w1, w2);
+        w2.setPosition(w1.getPosition());
+        compare(w1, w2);
+
+        w2.set("w2");
+        Worker w3 = (Worker)whatAreYouDoing(w2);  // 다운캐스팅
+        System.out.println();
+        w3.whatAreYouDoing();
+
+        w3 = (Worker)clone(w2);
+        w3.println("w3    : ");
+        System.out.println("--------------------");
+
+        w2.println("w2: ");
+        w1 = new Worker("", 0, 0.0, false, "", "", "");
+        assign(w2, w1); // (destination, source): destination = source
+        w2.println("w2: ");
+        System.out.println("--------------------");
+
+        input(w2, "worker"); // w2 3 44.4 true :Jongno-gu Seoul: Samsung Director
+        w2.println("w2: ");
+        System.out.println("--------------------");
+
+        Worker w4 = (Worker)newInput(false, "worker");
+        // w4 3 44.4 true :Jongno-gu Seoul: Samsung Director
+        w4.println("w4: ");
     }
 }
 
