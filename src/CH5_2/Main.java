@@ -93,6 +93,7 @@ class Person {
     public void println(String msg) {
         System.out.print(msg);
         print();
+        System.out.println();
     }
 
     // Getter: getXXX() 관련 함수들
@@ -193,7 +194,7 @@ class Person {
     }
 
     private void printMembers() {
-        System.out.print(name + " " + id + " " + weight + " " + married + " :" + address + ":");
+        System.out.print(name + " " + id + " " + weight + " " + married + " :" + address + ": ");
     }
 }
 
@@ -300,8 +301,8 @@ class Student extends Person {
     }
 
     // printMembers(), inputMembers(Scanner sc)
-    public void printMembers() {
-        System.out.println(department + " " + GPA + " " + year);
+    private void printMembers() {
+        System.out.print(department + " " + GPA + " " + year);
     }
 
     // 새로 추가된 메소드
@@ -406,8 +407,8 @@ class Worker extends Person {
         inputMembers(sc);
     }
 
-    public void printMembers() {
-        System.out.println(company + " " + position);
+    private void printMembers() {
+        System.out.print(company + " " + position);
     }
 
     // 새로 추가된 메소드
