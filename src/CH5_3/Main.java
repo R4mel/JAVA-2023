@@ -143,8 +143,6 @@ class IPhone { // TODO: 이 클래스는 SmartPhone 클래스를 상속한다.
         this.model = model;
     }
 
-    ;
-
     //@Override
     public void sendCall(String callee) {
     }
