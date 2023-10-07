@@ -1,8 +1,6 @@
 package CH5_3;
 
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,8 +9,8 @@ public class Main {
         // chk: 1(자동 오류 체크), 0(키보드에서 직접 입력하여 프로그램 실행)
         // trace: true(오류발생한 곳 출력), false(단순히 O, X만 표시)
         //--------------------------------
-        int chk = 1;
-        new AutoCheck(chk, true).run();
+//        int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
+        run(new Scanner(System.in));
     }
 
     public static void run(Scanner scan) {
@@ -21,6 +19,7 @@ public class Main {
         scan.close();
     }
 }
+
 class MainMenu {
     final static int MENU_COUNT = 5;
 
@@ -28,7 +27,7 @@ class MainMenu {
         String menuStr =
                 "******* Main Menu ********\n" +
                         "* 0.exit 1.PersonManager *\n" +
-                        "* 2.ch2 3.ch3            *\n" +
+                        "* 2.ch2 3.ch3 4.ch5      *\n" +
                         "**************************\n";
 
         while (true) {
@@ -46,6 +45,9 @@ class MainMenu {
                 case 3:
                     Ch3.run();
                     break;
+                case 4:
+                    new Inheritance().run();
+                    break;
             }
         }
     }
@@ -62,9 +64,9 @@ class Person {
     // 생성자 함수들
     public Person(String name, int id, double weight, boolean married, String address) {
         set(name, "", id, weight, married, address);
-        System.out.print("Person(): ");
-        printMembers();
-        System.out.println();
+//        System.out.print("Person(): ");
+//        printMembers();
+//        System.out.println();
     }
 
     public Person(String name) {
@@ -91,12 +93,6 @@ class Person {
     public void println(String msg) {
         System.out.print(msg);
         print();
-        System.out.println();
-    }
-
-    // assign() 함수
-    public void assign(Person user) {
-        set(user.getName(), user.getPasswd(), user.getId(), user.getWeight(), user.getMarried(), user.getAddress());
     }
 
     // Getter: getXXX() 관련 함수들
@@ -149,7 +145,20 @@ class Person {
         this.passwd = passwd;
     }
 
+    public Person(Person p) { // 복사 생성자
+        assign(p);
+//        System.out.print("Person(p): ");
+//        printMembers();
+//        System.out.println();
+    }
+
     // Candidates for virtual functions and overriding
+
+    // assign() 함수
+    public void assign(Person user) {
+        set(user.getName(), user.getPasswd(), user.getId(), user.getWeight(), user.getMarried(), user.getAddress());
+    }
+
     // print(), clone(), whatAreYouDoing(), equals(), input() 함수
     public boolean equals(Person user) {
         return (user.getName() == getName() && user.getId() == getId());
@@ -168,10 +177,8 @@ class Person {
     }
 
     public Person clone() {
-        System.out.println("Person::clone()");
-        Person p = new Person(name, id, weight, married, address);
-        p.setPasswd(getPasswd());
-        return p;
+//        System.out.println("Person::clone()");
+        return new Person(this);
     }
 
     private void inputMembers(Scanner sc) {
@@ -187,6 +194,229 @@ class Person {
 
     private void printMembers() {
         System.out.print(name + " " + id + " " + weight + " " + married + " :" + address + ":");
+    }
+}
+
+class Student extends Person {
+    private String department = ""; // 학과
+    private double GPA;        // 평균평점
+    private int year;          // 학년
+
+    public Student(String name, int id, double weight, boolean married, String address, String department, double GPA, int year) {
+        super(name, id, weight, married, address);
+        // TODO: 수퍼(부모)클래스의 생성자를 호출하여 수퍼 클래스 멤버들을 초기화하라.
+        set(department, GPA, year);
+//        System.out.print("Student(): ");
+//        printMembers();
+    }
+
+    public Student(Student s) {
+        super(s);
+        set(s.department, s.GPA, s.year);
+//        System.out.print("Student(s): ");
+//        printMembers();
+    }
+
+    // getter and setter
+    public void set(String department, double GPA, int year) {
+        this.department = department;
+        this.GPA = GPA;
+        this.year = year;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public double getGPA() {
+        return GPA;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public void setGPA(double GPA) {
+        this.GPA = GPA;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    // Overriding
+    @Override
+    public void print() {
+        super.print();
+        printMembers();
+    }
+
+    @Override
+    public boolean equals(Person p) {
+        Student s = (Student) p;
+        return (super.equals(s) && s.getDepartment() == getDepartment() && s.getYear() == getYear());
+    }
+
+    @Override
+    public void whatAreYouDoing() {
+        System.out.println("~~~~~~~~~~~~~~~~ Student::whatAreYouDoing() ~~~~~~~~~~~~~~~~");
+        study();
+        takeClass();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    }
+
+    @Override
+    public Person clone() {
+//        System.out.println("Student::clone()");
+        return new Student(this);
+    }
+
+    @Override
+    public void assign(Person user) {
+        Student s = (Student) user;
+        super.assign(s);
+        set(s.getDepartment(), s.getGPA(), s.getYear());
+    }
+
+    void input(Scanner sc) {
+        super.input(sc);
+        inputMembers(sc);
+    }
+
+    private void inputMembers(Scanner sc) {
+        department = sc.next();
+        GPA = sc.nextDouble();
+        year = sc.nextInt();
+        set(department, GPA, year);
+    }
+
+    public Student(Scanner sc) {
+        super(sc);
+        inputMembers(sc);
+    }
+
+    // printMembers(), inputMembers(Scanner sc)
+    public void printMembers() {
+        System.out.println(department + " " + GPA + " " + year);
+    }
+
+    // 새로 추가된 메소드
+    public void study() {
+        System.out.println(getName() + " is studying as a " + year + "-year student in " + department);
+    }
+
+    public void takeClass() {
+        System.out.println(getName() + " took several courses and got GPA " + GPA);
+    }
+}
+
+class Worker extends Person {
+    private String company = "";    // 회사명
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    private String position = "";   // 직급
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public Worker(Worker s) {
+        super(s);
+        set(s.company, s.position);
+//        System.out.print("Worker(w): ");
+//        printMembers();
+    }
+
+    public Worker(String name, int id, double weight, boolean married, String address, String company, String position) {
+        super(name, id, weight, married, address);
+        set(company, position);
+//        System.out.print("Worker(): ");
+//        printMembers();
+    }
+
+    // getter and setter
+    public void set(String company, String position) {
+        this.company = company;
+        this.position = position;
+    }
+
+    // Overriding
+    @Override
+    public boolean equals(Person p) {
+        Worker s = (Worker) p;
+        return (super.equals(s) && s.getCompany() == getCompany() && s.getPosition() == getPosition());
+    }
+
+    @Override
+    public void whatAreYouDoing() {
+        System.out.println("!!!!!!!!!!!!!!!! Worker::whatAreYouDoing()!!!!!!!!!!!!!!!!!");
+        work();
+        goOnVacation();
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
+
+    @Override
+    public Person clone() {
+//        System.out.println("Worker::clone()");
+        return new Worker(this);
+    }
+
+    @Override
+    public void assign(Person user) {
+        Worker s = (Worker) user;
+        super.assign(s);
+        set(s.getCompany(), s.getPosition());
+    }
+
+    @Override
+    public void print() {
+        super.print();
+        printMembers();
+    }
+
+    // printMembers(), inputMembers(Scanner sc)
+    void input(Scanner sc) {
+        super.input(sc);
+        inputMembers(sc);
+    }
+
+    private void inputMembers(Scanner sc) {
+        company = sc.next();
+        position = sc.next();
+        set(company, position);
+    }
+
+    public Worker(Scanner sc) {
+        super(sc);
+        inputMembers(sc);
+    }
+
+    public void printMembers() {
+        System.out.println(company + " " + position);
+    }
+
+    // 새로 추가된 메소드
+    public void work() {
+        System.out.println(getName() + " works in " + company + " as " + position);
+    }
+
+    public void goOnVacation() {
+        System.out.println(getName() + " is now enjoying his(her) vacation.");
     }
 }
 
@@ -377,7 +607,7 @@ class VectorPerson {
 
     public VectorPerson(int capacity) {
         count = 0; // persons 배열에 현재 삽입된 객체의 개수는 0
-        System.out.println("VectorPerson::VectorPerson(" + capacity + ")");
+//        System.out.println("VectorPerson::VectorPerson(" + capacity + ")");
         persons = new Person[capacity]; // 객체 참조 배열 할당
     }
 
@@ -451,19 +681,36 @@ class VectorPerson {
         for (int i = 0; i < personsLength; i++) {
             persons[i] = tmp[i];
         }
-        System.out.println("VectorPerson: capacity extended to " + persons.length);
+//        System.out.println("VectorPerson: capacity extended to " + persons.length);
     }
 }
 
 class Factory {
     public void printInputNotice(String preMsg, String postMsg) {
-        System.out.println("input" + preMsg + " [person information]" + postMsg + ":");
+        System.out.println("input" + preMsg + " [delimiter(P,S,or W)]" +
+                " [person information]" + postMsg + ":");
     }
 
     public Person inputPerson(Scanner sc) {
-        // user 100 65 true :426 hakdong-ro, Gangnam-gu, Seoul:
-        var p = new Person(sc); // 위 행처럼 입력된 사람 정보를 입력 받음
-        if (UI.echo_input) p.println(); // 자동오류체크시 출력됨
+        Person p = null;
+        String delimiter = sc.next();
+        switch (delimiter) {
+            case "S":
+                p = new Student(sc);
+                break;
+            case "W":
+                p = new Worker(sc);
+                break;
+            case "P":
+                p = new Person(sc);
+                break;
+            default:
+                String nextLn = sc.nextLine();
+                if (UI.echo_input) System.out.println(delimiter + nextLn);
+                System.out.println(delimiter + ": WRONG delimiter");
+                return null;
+        }
+        if (UI.echo_input) p.println(delimiter.equals("") ? "" : delimiter + " ");
         return p;
     }
 }
@@ -475,7 +722,7 @@ class PersonManager {
     private Person array[];
 
     public PersonManager(Person array[], Factory factory) {
-        System.out.println("PersonManager(array[])");
+//        System.out.println("PersonManager(array[])");
         pVector = new VectorPerson();
         this.factory = factory;
         this.array = array;
@@ -525,13 +772,13 @@ class PersonManager {
 
     public void display() { // Menu item 1
         int count = pVector.size();
-        System.out.println("display(): count " + count);
+//        System.out.println("display(): count " + count);
         for (int i = 0; i < count; ++i) {
             System.out.print("[" + i + "] ");
             pVector.get(i).println();
         }
-        System.out.println("empty():" + pVector.isEmpty() + ", size():" + pVector.size()
-                + ", capacity():" + pVector.capacity());
+//        System.out.println("empty():" + pVector.isEmpty() + ", size():" + pVector.size()
+//                + ", capacity():" + pVector.capacity());
     }
 
     public void clear() {  // Menu item 2
@@ -572,6 +819,15 @@ class PersonManager {
         display();
     }
 
+    /*
+    5
+    K p3 11 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+    P p3 11 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+    S s3 12 71.5 false :Gwangju Nam-gu Bongseon-dong 21: Computer 3.3 2
+    W w3 13 65 true :Jong-ro 1-gil, Jongno-gu, Seoul: Kia CEO
+    S s4 15 80 true :1001, Jungang-daero, Yeonje-gu, Busan: Biology 3.8 3
+    W w4 16 77 false :Buk-ro 3, Kangdong-gu, Seoul: Naver Department-Head
+    */
     // 아래 함수는 사용자로부터 새로 추가할 Person 객체의 수를 입력 받고 for문을 이용하여
     // 그 개수만큼의 Person 객체를 생성하고 인적정보를 입력받은 후 (factory.inputPerson()을 통해)
     // VectorPerson pVector의 맨 끝에 추가한다.
@@ -644,17 +900,181 @@ class MultiManager {
             new Person("p3", 13, 83.3, true, "100 Dunsan-ro Seo-gu Daejeon"),
             new Person("p4", 14, 64.4, false, "88 Gongpyeong-ro, Jung-gu, Daegu"),
     };
-    // new를 이용해 동적으로 할당할 경우 소멸자 함수를 만들어 거기서 delete 해 주어야 함
+
+    private Student students[] = {
+            new Student("s1", 1, 65.4, true, "Jongno-gu Seoul", "Physics", 3.8, 1),
+            new Student("s2", 2, 54.3, false, "Yeonje-gu Busan", "Electronics", 2.5, 4),
+    };
+
+    private Worker workers[] = {
+            new Worker("w1", 3, 33.3, false, "Kangnam-gu Seoul", "Samsung", "Director"),
+            new Worker("w2", 4, 44.4, true, "Dobong-gu Kwangju", "Hyundai", "Manager"),
+    };
 
     private Person allPersons[] = {
-            persons[0], persons[1], persons[2], persons[3], persons[4],
+            persons[0], persons[1], students[0], students[1], workers[0], workers[1],
     };
 
     public void run() {
-        System.out.println("PersonManager::run() starts");
+//        System.out.println("PersonManager::run() starts");
         var pm = new PersonManager(allPersons, new Factory());
         pm.run();
-        System.out.println("PersonManager::run() returned");
+//        System.out.println("PersonManager::run() returned");
+    }
+}
+
+class Inheritance {
+    Student s;
+    Worker w;
+
+    public Inheritance() {
+        s = new Student("s1", 1, 65.4, true, "Jongno-gu Seoul", "Physics", 3.8, 1);
+        w = new Worker("w1", 3, 33.3, false, "Kangnam-gu Seoul", "Samsung", "Director");
+    }
+
+    public void run() {
+        String menuStr =
+                "***** Inheritance Menu ******\n" +
+                        "* 0.exit 1.Student 2.Worker *\n" +
+                        "*****************************\n";
+        final int MENU_COUNT = 3; // 상수 정의
+        while (true) {
+            int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
+            switch (menuItem) {
+                case 1:
+                    student();
+                    break;
+                case 2:
+                    worker();
+                    break;
+                case 0:
+                    return;
+            }
+        }
+    }
+
+    void compare(Person p1, Person p2) {
+        p1.println("p1: ");
+        p2.println("p2: ");
+        System.out.println("p1.equals(p2) : " + p1.equals(p2));
+        System.out.println("--------------------");
+    }
+
+    Person whatAreYouDoing(Person p) {
+        p.whatAreYouDoing();
+        return p;
+    }
+
+    void input(Person p, String msg) {
+        System.out.print("input " + msg + ": ");
+        p.input(UI.scan);
+        if (UI.echo_input) p.println(); // 자동체크에서 사용됨
+    }
+
+    Person clone(Person p) {
+        Person c = p.clone();
+        return c;
+    }
+
+    void assign(Person d, Person s) {
+        d.assign(s); // s를 d에 복사
+    }
+
+    Person newInput(Boolean isStudent, String msg) {
+        Person p = null;
+        System.out.print("input new " + msg + ": ");
+        if (isStudent)
+            p = new Student(UI.scan);
+        else
+            p = new Worker(UI.scan);
+        if (UI.echo_input) p.println(); // 자동체크에서 사용됨
+        return p;
+    }
+
+    void student() {
+        var s1 = new Student(s);
+        var s2 = new Student(s1);
+        System.out.println("--------------------");
+        s2.set("s2");
+        compare(s1, s2); // 업캐스팅
+        s2.set(s1.getName());
+        s2.setGPA(s2.getGPA() - 1.0);
+        compare(s1, s2);
+
+        s2.setDepartment(s1.getDepartment() + "-Electronics");
+        compare(s1, s2);
+
+        s2.setDepartment(s1.getDepartment());
+        s2.setYear(s1.getYear() + 1);
+        compare(s1, s2);
+
+        s2.setYear(s1.getYear());
+        compare(s1, s2);
+
+        s2.set("s2");
+        Student s3 = (Student) whatAreYouDoing(s2); // 함수호출:다운캐스팅 & 리턴:업캐스팅
+        System.out.println();
+        s3.whatAreYouDoing();
+
+        s3 = (Student) clone(s2);
+        s3.println("s3: ");
+        System.out.println("--------------------");
+
+        s2.println("s2: ");
+        s1 = new Student("", 0, 0.0, false, "", "", 0.0, 0);
+        assign(s2, s1); // (destination, source): destination = source
+        s2.println("s2: ");
+        System.out.println("--------------------");
+
+        input(s2, "student"); // s2 1 56.9 false :Gangnam-gu Seoul: Physics 2.0 1
+        s2.println("s2: ");
+        System.out.println("--------------------");
+
+        Student s4 = (Student) newInput(true, "student");
+        // s4 1 56.9 false :Gangnam-gu Seoul: Physics 2.0 1
+        s4.println("s4: ");
+    }
+
+    void worker() {
+        var w1 = new Worker(w);
+        var w2 = new Worker(w1);
+
+        System.out.println("--------------------");
+        w2.set("w2");
+        compare(w1, w2); // 업캐스팅
+
+        w2.set(w1.getName());
+        w2.setCompany(w1.getCompany() + "-Hyundai");
+        w2.setPosition(w1.getPosition());
+        compare(w1, w2);
+        w2.setCompany(w1.getCompany());
+        w2.setPosition(w1.getPosition() + "-Manager");
+        compare(w1, w2);
+        w2.setPosition(w1.getPosition());
+        compare(w1, w2);
+
+        w2.set("w2");
+        Worker w3 = (Worker) whatAreYouDoing(w2);  // 다운캐스팅
+        System.out.println();
+        w3.whatAreYouDoing();
+
+        w3 = (Worker) clone(w2);
+        w3.println("w3    : ");
+        System.out.println("--------------------");
+
+        w2.println("w2: ");
+        w1 = new Worker("", 0, 0.0, false, "", "", "");
+        assign(w2, w1); // (destination, source): destination = source
+        w2.println("w2: ");
+        System.out.println("--------------------");
+
+        input(w2, "worker"); // w2 3 44.4 true :Jongno-gu Seoul: Samsung Director
+        w2.println("w2: ");
+        System.out.println("--------------------");
+
+        Worker w4 = (Worker) newInput(false, "worker");
+        // w4 3 44.4 true :Jongno-gu Seoul: Samsung Director
+        w4.println("w4: ");
     }
 }
 
