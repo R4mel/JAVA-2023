@@ -53,6 +53,116 @@ class MainMenu {
     }
 }
 
+interface BaseStation {
+    boolean connectTo(String caller, String callee);
+    // 이 메소드는 Phone::sendCall(String caller)에서 호출되어야 한다.
+    // callee라는 사람이 존재할 경우
+    //     System.out.println("base station: sends a call signal of "+caller+
+    //               " to "+callee)를 출력하고
+    //     이 사람의 등록된 Phone의 receiveCall(caller, callee)을 호출하고 true를 리턴
+    // 존재하지 않을 경우 "callee_name: NOT found"라는 에러 메시지 출력하고 false 리턴
+}
+
+interface Phone {
+    void sendCall(String callee);
+
+    // 이 메소드는 "made a call to 수신자_이름(callee)"라고 출력해야 하며 이 출력의 앞 또는 뒤에
+    // 발신자 이름도 함께 출력하되 메이커가 알아서 적절히 회사명, 모델명 등과 함께 표시하면 된다.
+    // 그런 후 baseStation.connectTo(caller, callee)를 호출해야 한다.
+    void receiveCall(String caller);
+    // 이 메소드는 "received a call from 송신자_이름(caller)"라고 출력해야 하며 이 출력의 앞 또는 뒤에
+    // 수신자 이름도 함께 출력하되 메이커가 알아서 적절히 회사명, 모델명 등과 함께 표시하면 된다.
+}
+
+interface Calculator {
+    // +, -, *, / 사칙연산만 지원하고 그 외의 연산자일 경우 "NOT supported operator" 에러 메시지 출력
+    // 수식과 계산 결과 또는 에러 메시지를 출력해야 하며 이 출력의 앞 또는 뒤에
+    // 계산기 소유주 이름도 함께 출력하되 메이커가 알아서 적절히 회사명, 모델명 등과 함께 표시하면 된다.
+    void calculate(double oprd1, String op, double oprd2); // 예: (3, "+", 2.0)
+}
+
+abstract class SmartPhone { // TODO: 이 클래스는 Phone, Calculator를 구현한다.
+    protected static BaseStation baseStation;
+
+    public static void setBaseStation(BaseStation bs) {
+        baseStation = bs;
+    }
+
+    protected String owner;  // 스마트폰 소유주 이름
+
+    public SmartPhone(String owner) {
+        this.owner = owner;
+    }
+
+    public abstract String getMaker();
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public void print() {
+        System.out.print(owner + "'s Phone: " + getMaker());
+    }
+
+    public void println() {
+        print();
+        System.out.println();
+    }
+}
+
+class GalaxyPhone { // TODO: 이 클래스는 SmartPhone 클래스를 상속한다.
+    private void printTradeMark(String appName) {
+        //System.out.println(" @ "+owner+"'s Galaxy "+appName);
+    }
+
+    public GalaxyPhone(String owner) {
+    }
+
+    //@Override
+    public void sendCall(String callee) {
+    }
+
+    //@Override
+    public void receiveCall(String caller) {
+    }
+
+    //@Override
+    public void calculate(double oprd1, String op, double oprd2) {
+    }
+
+    //@Override
+    public String getMaker() {
+        return null;
+    }
+}
+
+class IPhone { // TODO: 이 클래스는 SmartPhone 클래스를 상속한다.
+    String model;
+
+    public IPhone(String owner, String model) {
+        this.model = model;
+    }
+
+    ;
+
+    //@Override
+    public void sendCall(String callee) {
+    }
+
+    //@Override
+    public void receiveCall(String caller) {
+    }
+
+    //@Override
+    public void calculate(double oprd1, String op, double oprd2) {
+    }
+
+    //@Override
+    public String getMaker() {
+        return null;
+    }
+}
+
 class Person {
     private String name;    // 이름
     private int id;      // Identifier
