@@ -96,6 +96,12 @@ abstract class SmartPhone { // TODO: 이 클래스는 Phone, Calculator를 구�
 
     public abstract String getMaker();
 
+    public abstract void sendCall(String callee);
+
+    public abstract void receiveCall(String caller);
+
+    public abstract void calculate(double oprd1, String op, double oprd2);
+
     public void setOwner(String owner) {
         this.owner = owner;
     }
@@ -110,52 +116,54 @@ abstract class SmartPhone { // TODO: 이 클래스는 Phone, Calculator를 구�
     }
 }
 
-class GalaxyPhone { // TODO: 이 클래스는 SmartPhone 클래스를 상속한다.
+class GalaxyPhone extends SmartPhone { // TODO: 이 클래스는 SmartPhone 클래스를 상속한다.
     private void printTradeMark(String appName) {
-        //System.out.println(" @ "+owner+"'s Galaxy "+appName);
+        System.out.println(" @ " + owner + "'s Galaxy " + appName);
     }
 
     public GalaxyPhone(String owner) {
+        super(owner);
     }
 
-    //@Override
+    @Override
     public void sendCall(String callee) {
     }
 
-    //@Override
+    @Override
     public void receiveCall(String caller) {
     }
 
-    //@Override
+    @Override
     public void calculate(double oprd1, String op, double oprd2) {
     }
 
-    //@Override
+    @Override
     public String getMaker() {
         return null;
     }
 }
 
-class IPhone { // TODO: 이 클래스는 SmartPhone 클래스를 상속한다.
+class IPhone extends SmartPhone { // TODO: 이 클래스는 SmartPhone 클래스를 상속한다.
     String model;
 
     public IPhone(String owner, String model) {
+        super(owner);
         this.model = model;
     }
 
-    //@Override
+    @Override
     public void sendCall(String callee) {
     }
 
-    //@Override
+    @Override
     public void receiveCall(String caller) {
     }
 
-    //@Override
+    @Override
     public void calculate(double oprd1, String op, double oprd2) {
     }
 
-    //@Override
+    @Override
     public String getMaker() {
         return null;
     }
@@ -169,9 +177,11 @@ class Person {
     private String address; // 주소
     private String passwd = ""; // 비밀번호
 
+    private SmartPhone smartPhone; // 스마트폰: 5_3에서 추가
+
     // 생성자 함수들
     public Person(String name, int id, double weight, boolean married, String address) {
-        set(name, "", id, weight, married, address);
+        this(name, id, weight, married, address, null);
 //        System.out.print("Person(): ");
 //        printMembers();
 //        System.out.println();
@@ -185,12 +195,17 @@ class Person {
         inputMembers(sc);
     }
 
-    public void set(String name, String passwd, int id, double weight, boolean married, String address) {
+    public Person(String name, int id, double weight, boolean married, String address, SmartPhone smartPhone) {
+        set(name, "", id, weight, married, address, smartPhone);
+    }
+
+    public void set(String name, String passwd, int id, double weight, boolean married, String address, SmartPhone smartPhone) {
         this.name = name;
         this.id = id;
         this.weight = weight;
         this.married = married;
         this.address = address;
+        setSmartPhone(smartPhone);
     }
 
     public void println() {
@@ -201,6 +216,7 @@ class Person {
     public void println(String msg) {
         System.out.print(msg);
         print();
+        System.out.println();
     }
 
     // Getter: getXXX() 관련 함수들
@@ -228,10 +244,15 @@ class Person {
         return passwd;
     }
 
+    public SmartPhone getSmartPhone() {
+        return smartPhone;
+    }
+
     // Setter: overloading: set() 함수 중복
     public void set(String name) {
         this.name = name;
-    }
+        smartPhone.setOwner(name);
+    } // 5_3: smartPhone
 
     public void set(int id) {
         this.id = id;
@@ -253,6 +274,16 @@ class Person {
         this.passwd = passwd;
     }
 
+    // 이 함수는 smPhone이 null인 경우 id에 따라 GalaxyPhone 또는 IPhone 객체를 생성한다.
+    public void setSmartPhone(SmartPhone smPhone) { // 5_3
+        if (smPhone != null) {
+            smartPhone = smPhone;
+            smartPhone.setOwner(name);
+        } else
+            smartPhone = ((id % 2) == 1) ? new GalaxyPhone(name) : // id가 홀수인 경우
+                    new IPhone(name, "13"); // id가 짝수인 경우
+    }
+
     public Person(Person p) { // 복사 생성자
         assign(p);
 //        System.out.print("Person(p): ");
@@ -264,7 +295,7 @@ class Person {
 
     // assign() 함수
     public void assign(Person user) {
-        set(user.getName(), user.getPasswd(), user.getId(), user.getWeight(), user.getMarried(), user.getAddress());
+        set(user.getName(), user.getPasswd(), user.getId(), user.getWeight(), user.getMarried(), user.getAddress(), user.getSmartPhone());
     }
 
     // print(), clone(), whatAreYouDoing(), equals(), input() 함수
@@ -297,7 +328,7 @@ class Person {
         while ((address = sc.findInLine(":.*:")) == null)
             sc.nextLine();
         address = address.substring(1, address.length() - 1);
-        set(name, "", id, weight, married, address);
+        set(name, "", id, weight, married, address, null);
     }
 
     private void printMembers() {
@@ -408,8 +439,8 @@ class Student extends Person {
     }
 
     // printMembers(), inputMembers(Scanner sc)
-    public void printMembers() {
-        System.out.println(department + " " + GPA + " " + year);
+    private void printMembers() {
+        System.out.print(department + " " + GPA + " " + year);
     }
 
     // 새로 추가된 메소드
@@ -514,8 +545,8 @@ class Worker extends Person {
         inputMembers(sc);
     }
 
-    public void printMembers() {
-        System.out.println(company + " " + position);
+    private void printMembers() {
+        System.out.print(company + " " + position);
     }
 
     // 새로 추가된 메소드
@@ -828,7 +859,6 @@ class PersonManager {
     private VectorPerson pVector;
     private Factory factory;
     private Person array[];
-
     public PersonManager(Person array[], Factory factory) {
 //        System.out.println("PersonManager(array[])");
         pVector = new VectorPerson();
@@ -837,14 +867,14 @@ class PersonManager {
         addArray();
         display();
     }
-
     public void run() {
         String menuStr =
-                "=========== Person Management Menu ==========\n" +
-                        "= 0.exit 1.display 2.clear 3.reset 4.remove =\n" +
-                        "= 5.copy 6.append 7.insert 8.login          =\n" +
-                        "=============================================\n";
-        final int MENU_COUNT = 9; // 상수 정의
+                "=============== Person Management Menu ================\n" +
+                        "= 0.exit 1.display 2.clear 3.reset 4.remove           =\n" +
+                        "= 5.copy 6.append 7.insert 8.login 9.dispStudent(5_3) =\n" +
+                        "= 10.dispPhone(5_3)                                   =\n" +
+                        "=======================================================\n";
+        final int MENU_COUNT = 11; // 상수 정의
         while (true) {
             int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
             switch (menuItem) {
@@ -871,6 +901,12 @@ class PersonManager {
                     break;
                 case 8:
                     login();
+                    break;
+                case 9:
+                    dispStudent();
+                    break;
+                case 10:
+                    dispPhone();
                     break;
                 case 0:
                     return;
@@ -981,6 +1017,12 @@ class PersonManager {
             new CurrentUser(p).run();
         else
             System.out.println("WRONG password!!");
+    }
+
+    public void dispStudent() { // Menu item 9: ch5_3
+    }
+
+    public void dispPhone() { // Menu item 10: ch5_3
     }
 
     // pVector에 삽입되어 있는 Person 객체들 중 사용자가 입력한 이름 name과
