@@ -88,6 +88,11 @@ class Person {
     public void println() {
         print();
         System.out.println();
+        /*
+        1. println() 호출
+        2. print() 호출
+        3. 슈퍼 클래스의 print()가 호출되지 않고 원래 객체 내에서 오버라이딩된 함수가 호출됨.(5장 18p 참고)
+        */
     }
 
     public void println(String msg) {
