@@ -114,6 +114,8 @@ abstract class SmartPhone { // TODO: 이 클래스는 Phone, Calculator를 구�
         print();
         System.out.println();
     }
+
+    public abstract SmartPhone clone();
 }
 
 class GalaxyPhone extends SmartPhone { // TODO: 이 클래스는 SmartPhone 클래스를 상속한다.
@@ -127,19 +129,48 @@ class GalaxyPhone extends SmartPhone { // TODO: 이 클래스는 SmartPhone 클�
 
     @Override
     public void sendCall(String callee) {
+        System.out.print("made a call to " + callee);
+        printTradeMark("Phone");
+        baseStation.connectTo(owner, callee);
     }
 
     @Override
     public void receiveCall(String caller) {
+        System.out.print("received a call from " + caller);
+        printTradeMark("Phone");
     }
 
     @Override
     public void calculate(double oprd1, String op, double oprd2) {
+        System.out.print(oprd1 + " " + op + " " + oprd2 + " = ");
+        switch (op) {
+            case "+":
+                System.out.print(oprd1 + oprd2);
+                break;
+            case "-":
+                System.out.print(oprd1 - oprd2);
+                break;
+            case "*":
+                System.out.print(oprd1 * oprd2);
+                break;
+            case "/":
+                System.out.print(oprd1 / oprd2);
+                break;
+            default:
+                System.out.print("NOT supported operator");
+                break;
+        }
+        printTradeMark("Calculator");
     }
 
     @Override
     public String getMaker() {
-        return null;
+        return "SAMSUNG";
+    }
+
+    @Override
+    public SmartPhone clone() {
+        return new GalaxyPhone(owner);
     }
 }
 
@@ -153,19 +184,62 @@ class IPhone extends SmartPhone { // TODO: 이 클래스는 SmartPhone 클래스
 
     @Override
     public void sendCall(String callee) {
+        System.out.print(owner + "'s IPhone " + model + ": ");
+        System.out.println("made a call to " + callee);
+        baseStation.connectTo(owner, callee);
     }
 
     @Override
     public void receiveCall(String caller) {
+        System.out.print(owner + "'s IPhone " + model + ": ");
+        System.out.println("received a call from " + caller);
+    }
+
+    private double add(double oprd1, double oprd2) {
+        return oprd1 + oprd2;
+    }
+
+    private double sub(double oprd1, double oprd2) {
+        return oprd1 - oprd2;
+    }
+
+    private double mul(double oprd1, double oprd2) {
+        return oprd1 * oprd2;
+    }
+
+    private double div(double oprd1, double oprd2) {
+        return oprd1 / oprd2;
     }
 
     @Override
     public void calculate(double oprd1, String op, double oprd2) {
+        switch (op) {
+            case "+":
+                System.out.println(owner + "'s IPhone " + model + ": " + oprd1 + " " + op + " " + oprd2 + " = " + add(oprd1, oprd2));
+                break;
+            case "-":
+                System.out.println(owner + "'s IPhone " + model + ": " + oprd1 + " " + op + " " + oprd2 + " = " + sub(oprd1, oprd2));
+                break;
+            case "*":
+                System.out.println(owner + "'s IPhone " + model + ": " + oprd1 + " " + op + " " + oprd2 + " = " + mul(oprd1, oprd2));
+                break;
+            case "/":
+                System.out.println(owner + "'s IPhone " + model + ": " + oprd1 + " " + op + " " + oprd2 + " = " + div(oprd1, oprd2));
+                break;
+            default:
+                System.out.println(owner + "'s IPhone " + model + ": " + op + " = NOT supported operator");
+                break;
+        }
     }
 
     @Override
     public String getMaker() {
-        return null;
+        return "Apple";
+    }
+
+    @Override
+    public SmartPhone clone() {
+        return new IPhone(owner, model);
     }
 }
 
@@ -253,6 +327,14 @@ class Person {
         return smartPhone;
     }
 
+    public SmartPhone getCalculator() {
+        return smartPhone;
+    }
+
+    public SmartPhone getPhone() {
+        return smartPhone;
+    }
+
     // Setter: overloading: set() 함수 중복
     public void set(String name) {
         this.name = name;
@@ -300,7 +382,7 @@ class Person {
 
     // assign() 함수
     public void assign(Person user) {
-        set(user.getName(), user.getPasswd(), user.getId(), user.getWeight(), user.getMarried(), user.getAddress(), user.getSmartPhone());
+        set(user.getName(), user.getPasswd(), user.getId(), user.getWeight(), user.getMarried(), user.getAddress(), user.getSmartPhone().clone());
     }
 
     // print(), clone(), whatAreYouDoing(), equals(), input() 함수
@@ -337,7 +419,7 @@ class Person {
     }
 
     private void printMembers() {
-        System.out.print(name + " " + id + " " + weight + " " + married + " :" + address + ":");
+        System.out.print(name + " " + id + " " + weight + " " + married + " :" + address + ": ");
     }
 }
 
@@ -648,9 +730,10 @@ class CurrentUser {
         String menuStr =
                 "++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++\n" +
                         "+ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +\n" +
-                        "+ 6.isSame 7.update 8.chPasswd(4_2)                             +\n" +
+                        "+ 6.isSame 7.update 8.chPasswd(4_2) 9.chSmartPhone(5_3)         +\n" +
+                        "+ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3)                  +\n" +
                         "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-        final int MENU_COUNT = 9;
+        final int MENU_COUNT = 13;
         while (true) {
             int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
             switch (menuItem) {
@@ -678,6 +761,18 @@ class CurrentUser {
                 case 8:
                     chPasswd();
                     break;
+                case 9:
+                    chSmartPhone();
+                    break;
+                case 10:
+                    userClone();
+                    break;
+                case 11:
+                    calc();
+                    break;
+                case 12:
+                    phoneCall();
+                    break;
                 case 0:
                     return;
             }
@@ -690,8 +785,58 @@ class CurrentUser {
         System.out.println("password changed");
     }
 
+    void chSmartPhone() { // Menu item 9
+        String maker = UI.getNext("maker of phone to change(ex: Samsung or Apple)? ");
+        if (maker.equals("Samsung")) {
+            var s = new GalaxyPhone(user.getName());
+            user.setSmartPhone(s);
+
+        } else if (maker.equals("Apple")) {
+            var a = new IPhone(user.getName(), "14");
+            user.setSmartPhone(a);
+        } else {
+            System.out.println(maker + ": WRONG phone's maker");
+            return;
+        }
+        display();
+    }
+
+    void userClone() { // Menu item 10
+        display();
+        Person c = user.clone();
+        System.out.println("------------------\nclone:");
+        c.println();
+        c.getSmartPhone().println();
+        System.out.println("\nchange clone's name " + c.getName() + " to c1\n");
+        c.set("c1"); // clone의 이름을 c1으로 변경함: 스마트폰의 소유주도 c1으로 변경됨
+        display();
+        System.out.println("------------------\nclone:");
+        c.println();
+        c.getSmartPhone().println();
+    }
+
+    void calc() { // Menu item 11: 연산자와 피연산자는 스페이스로 분리되어 있어야 함
+        //TODO: "expression: "을 출력하고 연산자와 두개의 피연산자를 스캐너로부터 입력 받아라.
+        System.out.print("expression: ");
+        String op;
+        double d1, d2;
+        d1 = UI.scan.nextDouble();
+        op = UI.scan.next();
+        d2 = UI.scan.nextDouble();
+        if (UI.echo_input) System.out.println(d1 + " " + op + " " + d2); // 자동오류체크시 출력됨
+        user.getCalculator().calculate(d1, op, d2);
+    }
+
+    void phoneCall() { // Menu item 12
+        // PersonManager에 등록되어 있는 사용자 중 한명의 이름을 입력하라.
+        String callee = UI.getNext("name to call? ");
+        user.getPhone().sendCall(callee);
+    }
+
     void display() {
         user.println();
+        user.getSmartPhone().println();
+
     } // Menu item 1
 
     void getter() { // Menu item 2
@@ -859,11 +1004,12 @@ class Factory {
     }
 }
 
-class PersonManager {
+class PersonManager implements BaseStation {
     static int cpCount = 0;
     private VectorPerson pVector;
     private Factory factory;
     private Person array[];
+
     public PersonManager(Person array[], Factory factory) {
 //        System.out.println("PersonManager(array[])");
         pVector = new VectorPerson();
@@ -871,7 +1017,9 @@ class PersonManager {
         this.array = array;
         addArray();
         display();
+        SmartPhone.setBaseStation(this);
     }
+
     public void run() {
         String menuStr =
                 "=============== Person Management Menu ================\n" +
@@ -1025,9 +1173,34 @@ class PersonManager {
     }
 
     public void dispStudent() { // Menu item 9: ch5_3
+        int count = pVector.size();
+        System.out.println("dispStudent():");
+        for (int i = 0; i < count; ++i) {
+            if (pVector.get(i) instanceof Student) {
+                System.out.print("[" + i + "] ");
+                pVector.get(i).println();
+            }
+        }
     }
 
     public void dispPhone() { // Menu item 10: ch5_3
+        int count = pVector.size();
+        System.out.println("dispPhones(): count " + count);
+        for (int i = 0; i < count; ++i) {
+            System.out.print("[" + i + "] ");
+            pVector.get(i).getSmartPhone().println();
+        }
+    }
+
+    @Override
+    public boolean connectTo(String caller, String callee) {
+        Person p = findByName(callee);
+        if (p == null) return false;
+        else {
+            System.out.println("base station: sends a call signal of " + caller + " to " + callee);
+            p.getPhone().receiveCall(caller);
+            return true;
+        }
     }
 
     // pVector에 삽입되어 있는 Person 객체들 중 사용자가 입력한 이름 name과
