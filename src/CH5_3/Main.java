@@ -1156,7 +1156,7 @@ class PersonManager implements BaseStation {
         pVector.add(index, p);
         display();
     }
-
+    // test
     // 사용자로부터 VectorPerson pVector에 저장된 사람들 중에서 로그인할 사람의 이름(name)과 비번을 입력받고
     // 해당 비번이 맞으면 CurrentUser의 객체를 생성하고 이 객체의 run() 멤버 함수를 호출한다.
     // 초기 비번은 설정되어 있지 않기에 그냥 엔터치면 된다.
