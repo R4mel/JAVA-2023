@@ -1011,7 +1011,6 @@ class PersonManager implements BaseStation {
     private Person array[];
 
     public PersonManager(Person array[], Factory factory) {
-        //test
 //        System.out.println("PersonManager(array[])");
         pVector = new VectorPerson();
         this.factory = factory;
