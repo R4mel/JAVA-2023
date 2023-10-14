@@ -21,6 +21,7 @@ public class Main {
 }
 
 class MainMenu {
+    // test
     final static int MENU_COUNT = 5;
 
     public static void run() {
