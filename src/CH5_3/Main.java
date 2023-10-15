@@ -1003,7 +1003,7 @@ class Factory {
         return p;
     }
 }
-//asdf
+
 class PersonManager implements BaseStation {
     static int cpCount = 0;
     private VectorPerson pVector;
