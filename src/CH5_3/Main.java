@@ -721,7 +721,7 @@ class UI {
 
 class CurrentUser {
     Person user;
-     // test
+     // testl;
     CurrentUser(Person user) {
         this.user = user;
     }
