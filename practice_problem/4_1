@@ -1,0 +1,147 @@
+[4장 실습용 문제]
+
+/******************************************************************************
+ * 문제 4-1
+ ******************************************************************************/
+// 새로운 프로젝트를 만든 후 새로운 클래스 Main를 만들어 Main.java 소스파일을 만들어라.
+// 그런 후 아래 main 메소드를 복사해 소스파일에 넣어라.
+//
+// 클래스 정의, 생성자, 접근자, 객체배열 및 정적클래스와 관련된 문제이다.
+// 아래 프로그램은 Student, Manager, Main으로 구성된다.
+//
+// 프로그램의 실행결과를 먼저 확인하라.
+// 먼저 0 ~ 5 사이의 서로 다른 6개의 숫자를 임의의 순서로 연속적으로 입력 받는다.
+// 이는 Manager에 추가할 학생들의 인덱스 순서이다.
+// 그런 후 5명의 학생 객체를 생성하여 Manager에 추가한다.
+// Manager는 5명의 학생 객체를 객체 배열에 저장하여 관리한다.
+//
+// Student, Manager 클래스의 멤버는 필요에 따라 추가해야 한다.
+//
+// 메뉴의 각 항목의 기능은 다음과 같으며, 이 순서로 구현하라.
+// 1.DisplayAll: Manager가 관리하는 모든 학생 정보를 출력해야 한다.
+//   Student의 printStudent()를 활용하라. 오타를 줄이기 위해 아래 문장도 사용하라.
+    	System.out.printf("name\ttall\tdifference\n");
+//
+// 2.CalculateMean: Manager가 관리하는 모든 학생들의 키의 평균 값을 구해서 출력하고
+//   이때 오타를 줄이기 위해 아래 문장을 사용하라.
+        System.out.printf("tall mean: %.2f\n\n", mean);
+//   각 학생의 키와 평균과의 차이 값을 각 학생 객체의 diff 멤버에 저장하라. (키가 평균보다 작으면 음수 값이 된다.)
+//   그리고 학생 전체를 다시 디스플레이하라.
+//
+// 3.FindStudent: Manager가 관리하는 학생 중에 입력된 이름과 동일한 이름을 가진 학생을 찾아 출력한다.
+//                찾지 못한 경우 아래의 에러 메시지를 출력한다.
+    	System.out.println(name+": not found.");
+//
+//=============================================================================
+
+class Student {
+    // 아래 name, tall, diff는 반드시 private로 하라.
+    private String name;
+    private int tall;
+    private double diff;
+
+    public void printStudent() {
+    	System.out.printf("%s\t%d\t%6.2f\n", name, tall, diff);
+    }
+    // 필요한 경우 멤버 값을 설정하고 구해오는 메소드(함수)를 만들어 멤버에 접근하라.
+}
+
+// 필요한 메소드(함수)를 구현하라.
+class Manager {
+}
+
+public class Main {
+
+    public static void main(String[] args)
+    {
+        Scanner in = new Scanner(System.in);
+        String[] name = {"bob", "john", "alice", "nana", "tom", "sandy"};
+        int[] tall = {172, 183, 168, 161, 171, 172};
+
+        // Manager 클래스의 객체변수 manager 선언 및 객체 생성
+        // name.length는 manager내에 생성될 학생배열의 길이임
+        Manager manager = new Manager(name.length);
+
+        System.out.print("input continuously 6 indices(index) of array: ");
+
+        // 0 ~ 5 사이의 서로 다른 6개의 숫자(임의의 순서)들을 연속적으로 입력 받으면서
+        // 학생 객체를 생성한 후 manager에 등록한다.
+        for(int i = 0; i < name.length; i++)  {
+            int j = in.nextInt();
+            // manager 객체의 append 메소드를 실행하여 학생 객체 등록
+            // append()는 manager내의 학생 객체 배열에 순서적으로 삽입한다.
+            manager.append(new Student(name[j], tall[j]));
+        }
+
+        while(true) {
+            System.out.print("\n0.Exit 1.DisplayAll 2.CalculateMean 3.FindStudent >> ");
+            int input = in.nextInt();
+            if (input == 0)
+            	break;
+            switch (input) {
+            case 1: manager.displayAll();
+                    break;
+            case 2: manager.calculateMean();
+                    break;
+            case 3: System.out.print("name? ");
+                    String pname = in.next();
+                    manager.findStudent(pname);
+                    break;
+            }
+        }
+        in.close();
+    }
+}
+
+===============================================================================
+== [문제 4-1] 실행 결과
+===============================================================================
+input continuously 6 indices(index) of array: 0 1 2 3 4 5 // 사용자 입력: 0 ~ 5 숫자를 임의의 순서로 입력
+
+0.Exit 1.DisplayAll 2.CalculateMean 3.FindStudent >> 1 // 사용자 입력
+name	tall	difference
+bob	172	  0.00
+john	183	  0.00
+alice	168	  0.00
+nana	161	  0.00
+tom	171	  0.00
+sandy	172	  0.00
+
+0.Exit 1.DisplayAll 2.CalculateMean 3.FindStudent >> 2 // 사용자 입력
+tall mean: 171.17
+
+name	tall	difference
+bob	172	  0.83
+john	183	 11.83
+alice	168	 -3.17
+nana	161	-10.17
+tom	171	 -0.17
+sandy	172	  0.83
+
+0.Exit 1.DisplayAll 2.CalculateMean 3.FindStudent >> 3 // 사용자 입력
+name? tom
+tom	171	 -0.17
+
+0.Exit 1.DisplayAll 2.CalculateMean 3.FindStudent >> 3 // 사용자 입력
+name? shim
+shim: not found.
+
+0.Exit 1.DisplayAll 2.CalculateMean 3.FindStudent >> 0 // 사용자 입력
+
+===============================================================================
+== [문제 4-1] 실행 결과 - 2
+== 아래와 같이 2 0 1 4 5 3 로 입력하면 배열에 들어가는 학생 객체의 순서가 달라지게 된다.
+===============================================================================
+input continuously 6 indices(index) of array: 2 0 1 4 5 3
+
+0.Exit 1.DisplayAll 2.CalculateMean 3.FindStudent >> 1
+name	tall	difference
+alice	168	  0.00
+bob	172	  0.00
+john	183	  0.00
+tom	171	  0.00
+sandy	172	  0.00
+nana	161	  0.00
+
+0.Exit 1.DisplayAll 2.CalculateMean 3.FindStudent >> 0
+================================================================================
