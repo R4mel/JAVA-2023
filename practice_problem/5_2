@@ -1,0 +1,135 @@
+[5장 실습용 문제]
+
+/******************************************************************************
+ * 문제 5-2
+ ******************************************************************************/
+// 새로운 프로젝트를 만든 후 새로운 클래스 Main를 만들어 Main.java 소스파일을 만들어라.
+// 그런 후 아래 소스코드를 복사해 소스파일에 삽입하라.
+//
+// 아래 프로그램은 두 인터페이스 Graphics과 Window를 인터페이스 GUI가 상속받고
+// 이 GUI 인테페이스를 두 클래스 LinuxGUI와 MSWindowsGUI가 서로 다르게 구현한 것이다.
+// LinuxGUI와 MSWindowsGUI는 GUI 인테페이스의 모든 메소드들을
+// 기능은 동일하게 지원하면서도 구현은 서로 다르게 한 것이다.
+//
+// 구현할 사항: LinuxGUI와 MSWindowsGUI 클래스에 필요한 멤버 함수들을 구현하면 된다.
+//           또한 GUI가 Graphics과 Window를 인터페이스를 상속받게 하라.
+//
+//=============================================================================
+
+// 경고: 아래 각 클래스의 멤버 변수는 더 이상 추가하지 말고
+// 기존 멤버의 접근지정자도 수정하지 말것.
+
+// 화면상의 한 점의 좌표를 저장하며 이 점의 좌표를 출력하거나 이동하여 주는 클래스
+class Point {
+    private int x, y; // 점의 좌표
+
+    public Point(int x, int y) {
+        this.x = x;    this.y = y;
+    }
+    public void display() {  // 좌표 출력
+        System.out.print("("+x+","+y+")");
+    }
+}
+
+// 화면에 그래픽을 그려 주기 위한 인터페이스이다.
+interface Graphics {
+
+    // 다음과 같이 선의 양 끝 점 p1과 p2의 좌표를 출력한다.
+    // 예) LinuxGUI: L(10,11)(20,22)
+    // "LinuxGUI"는 이 함수를 구현한 시스템 이름이며, 구현 시스템에 따라 다르다.
+
+    void drawLine(Point p1, Point p2);
+}
+
+// Window 시스템을 위한 인터페이스이다.
+interface Window {
+
+    // 다음과 같이 생성할 윈도우 창의 대각선 양 끝 점 p1과 p2의 좌표를 출력한다.
+    // 예) LinuxGUI: W(10,11)(20,22)
+    // "LinuxGUI"는 이 함수를 구현한 시스템 이름이며, 구현 시스템에 따라 다르다.
+
+    void createWindow(Point p1, Point p2); // 윈도우 창을 생성해 주는 함수이다.
+}
+
+// Window 창과 그래픽을 지원하는 시스템을 위한 GUI 인터페이스이다.
+문제: 이 인터페이스는 기존의 Graphics와 Window 인터페이스를 상속해야 한다.
+interface GUI { // 두 인터페이스 상속할 것
+
+    // GUI에 새로 추가된 함수임
+    // 다음과 같이 마우스 이벤트가 발생한 좌표를 출력을 한다.
+    // 예) LinuxGUI: E(10,11)
+    // "LinuxGUI"는 이 함수를 구현한 시스템 이름이며, 구현 시스템에 따라 다르다.
+
+    void inputMounseEvent(Point p); // 마우스 이벤트를 받아들이는 함수이다.
+}
+
+// GUI 인터페이스를 구현한 Linux 시스템용 클래스이다.
+class LinuxGUI { // GUI 인터페이스 구현할 것
+
+    문제: 필요한 멤버 함수들 구현하라.
+
+}
+
+// GUI 인터페이스를 구현한 MSWindows용 클래스이다.
+class MSWindowsGUI { // GUI 인터페이스 구현할 것
+
+    문제: 필요한 멤버 함수들 구현하라.
+
+}
+
+public class Main {
+
+    static Point p1, p2;
+
+    // 한 점의 좌표를 입력 받은 후 Point 객체를 생성한 후 리턴
+    static Point getPoint(Scanner in) {
+        System.out.print("Point x and y? ");
+        int x = in.nextInt();
+        int y = in.nextInt();
+        return new Point(x, y);
+    }
+
+    static void runGraphis(Graphics g) {
+        g.drawLine(p1, p2);
+    }
+
+    static void runWindow(Window w) {
+        w.createWindow(p1, p2);
+    }
+
+    static void GUIsystem(GUI gui) {
+        runGraphis(gui);
+        runWindow(gui);
+        gui.inputMounseEvent(p1);
+    }
+
+    public static void main(String[] args)
+    {
+        Scanner in = new Scanner(System.in);
+        // 두 점의 좌표를 미리 생성해 둔다.
+        p1 = getPoint(in);
+        p2 = getPoint(in);
+        System.out.println();
+
+        LinuxGUI linux = new LinuxGUI();
+        GUIsystem(linux);
+
+        MSWindowsGUI ms = new MSWindowsGUI();
+        GUIsystem(ms);
+
+        in.close();
+    }
+}
+
+===============================================================================
+== [문제 5-2] 실행 결과
+===============================================================================
+Point x and y? 10 11             // 한 점의 x, y 좌표를 입력 받음
+Point x and y? 20 22
+
+LinuxGUI: L(10,11)(20,22)      // g.drawLine(p1, p2)의 출력
+LinuxGUI: W(10,11)(20,22)      // w.createWindow(p1, p2)의 출력
+LinuxGUI: E(10,11)             // gui.inputMounseEvent(p1)의 출력
+MSWindowsGUI: L(10,11)(20,22)
+MSWindowsGUI: W(10,11)(20,22)
+MSWindowsGUI: E(10,11)
