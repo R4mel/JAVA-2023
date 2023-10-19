@@ -1,0 +1,71 @@
+[3장 실습용 문제]
+
+/******************************************************************************
+ * 문제 3-1
+ ******************************************************************************/
+// 새로운 프로젝트와 Main.java 소스파일을 만든 후 아래 코드를 복사하여 소스파일에 삽입하라.
+// [문제 3-1] 실행 결과를 참고하여 아래 코드를 완성하라.
+
+import ...;
+
+public class Main
+{
+    public static int[][] makeArray(Scanner s) {
+        출력 결과를 참고하여 사용자로부터 정방형 배열 크기("array size? ")를 입력받고 배열을 생성한다.
+        필요한 배열의 원소들을 적절히 초기화한 후 배열을 리턴한다.
+        (초기화하지 않은 배열 원소는 0으로 자동 설정된다.)
+    }
+
+    public static void printArray(int arr[][]) {
+        출력 결과를 참고하여 2차원 배열 arr[][]의 모든 원소들을 출력한다.
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = 스캐너 객체 생성;
+        int arr[][];
+
+        { // 아래 과정을 계속 반복 수행한다.
+            arr = makeArray(scanner);
+            printArray(arr);
+            System.out.print("continue? ");
+            문자열 단어 하나를 입력 받음
+            System.out.println();
+            입력된 단어가 "yes"이면 계속 반복 수행하고 "yes"가 아니면 여기서 반복을 중단한다.
+        }
+
+        스캐너 객체 닫기;
+        System.out.println("Done.");
+    }
+}
+
+
+===============================================================================
+==  [문제 3-1] 실행 결과
+===============================================================================
+array size? 2
+arr[0] 0 1
+arr[1] 2 3
+continue? yes
+
+array size? 3
+arr[0] 0 0 1
+arr[1] 0 2 3
+arr[2] 4 5 6
+continue? yes
+
+array size? 4
+arr[0] 0 0 0 1
+arr[1] 0 0 2 3
+arr[2] 0 4 5 6
+arr[3] 7 8 9 10
+continue? yes
+
+array size? 5
+arr[0] 0 0 0 0 1
+arr[1] 0 0 0 2 3
+arr[2] 0 0 4 5 6
+arr[3] 0 7 8 9 10
+arr[4] 11 12 13 14 15
+continue? no
+
+Done.
