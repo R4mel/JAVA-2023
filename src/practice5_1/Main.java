@@ -1,6 +1,5 @@
 package practice5_1;
 
-import java.awt.desktop.SystemEventListener;
 import java.util.*;
 
 class Point {
@@ -36,7 +35,7 @@ interface Window {
 
 // Window 창과 그래픽을 지원하는 시스템을 위한 GUI 인터페이스이다.
 // 문제: 이 인터페이스는 기존의 Graphics와 Window 인터페이스를 상속해야 한다.
-interface GUI { // 두 인터페이스 상속할 것
+interface GUI extends Graphics, Window{ // 두 인터페이스 상속할 것
 
     // GUI에 새로 추가된 함수임
     // 다음과 같이 마우스 이벤트가 발생한 좌표를 출력을 한다.
@@ -46,61 +45,96 @@ interface GUI { // 두 인터페이스 상속할 것
     void inputMounseEvent(Point p); // 마우스 이벤트를 받아들이는 함수이다.
 }
 
-// GUI 인터페이스를 구현한 Linux 시스템용 클래스이다.
-class LinuxGUI { // GUI 인터페이스 구현할 것
+class LinuxGUI implements GUI{
+    @Override
+    public void drawLine(Point p1, Point p2) {
+        System.out.print("LinuxGUI: L");
+        p1.display();
+        p2.display();
+        System.out.println();
+    }
 
+    @Override
+    public void createWindow(Point p1, Point p2) {
+        System.out.print("LinuxGUI: W");
+        p1.display();
+        p2.display();
+        System.out.println();
+    }
 
-
+    @Override
+    public void inputMounseEvent(Point p) {
+        System.out.print("LinuxGUI: E");
+        p.display();
+        System.out.println();
+    }
 }
 
-// GUI 인터페이스를 구현한 MSWindows용 클래스이다.
-class MSWindowsGUI { // GUI 인터페이스 구현할 것
+class MSWindowsGUI implements GUI{
+    @Override
+    public void drawLine(Point p1, Point p2) {
+        System.out.print("MSWindowsGUI: L");
+        p1.display();
+        p2.display();
+        System.out.println();
+    }
 
+    @Override
+    public void createWindow(Point p1, Point p2) {
+        System.out.print("MSWindowsGUI: W");
+        p1.display();
+        p2.display();
+        System.out.println();
+    }
 
-
+    @Override
+    public void inputMounseEvent(Point p) {
+        System.out.print("MSWindowsGUI: E");
+        p.display();
+        System.out.println();
+    }
 }
 
-public class Main{
-    public static void main(String[] args) {
-        static Point p1, p2;
+public class Main {
 
-        // 한 점의 좌표를 입력 받은 후 Point 객체를 생성한 후 리턴
-        static Point getPoint(Scanner in) {
-            System.out.print("Point x and y? ");
-            int x = in.nextInt();
-            int y = in.nextInt();
-            return new Point(x, y);
-        }
+    static Point p1, p2;
 
-        static void runGraphis(Graphics g) {
-            g.drawLine(p1, p2);
-        }
+    // 한 점의 좌표를 입력 받은 후 Point 객체를 생성한 후 리턴
+    static Point getPoint(Scanner in) {
+        System.out.print("Point x and y? ");
+        int x = in.nextInt();
+        int y = in.nextInt();
+        return new Point(x, y);
+    }
 
-        static void runWindow(Window w) {
-            w.createWindow(p1, p2);
-        }
+    static void runGraphis(Graphics g) {
+        g.drawLine(p1, p2);
+    }
 
-        static void GUIsystem(GUI gui) {
-            runGraphis(gui);
-            runWindow(gui);
-            gui.inputMounseEvent(p1);
-        }
+    static void runWindow(Window w) {
+        w.createWindow(p1, p2);
+    }
 
-        public static void main(String[] args)
-        {
-            Scanner in = new Scanner(System.in);
-            // 두 점의 좌표를 미리 생성해 둔다.
-            p1 = getPoint(in);
-            p2 = getPoint(in);
-            System.out.println();
+    static void GUIsystem(GUI gui) {
+        runGraphis(gui);
+        runWindow(gui);
+        gui.inputMounseEvent(p1);
+    }
 
-            LinuxGUI linux = new LinuxGUI();
-            GUIsystem(linux);
+    public static void main(String[] args)
+    {
+        Scanner in = new Scanner(System.in);
+        // 두 점의 좌표를 미리 생성해 둔다.
+        p1 = getPoint(in);
+        p2 = getPoint(in);
+        System.out.println();
 
-            MSWindowsGUI ms = new MSWindowsGUI();
-            GUIsystem(ms);
+        LinuxGUI linux = new LinuxGUI();
+        GUIsystem(linux);
 
-            in.close();
-        }
+        MSWindowsGUI ms = new MSWindowsGUI();
+        GUIsystem(ms);
+
+        in.close();
     }
 }
