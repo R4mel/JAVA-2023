@@ -1,0 +1,95 @@
+[3장 실습용 문제]
+
+/******************************************************************************
+ * 문제 3-3
+ ******************************************************************************/
+// 새로운 프로젝트와 Main.java 소스파일을 만든 후 [문제 3-2]에서 작성한 소스코드를 복사해서 삽입하라.
+// [문제 3-3] 실행 결과를 참고하여 아래 코드를 완성하라.
+
+public class Main
+{
+    public static int[][] makeArray(Scanner s) { 기존 코드와 동일 }
+
+    public static void printArray(int arr[][]) { 기존 코드와 동일 }
+
+    public static void printArrayElement(Scanner s, int arr[][]) {
+        int r = 0, c = 0;
+        "dividen? " 와 "divisor? " 를 출력하고 분자와 분모를 각각 입력 받는다.
+        분자를 분모로 나눈 몫을 행 변수 r에 저장하고
+        분자를 분모로 나눈 나머지를 열 변수 c에 저장
+        arr[r][c] 원소를 출력결과처럼 적절히 출력하고 리턴
+        위 과정을 처리하는 도중 예외가 발생할 경우 출력결과처럼 에러 원인을 출력하고 리턴
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = 스캐너 객체 생성;
+        int arr[][];
+
+        arr = makeArray(scanner);
+        printArray(arr);
+        System.out.println();
+
+        { // 아래 과정을 계속 반복 수행한다.
+            printArrayElement(scanner, arr);
+            System.out.print("continue? ");
+            문자열 단어 하나를 입력 받음
+            System.out.println();
+            입력된 단어가 "yes"이면 계속 반복 수행하고 "yes"가 아니면 여기서 반복을 중단한다.
+        }
+
+        스캐너 객체 닫기;
+        System.out.println("Done.");
+    }
+}
+
+
+===============================================================================
+==  [문제 3-3] 실행 결과
+===============================================================================
+array size? 5
+arr[0] 0 1 2 3 4
+arr[1] 1 2 3 4
+arr[2] 2 3 4
+arr[3] 3 4
+arr[4] 4
+
+dividen? 13
+divisor? 10
+arr[1][3]: 4
+continue? yes
+
+dividen? 23
+divisor? 10
+arr[2][3]: array index is out of BOUNDS
+continue? yes
+
+dividen? 22
+divisor? 10
+arr[2][2]: 4
+continue? yes
+
+dividen? 22b
+input an INTEGER
+continue? yes
+
+dividen? 22
+divisor? 10.1
+input an INTEGER
+continue? yes
+
+dividen? 22
+divisor? 0
+divisor is ZERO
+continue? yes
+
+dividen? 13
+divisor? 5
+arr[2][3]: array index is out of BOUNDS
+continue? yes
+
+dividen? 12
+divisor? 5
+arr[2][2]: 4
+continue? no
+
+Done.
