@@ -1,0 +1,137 @@
+[4장 실습용 문제]
+
+/******************************************************************************
+ * 문제 4-2
+ ******************************************************************************/
+// 새로운 프로젝트와 Main.java 소스파일을 만든 후 [문제 4-1]에서 작성한 소스코드를 복사해서 삽입하라.
+// [문제 4-2] 실행 결과를 참고하여 아래 코드를 작성하라.
+// 1) 기존의 main() 함수 내에 있던 String[] name, int[] tall 변수를 Manager 클래스의
+//    static private 멤버로 옮겨라.
+// 2) 아래 main() 함수에서 호출하는 Manager.makeManager(in) 문장을 참조하여 Manager 클래스에
+//    해당 함수를 구현하라. 기존 [문제 4-1]의 main 함수에 있던 manager 객체
+//    생성하는 코드들(while 문장 앞까지의 코드)를 makeManager(in) 함수로 옮기면 된다.
+//    그리고 생성된 manager 객체를 리턴하면 된다.
+// 3) Manager 객체는 항상 makeManager(in) 함수를 사용하여 생성하고 사용자가 직접
+//    new Manager(3) 형태로 호출하여 객체를 생성할 수 없게 하라.
+// 4) 기존 main() 함수를 아래 main() 함수로 교체하라.
+// 5) 메뉴 항목 "4.FindStudent2"를 선택할 경우 manager.findStudent(pname, tall)가 호출된다.
+//    이 함수를 구현하라. 이 함수는 Manager가 관리하는 학생 중에 입력된 이름과 키가
+//    각각 pname과 tall과 동일한 학생을 찾아 출력한다. 찾지 못한 경우 적절한 에러 메시지를 출력한다.
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Scanner in = new Scanner(System.in);
+        Manager manager = Manager.makeManager(in);
+        // manager = new Manager(3);
+        // 위 문장의 주석을 제거하면 Manager 생성자 접근할 수 없다는 에러가 발생하여야 한다.
+
+        while(true) {
+            System.out.print("\n0.Exit 1.DisplayAll 2.CalculateMean\n");
+            System.out.print("3.FindStudent 4.FindStudent2 5.MakeManager >> ");
+            int input = in.nextInt();
+            if (input == 0)
+            	break;
+            switch (input) {
+            case 1: manager.displayAll();
+                    break;
+            case 2: manager.calculateMean();
+                    break;
+            case 3: System.out.print("name? ");
+                    String pname = in.next();
+                    manager.findStudent(pname);
+                    break;
+            case 4: System.out.print("name, tall? ");
+                    pname = in.next();
+                    int tall = in.nextInt();
+                    manager.findStudent(pname, tall);
+                    break;
+            case 5: manager = Manager.makeManager(in);
+                    break;
+            }
+        }
+        in.close();
+    }
+}
+
+===============================================================================
+==  [문제 4-2] 실행 결과
+===============================================================================
+input continuously 6 indices(index) of array: 0 1 2 3 4 5 // 사용자 입력: 0 ~ 5 숫자를 임의의 순서로 입력
+
+0.Exit 1.DisplayAll 2.CalculateMean
+3.FindStudent 4.FindStudent2 5.MakeManager >> 1
+name	tall	difference
+bob	172	  0.00
+john	183	  0.00
+alice	168	  0.00
+nana	161	  0.00
+tom	171	  0.00
+sandy	172	  0.00
+
+0.Exit 1.DisplayAll 2.CalculateMean
+3.FindStudent 4.FindStudent2 5.MakeManager >> 2
+tall mean: 171.17
+
+name	tall	difference
+bob	172	  0.83
+john	183	 11.83
+alice	168	 -3.17
+nana	161	-10.17
+tom	171	 -0.17
+sandy	172	  0.83
+
+0.Exit 1.DisplayAll 2.CalculateMean
+3.FindStudent 4.FindStudent2 5.MakeManager >> 5
+input continuously 6 indices(index) of array: 5 4 3 2 1 0 // 사용자 입력: 0 ~ 5 숫자를 임의의 순서로 입력
+
+0.Exit 1.DisplayAll 2.CalculateMean
+3.FindStudent 4.FindStudent2 5.MakeManager >> 1 // 새로운 manager 객체가 생성되었고, 배열에 들어간 객체 순서도 다름
+name	tall	difference
+sandy	172	  0.00
+tom	171	  0.00
+nana	161	  0.00
+alice	168	  0.00
+john	183	  0.00
+bob	172	  0.00
+
+0.Exit 1.DisplayAll 2.CalculateMean
+3.FindStudent 4.FindStudent2 5.MakeManager >> 2
+tall mean: 171.17
+
+name	tall	difference
+sandy	172	  0.83
+tom	171	 -0.17
+nana	161	-10.17
+alice	168	 -3.17
+john	183	 11.83
+bob	172	  0.83
+
+0.Exit 1.DisplayAll 2.CalculateMean
+3.FindStudent 4.FindStudent2 5.MakeManager >> 4
+name, tall? nana 161
+nana	161	-10.17
+
+0.Exit 1.DisplayAll 2.CalculateMean
+3.FindStudent 4.FindStudent2 5.MakeManager >> 4
+name, tall? nana 160
+nana 160: not found.
+
+0.Exit 1.DisplayAll 2.CalculateMean
+3.FindStudent 4.FindStudent2 5.MakeManager >> 4
+name, tall? NANA 161
+NANA 161: not found.
+
+0.Exit 1.DisplayAll 2.CalculateMean
+3.FindStudent 4.FindStudent2 5.MakeManager >> 4
+name, tall? bob 171
+bob 171: not found.
+
+0.Exit 1.DisplayAll 2.CalculateMean
+3.FindStudent 4.FindStudent2 5.MakeManager >> 4
+name, tall? bob 172
+bob	172	  0.83
+
+0.Exit 1.DisplayAll 2.CalculateMean
+3.FindStudent 4.FindStudent2 5.MakeManager >> 0
