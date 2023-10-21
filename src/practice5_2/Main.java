@@ -6,14 +6,15 @@ class Point {
     private int x, y; // 점의 좌표
 
     public Point(int x, int y) {
-        this.x = x;    this.y = y;
+        this.x = x;
+        this.y = y;
     }
+
     public void display() {  // 좌표 출력
-        System.out.print("("+x+","+y+")");
+        System.out.print("(" + x + "," + y + ")");
     }
 }
 
-// 화면에 그래픽을 그려 주기 위한 인터페이스이다.
 interface Graphics {
 
     // 다음과 같이 선의 양 끝 점 p1과 p2의 좌표를 출력한다.
@@ -34,8 +35,7 @@ interface Window {
 }
 
 // Window 창과 그래픽을 지원하는 시스템을 위한 GUI 인터페이스이다.
-// 문제: 이 인터페이스는 기존의 Graphics와 Window 인터페이스를 상속해야 한다.
-interface GUI extends Graphics, Window{ // 두 인터페이스 상속할 것
+interface GUI extends Graphics, Window { // 두 인터페이스 상속할 것
 
     // GUI에 새로 추가된 함수임
     // 다음과 같이 마우스 이벤트가 발생한 좌표를 출력을 한다.
@@ -45,7 +45,8 @@ interface GUI extends Graphics, Window{ // 두 인터페이스 상속할 것
     void inputMounseEvent(Point p); // 마우스 이벤트를 받아들이는 함수이다.
 }
 
-class LinuxGUI implements GUI{
+class LinuxGUI implements GUI {
+
     @Override
     public void drawLine(Point p1, Point p2) {
         System.out.print("LinuxGUI: L");
@@ -70,7 +71,8 @@ class LinuxGUI implements GUI{
     }
 }
 
-class MSWindowsGUI implements GUI{
+class MSWindowsGUI implements GUI {
+
     @Override
     public void drawLine(Point p1, Point p2) {
         System.out.print("MSWindowsGUI: L");
@@ -121,8 +123,7 @@ public class Main {
         gui.inputMounseEvent(p1);
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         // 두 점의 좌표를 미리 생성해 둔다.
         p1 = getPoint(in);
