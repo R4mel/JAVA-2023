@@ -1,0 +1,20 @@
+************************ Main Menu *******************
+* 0.Exit  1.Jobs 2.Process                           *
+* 3.FCFS  4.SPN  5.HRRN  6.SRT  7.RR(q=1)  8.RR(q=4) *
+******************************************************
+Menu item number? 1
+The number of processes? 10
+input 10 process names: A B C D E F G H I J 
+input 10 arrival times: 0 2 4 6 8 23 32 34 36 38 
+input 10 service times: 3 6 4 5 2 6 3 4 5 2 
+
+ A  B  C  D  E  F  G  H  I  J 
+ 0  2  4  6  8 23 32 34 36 38 
+ 3  6  4  5  2  6  3  4  5  2 
+
+************************ Main Menu *******************
+* 0.Exit  1.Jobs 2.Process                           *
+* 3.FCFS  4.SPN  5.HRRN  6.SRT  7.RR(q=1)  8.RR(q=4) *
+******************************************************
+Menu item number? 0
+Good bye.

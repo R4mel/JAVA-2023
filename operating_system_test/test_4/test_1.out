@@ -1,0 +1,21 @@
+ A  B  C  D  E  A  B  C  D  E 
+ 0  2  4  6  8 30 32 34 36 38 
+ 3  6  4  5  2  6  3  4  5  2 
+
+************************ Main Menu *******************
+* 0.Exit  1.Jobs 2.Process                           *
+* 3.FCFS  4.SPN  5.HRRN  6.SRT  7.RR(q=1)  8.RR(q=4) *
+******************************************************
+Menu item number? 3
+Scheduling Algorithm: FCFS
+0         1         2         3         4         5    
+0123456789012345678901234567890123456789012345678901234
+ AAABBBBBBCCCCDDDDDEE          AAAAAABBBCCCCDDDDDEE
+
+
+************************ Main Menu *******************
+* 0.Exit  1.Jobs 2.Process                           *
+* 3.FCFS  4.SPN  5.HRRN  6.SRT  7.RR(q=1)  8.RR(q=4) *
+******************************************************
+Menu item number? 0
+Good bye.

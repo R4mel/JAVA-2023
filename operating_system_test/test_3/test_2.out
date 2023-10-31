@@ -1,0 +1,64 @@
+ A  B  C  D  E  A  B  C  D  E 
+ 0  2  4  6  8 30 32 34 36 38 
+ 3  6  4  5  2  6  3  4  5  2 
+
+************************ Main Menu *******************
+* 0.Exit  1.Jobs 2.Process                           *
+* 3.FCFS  4.SPN  5.HRRN  6.SRT  7.RR(q=1)  8.RR(q=4) *
+******************************************************
+Menu item number? 1
+The number of processes? 10
+input 10 process names: A B C D E F G H I J 
+input 10 arrival times: 0 2 4 6 8 23 32 34 36 38 
+input 10 service times: 3 6 4 5 2 6 3 4 5 2 
+
+ A  B  C  D  E  F  G  H  I  J 
+ 0  2  4  6  8 23 32 34 36 38 
+ 3  6  4  5  2  6  3  4  5  2 
+
+************************ Main Menu *******************
+* 0.Exit  1.Jobs 2.Process                           *
+* 3.FCFS  4.SPN  5.HRRN  6.SRT  7.RR(q=1)  8.RR(q=4) *
+******************************************************
+Menu item number? 2
+Create processes and print their member data.
+A: a( 0) s(3) e(0)
+B: a( 2) s(6) e(0)
+C: a( 4) s(4) e(0)
+D: a( 6) s(5) e(0)
+E: a( 8) s(2) e(0)
+F: a(23) s(6) e(0)
+G: a(32) s(3) e(0)
+H: a(34) s(4) e(0)
+I: a(36) s(5) e(0)
+J: a(38) s(2) e(0)
+
+Print returned values of member methods of each process.
+A: s(3) e(3) r(0) w(40) rr(14.33) f(true)
+B: s(6) e(3) r(3) w(38) rr( 7.33) f(false)
+C: s(4) e(2) r(2) w(36) rr(10.00) f(false)
+D: s(5) e(3) r(2) w(34) rr( 7.80) f(false)
+E: s(2) e(2) r(0) w(32) rr(17.00) f(true)
+F: s(6) e(3) r(3) w(17) rr( 3.83) f(false)
+G: s(3) e(3) r(0) w( 8) rr( 3.67) f(true)
+H: s(4) e(2) r(2) w( 6) rr( 2.50) f(false)
+I: s(5) e(3) r(2) w( 4) rr( 1.80) f(false)
+J: s(2) e(2) r(0) w( 2) rr( 2.00) f(true)
+
+************************ Main Menu *******************
+* 0.Exit  1.Jobs 2.Process                           *
+* 3.FCFS  4.SPN  5.HRRN  6.SRT  7.RR(q=1)  8.RR(q=4) *
+******************************************************
+Menu item number? 3
+Scheduling Algorithm: FCFS
+0         1         2         3         4         5    
+0123456789012345678901234567890123456789012345678901234
+
+
+
+************************ Main Menu *******************
+* 0.Exit  1.Jobs 2.Process                           *
+* 3.FCFS  4.SPN  5.HRRN  6.SRT  7.RR(q=1)  8.RR(q=4) *
+******************************************************
+Menu item number? 0
+Good bye.
