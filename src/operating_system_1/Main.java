@@ -130,7 +130,7 @@ public class Main {
 
     public static void main(String[] args) {
         int chk = 1;
-        if (chk != 0) new AutoCheck(chk, true).run();
-        else run(new Scanner(System.in));
+        // if (chk != 0) new AutoCheck(chk, true).run(); else
+        run(new Scanner(System.in));
     }
 }
