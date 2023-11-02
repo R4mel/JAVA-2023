@@ -394,7 +394,7 @@ class Person {
     @Override
     public boolean equals(Object o) {
         Person p = (Person) o;
-        return (p.getName() == getName() && p.getId() == getId());
+        return (p.getName().equals(getName()) && p.getId() == getId());
     }
 
 //    void print() {
@@ -495,7 +495,7 @@ class Student extends Person {
     @Override
     public boolean equals(Object p) {
         Student s = (Student) p;
-        return (super.equals(s) && s.getDepartment() == getDepartment() && s.getYear() == getYear());
+        return (super.equals(s) && s.getDepartment().equals(getDepartment()) && s.getYear() == getYear());
     }
 
     @Override
@@ -601,7 +601,7 @@ class Worker extends Person {
     @Override
     public boolean equals(Object p) {
         Worker s = (Worker) p;
-        return (super.equals(s) && s.getCompany() == getCompany() && s.getPosition() == getPosition());
+        return (super.equals(s) && s.getCompany().equals(getCompany()) && s.getPosition().equals(getPosition()));
     }
 
     @Override
@@ -1085,6 +1085,9 @@ class PersonManager implements BaseStation {
                 case 11:
                     find();
                     break;
+                case 12:
+                    wrapper();
+                    break;
                 case 0:
                     return;
             }
@@ -1219,21 +1222,55 @@ class PersonManager implements BaseStation {
     public void find() { // Menu item 11: ch6_1
         boolean found = false;
         factory.printInputNotice("", " to find by equals()");
+        Person p = factory.inputPerson(UI.scan); // 한 사람의 정보를 입력 받음
+        if (p == null) return;
+        for (int i = 0; i < pVector.size(); i++) {
+            if (p.getClass() == pVector.get(i).getClass()) {
+                if (pVector.get(i).equals(p)) {
+                    System.out.print("[" + i + "] ");
+                    System.out.println(pVector.get(i).toString());
+                    found = true;
+                    return;
+                }
+            }
+        }
+        if (!found) {
+            System.out.println("NOT found by equals()");
+        }
+    }
 
-        display();
-        /* TODO:
-        PersonManager::append() 함수를 참고하여 화면에 아래 메시지가 출력되도록 하고
-        input [delimiter(P,S,or W)] [person information] to find by equals():
-        한 사람의 정보를 입력 받아 적절한 객체를 생성하고 이를 넘겨 받아 p에 저장하라.
-        만약 p가 객체 정보가 잘못 입력되었으면(Q: WRONG delimiter인 경우) 바로 리턴하라.
-        for 문을 이용하여 pVector에 저장된 각각의 원소에 대해
-            p와 동일한 클래스(getClass())인지 비교(==)하고 같은 클래스일 경우
-            equals()를 이용하여 객체 내용이 동일한 객체일 경우 실행결과처럼 출력하라.
-            주의: 실행결과에서는 없지만 동일한 객체가 여러개 나올 수 있음
-        동일한 객체가 하나도 없을 경우(!found) 실행결과처럼 출력하라.
+    void wrapper() { // Menu item 12: ch6_1
+        for(int i=0; i<pVector.size(); i++){
+            Person p = pVector.get(i);
+        }
+        /*
+        TODO:
+        for을 이용하여 pVector의 각 멤버(pVector.get(i))에 대해 Person p에 저장한 후
+        p의 name, id, weight, married 멤버에 대해
+        아래의 2)의 dispPersonInfo(String, String, String, String)
+        함수를 호출하라. 이때 필요한 매개변수는 String으로 변환한 후 호출해야 한다.
+        주의: 절대 dispPersonInfo(String, int, double, boolean)를
+             바로 호출하지 마라.
         */
     }
 
+    private void dispPersonInfo(String sname, String sid, String sweight, String smarried) {
+      	/*
+        TODO:
+        sname의 첫 글자와 끝 글자를 서로 바꾸어라. 예를 들어 "Park" -> "karP"
+        sid의 끝 글자가 '0'이면 '1'로 변환하라. "2340" -> "2341"
+        dispPersonInfo(String, int, double, boolean)를 호출하라.
+        이때 필요한 매개변수는 int, double, boolean 으로 변환한 후 호출해야 한다.
+        변환한 후 married의 경우 true는 false로, false는 true로 바꾼 후 호출하라.
+        */
+    }
+    private void dispPersonInfo(String sname, int id, double weight, boolean married) {
+      	/*
+        TODO: 실행 결과를 참고하여
+        sname id 0x(id의 16진수 문자열) 0(id의 8진수 문자열) 0b(id의 2진수 문자열) weight married
+        순서로 출력하라.
+        */
+    }
     @Override
     public boolean connectTo(String caller, String callee) {
         Person p = findByName(callee);
