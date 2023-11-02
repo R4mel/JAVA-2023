@@ -1,0 +1,18 @@
+1
+15
+11
+K k1
+11
+P p0 10 0 true :Jeju:
+11
+P p0 11 0 true :Jeju:
+11
+S s1 1 0 false : : Physics 0 1
+11
+S s1 1 0 false :Busan: Physics 0 2
+11
+W w1 3 33.3 false :Kangnam-gu Seoul: Samsung Manager
+11
+W w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+0
+0
