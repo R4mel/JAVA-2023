@@ -84,14 +84,32 @@ interface Calculator {
 abstract class SmartPhone {
     protected static BaseStation baseStation;
 
+    protected static Calendar userDate = null; // ch6_1
+
     public static void setBaseStation(BaseStation bs) {
         baseStation = bs;
     }
 
+    public static void setDate(String line) { // ch6_1
+        if (line.equals("")) {
+            userDate = null;
+            return;
+        }
+
+        Scanner s = new Scanner(line);
+        userDate = Calendar.getInstance();
+        userDate.clear();
+        userDate.set(s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt());
+        s.close();
+    }
+
     protected String owner;  // 스마트폰 소유주 이름
+
+    protected Calendar date; // ch6_1
 
     public SmartPhone(String owner) {
         this.owner = owner;
+        date = (userDate == null) ? Calendar.getInstance() : (Calendar) userDate.clone();  // ch6_1
     }
 
     public abstract String getMaker();
@@ -117,7 +135,18 @@ abstract class SmartPhone {
 
     @Override
     public String toString() {
-        return owner + "'s Phone: " + getMaker();
+        int ampm = date.get(Calendar.AM_PM);
+        int year = date.get(Calendar.YEAR);
+        int month = date.get(Calendar.MONTH);
+        int day = date.get(Calendar.DAY_OF_MONTH);
+        int hour = date.get(Calendar.HOUR);
+        int minute = date.get(Calendar.MINUTE);
+        int second = date.get(Calendar.SECOND);
+        if (ampm == Calendar.AM) {
+            return owner + "'s Phone: " + getMaker() + "(" + year + "." + month + "." + day + " AM " + hour + ":" + minute + ":" + second + ")";
+        }
+        return owner + "'s Phone: " + getMaker() + "(" + year + "." + month + "." + day + " PM " + hour + ":" + minute + ":" + second + ")";
+        // (2023.10.18 PM 4:4:58)
     }
 
     public abstract SmartPhone clone();
@@ -170,7 +199,7 @@ class GalaxyPhone extends SmartPhone {
 
     @Override
     public String getMaker() {
-        return "SAMSUNG";
+        return "SAMSUNG Phone ";
     }
 
     @Override
@@ -239,7 +268,7 @@ class IPhone extends SmartPhone {
 
     @Override
     public String getMaker() {
-        return "Apple";
+        return "Apple Phone ";
     }
 
     @Override
@@ -752,9 +781,9 @@ class CurrentUser {
                 "++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++\n" +
                         "+ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +\n" +
                         "+ 6.isSame 7.update 8.chPasswd(4_2) 9.chSmartPhone(5_3)         +\n" +
-                        "+ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3)                  +\n" +
+                        "+ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) 13.chWeight(6_1) +\n" +
                         "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-        final int MENU_COUNT = 13;
+        final int MENU_COUNT = 14;
         while (true) {
             int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
             switch (menuItem) {
@@ -793,6 +822,9 @@ class CurrentUser {
                     break;
                 case 12:
                     phoneCall();
+                    break;
+                case 13:
+                    chWeight();
                     break;
                 case 0:
                     return;
@@ -852,6 +884,13 @@ class CurrentUser {
         // PersonManager에 등록되어 있는 사용자 중 한명의 이름을 입력하라.
         String callee = UI.getNext("name to call? ");
         user.getPhone().sendCall(callee);
+    }
+
+    void chWeight() { // Menu item 13
+        double sr = Math.sqrt(user.getWeight());
+        System.out.println("weight:" + user.getWeight() + " sqrt:" + sr + " ceil:" + Math.ceil(sr) + " floor:" + Math.floor(sr) + " round:" + Math.round(sr));
+        user.set(Math.ceil(sr) * Math.floor(sr));
+        System.out.println(user);
     }
 
     void display() {
@@ -924,6 +963,13 @@ class VectorPerson {
     // persons[index]의 값을 반환
     public Person get(int index) {
         return persons[index];
+    }
+
+    // persons[index]의 값을 p로 새로 교체하고 과거의 persons[index] 값을 반환
+    public Person set(int index, Person p) {
+        Person a = persons[index];
+        persons[index] = p;
+        return a;
     }
 
     // 할당 받은 persons 배열의 전체 길이를 반환함 (count가 아님)
@@ -1088,6 +1134,12 @@ class PersonManager implements BaseStation {
                 case 12:
                     wrapper();
                     break;
+                case 13:
+                    shuffle();
+                    break;
+                case 14:
+                    setDate();
+                    break;
                 case 0:
                     return;
             }
@@ -1228,7 +1280,7 @@ class PersonManager implements BaseStation {
             if (p.getClass() == pVector.get(i).getClass()) {
                 if (pVector.get(i).equals(p)) {
                     System.out.print("[" + i + "] ");
-                    System.out.println(pVector.get(i).toString());
+                    System.out.println(pVector.get(i));
                     found = true;
                     return;
                 }
@@ -1240,37 +1292,47 @@ class PersonManager implements BaseStation {
     }
 
     void wrapper() { // Menu item 12: ch6_1
-        for(int i=0; i<pVector.size(); i++){
+        for (int i = 0; i < pVector.size(); i++) {
             Person p = pVector.get(i);
+            System.out.print("[" + i + "] ");
+            dispPersonInfo(p.getName(), String.valueOf(p.getId()), String.valueOf(p.getWeight()), String.valueOf(p.getMarried()));
         }
-        /*
-        TODO:
-        for을 이용하여 pVector의 각 멤버(pVector.get(i))에 대해 Person p에 저장한 후
-        p의 name, id, weight, married 멤버에 대해
-        아래의 2)의 dispPersonInfo(String, String, String, String)
-        함수를 호출하라. 이때 필요한 매개변수는 String으로 변환한 후 호출해야 한다.
-        주의: 절대 dispPersonInfo(String, int, double, boolean)를
-             바로 호출하지 마라.
-        */
     }
 
     private void dispPersonInfo(String sname, String sid, String sweight, String smarried) {
-      	/*
-        TODO:
-        sname의 첫 글자와 끝 글자를 서로 바꾸어라. 예를 들어 "Park" -> "karP"
-        sid의 끝 글자가 '0'이면 '1'로 변환하라. "2340" -> "2341"
-        dispPersonInfo(String, int, double, boolean)를 호출하라.
-        이때 필요한 매개변수는 int, double, boolean 으로 변환한 후 호출해야 한다.
-        변환한 후 married의 경우 true는 false로, false는 true로 바꾼 후 호출하라.
-        */
+        char first = sname.charAt(0);
+        char last = sname.charAt(sname.length() - 1);
+        String add = sname.substring(1, sname.length() - 1);
+        sname = last + add + first;
+        if (sid.charAt(sid.length() - 1) == '0') {
+            sid = sid.substring(0, sid.length() - 1) + '1';
+        }
+        if (smarried.equals("true")) {
+            smarried = "false";
+        } else {
+            smarried = "true";
+        }
+        dispPersonInfo(sname, Integer.parseInt(sid), Double.parseDouble(sweight), Boolean.parseBoolean(smarried));
     }
+
     private void dispPersonInfo(String sname, int id, double weight, boolean married) {
-      	/*
-        TODO: 실행 결과를 참고하여
-        sname id 0x(id의 16진수 문자열) 0(id의 8진수 문자열) 0b(id의 2진수 문자열) weight married
-        순서로 출력하라.
-        */
+        System.out.println(sname + " " + id + " 0x" + Integer.toHexString(id) + " 0" + Integer.toOctalString(id) + " 0b" + Integer.toBinaryString(id) + " " + weight + " " + married);
     }
+
+    public void shuffle() { // Menu item 13: ch6_1
+        int count = pVector.size();
+        for (int i = 0; i < count; i++) {
+            int j = (int) (Math.random() * count);
+            pVector.set(j, pVector.set(i, pVector.get(j)));
+        }
+        display();
+    }
+
+    public void setDate() { // Menu item 14: ch6_1
+        String line = UI.getNextLine("date and time(ex: 2021 10 1 18 24 30)? ");
+        SmartPhone.setDate(line);
+    }
+
     @Override
     public boolean connectTo(String caller, String callee) {
         Person p = findByName(callee);
