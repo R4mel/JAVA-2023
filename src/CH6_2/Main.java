@@ -1,8 +1,6 @@
 package CH6_2;
 
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -81,46 +79,76 @@ interface Calculator {
     // 수식과 계산 결과 또는 에러 메시지를 출력해야 하며 이 출력의 앞 또는 뒤에
     // 계산기 소유주 이름도 함께 출력하되 메이커가 알아서 적절히 회사명, 모델명 등과 함께 표시하면 된다.
     void calculate(double oprd1, String op, double oprd2); // 예: (3, "+", 2.0)
+
+    void calculate(String expr);                     // 예: ("3+2") ("2+ 3")
 }
 
-abstract class SmartPhone { // TODO: 이 클래스는 Phone, Calculator를 구현한다.
+abstract class SmartPhone implements Phone, Calculator {
     protected static BaseStation baseStation;
+
+    protected static Calendar userDate = null; // ch6_1
 
     public static void setBaseStation(BaseStation bs) {
         baseStation = bs;
     }
 
+    public static void setDate(String line) { // ch6_1
+        if (line.equals("")) {
+            userDate = null;
+            return;
+        }
+
+        Scanner s = new Scanner(line);
+        userDate = Calendar.getInstance();
+        userDate.clear();
+        userDate.set(s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt());
+        s.close();
+    }
+
     protected String owner;  // 스마트폰 소유주 이름
+
+    protected Calendar date; // ch6_1
 
     public SmartPhone(String owner) {
         this.owner = owner;
+        date = (userDate == null) ? Calendar.getInstance() : (Calendar) userDate.clone();  // ch6_1
     }
 
     public abstract String getMaker();
-
-    public abstract void sendCall(String callee);
-
-    public abstract void receiveCall(String caller);
-
-    public abstract void calculate(double oprd1, String op, double oprd2);
 
     public void setOwner(String owner) {
         this.owner = owner;
     }
 
-    public void print() {
-        System.out.print(owner + "'s Phone: " + getMaker());
-    }
+//    public void print() {
+//        System.out.print(owner + "'s Phone: " + getMaker());
+//    }
 
-    public void println() {
-        print();
-        System.out.println();
+//    public void println() {
+//        print();
+//        System.out.println();
+//    }
+
+    @Override
+    public String toString() {
+        int ampm = date.get(Calendar.AM_PM);
+        int year = date.get(Calendar.YEAR);
+        int month = date.get(Calendar.MONTH);
+        int day = date.get(Calendar.DAY_OF_MONTH);
+        int hour = date.get(Calendar.HOUR);
+        int minute = date.get(Calendar.MINUTE);
+        int second = date.get(Calendar.SECOND);
+        if (ampm == Calendar.AM) {
+            return owner + "'s Phone: " + getMaker() + "(" + year + "." + month + "." + day + " AM " + hour + ":" + minute + ":" + second + ")";
+        }
+        return owner + "'s Phone: " + getMaker() + "(" + year + "." + month + "." + day + " PM " + hour + ":" + minute + ":" + second + ")";
+        // (2023.10.18 PM 4:4:58)
     }
 
     public abstract SmartPhone clone();
 }
 
-class GalaxyPhone extends SmartPhone { // TODO: 이 클래스는 SmartPhone 클래스를 상속한다.
+class GalaxyPhone extends SmartPhone {
     private void printTradeMark(String appName) {
         System.out.println(" @ " + owner + "'s Galaxy " + appName);
     }
@@ -166,8 +194,35 @@ class GalaxyPhone extends SmartPhone { // TODO: 이 클래스는 SmartPhone 클�
     }
 
     @Override
+    public void calculate(String expr) {
+        String oprs[] = { "+", "-", "*", "/" };
+        int i;
+        for (i = 0; i < oprs.length; i++)
+            if (expr.indexOf(oprs[i]) >= 0) // expr에 oprs[i] 있는지 조사하고
+                break;                      // 있으면 expr 내의 인덱스, 없으면 음수 반환
+        if ((i >= oprs.length))             // expr에 적절한 연산자가 없을 경우
+            calculate(0, expr, 0);          // 에러 처리를 위해 호출함
+        else {
+            String a = null;
+            String[] opr = null;
+            for(var s: oprs){
+                if(expr.contains(s)){
+                    a = s;
+                }
+            }
+            if(a.equals("+")){
+                opr = expr.split("\\+");
+            }
+            else if(a.equals("*")){
+                opr = expr.split("\\*");
+            }
+            calculate(Double.parseDouble(opr[0]), a, Double.parseDouble(opr[1]));
+        }
+    }
+
+    @Override
     public String getMaker() {
-        return "SAMSUNG";
+        return "SAMSUNG Phone ";
     }
 
     @Override
@@ -176,7 +231,7 @@ class GalaxyPhone extends SmartPhone { // TODO: 이 클래스는 SmartPhone 클�
     }
 }
 
-class IPhone extends SmartPhone { // TODO: 이 클래스는 SmartPhone 클래스를 상속한다.
+class IPhone extends SmartPhone {
     String model;
 
     public IPhone(String owner, String model) {
@@ -235,8 +290,53 @@ class IPhone extends SmartPhone { // TODO: 이 클래스는 SmartPhone 클래스
     }
 
     @Override
+    public void calculate(String expr) {
+        String oprs[] = { "+", "-", "*", "/" };
+        int i;
+        for (i = 0; i < oprs.length; i++)
+            if (expr.indexOf(oprs[i]) >= 0) // expr에 oprs[i] 있는지 조사하고
+                break;                      // 있으면 expr 내의 인덱스, 없으면 음수 반환
+        if ((i >= oprs.length))             // expr에 적절한 연산자가 없을 경우
+            calculate(0, expr, 0);          // 에러 처리를 위해 호출함
+        else {
+            int j = 0;
+            for(int k=0; k< oprs.length; k++){
+                if(expr.indexOf(oprs[k]) >= 0){
+                    j = k;
+                }
+            }
+
+            String first = expr.substring(0, j).trim();
+            String opr = expr.substring(j, j+1);
+            String last = expr.substring(j+1).trim();
+
+            expr = first + " " + opr + " " + last;
+
+            Scanner s = new Scanner(expr);
+            calculate(Double.parseDouble(s.next()), s.next(), Double.parseDouble(s.next()));
+            s.close();
+            /* TODO:
+            expr.indexOf(oprs[i])를 이용해 expr 내에서 연산자의 위치(인덱스)를 구해 j에 저장
+            String의 substring()을 이용해 expr 내에서 피연산자1, 연산자, 피연산자2 등 세 개의
+            서브 문자열을 발췌하라. substring() 호출 시 인덱스 j를 활용하여 j의 바로 앞까지,
+            j에서 j+1까지, j 바로 뒤에서 끝까지 세 개의 서브 문자열을 구할 수 있다.
+            참고로 피연산자에는 공백 문자가 포함되어 있어도 괜찮다.
+            피연산자1, 연산자, 피연산자2 서브 문자열들을 +를 이용하여 다시 하나의 문자열로 결합하여
+            expr에 저장하라. 이때 피연산자와 연산자가 분리되게 중간에 " "를 무조건 추가하라.
+
+            새로운 Scanner 변수 s를 만들어라. 이때 함수 인자로 새로 결합된 expr 문자열을 지정하라.
+            [SmartPhone의 setDate(String line) 함수 참고]
+            스캐너를 통해 실수값(피연산자1), 문자열(연산자), 실수값(피연산자2)를 읽어 들여라.
+            (이 스캐너는 실수값과 문자열을 expr에서 읽어 들인다.)
+            계산을 위해 기존 calculate(double, String, double)를 호출하라.
+            스캐너를 닫아라.
+            */
+        }
+    }
+
+    @Override
     public String getMaker() {
-        return "Apple";
+        return "Apple Phone ";
     }
 
     @Override
@@ -284,21 +384,21 @@ class Person {
         setSmartPhone(smartPhone);
     }
 
-    public void println() {
-        print();
-        System.out.println();
+//    public void println() {
+//        print();
+//        System.out.println();
         /*
         1. println() 호출
         2. print() 호출
         3. 슈퍼 클래스의 print()가 호출되지 않고 원래 객체 내에서 오버라이딩된 함수가 호출됨.(5장 18p 참고)
         */
-    }
+//    }
 
-    public void println(String msg) {
-        System.out.print(msg);
-        print();
-        System.out.println();
-    }
+//    public void println(String msg) {
+//        System.out.print(msg);
+//        print();
+//        System.out.println();
+//    }
 
     // Getter: getXXX() 관련 함수들
     public String getName() {
@@ -388,13 +488,15 @@ class Person {
     }
 
     // print(), clone(), whatAreYouDoing(), equals(), input() 함수
-    public boolean equals(Person user) {
-        return (user.getName() == getName() && user.getId() == getId());
+    @Override
+    public boolean equals(Object o) {
+        Person p = (Person) o;
+        return (p.getName().equals(getName()) && p.getId() == getId());
     }
 
-    void print() {
-        printMembers();
-    }
+//    void print() {
+//        printMembers();
+//    }
 
     void input(Scanner sc) {
         inputMembers(sc);
@@ -420,9 +522,14 @@ class Person {
         set(name, "", id, weight, married, address, null);
     }
 
-    private void printMembers() {
-        System.out.print(name + " " + id + " " + weight + " " + married + " :" + address + ": ");
+    @Override
+    public String toString() {
+        return name + " " + id + " " + weight + " " + married + " :" + address + ": ";
     }
+
+//    private void printMembers() {
+//        System.out.print(name + " " + id + " " + weight + " " + married + " :" + address + ": ");
+//    }
 }
 
 class Student extends Person {
@@ -432,7 +539,6 @@ class Student extends Person {
 
     public Student(String name, int id, double weight, boolean married, String address, String department, double GPA, int year) {
         super(name, id, weight, married, address);
-        // TODO: 수퍼(부모)클래스의 생성자를 호출하여 수퍼 클래스 멤버들을 초기화하라.
         set(department, GPA, year);
 //        System.out.print("Student(): ");
 //        printMembers();
@@ -477,16 +583,16 @@ class Student extends Person {
     }
 
     // Overriding
-    @Override
-    public void print() {
-        super.print();
-        printMembers();
-    }
+//    @Override
+//    public void print() {
+//        super.print();
+//        printMembers();
+//    }
 
     @Override
-    public boolean equals(Person p) {
+    public boolean equals(Object p) {
         Student s = (Student) p;
-        return (super.equals(s) && s.getDepartment() == getDepartment() && s.getYear() == getYear());
+        return (super.equals(s) && s.getDepartment().equals(getDepartment()) && s.getYear() == getYear());
     }
 
     @Override
@@ -528,8 +634,13 @@ class Student extends Person {
     }
 
     // printMembers(), inputMembers(Scanner sc)
-    private void printMembers() {
-        System.out.print(department + " " + GPA + " " + year);
+//    private void printMembers() {
+//        System.out.print(department + " " + GPA + " " + year);
+//    }
+
+    @Override
+    public String toString() {
+        return super.toString() + department + " " + GPA + " " + year;
     }
 
     // 새로 추가된 메소드
@@ -585,9 +696,9 @@ class Worker extends Person {
 
     // Overriding
     @Override
-    public boolean equals(Person p) {
+    public boolean equals(Object p) {
         Worker s = (Worker) p;
-        return (super.equals(s) && s.getCompany() == getCompany() && s.getPosition() == getPosition());
+        return (super.equals(s) && s.getCompany().equals(getCompany()) && s.getPosition().equals(getPosition()));
     }
 
     @Override
@@ -611,11 +722,11 @@ class Worker extends Person {
         set(s.getCompany(), s.getPosition());
     }
 
-    @Override
-    public void print() {
-        super.print();
-        printMembers();
-    }
+//    @Override
+//    public void print() {
+//        super.print();
+//        printMembers();
+//    }
 
     // printMembers(), inputMembers(Scanner sc)
     void input(Scanner sc) {
@@ -634,8 +745,13 @@ class Worker extends Person {
         inputMembers(sc);
     }
 
-    private void printMembers() {
-        System.out.print(company + " " + position);
+//    private void printMembers() {
+//        System.out.print(company + " " + position);
+//    }
+
+    @Override
+    public String toString() {
+        return super.toString() + company + " " + position;
     }
 
     // 새로 추가된 메소드
@@ -733,9 +849,10 @@ class CurrentUser {
                 "++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++\n" +
                         "+ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +\n" +
                         "+ 6.isSame 7.update 8.chPasswd(4_2) 9.chSmartPhone(5_3)         +\n" +
-                        "+ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3)                  +\n" +
+                        "+ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) 13.chWeight(6_1) +\n" +
+                        "+ 14.calcString(6_2) 15.memo(6_2)                               +\n" +
                         "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-        final int MENU_COUNT = 13;
+        final int MENU_COUNT = 16;
         while (true) {
             int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
             switch (menuItem) {
@@ -775,6 +892,12 @@ class CurrentUser {
                 case 12:
                     phoneCall();
                     break;
+                case 13:
+                    chWeight();
+                    break;
+                case 14:
+                    calcString();
+                    break;
                 case 0:
                     return;
             }
@@ -807,14 +930,14 @@ class CurrentUser {
         display();
         Person c = user.clone();
         System.out.println("------------------\nclone:");
-        c.println();
-        c.getSmartPhone().println();
+        System.out.println(c);
+        System.out.println(c.getSmartPhone());
         System.out.println("\nchange clone's name " + c.getName() + " to c1\n");
         c.set("c1"); // clone의 이름을 c1으로 변경함: 스마트폰의 소유주도 c1으로 변경됨
         display();
         System.out.println("------------------\nclone:");
-        c.println();
-        c.getSmartPhone().println();
+        System.out.println(c);
+        System.out.println(c.getSmartPhone());
     }
 
     void calc() { // Menu item 11: 연산자와 피연산자는 스페이스로 분리되어 있어야 함
@@ -835,9 +958,27 @@ class CurrentUser {
         user.getPhone().sendCall(callee);
     }
 
+    void chWeight() { // Menu item 13
+        double sr = Math.sqrt(user.getWeight());
+        System.out.println("weight:" + user.getWeight() + " sqrt:" + sr + " ceil:" + Math.ceil(sr) + " floor:" + Math.floor(sr) + " round:" + Math.round(sr));
+        user.set(Math.ceil(sr) * Math.floor(sr));
+        System.out.println(user);
+    }
+
+    // Menu item 14:ch6_2: "2+3", "2+ 3"처럼 연산자와 피연산자가 붙어 있어도 됨
+    void calcString() {
+        String line = UI.getNextLine("expression: ");
+        user.getCalculator().calculate(line);
+        /* TODO:
+        화면에 "expression: "을 출력하고 한줄을 통채로 입력 받아
+        문자열 변수 line에 저장하라. (PersonManager의 setDate() 참고)
+        user 계산기의 calculate(line)을 호출하라. (CurrentUser::calc() 참고)
+        */
+    }
+
     void display() {
-        user.println();
-        user.getSmartPhone().println();
+        System.out.println(user);
+        System.out.println(user.getSmartPhone());
 
     } // Menu item 1
 
@@ -854,13 +995,13 @@ class CurrentUser {
         p.set(user.getWeight());
         p.set(user.getMarried());
         p.setAddress(user.getAddress());
-        p.println("p.set(): ");
+        System.out.println("p.set(): " + p);
     }
 
     void copy() { // Menu item 4
-        user.println("user: ");
+        System.out.println("user: " + user);
         var p = user.clone();
-        p.println("p: ");
+        System.out.println("p: " + p);
     }
 
     void whatAreYouDoing() {  // Menu item 5
@@ -868,20 +1009,20 @@ class CurrentUser {
     }
 
     void equals() { // Menu item 6
-        user.println("user: ");
+        System.out.println("user: " + user);
         var p = new Person("user");
         p.set(1);
-        p.println("p: ");
+        System.out.println("p: " + p);
         System.out.println("p.equals(user): " + p.equals(user));
         p.assign(user);
-        p.println("p.assign(user): ");
+        System.out.println("p.assign(user): " + p);
         System.out.println("p.equals(user): " + p.equals(user));
     }
 
     void update() { // Menu item 7
         System.out.println("input person information:");
         user.input(UI.scan); // user 100 65 true :426 hakdong-ro, Gangnam-gu, Seoul:
-        if (UI.echo_input) user.println(); // 자동오류체크시 출력됨
+        if (UI.echo_input) System.out.println(user); // 자동오류체크시 출력됨
         display();
     }
 }
@@ -905,6 +1046,13 @@ class VectorPerson {
     // persons[index]의 값을 반환
     public Person get(int index) {
         return persons[index];
+    }
+
+    // persons[index]의 값을 p로 새로 교체하고 과거의 persons[index] 값을 반환
+    public Person set(int index, Person p) {
+        Person a = persons[index];
+        persons[index] = p;
+        return a;
     }
 
     // 할당 받은 persons 배열의 전체 길이를 반환함 (count가 아님)
@@ -1001,7 +1149,7 @@ class Factory {
                 System.out.println(delimiter + ": WRONG delimiter");
                 return null;
         }
-        if (UI.echo_input) p.println(delimiter.equals("") ? "" : delimiter + " ");
+        if (UI.echo_input) System.out.println(delimiter.equals("") ? "" : delimiter + " " + p);
         return p;
     }
 }
@@ -1024,12 +1172,12 @@ class PersonManager implements BaseStation {
 
     public void run() {
         String menuStr =
-                "=============== Person Management Menu ================\n" +
-                        "= 0.exit 1.display 2.clear 3.reset 4.remove           =\n" +
-                        "= 5.copy 6.append 7.insert 8.login 9.dispStudent(5_3) =\n" +
-                        "= 10.dispPhone(5_3)                                   =\n" +
-                        "=======================================================\n";
-        final int MENU_COUNT = 11; // 상수 정의
+                "=================== Person Management Menu =====================\n" +
+                        "= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =\n" +
+                        "= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =\n" +
+                        "= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =\n" +
+                        "= 15.chAddress(6_2)                                            =\n";
+        final int MENU_COUNT = 16; // 상수 정의
         while (true) {
             int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
             switch (menuItem) {
@@ -1063,6 +1211,21 @@ class PersonManager implements BaseStation {
                 case 10:
                     dispPhone();
                     break;
+                case 11:
+                    find();
+                    break;
+                case 12:
+                    wrapper();
+                    break;
+                case 13:
+                    shuffle();
+                    break;
+                case 14:
+                    setDate();
+                    break;
+                case 15:
+                    chAddress();
+                    break;
                 case 0:
                     return;
             }
@@ -1074,7 +1237,7 @@ class PersonManager implements BaseStation {
 //        System.out.println("display(): count " + count);
         for (int i = 0; i < count; ++i) {
             System.out.print("[" + i + "] ");
-            pVector.get(i).println();
+            System.out.println(pVector.get(i));
         }
 //        System.out.println("empty():" + pVector.isEmpty() + ", size():" + pVector.size()
 //                + ", capacity():" + pVector.capacity());
@@ -1180,7 +1343,7 @@ class PersonManager implements BaseStation {
         for (int i = 0; i < count; ++i) {
             if (pVector.get(i) instanceof Student) {
                 System.out.print("[" + i + "] ");
-                pVector.get(i).println();
+                System.out.println(pVector.get(i));
             }
         }
     }
@@ -1190,8 +1353,92 @@ class PersonManager implements BaseStation {
         System.out.println("dispPhones(): count " + count);
         for (int i = 0; i < count; ++i) {
             System.out.print("[" + i + "] ");
-            pVector.get(i).getSmartPhone().println();
+            System.out.println(pVector.get(i).getSmartPhone());
         }
+    }
+
+    public void find() { // Menu item 11: ch6_1
+        boolean found = false;
+        factory.printInputNotice("", " to find by equals()");
+        Person p = factory.inputPerson(UI.scan); // 한 사람의 정보를 입력 받음
+        if (p == null) return;
+        for (int i = 0; i < pVector.size(); i++) {
+            if (p.getClass() == pVector.get(i).getClass()) {
+                if (pVector.get(i).equals(p)) {
+                    System.out.print("[" + i + "] ");
+                    System.out.println(pVector.get(i));
+                    found = true;
+                    return;
+                }
+            }
+        }
+        if (!found) {
+            System.out.println("NOT found by equals()");
+        }
+    }
+
+    void wrapper() { // Menu item 12: ch6_1
+        for (int i = 0; i < pVector.size(); i++) {
+            Person p = pVector.get(i);
+            System.out.print("[" + i + "] ");
+            dispPersonInfo(p.getName(), String.valueOf(p.getId()), String.valueOf(p.getWeight()), String.valueOf(p.getMarried()));
+        }
+    }
+
+    private void dispPersonInfo(String sname, String sid, String sweight, String smarried) {
+        char first = sname.charAt(0);
+        char last = sname.charAt(sname.length() - 1);
+        String add = sname.substring(1, sname.length() - 1);
+        sname = last + add + first;
+        if (sid.charAt(sid.length() - 1) == '0') {
+            sid = sid.substring(0, sid.length() - 1) + '1';
+        }
+        if (smarried.equals("true")) {
+            smarried = "false";
+        } else {
+            smarried = "true";
+        }
+        dispPersonInfo(sname, Integer.parseInt(sid), Double.parseDouble(sweight), Boolean.parseBoolean(smarried));
+    }
+
+    private void dispPersonInfo(String sname, int id, double weight, boolean married) {
+        System.out.println(sname + " " + id + " 0x" + Integer.toHexString(id) + " 0" + Integer.toOctalString(id) + " 0b" + Integer.toBinaryString(id) + " " + weight + " " + married);
+    }
+
+    public void shuffle() { // Menu item 13: ch6_1
+        int count = pVector.size();
+        for (int i = 0; i < count; i++) {
+            int j = (int) (Math.random() * count);
+            pVector.set(j, pVector.set(i, pVector.get(j)));
+        }
+        display();
+    }
+
+    public void setDate() { // Menu item 14: ch6_1
+        String line = UI.getNextLine("date and time(ex: 2021 10 1 18 24 30)? ");
+        SmartPhone.setDate(line);
+    }
+
+    void chAddress() { // Menu item 14: ch6_2
+        for (int i = 0; i < pVector.size(); ++i) {
+            Person p = pVector.get(i);
+            p.setAddress(newAddress(p.getAddress()));
+        }
+        display();
+    }
+
+    private String newAddress(String address) {
+        address.toLowerCase().replaceAll("-gu", "_gu");
+        String[] arr = address.split(",");
+        StringBuilder addressBuilder = new StringBuilder();
+        for (int i = 0; i < arr.length; i++) {
+            if (i == arr.length - 1) {
+                addressBuilder.append(arr[i].trim());
+            } else {
+                addressBuilder.append(arr[i].trim()).append(" ");
+            }
+        }
+        return addressBuilder.toString();
     }
 
     @Override
@@ -1223,9 +1470,9 @@ class PersonManager implements BaseStation {
 }
 
 class MultiManager {
-    private Person persons[] = {
-            new Person("p0", 10, 70.0, false, "Gwangju Nam-gu Bongseon-dong 21"),
-            new Person("p1", 11, 61.1, true, "Jong-ro 1-gil, Jongno-gu, Seoul"),
+    private Person persons[] = {        // ch6_2: p0, p1 주소 변경되었음(공백문자와 ,를 의도적으로 띄우거나 붙여 놓았음)
+            new Person("p0", 10, 70.0, false, "Gwangju ,Nam-gu , Bongseon-dong 21"),
+            new Person("p1", 11, 61.1, true, "Jong-ro 1-gil,Jongno-gu,   Seoul"),
             new Person("p2", 12, 52.2, false, "1001, Jungang-daero, Yeonje-gu, Busan"),
             new Person("p3", 13, 83.3, true, "100 Dunsan-ro Seo-gu Daejeon"),
             new Person("p4", 14, 64.4, false, "88 Gongpyeong-ro, Jung-gu, Daegu"),
@@ -1284,8 +1531,8 @@ class Inheritance {
     }
 
     void compare(Person p1, Person p2) {
-        p1.println("p1: ");
-        p2.println("p2: ");
+        System.out.println("p1: " + p1);
+        System.out.println("p2: " + p2);
         System.out.println("p1.equals(p2) : " + p1.equals(p2));
         System.out.println("--------------------");
     }
@@ -1298,7 +1545,7 @@ class Inheritance {
     void input(Person p, String msg) {
         System.out.print("input " + msg + ": ");
         p.input(UI.scan);
-        if (UI.echo_input) p.println(); // 자동체크에서 사용됨
+        if (UI.echo_input) System.out.println(p); // 자동체크에서 사용됨
     }
 
     Person clone(Person p) {
@@ -1317,7 +1564,7 @@ class Inheritance {
             p = new Student(UI.scan);
         else
             p = new Worker(UI.scan);
-        if (UI.echo_input) p.println(); // 자동체크에서 사용됨
+        if (UI.echo_input) System.out.println(p); // 자동체크에서 사용됨
         return p;
     }
 
@@ -1347,22 +1594,22 @@ class Inheritance {
         s3.whatAreYouDoing();
 
         s3 = (Student) clone(s2);
-        s3.println("s3: ");
+        System.out.println("s3: " + s3);
         System.out.println("--------------------");
 
-        s2.println("s2: ");
+        System.out.println("s2: " + s2);
         s1 = new Student("", 0, 0.0, false, "", "", 0.0, 0);
         assign(s2, s1); // (destination, source): destination = source
-        s2.println("s2: ");
+        System.out.println("s2: " + s2);
         System.out.println("--------------------");
 
         input(s2, "student"); // s2 1 56.9 false :Gangnam-gu Seoul: Physics 2.0 1
-        s2.println("s2: ");
+        System.out.println("s2: " + s2);
         System.out.println("--------------------");
 
         Student s4 = (Student) newInput(true, "student");
         // s4 1 56.9 false :Gangnam-gu Seoul: Physics 2.0 1
-        s4.println("s4: ");
+        System.out.println("s4: " + s4);
     }
 
     void worker() {
@@ -1389,22 +1636,22 @@ class Inheritance {
         w3.whatAreYouDoing();
 
         w3 = (Worker) clone(w2);
-        w3.println("w3    : ");
+        System.out.println("w3    : " + w3);
         System.out.println("--------------------");
 
-        w2.println("w2: ");
+        System.out.println("w2: " + w2);
         w1 = new Worker("", 0, 0.0, false, "", "", "");
         assign(w2, w1); // (destination, source): destination = source
-        w2.println("w2: ");
+        System.out.println("w2: " + w2);
         System.out.println("--------------------");
 
         input(w2, "worker"); // w2 3 44.4 true :Jongno-gu Seoul: Samsung Director
-        w2.println("w2: ");
+        System.out.println("w2: " + w2);
         System.out.println("--------------------");
 
         Worker w4 = (Worker) newInput(false, "worker");
         // w4 3 44.4 true :Jongno-gu Seoul: Samsung Director
-        w4.println("w4: ");
+        System.out.println("w4: " + w4);
     }
 }
 
