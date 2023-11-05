@@ -8,24 +8,22 @@ class Solution {
         return arr;
     }
 
-    public void dispPersonInfo(String sname) {
-        char first = sname.charAt(0);
-        char last = sname.charAt(sname.length() - 1);
-        String add = sname.substring(1, sname.length() - 1);
-        sname = last + add + first;
-        System.out.println(sname);
+    public String string(String expr) {
+        // 2+3
+        String first = expr.substring(0, 1).trim();
+        String opr = expr.substring(1, 2).trim();
+        String last = expr.substring(2).trim();
+        System.out.println(first);
+        System.out.println(opr);
+        System.out.println(last);
+        return first + " " + opr + " " + last;
     }
+
 }
 
 class Application {
     public static void main(String[] args) {
         Solution test = new Solution();
-        String a = "Gwangju ,Nam-gu , Bongseon-dong 21";
-        a.toLowerCase().replaceAll("-gu", "_gu");
-        String[] b = a.split(",");
-        for(int i=0; i<b.length; i++){
-            System.out.println(b[i].trim());
-        }
-
+        System.out.println(test.string("2+3"));
     }
 }
