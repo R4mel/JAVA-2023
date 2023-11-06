@@ -1072,34 +1072,51 @@ class Memo {
     private Pair find_line(int lineNum) {
         int start = 0, end = 0;
 
-        int i = 0;
-        while (i < lineNum) {
-            if ((end = mStr.indexOf("\n", start)) == -1) return null;
+        for (int i = 0; i < lineNum; i++) {
+            end = mStr.indexOf("\n", start);
             start = end + 1;
-            i++;
-        }
+            if (end == -1) {
+                return null;
+            }
 
-        if (start == mStr.length()) {
-            return null;
-        }
+            if (start == mStr.length()) {
+                return null;
+            }
 
-        end = mStr.indexOf("\n", start);
-        if (end == -1) end = mStr.length();
+            end = mStr.indexOf("\n", start);
+
+            if (end != -1) {
+                end++;
+            }
+            if (end == -1) {
+                end = mStr.length();
+            }
+        }
         return new Pair(start, end);
     }
 
     void delLn() { // Menu item 6
         int lineNum = UI.getPosInt("line number to delete? ");
         Pair p;
-        if (mStr.length() == 0 || (p = find_line(lineNum)) == null)
+        if (mStr.length() == 0 || (p = find_line(lineNum)) == null) {
             System.out.println("Out of line number range");
-        else {
+        } else {
             mStr.delete(p.start, p.end);
             dispByLn();
         }
     }
 
     void replLn() { // Menu item 7
+        int lineNum = UI.getPosInt("line number to replace? ");
+        Pair p;
+        String text = UI.getNextLine("input content to replace:\n");
+        if (mStr.length() == 0 || (p = find_line(lineNum)) == null) {
+            System.out.println("Out of line number range");
+        } else {
+            p.end = mStr.indexOf("\n", p.start);
+            mStr.replace(p.start, p.end, text);
+            dispByLn();
+        }
     }
 
     void scrollUp() { // Menu item 8
