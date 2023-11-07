@@ -1120,6 +1120,18 @@ class Memo {
     }
 
     void scrollUp() { // Menu item 8
+        if (mStr.isEmpty()) {
+            dispByLn();
+        }
+        if (mStr.charAt(mStr.length() - 1) != '\n') {
+            mStr.append('\n');
+        }
+        Pair p = find_line(0);
+        p.end = mStr.indexOf("\n", p.start);
+        String text = mStr.substring(p.start, p.end);
+        mStr.append(text);
+        mStr.delete(p.start, p.end + 1);
+        dispByLn();
     }
 
     void scrollDown() { // Menu item 9
