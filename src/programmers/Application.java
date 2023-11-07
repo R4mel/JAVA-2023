@@ -21,7 +21,8 @@ class Solution {
 class Application {
     public static void main(String[] args) {
         Solution test = new Solution();
-        int[][] a = {{2, 3}, {0, 7}, {5, 9}, {6, 10}};
-        System.out.println(test.solution("rermgorpsam", a));
+        StringBuffer sb = new StringBuffer();
+        sb.append("asdf");
+        System.out.println(sb.isEmpty());
     }
 }

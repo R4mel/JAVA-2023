@@ -10,7 +10,7 @@ public class Main {
         //--------------------------------
         // trace: true(오류발생한 곳 출력), false(단순히 O, X만 표시)
 //        int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
-        run(new Scanner(System.in));
+            run(new Scanner(System.in));
     }
 
     public static void run(Scanner scan) {
@@ -23,41 +23,41 @@ public class Main {
 class MainMenu {
     final static int MENU_COUNT = 5;
 
-    public static void run() {
-        var user = new Student("s1", 1, 65.4, true, "Jongno-gu Seoul", "Physics", 3.8, 1);
-        Memo m = new Memo(user.getMemo());
-        m.run();
-        user.setMemo(m.toString());
-        System.out.println("\nGood bye!!");
-    }
     //    public static void run() {
-//        String menuStr =
-//                "******* Main Menu ********\n" +
-//                        "* 0.exit 1.PersonManager *\n" +
-//                        "* 2.ch2 3.ch3 4.ch5      *\n" +
-//                        "**************************\n";
-//
-//        while (true) {
-//            int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
-//            switch (menuItem) {
-//                case 0:
-//                    System.out.println("\nGood bye!!");
-//                    return;
-//                case 1:
-//                    new MultiManager().run();
-//                    break;
-//                case 2:
-//                    Ch2.run();
-//                    break;
-//                case 3:
-//                    Ch3.run();
-//                    break;
-//                case 4:
-//                    new Inheritance().run();
-//                    break;
-//            }
-//        }
+//        var user = new Student("s1", 1, 65.4, true, "Jongno-gu Seoul", "Physics", 3.8, 1);
+//        Memo m = new Memo(user.getMemo());
+//        m.run();
+//        user.setMemo(m.toString());
+//        System.out.println("\nGood bye!!");
 //    }
+    public static void run() {
+        String menuStr =
+                "******* Main Menu ********\n" +
+                        "* 0.exit 1.PersonManager *\n" +
+                        "* 2.ch2 3.ch3 4.ch5      *\n" +
+                        "**************************\n";
+
+        while (true) {
+            int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
+            switch (menuItem) {
+                case 0:
+                    System.out.println("\nGood bye!!");
+                    return;
+                case 1:
+                    new MultiManager().run();
+                    break;
+                case 2:
+                    Ch2.run();
+                    break;
+                case 3:
+                    Ch3.run();
+                    break;
+                case 4:
+                    new Inheritance().run();
+                    break;
+            }
+        }
+    }
 }
 
 interface BaseStation {
@@ -202,7 +202,7 @@ class GalaxyPhone extends SmartPhone {
 
     @Override
     public void calculate(String expr) {
-        String oprs[] = {"+", "-", "*", "/"};
+        String[] oprs = {"+", "-", "*", "/"};
         int i;
         for (i = 0; i < oprs.length; i++)
             if (expr.indexOf(oprs[i]) >= 0) // expr에 oprs[i] 있는지 조사하고
@@ -217,10 +217,20 @@ class GalaxyPhone extends SmartPhone {
                     a = s;
                 }
             }
-            if (a.equals("+")) {
-                opr = expr.split("\\+");
-            } else if (a.equals("*")) {
-                opr = expr.split("\\*");
+
+            switch (a) {
+                case "+":
+                    opr = expr.split("\\+");
+                    break;
+                case "*":
+                    opr = expr.split("\\*");
+                    break;
+                case "-":
+                    opr = expr.split("-");
+                    break;
+                case "/":
+                    opr = expr.split("/");
+                    break;
             }
             calculate(Double.parseDouble(opr[0]), a, Double.parseDouble(opr[1]));
         }
@@ -297,24 +307,25 @@ class IPhone extends SmartPhone {
 
     @Override
     public void calculate(String expr) {
-        String oprs[] = {"+", "-", "*", "/"};
+        String[] oprs = {"+", "-", "*", "/"};
         int i;
+        int j = 0;
         for (i = 0; i < oprs.length; i++)
             if (expr.indexOf(oprs[i]) >= 0) // expr에 oprs[i] 있는지 조사하고
                 break;                      // 있으면 expr 내의 인덱스, 없으면 음수 반환
         if ((i >= oprs.length))             // expr에 적절한 연산자가 없을 경우
             calculate(0, expr, 0);          // 에러 처리를 위해 호출함
         else {
-            int j = 0;
             for (int a = 0; a < 4; a++) {
-                if (expr.indexOf(oprs[a]) >= 0) {
-                    j = a;
+                if (expr.indexOf(oprs[a]) != -1) {
+                    j = expr.indexOf(oprs[a]);
+                    break;
                 }
             }
 
-            String first = expr.substring(0, j + 1);
-            String opr = expr.substring(j + 1, j + 2).trim();
-            String last = expr.substring(j + 2);
+            String first = expr.substring(0, j);
+            String opr = expr.substring(j, j + 1).trim();
+            String last = expr.substring(j + 1);
 
             expr = first + " " + opr + " " + last;
 
@@ -838,7 +849,7 @@ class UI {
 
 // String과 StringBuffer 클래스의 활용을 연습하기 위한 클래스
 class Memo {
-    private StringBuffer mStr;  // 메모를 저장하고 수정하기 위한 문자열 버퍼
+    private final StringBuffer mStr;  // 메모를 저장하고 수정하기 위한 문자열 버퍼
 
     // 문자열 m을 이용하여 StringBuffer를 생성한다.
     public Memo(String m) {
@@ -850,7 +861,7 @@ class Memo {
         return mStr.toString();
     }
 
-    private String memoData =
+    private final String memoData =
             "The Last of the Mohicans\n" +
                     "James Fenimore Cooper\n" +
                     "Author's Introduction\n" +
@@ -951,7 +962,7 @@ class Memo {
         String word = UI.getNext("word to find? ");
         // 전체 메모 mStr를 문자열로 변환한 후 이를 행 단위로 쪼갬
         // 아래 구분자 "\\v"은 행 단위로 쪼개라는 구분자를 의미함; 즉, '\n','\r','\f'등을 의미함
-        String lines[] = mStr.toString().split("\\v");
+        String[] lines = mStr.toString().split("\\v");
         int tot_count = 0; // 단어를 찾은 총 횟수
 
         int j;
@@ -1024,15 +1035,16 @@ class Memo {
         String m = mStr.toString();
         String[] tokens = m.split("\\s");
         for (int i = 0; i < tokens.length; i++) {
-            if (tokens[i].compareTo(word) > 0) {
+            if (tokens[i].compareTo(word) > 0 && tokens[i].length() > 0) {
                 larger++;
-            } else if (tokens[i].compareTo(word) == 0) {
+            }
+            if (tokens[i].compareTo(word) == 0 && tokens[i].length() > 0) {
                 same++;
-            } else if (tokens[i].compareTo(word) < 0) {
+            }
+            if (tokens[i].compareTo(word) < 0 && tokens[i].length() > 0) {
                 less++;
             }
         }
-
         System.out.println("less: " + less);
         System.out.println("same: " + same);
         System.out.println("larger: " + larger);
@@ -1072,14 +1084,14 @@ class Memo {
     private Pair find_line(int lineNum) {
         int start = 0, end = 0;
 
+        if(mStr.isEmpty()){
+            return null;
+        }
+
         for (int i = 0; i < lineNum; i++) {
             end = mStr.indexOf("\n", start);
             start = end + 1;
-            if (end == -1) {
-                return null;
-            }
-
-            if (start == mStr.length()) {
+            if (end == -1 || start == mStr.length()) {
                 return null;
             }
 
@@ -1096,11 +1108,15 @@ class Memo {
     }
 
     void delLn() { // Menu item 6
-        int lineNum = UI.getPosInt("line number to delete? ");
+        int lineNum = UI.getIndex("line number to delete? ", mStr.length());
         Pair p;
-        if (mStr.length() == 0 || (p = find_line(lineNum)) == null) {
+        if (mStr.isEmpty() || (p = find_line(lineNum)) == null) {
             System.out.println("Out of line number range");
         } else {
+            p.end = mStr.indexOf("\n", p.start);
+            if(p.end == -1){
+                p.end = mStr.length();
+            }
             mStr.delete(p.start, p.end);
             dispByLn();
         }
@@ -1109,10 +1125,10 @@ class Memo {
     void replLn() { // Menu item 7
         int lineNum = UI.getPosInt("line number to replace? ");
         Pair p;
-        String text = UI.getNextLine("input content to replace:\n");
-        if (mStr.length() == 0 || (p = find_line(lineNum)) == null) {
+        if (mStr.isEmpty() || (p = find_line(lineNum)) == null) {
             System.out.println("Out of line number range");
         } else {
+            String text = UI.getNextLine("input content to replace:\n");
             p.end = mStr.indexOf("\n", p.start);
             mStr.replace(p.start, p.end, text);
             dispByLn();
@@ -1122,8 +1138,8 @@ class Memo {
     void scrollUp() { // Menu item 8
         if (mStr.isEmpty()) {
             dispByLn();
-        }
-        if (mStr.charAt(mStr.length() - 1) != '\n') {
+            return;
+        } else if (mStr.charAt(mStr.length() - 1) != '\n') {
             mStr.append('\n');
         }
         Pair p = find_line(0);
@@ -1134,7 +1150,33 @@ class Memo {
         dispByLn();
     }
 
+    // 마지막 행의 시작 위치를 구하여 반환한다.
+    private int find_last_line() {
+        int start = 0, pos;
+        for (; ; ) {
+            pos = mStr.indexOf("\n", start);
+            if (pos == -1 || pos + 1 == mStr.length()) {
+                break;
+            }
+            start = pos + 1;
+        }
+        return start;
+    }
+
     void scrollDown() { // Menu item 9
+        if (mStr.isEmpty()) {
+            dispByLn();
+            return;
+        }
+        if (mStr.charAt(mStr.length() - 1) != '\n') {
+            mStr.append('\n');
+        }
+        int last_line_start = find_last_line();
+        int last_line_end = mStr.length();
+        String text = mStr.substring(last_line_start, last_line_end);
+        mStr.delete(last_line_start, last_line_end);
+        mStr.insert(0, text);
+        dispByLn();
     }
 
     /*
@@ -1148,6 +1190,22 @@ class Memo {
     have an Asiatic origin.
     */
     void inputMemo() { // Menu item 10
+        mStr.setLength(0);
+        System.out.println("--- input memo lines, and then input empty line at the end ---");
+        while (true) {
+            String text = UI.getNextLine("");
+            if (text.equals("")) {
+                break;
+            }
+            mStr.append(text).append("\n");
+        }
+        /*
+        while() 문을 이용하여 반복적으로
+            키보드에서 한 행을 한꺼번에 입력 받는다.
+            빈 줄일 경우 while을 빠져 나간다.
+            참고로 입력받은 행 끝에는 "\n"가 없기 때문에 이를 추가해 주어야 한다.
+            그 행을 mStr에 추가한다.
+        */
     }
 }   // Memo class: ch6_2
 
@@ -1431,13 +1489,9 @@ class VectorPerson {
     public void extend_capacity() {
         int personsLength = persons.length;
         Person[] tmp = new Person[personsLength * 2];
-        for (int i = 0; i < personsLength; i++) {
-            tmp[i] = persons[i];
-        }
+        System.arraycopy(persons, 0, tmp, 0, personsLength);
         persons = new Person[tmp.length];
-        for (int i = 0; i < personsLength; i++) {
-            persons[i] = tmp[i];
-        }
+        System.arraycopy(tmp, 0, persons, 0, personsLength);
 //        System.out.println("VectorPerson: capacity extended to " + persons.length);
     }
 }
@@ -1474,11 +1528,11 @@ class Factory {
 
 class PersonManager implements BaseStation {
     static int cpCount = 0;
-    private VectorPerson pVector;
-    private Factory factory;
-    private Person array[];
+    private final VectorPerson pVector;
+    private final Factory factory;
+    private final Person[] array;
 
-    public PersonManager(Person array[], Factory factory) {
+    public PersonManager(Person[] array, Factory factory) {
 //        System.out.println("PersonManager(array[])");
         pVector = new VectorPerson();
         this.factory = factory;
@@ -1620,7 +1674,7 @@ class PersonManager implements BaseStation {
     */
     public void append() { // Menu item 6
         int count = UI.getPosInt("number of persons to append? ");
-        factory.printInputNotice(" " + Integer.toString(count), " to append");
+        factory.printInputNotice(" " + count, " to append");
         for (int i = 0; i < count; ++i) {
             Person p = factory.inputPerson(UI.scan); // 한 사람의 정보를 입력 받음
             if (p != null) pVector.add(p);
@@ -1789,7 +1843,7 @@ class PersonManager implements BaseStation {
 }
 
 class MultiManager {
-    private Person persons[] = {        // ch6_2: p0, p1 주소 변경되었음(공백문자와 ,를 의도적으로 띄우거나 붙여 놓았음)
+    private final Person[] persons = {        // ch6_2: p0, p1 주소 변경되었음(공백문자와 ,를 의도적으로 띄우거나 붙여 놓았음)
             new Person("p0", 10, 70.0, false, "Gwangju ,Nam-gu , Bongseon-dong 21"),
             new Person("p1", 11, 61.1, true, "Jong-ro 1-gil,Jongno-gu,   Seoul"),
             new Person("p2", 12, 52.2, false, "1001, Jungang-daero, Yeonje-gu, Busan"),
@@ -1797,17 +1851,17 @@ class MultiManager {
             new Person("p4", 14, 64.4, false, "88 Gongpyeong-ro, Jung-gu, Daegu"),
     };
 
-    private Student students[] = {
+    private final Student[] students = {
             new Student("s1", 1, 65.4, true, "Jongno-gu Seoul", "Physics", 3.8, 1),
             new Student("s2", 2, 54.3, false, "Yeonje-gu Busan", "Electronics", 2.5, 4),
     };
 
-    private Worker workers[] = {
+    private final Worker[] workers = {
             new Worker("w1", 3, 33.3, false, "Kangnam-gu Seoul", "Samsung", "Director"),
             new Worker("w2", 4, 44.4, true, "Dobong-gu Kwangju", "Hyundai", "Manager"),
     };
 
-    private Person allPersons[] = {
+    private final Person[] allPersons = {
             persons[0], persons[1], students[0], students[1], workers[0], workers[1],
     };
 
@@ -2044,7 +2098,7 @@ class Ch3 {
     public static void exception() {
         var random = new Random(UI.getInt("seed for random number? "));// 난수 발생기
         int i = 0;
-        int arr[];
+        int[] arr;
         while (true) {
             try {
                 String str = UI.getNext("array[] size? ");
@@ -2119,13 +2173,13 @@ class Ch3 {
     public static void game() {
         final int USER = 0;     // 상수 정의
         final int COMPUTER = 1;
-        String MJBarray[] = {"m", "j", "b"}; // 묵(m) 찌(j) 빠(b) 문자열을 가진 배열
+        String[] MJBarray = {"m", "j", "b"}; // 묵(m) 찌(j) 빠(b) 문자열을 가진 배열
         System.out.println("Start the MUK-JJI-BBA game.");
         // 난수 발생기
         random = new Random(UI.getInt("seed for random number? "));
         // 누가 우선권을 가졌는지 저장하고 있음, USER:사용자 우선권, COMPUTER:computer 우선권
         int priority = USER;
-        String priStr[] = {"USER", "COMPUTER"}; // 우선권을 화면에 출력할 때 사용할 문자열
+        String[] priStr = {"USER", "COMPUTER"}; // 우선권을 화면에 출력할 때 사용할 문자열
         String user;
         while (true) {
             while (true) {
@@ -2197,13 +2251,13 @@ class Ch2 {
         int i1 = 1, i2 = 2, i3 = 3; // 변수 선언과 함께 초기화
 
         System.out.println(i1 + i2 + i3);
-        System.out.println("" + i1 + i2 + i3);
+        System.out.println(String.valueOf(i1) + i2 + i3);
         System.out.println(i1 + i2 + i3 + " " + i1 + i2 + i3);
 
         boolean b = true;
         double d = 1.2;
 
-        System.out.println("" + b + " " + !b + " " + d);
+        System.out.println(b + " " + !b + " " + d);
     }
 
     public static void readToken() {
