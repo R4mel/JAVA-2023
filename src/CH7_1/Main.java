@@ -1,8 +1,6 @@
 package CH7_1;
 
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,7 +9,7 @@ public class Main {
         // chk: 1(자동 오류 체크), 0(키보드에서 직접 입력하여 프로그램 실행)
         //--------------------------------
         // trace: true(오류발생한 곳 출력), false(단순히 O, X만 표시)
-//        int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
+        // int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
         run(new Scanner(System.in));
     }
 
@@ -25,6 +23,13 @@ public class Main {
 class MainMenu {
     final static int MENU_COUNT = 5;
 
+    //    public static void run() {
+//        var user = new Student("s1", 1, 65.4, true, "Jongno-gu Seoul", "Physics", 3.8, 1);
+//        Memo m = new Memo(user.getMemo());
+//        m.run();
+//        user.setMemo(m.toString());
+//        System.out.println("\nGood bye!!");
+//    }
     public static void run() {
         String menuStr =
                 "******* Main Menu ********\n" +
@@ -81,46 +86,76 @@ interface Calculator {
     // 수식과 계산 결과 또는 에러 메시지를 출력해야 하며 이 출력의 앞 또는 뒤에
     // 계산기 소유주 이름도 함께 출력하되 메이커가 알아서 적절히 회사명, 모델명 등과 함께 표시하면 된다.
     void calculate(double oprd1, String op, double oprd2); // 예: (3, "+", 2.0)
+
+    void calculate(String expr);                     // 예: ("3+2") ("2+ 3")
 }
 
-abstract class SmartPhone { // TODO: 이 클래스는 Phone, Calculator를 구현한다.
+abstract class SmartPhone implements Phone, Calculator {
     protected static BaseStation baseStation;
+
+    protected static Calendar userDate = null; // ch6_1
 
     public static void setBaseStation(BaseStation bs) {
         baseStation = bs;
     }
 
+    public static void setDate(String line) { // ch6_1
+        if (line.equals("")) {
+            userDate = null;
+            return;
+        }
+
+        Scanner s = new Scanner(line);
+        userDate = Calendar.getInstance();
+        userDate.clear();
+        userDate.set(s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt(), s.nextInt());
+        s.close();
+    }
+
     protected String owner;  // 스마트폰 소유주 이름
+
+    protected Calendar date; // ch6_1
 
     public SmartPhone(String owner) {
         this.owner = owner;
+        date = (userDate == null) ? Calendar.getInstance() : (Calendar) userDate.clone();  // ch6_1
     }
 
     public abstract String getMaker();
-
-    public abstract void sendCall(String callee);
-
-    public abstract void receiveCall(String caller);
-
-    public abstract void calculate(double oprd1, String op, double oprd2);
 
     public void setOwner(String owner) {
         this.owner = owner;
     }
 
-    public void print() {
-        System.out.print(owner + "'s Phone: " + getMaker());
-    }
+//    public void print() {
+//        System.out.print(owner + "'s Phone: " + getMaker());
+//    }
 
-    public void println() {
-        print();
-        System.out.println();
+//    public void println() {
+//        print();
+//        System.out.println();
+//    }
+
+    @Override
+    public String toString() {
+        int ampm = date.get(Calendar.AM_PM);
+        int year = date.get(Calendar.YEAR);
+        int month = date.get(Calendar.MONTH);
+        int day = date.get(Calendar.DAY_OF_MONTH);
+        int hour = date.get(Calendar.HOUR);
+        int minute = date.get(Calendar.MINUTE);
+        int second = date.get(Calendar.SECOND);
+        if (ampm == Calendar.AM) {
+            return owner + "'s Phone: " + getMaker() + "(" + year + "." + month + "." + day + " AM " + hour + ":" + minute + ":" + second + ")";
+        }
+        return owner + "'s Phone: " + getMaker() + "(" + year + "." + month + "." + day + " PM " + hour + ":" + minute + ":" + second + ")";
+        // (2023.10.18 PM 4:4:58)
     }
 
     public abstract SmartPhone clone();
 }
 
-class GalaxyPhone extends SmartPhone { // TODO: 이 클래스는 SmartPhone 클래스를 상속한다.
+class GalaxyPhone extends SmartPhone {
     private void printTradeMark(String appName) {
         System.out.println(" @ " + owner + "'s Galaxy " + appName);
     }
@@ -166,8 +201,43 @@ class GalaxyPhone extends SmartPhone { // TODO: 이 클래스는 SmartPhone 클�
     }
 
     @Override
+    public void calculate(String expr) {
+        String[] oprs = {"+", "-", "*", "/"};
+        int i;
+        for (i = 0; i < oprs.length; i++)
+            if (expr.indexOf(oprs[i]) >= 0) // expr에 oprs[i] 있는지 조사하고
+                break;                      // 있으면 expr 내의 인덱스, 없으면 음수 반환
+        if ((i >= oprs.length))             // expr에 적절한 연산자가 없을 경우
+            calculate(0, expr, 0);          // 에러 처리를 위해 호출함
+        else {
+            String a = "";
+            String[] opr = null;
+            for (var s : oprs) {
+                if (expr.contains(s)) {
+                    a = s;
+                }
+            }
+            switch (a) {
+                case "+":
+                    opr = expr.split("\\+");
+                    break;
+                case "*":
+                    opr = expr.split("\\*");
+                    break;
+                case "-":
+                    opr = expr.split("-");
+                    break;
+                case "/":
+                    opr = expr.split("/");
+                    break;
+            }
+            calculate(Double.parseDouble(opr[0]), a, Double.parseDouble(opr[1]));
+        }
+    }
+
+    @Override
     public String getMaker() {
-        return "SAMSUNG";
+        return "SAMSUNG Phone ";
     }
 
     @Override
@@ -176,7 +246,7 @@ class GalaxyPhone extends SmartPhone { // TODO: 이 클래스는 SmartPhone 클�
     }
 }
 
-class IPhone extends SmartPhone { // TODO: 이 클래스는 SmartPhone 클래스를 상속한다.
+class IPhone extends SmartPhone {
     String model;
 
     public IPhone(String owner, String model) {
@@ -235,8 +305,38 @@ class IPhone extends SmartPhone { // TODO: 이 클래스는 SmartPhone 클래스
     }
 
     @Override
+    public void calculate(String expr) {
+        String[] oprs = {"+", "-", "*", "/"};
+        int i;
+        int j = 0;
+        for (i = 0; i < oprs.length; i++)
+            if (expr.indexOf(oprs[i]) >= 0) // expr에 oprs[i] 있는지 조사하고
+                break;                      // 있으면 expr 내의 인덱스, 없으면 음수 반환
+        if ((i >= oprs.length))             // expr에 적절한 연산자가 없을 경우
+            calculate(0, expr, 0);          // 에러 처리를 위해 호출함
+        else {
+            for (int a = 0; a < 4; a++) {
+                if (expr.indexOf(oprs[a]) != -1) {
+                    j = expr.indexOf(oprs[a]);
+                    break;
+                }
+            }
+
+            String first = expr.substring(0, j);
+            String opr = expr.substring(j, j + 1).trim();
+            String last = expr.substring(j + 1);
+
+            expr = first + " " + opr + " " + last;
+
+            Scanner s = new Scanner(expr);
+            calculate(Double.parseDouble(s.next()), s.next(), Double.parseDouble(s.next()));
+            s.close();
+        }
+    }
+
+    @Override
     public String getMaker() {
-        return "Apple";
+        return "Apple Phone ";
     }
 
     @Override
@@ -252,8 +352,9 @@ class Person {
     private boolean married; // 결혼여부
     private String address; // 주소
     private String passwd = ""; // 비밀번호
-
     private SmartPhone smartPhone; // 스마트폰: 5_3에서 추가
+
+    private String memo;       // 메모: 6_2
 
     // 생성자 함수들
     public Person(String name, int id, double weight, boolean married, String address) {
@@ -282,23 +383,24 @@ class Person {
         this.married = married;
         this.address = address;
         setSmartPhone(smartPhone);
+        memo = ""; // 6_2
     }
 
-    public void println() {
-        print();
-        System.out.println();
+//    public void println() {
+//        print();
+//        System.out.println();
         /*
         1. println() 호출
         2. print() 호출
         3. 슈퍼 클래스의 print()가 호출되지 않고 원래 객체 내에서 오버라이딩된 함수가 호출됨.(5장 18p 참고)
         */
-    }
+//    }
 
-    public void println(String msg) {
-        System.out.print(msg);
-        print();
-        System.out.println();
-    }
+//    public void println(String msg) {
+//        System.out.print(msg);
+//        print();
+//        System.out.println();
+//    }
 
     // Getter: getXXX() 관련 함수들
     public String getName() {
@@ -337,6 +439,10 @@ class Person {
         return smartPhone;
     }
 
+    public String getMemo() {
+        return memo;
+    } // 6_2
+
     // Setter: overloading: set() 함수 중복
     public void set(String name) {
         this.name = name;
@@ -373,6 +479,10 @@ class Person {
                     new IPhone(name, "13"); // id가 짝수인 경우
     }
 
+    public void setMemo(String m) {
+        memo = m;
+    }
+
     public Person(Person p) { // 복사 생성자
         assign(p);
 //        System.out.print("Person(p): ");
@@ -388,13 +498,15 @@ class Person {
     }
 
     // print(), clone(), whatAreYouDoing(), equals(), input() 함수
-    public boolean equals(Person user) {
-        return (user.getName() == getName() && user.getId() == getId());
+    @Override
+    public boolean equals(Object o) {
+        Person p = (Person) o;
+        return (p.getName().equals(getName()) && p.getId() == getId());
     }
 
-    void print() {
-        printMembers();
-    }
+//    void print() {
+//        printMembers();
+//    }
 
     void input(Scanner sc) {
         inputMembers(sc);
@@ -420,9 +532,14 @@ class Person {
         set(name, "", id, weight, married, address, null);
     }
 
-    private void printMembers() {
-        System.out.print(name + " " + id + " " + weight + " " + married + " :" + address + ": ");
+    @Override
+    public String toString() {
+        return name + " " + id + " " + weight + " " + married + " :" + address + ": ";
     }
+
+//    private void printMembers() {
+//        System.out.print(name + " " + id + " " + weight + " " + married + " :" + address + ": ");
+//    }
 }
 
 class Student extends Person {
@@ -432,7 +549,6 @@ class Student extends Person {
 
     public Student(String name, int id, double weight, boolean married, String address, String department, double GPA, int year) {
         super(name, id, weight, married, address);
-        // TODO: 수퍼(부모)클래스의 생성자를 호출하여 수퍼 클래스 멤버들을 초기화하라.
         set(department, GPA, year);
 //        System.out.print("Student(): ");
 //        printMembers();
@@ -477,16 +593,16 @@ class Student extends Person {
     }
 
     // Overriding
-    @Override
-    public void print() {
-        super.print();
-        printMembers();
-    }
+//    @Override
+//    public void print() {
+//        super.print();
+//        printMembers();
+//    }
 
     @Override
-    public boolean equals(Person p) {
+    public boolean equals(Object p) {
         Student s = (Student) p;
-        return (super.equals(s) && s.getDepartment() == getDepartment() && s.getYear() == getYear());
+        return (super.equals(s) && s.getDepartment().equals(getDepartment()) && s.getYear() == getYear());
     }
 
     @Override
@@ -528,8 +644,13 @@ class Student extends Person {
     }
 
     // printMembers(), inputMembers(Scanner sc)
-    private void printMembers() {
-        System.out.print(department + " " + GPA + " " + year);
+//    private void printMembers() {
+//        System.out.print(department + " " + GPA + " " + year);
+//    }
+
+    @Override
+    public String toString() {
+        return super.toString() + department + " " + GPA + " " + year;
     }
 
     // 새로 추가된 메소드
@@ -585,9 +706,9 @@ class Worker extends Person {
 
     // Overriding
     @Override
-    public boolean equals(Person p) {
+    public boolean equals(Object p) {
         Worker s = (Worker) p;
-        return (super.equals(s) && s.getCompany() == getCompany() && s.getPosition() == getPosition());
+        return (super.equals(s) && s.getCompany().equals(getCompany()) && s.getPosition().equals(getPosition()));
     }
 
     @Override
@@ -611,11 +732,11 @@ class Worker extends Person {
         set(s.getCompany(), s.getPosition());
     }
 
-    @Override
-    public void print() {
-        super.print();
-        printMembers();
-    }
+//    @Override
+//    public void print() {
+//        super.print();
+//        printMembers();
+//    }
 
     // printMembers(), inputMembers(Scanner sc)
     void input(Scanner sc) {
@@ -634,8 +755,13 @@ class Worker extends Person {
         inputMembers(sc);
     }
 
-    private void printMembers() {
-        System.out.print(company + " " + position);
+//    private void printMembers() {
+//        System.out.print(company + " " + position);
+//    }
+
+    @Override
+    public String toString() {
+        return super.toString() + company + " " + position;
     }
 
     // 새로 추가된 메소드
@@ -718,8 +844,368 @@ class UI {
         if (echo_input) System.out.println(line);
         return line;
     }
-
 }
+
+// String과 StringBuffer 클래스의 활용을 연습하기 위한 클래스
+class Memo {
+    private final StringBuffer mStr;  // 메모를 저장하고 수정하기 위한 문자열 버퍼
+
+    // 문자열 m을 이용하여 StringBuffer를 생성한다.
+    public Memo(String m) {
+        mStr = new StringBuffer(m);
+    }
+
+    // StringBuffer mStr을 문자열로 변환하여 리턴한다.
+    public String toString() {
+        return mStr.toString();
+    }
+
+    private final String memoData =
+            "The Last of the Mohicans\n" +
+                    "James Fenimore Cooper\n" +
+                    "Author's Introduction\n" +
+                    "It is believed that the scene of this tale, and most of the information\n" +
+                    "necessary to understand its allusions, are rendered sufficiently \n" +
+                    "obvious to the reader in the text itself, or in the accompanying notes.\n" +
+                    "Still there is so much obscurity in the Indian traditions, and so much\n" +
+                    "confusion in the Indian names, as to render some explanation useful.\n" +
+                    "Few men exhibit greater diversity, or, if we may so express it, \n" +
+                    "greater antithesis of character, \n" +
+                    "than the native warrior of North America.";
+
+    public void run() {
+        String menuStr =
+                "+++++++++++++++++++++ Memo Management Menu +++++++++++++++++++\n" +
+                        "+ 0.exit 1.display 2.find 3.findReplace 4.compare 5.dispByLn +\n" +
+                        "+ 6.delLn 7.replLn 8.scrollUp 9.scrollDown 10.inputMemo      +\n" +
+                        "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+
+        // 멤버 mStr이 비었을 경우 위 memoData로 초기화한다.
+        if (mStr.length() == 0) mStr.append(memoData);
+        final int MENU_COUNT = 11; // 상수 정의
+
+        while (true) {
+            int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
+            switch (menuItem) {
+                case 1:
+                    display();
+                    break;
+                case 2:
+                    find();
+                    break;
+                case 3:
+                    findReplace();
+                    break;
+                case 4:
+                    compare();
+                    break;
+                case 5:
+                    dispByLn();
+                    break;
+                case 6:
+                    delLn();
+                    break;
+                case 7:
+                    replLn();
+                    break;
+                case 8:
+                    scrollUp();
+                    break;
+                case 9:
+                    scrollDown();
+                    break;
+                case 10:
+                    inputMemo();
+                    break;
+                case 0:
+                    return;
+            }
+        }
+    }
+
+    void display() { // Menu item 1
+        System.out.println("------- Memo -------");
+        System.out.print(mStr);
+        if (mStr.length() > 0 && mStr.charAt(mStr.length() - 1) != '\n')
+            System.out.println();
+        System.out.println("--------------------");
+    }
+
+    // content 문자열의 start 인덱스부터 word 문자열 단어를 찾아 그 단어의 시작 인덱스를 반환함
+    // 찾지 못한 경우 -1를 반환함
+    // " "로 분리된 word 단어만 찾고 다른 긴 단어 속에 포함된 경우에는 스킵한다.
+    private int findWord(String content, String word, int start) {
+        // content.indexOf(word, start):
+        //    content 문자열의 start 인덱스 위치부터 word를 검색하고
+        //    찾은 경우 찾은 시작 위치를, 못 찾은 경우 -1를 반환함
+        //    word가 다른 긴 단어의 속에 포함되어 있어도 검색이 된다.
+        if ((start = content.indexOf(word, start)) == -1)
+            return -1; // 못 찾은 경우
+        if (start > 0) {
+            // 찾은 단어의 앞이 공백이 아닌 경우 (긴 단어 속에 포함되어 있는 경우임)
+            //    찾은 단어 뒤쪽으로 계속 찾음; 재귀 함수
+            if (!Character.isWhitespace(content.charAt(start - 1)))
+                return findWord(content, word, start + word.length());
+        }
+        // 찾은 단어가 content의 끝에 있을 경우
+        if ((start + word.length()) == content.length())
+            return start; // 찾은 경우
+        // 찾은 단어의 뒤가 공백이 아닌 경우 (긴 단어 속에 포함되어 있는 경우임)
+        //    찾은 단어 뒤쪽으로 계속 찾음; 재귀 함수
+        if (!Character.isWhitespace(content.charAt(start + word.length())))
+            return findWord(content, word, start + word.length());
+        return start; // 찾은 경우
+    }
+
+    void find() { // Menu item 2
+        String word = UI.getNext("word to find? ");
+        // 전체 메모 mStr를 문자열로 변환한 후 이를 행 단위로 쪼갬
+        // 아래 구분자 "\\v"은 행 단위로 쪼개라는 구분자를 의미함; 즉, '\n','\r','\f'등을 의미함
+        String[] lines = mStr.toString().split("\\v");
+        int tot_count = 0; // 단어를 찾은 총 횟수
+
+        int j;
+        for (int i = 0; i < lines.length; i++) {
+            int count = 0;
+            for (j = 0; ; ) {
+                j = findWord(lines[i], word, j);
+                if (j >= 0) {
+                    count++;
+                    j += word.length();
+                    findWord(lines[i], word, j);
+                } else break;
+            }
+            if (count > 0) {
+                tot_count += count;
+                System.out.println("[" + i + "] " + lines[i]);
+            }
+        }
+
+        System.out.println("--------------------");
+        System.out.println(tot_count + " words found");
+    }
+
+    // content 문자열의 start 인덱스부터 word 문자열 단어를 찾아 그 단어의 시작 인덱스를 반환함
+    // 찾지 못한 경우 -1를 반환함
+    // " "로 분리된 word 단어만 찾고 다른 긴 단어 속에 포함된 경우에는 스킵한다.
+    private int findWord(StringBuffer content, String word, int start) {
+        // content.indexOf(word, start):
+        //    content 문자열의 start 인덱스 위치부터 word를 검색하고
+        //    찾은 경우 찾은 시작 위치를, 못 찾은 경우 -1를 반환함
+        //    word가 다른 긴 단어의 속에 포함되어 있어도 검색이 된다.
+        if ((start = content.indexOf(word, start)) == -1)
+            return -1; // 못 찾은 경우
+        if (start > 0) {
+            // 찾은 단어의 앞이 공백이 아닌 경우 (긴 단어 속에 포함되어 있는 경우임)
+            //    찾은 단어 뒤쪽으로 계속 찾음; 재귀 함수
+            if (!Character.isWhitespace(content.charAt(start - 1)))
+                return findWord(content, word, start + word.length());
+        }
+        // 찾은 단어가 content의 끝에 있을 경우
+        if ((start + word.length()) == content.length())
+            return start; // 찾은 경우
+        // 찾은 단어의 뒤가 공백이 아닌 경우 (긴 단어 속에 포함되어 있는 경우임)
+        //    찾은 단어 뒤쪽으로 계속 찾음; 재귀 함수
+        if (!Character.isWhitespace(content.charAt(start + word.length())))
+            return findWord(content, word, start + word.length());
+        return start; // 찾은 경우
+    }
+
+    void findReplace() { // Menu item 3
+        String find = UI.getNext("word to find? ");
+        String repl = UI.getNext("word to replace? ");
+        int count = 0; // 단어를 교체(찾은)한 횟수
+        for (int i = 0; ; ) {
+            i = findWord(mStr, find, i);
+            if (i >= 0) {
+                mStr.replace(i, i + find.length(), repl);
+                count++;
+                i += repl.length();
+                findWord(mStr, find, i);
+            } else break;
+        }
+        display();
+        System.out.println(count + " words replaced");
+    }
+
+    void compare() { // Menu item 4
+        int less = 0, same = 0, larger = 0;
+        String word = UI.getNext("word to compare? ");
+        String m = mStr.toString();
+        String[] tokens = m.split("\\s");
+        for (int i = 0; i < tokens.length; i++) {
+            if (tokens[i].compareTo(word) > 0 && tokens[i].length() > 0) {
+                larger++;
+            }
+            if (tokens[i].compareTo(word) == 0 && tokens[i].length() > 0) {
+                same++;
+            }
+            if (tokens[i].compareTo(word) < 0 && tokens[i].length() > 0) {
+                less++;
+            }
+        }
+        System.out.println("less: " + less);
+        System.out.println("same: " + same);
+        System.out.println("larger: " + larger);
+    }
+
+    void dispByLn() { // Menu item 5
+        System.out.println("--- Memo by line ---");
+        if (mStr.length() > 0) {
+            String m = mStr.toString();
+            String[] lines = m.split("\\v");
+            int count = 0;
+            for (int i = 0; i < lines.length; i++) {
+                if (lines[i].length() > 0) {
+                    System.out.println("[" + count + "] " + lines[i]);
+                    count++;
+                }
+            }
+        }
+        System.out.println("--------------------");
+    }
+
+    // 두 개의 정수 값(start, end)을 가지는 클래스
+    // 함수에서 두 개의 값을 한꺼번에 리턴하고자 할 때 이 클래스의 객체를 생성하여 반환한다.
+    // private 클래스이므로 이 클래스는 Memo 클래스 내에서만 사용가능하다.
+    private class Pair {
+        public int start, end;
+
+        Pair(int s, int e) {
+            start = s;
+            end = e;
+        }
+    }
+
+    // 행번호 lineNum(행은 0부터 시작)인 행의 시작 위치인 start와 (행의 끝+1)의 위치인 end를 찾아줌.
+    // end는 사실 그 다음 행(lineNum+1)의 시작 위치이며 마지막 행인 경우 mStr.length()와 같다.
+    // 해당 행 번호를 찾았으면 start, end 값을 가진 Pair 객체를, 찾지 못했으면 null을 반환
+    private Pair find_line(int lineNum) {
+        int start = 0, end = 0;
+
+        if (mStr.length() == 0) {
+            return null;
+        }
+
+        for (int i = 0; i < lineNum; i++) {
+            end = mStr.indexOf("\n", start);
+            start = end + 1;
+            if (end == -1 || start == mStr.length()) {
+                return null;
+            }
+        }
+        end = mStr.indexOf("\n", start);
+
+        if (end != -1) {
+            end++;
+        }
+        if (end == -1) {
+            end = mStr.length();
+        }
+
+        return new Pair(start, end);
+    }
+
+    void delLn() { // Menu item 6
+        int lineNum = UI.getPosInt("line number to delete? ");
+        Pair p;
+        if (mStr.length() == 0 || (p = find_line(lineNum)) == null) {
+            System.out.println("Out of line number range");
+        } else {
+            mStr.delete(p.start, p.end);
+            dispByLn();
+        }
+    }
+
+    void replLn() { // Menu item 7
+        int lineNum = UI.getPosInt("line number to replace? ");
+        Pair p;
+        if (mStr.length() == 0 || (p = find_line(lineNum)) == null) {
+            System.out.println("Out of line number range");
+        } else {
+            String text = UI.getNextLine("input content to replace:\n");
+            p.end = mStr.indexOf("\n", p.start);
+            if(p.end == -1) {
+                p.end = mStr.length();
+            }
+            mStr.replace(p.start, p.end, text);
+            dispByLn();
+        }
+    }
+
+    void scrollUp() { // Menu item 8
+        if (mStr.length() == 0) {
+            dispByLn();
+            return;
+        } else if (mStr.charAt(mStr.length() - 1) != '\n') {
+            mStr.append('\n');
+        }
+        Pair p = find_line(0);
+        String text = mStr.substring(p.start, p.end);
+        mStr.append(text);
+        mStr.delete(p.start, p.end);
+        dispByLn();
+    }
+
+    // 마지막 행의 시작 위치를 구하여 반환한다.
+    private int find_last_line() {
+        int start = 0, pos;
+        for (; ; ) {
+            pos = mStr.indexOf("\n", start);
+            if (pos == -1 || pos + 1 == mStr.length()) {
+                break;
+            }
+            start = pos + 1;
+        }
+        return start;
+    }
+
+    void scrollDown() { // Menu item 9
+        if (mStr.length() == 0) {
+            dispByLn();
+            return;
+        }
+        if (mStr.charAt(mStr.length() - 1) != '\n') {
+            mStr.append('\n');
+        }
+        int last_line_start = find_last_line();
+        int last_line_end = mStr.length();
+        String text = mStr.substring(last_line_start, last_line_end);
+        mStr.delete(last_line_start, last_line_end);
+        mStr.insert(0, text);
+        dispByLn();
+    }
+
+    /*
+    In war, he is daring, boastful, cunning, ruthless, self-denying,
+    and self-devoted; in peace, just, generous, hospitable, revengeful,
+    superstitious, modest, and commonly chaste.
+    These are qualities, it is true, which do not distinguish all alike;
+    but they are so far the predominating traits of these remarkable people
+    as to be characteristic.
+    It is generally believed that the Aborigines of the American continent
+    have an Asiatic origin.
+    */
+    void inputMemo() { // Menu item 10
+        mStr.setLength(0);
+        System.out.println("--- input memo lines, and then input empty line at the end ---");
+        while (true) {
+            String text = UI.getNextLine("");
+            if (text.equals("")) {
+                break;
+            }
+            mStr.append(text).append("\n");
+        }
+        /*
+        while() 문을 이용하여 반복적으로
+            키보드에서 한 행을 한꺼번에 입력 받는다.
+            빈 줄일 경우 while을 빠져 나간다.
+            참고로 입력받은 행 끝에는 "\n"가 없기 때문에 이를 추가해 주어야 한다.
+            그 행을 mStr에 추가한다.
+        */
+    }
+}   // Memo class: ch6_2
+
 
 class CurrentUser {
     Person user;
@@ -733,9 +1219,10 @@ class CurrentUser {
                 "++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++\n" +
                         "+ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +\n" +
                         "+ 6.isSame 7.update 8.chPasswd(4_2) 9.chSmartPhone(5_3)         +\n" +
-                        "+ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3)                  +\n" +
+                        "+ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) 13.chWeight(6_1) +\n" +
+                        "+ 14.calcString(6_2) 15.memo(6_2)                               +\n" +
                         "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-        final int MENU_COUNT = 13;
+        final int MENU_COUNT = 16;
         while (true) {
             int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
             switch (menuItem) {
@@ -775,6 +1262,15 @@ class CurrentUser {
                 case 12:
                     phoneCall();
                     break;
+                case 13:
+                    chWeight();
+                    break;
+                case 14:
+                    calcString();
+                    break;
+                case 15:
+                    memo();
+                    break;
                 case 0:
                     return;
             }
@@ -807,18 +1303,17 @@ class CurrentUser {
         display();
         Person c = user.clone();
         System.out.println("------------------\nclone:");
-        c.println();
-        c.getSmartPhone().println();
+        System.out.println(c);
+        System.out.println(c.getSmartPhone());
         System.out.println("\nchange clone's name " + c.getName() + " to c1\n");
         c.set("c1"); // clone의 이름을 c1으로 변경함: 스마트폰의 소유주도 c1으로 변경됨
         display();
         System.out.println("------------------\nclone:");
-        c.println();
-        c.getSmartPhone().println();
+        System.out.println(c);
+        System.out.println(c.getSmartPhone());
     }
 
     void calc() { // Menu item 11: 연산자와 피연산자는 스페이스로 분리되어 있어야 함
-        //TODO: "expression: "을 출력하고 연산자와 두개의 피연산자를 스캐너로부터 입력 받아라.
         System.out.print("expression: ");
         String op;
         double d1, d2;
@@ -835,9 +1330,28 @@ class CurrentUser {
         user.getPhone().sendCall(callee);
     }
 
+    void chWeight() { // Menu item 13
+        double sr = Math.sqrt(user.getWeight());
+        System.out.println("weight:" + user.getWeight() + " sqrt:" + sr + " ceil:" + Math.ceil(sr) + " floor:" + Math.floor(sr) + " round:" + Math.round(sr));
+        user.set(Math.ceil(sr) * Math.floor(sr));
+        System.out.println(user);
+    }
+
+    // Menu item 14:ch6_2: "2+3", "2+ 3"처럼 연산자와 피연산자가 붙어 있어도 됨
+    void calcString() {
+        String line = UI.getNextLine("expression: ");
+        user.getCalculator().calculate(line);
+    }
+
+    void memo() { // Menu item 15: ch6_2
+        Memo m = new Memo(user.getMemo());
+        m.run();
+        user.setMemo(m.toString());
+    }
+
     void display() {
-        user.println();
-        user.getSmartPhone().println();
+        System.out.println(user);
+        System.out.println(user.getSmartPhone());
 
     } // Menu item 1
 
@@ -854,13 +1368,13 @@ class CurrentUser {
         p.set(user.getWeight());
         p.set(user.getMarried());
         p.setAddress(user.getAddress());
-        p.println("p.set(): ");
+        System.out.println("p.set(): " + p);
     }
 
     void copy() { // Menu item 4
-        user.println("user: ");
+        System.out.println("user: " + user);
         var p = user.clone();
-        p.println("p: ");
+        System.out.println("p: " + p);
     }
 
     void whatAreYouDoing() {  // Menu item 5
@@ -868,20 +1382,20 @@ class CurrentUser {
     }
 
     void equals() { // Menu item 6
-        user.println("user: ");
+        System.out.println("user: " + user);
         var p = new Person("user");
         p.set(1);
-        p.println("p: ");
+        System.out.println("p: " + p);
         System.out.println("p.equals(user): " + p.equals(user));
         p.assign(user);
-        p.println("p.assign(user): ");
+        System.out.println("p.assign(user): " + p);
         System.out.println("p.equals(user): " + p.equals(user));
     }
 
     void update() { // Menu item 7
         System.out.println("input person information:");
         user.input(UI.scan); // user 100 65 true :426 hakdong-ro, Gangnam-gu, Seoul:
-        if (UI.echo_input) user.println(); // 자동오류체크시 출력됨
+        if (UI.echo_input) System.out.println(user); // 자동오류체크시 출력됨
         display();
     }
 }
@@ -905,6 +1419,13 @@ class VectorPerson {
     // persons[index]의 값을 반환
     public Person get(int index) {
         return persons[index];
+    }
+
+    // persons[index]의 값을 p로 새로 교체하고 과거의 persons[index] 값을 반환
+    public Person set(int index, Person p) {
+        Person a = persons[index];
+        persons[index] = p;
+        return a;
     }
 
     // 할당 받은 persons 배열의 전체 길이를 반환함 (count가 아님)
@@ -965,13 +1486,9 @@ class VectorPerson {
     public void extend_capacity() {
         int personsLength = persons.length;
         Person[] tmp = new Person[personsLength * 2];
-        for (int i = 0; i < personsLength; i++) {
-            tmp[i] = persons[i];
-        }
+        System.arraycopy(persons, 0, tmp, 0, personsLength);
         persons = new Person[tmp.length];
-        for (int i = 0; i < personsLength; i++) {
-            persons[i] = tmp[i];
-        }
+        System.arraycopy(tmp, 0, persons, 0, personsLength);
 //        System.out.println("VectorPerson: capacity extended to " + persons.length);
     }
 }
@@ -1001,18 +1518,18 @@ class Factory {
                 System.out.println(delimiter + ": WRONG delimiter");
                 return null;
         }
-        if (UI.echo_input) p.println(delimiter.equals("") ? "" : delimiter + " ");
+        if (UI.echo_input) System.out.println(delimiter.equals("") ? "" : delimiter + " " + p);
         return p;
     }
 }
 
 class PersonManager implements BaseStation {
     static int cpCount = 0;
-    private VectorPerson pVector;
-    private Factory factory;
-    private Person array[];
+    private final VectorPerson pVector;
+    private final Factory factory;
+    private final Person[] array;
 
-    public PersonManager(Person array[], Factory factory) {
+    public PersonManager(Person[] array, Factory factory) {
 //        System.out.println("PersonManager(array[])");
         pVector = new VectorPerson();
         this.factory = factory;
@@ -1024,12 +1541,13 @@ class PersonManager implements BaseStation {
 
     public void run() {
         String menuStr =
-                "=============== Person Management Menu ================\n" +
-                        "= 0.exit 1.display 2.clear 3.reset 4.remove           =\n" +
-                        "= 5.copy 6.append 7.insert 8.login 9.dispStudent(5_3) =\n" +
-                        "= 10.dispPhone(5_3)                                   =\n" +
-                        "=======================================================\n";
-        final int MENU_COUNT = 11; // 상수 정의
+                "=================== Person Management Menu =====================\n" +
+                        "= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =\n" +
+                        "= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =\n" +
+                        "= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =\n" +
+                        "= 15.chAddress(6_2)                                            =\n" +
+                        "================================================================\n";
+        final int MENU_COUNT = 16; // 상수 정의
         while (true) {
             int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
             switch (menuItem) {
@@ -1063,6 +1581,21 @@ class PersonManager implements BaseStation {
                 case 10:
                     dispPhone();
                     break;
+                case 11:
+                    find();
+                    break;
+                case 12:
+                    wrapper();
+                    break;
+                case 13:
+                    shuffle();
+                    break;
+                case 14:
+                    setDate();
+                    break;
+                case 15:
+                    chAddress();
+                    break;
                 case 0:
                     return;
             }
@@ -1074,7 +1607,7 @@ class PersonManager implements BaseStation {
 //        System.out.println("display(): count " + count);
         for (int i = 0; i < count; ++i) {
             System.out.print("[" + i + "] ");
-            pVector.get(i).println();
+            System.out.println(pVector.get(i));
         }
 //        System.out.println("empty():" + pVector.isEmpty() + ", size():" + pVector.size()
 //                + ", capacity():" + pVector.capacity());
@@ -1138,7 +1671,7 @@ class PersonManager implements BaseStation {
     */
     public void append() { // Menu item 6
         int count = UI.getPosInt("number of persons to append? ");
-        factory.printInputNotice(" " + Integer.toString(count), " to append");
+        factory.printInputNotice(" " + count, " to append");
         for (int i = 0; i < count; ++i) {
             Person p = factory.inputPerson(UI.scan); // 한 사람의 정보를 입력 받음
             if (p != null) pVector.add(p);
@@ -1180,7 +1713,7 @@ class PersonManager implements BaseStation {
         for (int i = 0; i < count; ++i) {
             if (pVector.get(i) instanceof Student) {
                 System.out.print("[" + i + "] ");
-                pVector.get(i).println();
+                System.out.println(pVector.get(i));
             }
         }
     }
@@ -1190,8 +1723,92 @@ class PersonManager implements BaseStation {
         System.out.println("dispPhones(): count " + count);
         for (int i = 0; i < count; ++i) {
             System.out.print("[" + i + "] ");
-            pVector.get(i).getSmartPhone().println();
+            System.out.println(pVector.get(i).getSmartPhone());
         }
+    }
+
+    public void find() { // Menu item 11: ch6_1
+        boolean found = false;
+        factory.printInputNotice("", " to find by equals()");
+        Person p = factory.inputPerson(UI.scan); // 한 사람의 정보를 입력 받음
+        if (p == null) return;
+        for (int i = 0; i < pVector.size(); i++) {
+            if (p.getClass() == pVector.get(i).getClass()) {
+                if (pVector.get(i).equals(p)) {
+                    System.out.print("[" + i + "] ");
+                    System.out.println(pVector.get(i));
+                    found = true;
+                    return;
+                }
+            }
+        }
+        if (!found) {
+            System.out.println("NOT found by equals()");
+        }
+    }
+
+    void wrapper() { // Menu item 12: ch6_1
+        for (int i = 0; i < pVector.size(); i++) {
+            Person p = pVector.get(i);
+            System.out.print("[" + i + "] ");
+            dispPersonInfo(p.getName(), String.valueOf(p.getId()), String.valueOf(p.getWeight()), String.valueOf(p.getMarried()));
+        }
+    }
+
+    private void dispPersonInfo(String sname, String sid, String sweight, String smarried) {
+        char first = sname.charAt(0);
+        char last = sname.charAt(sname.length() - 1);
+        String add = sname.substring(1, sname.length() - 1);
+        sname = last + add + first;
+        if (sid.charAt(sid.length() - 1) == '0') {
+            sid = sid.substring(0, sid.length() - 1) + '1';
+        }
+        if (smarried.equals("true")) {
+            smarried = "false";
+        } else {
+            smarried = "true";
+        }
+        dispPersonInfo(sname, Integer.parseInt(sid), Double.parseDouble(sweight), Boolean.parseBoolean(smarried));
+    }
+
+    private void dispPersonInfo(String sname, int id, double weight, boolean married) {
+        System.out.println(sname + " " + id + " 0x" + Integer.toHexString(id) + " 0" + Integer.toOctalString(id) + " 0b" + Integer.toBinaryString(id) + " " + weight + " " + married);
+    }
+
+    public void shuffle() { // Menu item 13: ch6_1
+        int count = pVector.size();
+        for (int i = 0; i < count; i++) {
+            int j = (int) (Math.random() * count);
+            pVector.set(j, pVector.set(i, pVector.get(j)));
+        }
+        display();
+    }
+
+    public void setDate() { // Menu item 14: ch6_1
+        String line = UI.getNextLine("date and time(ex: 2021 10 1 18 24 30)? ");
+        SmartPhone.setDate(line);
+    }
+
+    void chAddress() { // Menu item 14: ch6_2
+        for (int i = 0; i < pVector.size(); ++i) {
+            Person p = pVector.get(i);
+            p.setAddress(newAddress(p.getAddress()));
+        }
+        display();
+    }
+
+    private String newAddress(String address) {
+        address = address.toLowerCase().replaceAll("-gu", "_gu");
+        String[] arr = address.split(",");
+        StringBuilder addressBuilder = new StringBuilder();
+        for (int i = 0; i < arr.length; i++) {
+            if (i == arr.length - 1) {
+                addressBuilder.append(arr[i].trim());
+            } else {
+                addressBuilder.append(arr[i].trim()).append(" ");
+            }
+        }
+        return addressBuilder.toString();
     }
 
     @Override
@@ -1223,25 +1840,25 @@ class PersonManager implements BaseStation {
 }
 
 class MultiManager {
-    private Person persons[] = {
-            new Person("p0", 10, 70.0, false, "Gwangju Nam-gu Bongseon-dong 21"),
-            new Person("p1", 11, 61.1, true, "Jong-ro 1-gil, Jongno-gu, Seoul"),
+    private final Person[] persons = {        // ch6_2: p0, p1 주소 변경되었음(공백문자와 ,를 의도적으로 띄우거나 붙여 놓았음)
+            new Person("p0", 10, 70.0, false, "Gwangju ,Nam-gu , Bongseon-dong 21"),
+            new Person("p1", 11, 61.1, true, "Jong-ro 1-gil,Jongno-gu,   Seoul"),
             new Person("p2", 12, 52.2, false, "1001, Jungang-daero, Yeonje-gu, Busan"),
             new Person("p3", 13, 83.3, true, "100 Dunsan-ro Seo-gu Daejeon"),
             new Person("p4", 14, 64.4, false, "88 Gongpyeong-ro, Jung-gu, Daegu"),
     };
 
-    private Student students[] = {
+    private final Student[] students = {
             new Student("s1", 1, 65.4, true, "Jongno-gu Seoul", "Physics", 3.8, 1),
             new Student("s2", 2, 54.3, false, "Yeonje-gu Busan", "Electronics", 2.5, 4),
     };
 
-    private Worker workers[] = {
+    private final Worker[] workers = {
             new Worker("w1", 3, 33.3, false, "Kangnam-gu Seoul", "Samsung", "Director"),
             new Worker("w2", 4, 44.4, true, "Dobong-gu Kwangju", "Hyundai", "Manager"),
     };
 
-    private Person allPersons[] = {
+    private final Person[] allPersons = {
             persons[0], persons[1], students[0], students[1], workers[0], workers[1],
     };
 
@@ -1284,8 +1901,8 @@ class Inheritance {
     }
 
     void compare(Person p1, Person p2) {
-        p1.println("p1: ");
-        p2.println("p2: ");
+        System.out.println("p1: " + p1);
+        System.out.println("p2: " + p2);
         System.out.println("p1.equals(p2) : " + p1.equals(p2));
         System.out.println("--------------------");
     }
@@ -1298,7 +1915,7 @@ class Inheritance {
     void input(Person p, String msg) {
         System.out.print("input " + msg + ": ");
         p.input(UI.scan);
-        if (UI.echo_input) p.println(); // 자동체크에서 사용됨
+        if (UI.echo_input) System.out.println(p); // 자동체크에서 사용됨
     }
 
     Person clone(Person p) {
@@ -1317,7 +1934,7 @@ class Inheritance {
             p = new Student(UI.scan);
         else
             p = new Worker(UI.scan);
-        if (UI.echo_input) p.println(); // 자동체크에서 사용됨
+        if (UI.echo_input) System.out.println(p); // 자동체크에서 사용됨
         return p;
     }
 
@@ -1347,22 +1964,22 @@ class Inheritance {
         s3.whatAreYouDoing();
 
         s3 = (Student) clone(s2);
-        s3.println("s3: ");
+        System.out.println("s3: " + s3);
         System.out.println("--------------------");
 
-        s2.println("s2: ");
+        System.out.println("s2: " + s2);
         s1 = new Student("", 0, 0.0, false, "", "", 0.0, 0);
         assign(s2, s1); // (destination, source): destination = source
-        s2.println("s2: ");
+        System.out.println("s2: " + s2);
         System.out.println("--------------------");
 
         input(s2, "student"); // s2 1 56.9 false :Gangnam-gu Seoul: Physics 2.0 1
-        s2.println("s2: ");
+        System.out.println("s2: " + s2);
         System.out.println("--------------------");
 
         Student s4 = (Student) newInput(true, "student");
         // s4 1 56.9 false :Gangnam-gu Seoul: Physics 2.0 1
-        s4.println("s4: ");
+        System.out.println("s4: " + s4);
     }
 
     void worker() {
@@ -1389,22 +2006,22 @@ class Inheritance {
         w3.whatAreYouDoing();
 
         w3 = (Worker) clone(w2);
-        w3.println("w3    : ");
+        System.out.println("w3    : " + w3);
         System.out.println("--------------------");
 
-        w2.println("w2: ");
+        System.out.println("w2: " + w2);
         w1 = new Worker("", 0, 0.0, false, "", "", "");
         assign(w2, w1); // (destination, source): destination = source
-        w2.println("w2: ");
+        System.out.println("w2: " + w2);
         System.out.println("--------------------");
 
         input(w2, "worker"); // w2 3 44.4 true :Jongno-gu Seoul: Samsung Director
-        w2.println("w2: ");
+        System.out.println("w2: " + w2);
         System.out.println("--------------------");
 
         Worker w4 = (Worker) newInput(false, "worker");
         // w4 3 44.4 true :Jongno-gu Seoul: Samsung Director
-        w4.println("w4: ");
+        System.out.println("w4: " + w4);
     }
 }
 
@@ -1478,7 +2095,7 @@ class Ch3 {
     public static void exception() {
         var random = new Random(UI.getInt("seed for random number? "));// 난수 발생기
         int i = 0;
-        int arr[];
+        int[] arr;
         while (true) {
             try {
                 String str = UI.getNext("array[] size? ");
@@ -1553,13 +2170,13 @@ class Ch3 {
     public static void game() {
         final int USER = 0;     // 상수 정의
         final int COMPUTER = 1;
-        String MJBarray[] = {"m", "j", "b"}; // 묵(m) 찌(j) 빠(b) 문자열을 가진 배열
+        String[] MJBarray = {"m", "j", "b"}; // 묵(m) 찌(j) 빠(b) 문자열을 가진 배열
         System.out.println("Start the MUK-JJI-BBA game.");
         // 난수 발생기
         random = new Random(UI.getInt("seed for random number? "));
         // 누가 우선권을 가졌는지 저장하고 있음, USER:사용자 우선권, COMPUTER:computer 우선권
         int priority = USER;
-        String priStr[] = {"USER", "COMPUTER"}; // 우선권을 화면에 출력할 때 사용할 문자열
+        String[] priStr = {"USER", "COMPUTER"}; // 우선권을 화면에 출력할 때 사용할 문자열
         String user;
         while (true) {
             while (true) {
@@ -1631,13 +2248,13 @@ class Ch2 {
         int i1 = 1, i2 = 2, i3 = 3; // 변수 선언과 함께 초기화
 
         System.out.println(i1 + i2 + i3);
-        System.out.println("" + i1 + i2 + i3);
+        System.out.println(String.valueOf(i1) + i2 + i3);
         System.out.println(i1 + i2 + i3 + " " + i1 + i2 + i3);
 
         boolean b = true;
         double d = 1.2;
 
-        System.out.println("" + b + " " + !b + " " + d);
+        System.out.println(b + " " + !b + " " + d);
     }
 
     public static void readToken() {

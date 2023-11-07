@@ -11,12 +11,12 @@ menu item? 1
 [4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
 [5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
 
-======================= Person Management Menu =======================
-= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append 7.insert =
-= 8.login 9.dispStudent(5_3) 10.dispPhone(5_3) 11.find(6_1)          =
-= 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) 15.chAddress(6_2)  =
-= 16.sort(7_1) 17.reverse(7_1) 18.binarySearch(7_1)                  =
-======================================================================
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1)                        =
+================================================================
 menu item? 1
 [0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
 [1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
@@ -25,12 +25,12 @@ menu item? 1
 [4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
 [5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
 
-======================= Person Management Menu =======================
-= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append 7.insert =
-= 8.login 9.dispStudent(5_3) 10.dispPhone(5_3) 11.find(6_1)          =
-= 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) 15.chAddress(6_2)  =
-= 16.sort(7_1) 17.reverse(7_1) 18.binarySearch(7_1)                  =
-======================================================================
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1)                        =
+================================================================
 menu item? 5
 [0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
 [1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
@@ -45,13 +45,67 @@ menu item? 5
 [10] ww1 23 34.3 true :Kangnam-gu Seoul: Samsung Director
 [11] ww2 24 45.4 false :Dobong-gu Kwangju: Hyundai Manager
 
-======================= Person Management Menu =======================
-= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append 7.insert =
-= 8.login 9.dispStudent(5_3) 10.dispPhone(5_3) 11.find(6_1)          =
-= 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) 15.chAddress(6_2)  =
-= 16.sort(7_1) 17.reverse(7_1) 18.binarySearch(7_1)                  =
-======================================================================
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1)                        =
+================================================================
+menu item? 13
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[2] pp1 31 62.1 false :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[3] ss1 21 66.4 false :Jongno-gu Seoul: Physics 3.8 1
+[4] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[5] pp0 30 71.0 true :Gwangju ,Nam-gu , Bongseon-dong 21:
+[6] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[7] ss2 22 55.3 true :Yeonje-gu Busan: Electronics 2.5 4
+[8] ww2 24 45.4 false :Dobong-gu Kwangju: Hyundai Manager
+[9] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[10] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+[11] ww1 23 34.3 true :Kangnam-gu Seoul: Samsung Director
+
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1)                        =
+================================================================
 menu item? 16
+
+======================= Collections Menu =======================
+= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =
+================================================================
+menu item? 1
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[2] pp1 31 62.1 false :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[3] ss1 21 66.4 false :Jongno-gu Seoul: Physics 3.8 1
+[4] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[5] pp0 30 71.0 true :Gwangju ,Nam-gu , Bongseon-dong 21:
+[6] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[7] ss2 22 55.3 true :Yeonje-gu Busan: Electronics 2.5 4
+[8] ww2 24 45.4 false :Dobong-gu Kwangju: Hyundai Manager
+[9] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[10] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+[11] ww1 23 34.3 true :Kangnam-gu Seoul: Samsung Director
+
+======================= Collections Menu =======================
+= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =
+================================================================
+menu item? 2
+p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+
+======================= Collections Menu =======================
+= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =
+================================================================
+menu item? 3
+ww2 24 45.4 false :Dobong-gu Kwangju: Hyundai Manager
+
+======================= Collections Menu =======================
+= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =
+================================================================
+menu item? 4
 [0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
 [1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
 [2] pp0 30 71.0 true :Gwangju ,Nam-gu , Bongseon-dong 21:
@@ -65,13 +119,17 @@ menu item? 16
 [10] ww1 23 34.3 true :Kangnam-gu Seoul: Samsung Director
 [11] ww2 24 45.4 false :Dobong-gu Kwangju: Hyundai Manager
 
-======================= Person Management Menu =======================
-= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append 7.insert =
-= 8.login 9.dispStudent(5_3) 10.dispPhone(5_3) 11.find(6_1)          =
-= 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) 15.chAddress(6_2)  =
-= 16.sort(7_1) 17.reverse(7_1) 18.binarySearch(7_1)                  =
-======================================================================
-menu item? 17
+======================= Collections Menu =======================
+= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =
+================================================================
+menu item? 6
+For binary search, it's needed to sort in advance. Name to search? ww2
+ww2 24 45.4 false :Dobong-gu Kwangju: Hyundai Manager
+
+======================= Collections Menu =======================
+= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =
+================================================================
+menu item? 5
 [0] ww2 24 45.4 false :Dobong-gu Kwangju: Hyundai Manager
 [1] ww1 23 34.3 true :Kangnam-gu Seoul: Samsung Director
 [2] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
@@ -85,32 +143,24 @@ menu item? 17
 [10] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
 [11] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
 
-======================= Person Management Menu =======================
-= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append 7.insert =
-= 8.login 9.dispStudent(5_3) 10.dispPhone(5_3) 11.find(6_1)          =
-= 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) 15.chAddress(6_2)  =
-= 16.sort(7_1) 17.reverse(7_1) 18.binarySearch(7_1)                  =
-======================================================================
-menu item? 16
-[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
-[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
-[2] pp0 30 71.0 true :Gwangju ,Nam-gu , Bongseon-dong 21:
-[3] pp1 31 62.1 false :Jong-ro 1-gil,Jongno-gu,   Seoul:
-[4] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
-[5] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
-[6] ss1 21 66.4 false :Jongno-gu Seoul: Physics 3.8 1
-[7] ss2 22 55.3 true :Yeonje-gu Busan: Electronics 2.5 4
-[8] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
-[9] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
-[10] ww1 23 34.3 true :Kangnam-gu Seoul: Samsung Director
-[11] ww2 24 45.4 false :Dobong-gu Kwangju: Hyundai Manager
+======================= Collections Menu =======================
+= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =
+================================================================
+menu item? 6
+For binary search, it's needed to sort in advance. Name to search? ww2
+ww2 is NOT found.
 
-======================= Person Management Menu =======================
-= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append 7.insert =
-= 8.login 9.dispStudent(5_3) 10.dispPhone(5_3) 11.find(6_1)          =
-= 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) 15.chAddress(6_2)  =
-= 16.sort(7_1) 17.reverse(7_1) 18.binarySearch(7_1)                  =
-======================================================================
+======================= Collections Menu =======================
+= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =
+================================================================
+menu item? 0
+
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1)                        =
+================================================================
 menu item? 0
 
 ******* Main Menu ********

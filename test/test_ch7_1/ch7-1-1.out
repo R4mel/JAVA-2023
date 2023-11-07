@@ -11,12 +11,12 @@ menu item? 1
 [4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
 [5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
 
-======================= Person Management Menu =======================
-= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append 7.insert =
-= 8.login 9.dispStudent(5_3) 10.dispPhone(5_3) 11.find(6_1)          =
-= 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) 15.chAddress(6_2)  =
-= 16.sort(7_1) 17.reverse(7_1) 18.binarySearch(7_1)                  =
-======================================================================
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1)                        =
+================================================================
 menu item? 1
 [0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
 [1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
@@ -25,12 +25,12 @@ menu item? 1
 [4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
 [5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
 
-======================= Person Management Menu =======================
-= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append 7.insert =
-= 8.login 9.dispStudent(5_3) 10.dispPhone(5_3) 11.find(6_1)          =
-= 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) 15.chAddress(6_2)  =
-= 16.sort(7_1) 17.reverse(7_1) 18.binarySearch(7_1)                  =
-======================================================================
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1)                        =
+================================================================
 menu item? 5
 [0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
 [1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
@@ -45,12 +45,12 @@ menu item? 5
 [10] ww1 23 34.3 true :Kangnam-gu Seoul: Samsung Director
 [11] ww2 24 45.4 false :Dobong-gu Kwangju: Hyundai Manager
 
-======================= Person Management Menu =======================
-= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append 7.insert =
-= 8.login 9.dispStudent(5_3) 10.dispPhone(5_3) 11.find(6_1)          =
-= 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) 15.chAddress(6_2)  =
-= 16.sort(7_1) 17.reverse(7_1) 18.binarySearch(7_1)                  =
-======================================================================
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1)                        =
+================================================================
 menu item? 3
 [0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
 [1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
@@ -59,12 +59,12 @@ menu item? 3
 [4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
 [5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
 
-======================= Person Management Menu =======================
-= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append 7.insert =
-= 8.login 9.dispStudent(5_3) 10.dispPhone(5_3) 11.find(6_1)          =
-= 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) 15.chAddress(6_2)  =
-= 16.sort(7_1) 17.reverse(7_1) 18.binarySearch(7_1)                  =
-======================================================================
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1)                        =
+================================================================
 menu item? 13
 [0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
 [1] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
@@ -73,28 +73,28 @@ menu item? 13
 [4] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
 [5] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
 
-======================= Person Management Menu =======================
-= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append 7.insert =
-= 8.login 9.dispStudent(5_3) 10.dispPhone(5_3) 11.find(6_1)          =
-= 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) 15.chAddress(6_2)  =
-= 16.sort(7_1) 17.reverse(7_1) 18.binarySearch(7_1)                  =
-======================================================================
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1)                        =
+================================================================
 menu item? 2
 
-======================= Person Management Menu =======================
-= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append 7.insert =
-= 8.login 9.dispStudent(5_3) 10.dispPhone(5_3) 11.find(6_1)          =
-= 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) 15.chAddress(6_2)  =
-= 16.sort(7_1) 17.reverse(7_1) 18.binarySearch(7_1)                  =
-======================================================================
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1)                        =
+================================================================
 menu item? 1
 
-======================= Person Management Menu =======================
-= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append 7.insert =
-= 8.login 9.dispStudent(5_3) 10.dispPhone(5_3) 11.find(6_1)          =
-= 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) 15.chAddress(6_2)  =
-= 16.sort(7_1) 17.reverse(7_1) 18.binarySearch(7_1)                  =
-======================================================================
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1)                        =
+================================================================
 menu item? 6
 number of persons to append? 5
 input 5 [delimiter(P,S,or W)] [person information] to append:
@@ -111,12 +111,12 @@ W w4 16 77.0 false :Buk-ro 3, Kangdong-gu, Seoul: Naver Department-Head
 [3] s4 15 80.0 true :1001, Jungang-daero, Yeonje-gu, Busan: Biology 3.8 3
 [4] w4 16 77.0 false :Buk-ro 3, Kangdong-gu, Seoul: Naver Department-Head
 
-======================= Person Management Menu =======================
-= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append 7.insert =
-= 8.login 9.dispStudent(5_3) 10.dispPhone(5_3) 11.find(6_1)          =
-= 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) 15.chAddress(6_2)  =
-= 16.sort(7_1) 17.reverse(7_1) 18.binarySearch(7_1)                  =
-======================================================================
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1)                        =
+================================================================
 menu item? 7
 index to insert in front? 7
 7: OUT of selection range(0 ~ 5) Try again!!
@@ -130,31 +130,31 @@ W w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
 [4] s4 15 80.0 true :1001, Jungang-daero, Yeonje-gu, Busan: Biology 3.8 3
 [5] w4 16 77.0 false :Buk-ro 3, Kangdong-gu, Seoul: Naver Department-Head
 
-======================= Person Management Menu =======================
-= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append 7.insert =
-= 8.login 9.dispStudent(5_3) 10.dispPhone(5_3) 11.find(6_1)          =
-= 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) 15.chAddress(6_2)  =
-= 16.sort(7_1) 17.reverse(7_1) 18.binarySearch(7_1)                  =
-======================================================================
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1)                        =
+================================================================
 menu item? 2
 
-======================= Person Management Menu =======================
-= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append 7.insert =
-= 8.login 9.dispStudent(5_3) 10.dispPhone(5_3) 11.find(6_1)          =
-= 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) 15.chAddress(6_2)  =
-= 16.sort(7_1) 17.reverse(7_1) 18.binarySearch(7_1)                  =
-======================================================================
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1)                        =
+================================================================
 menu item? 7
 input [delimiter(P,S,or W)] [person information] to insert:
 W w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
 [0] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
 
-======================= Person Management Menu =======================
-= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append 7.insert =
-= 8.login 9.dispStudent(5_3) 10.dispPhone(5_3) 11.find(6_1)          =
-= 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) 15.chAddress(6_2)  =
-= 16.sort(7_1) 17.reverse(7_1) 18.binarySearch(7_1)                  =
-======================================================================
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1)                        =
+================================================================
 menu item? 7
 index to insert in front? 1
 input [delimiter(P,S,or W)] [person information] to insert:
@@ -162,12 +162,12 @@ S s3 12 71.5 false :Gwangju Nam-gu Bongseon-dong 21: Computer 3.3 2
 [0] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
 [1] s3 12 71.5 false :Gwangju Nam-gu Bongseon-dong 21: Computer 3.3 2
 
-======================= Person Management Menu =======================
-= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append 7.insert =
-= 8.login 9.dispStudent(5_3) 10.dispPhone(5_3) 11.find(6_1)          =
-= 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) 15.chAddress(6_2)  =
-= 16.sort(7_1) 17.reverse(7_1) 18.binarySearch(7_1)                  =
-======================================================================
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1)                        =
+================================================================
 menu item? 0
 
 ******* Main Menu ********
