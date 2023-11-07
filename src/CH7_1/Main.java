@@ -1524,19 +1524,24 @@ class Factory {
 }
 
 class PersonManager implements BaseStation {
-    static int cpCount = 0;
-    private final VectorPerson pVector;
+    int cpCount = 0;
+//    private final VectorPerson pVector;
+    private Vector<Person> pVector;
     private final Factory factory;
     private final Person[] array;
 
+    private Random rand; // 7_1 추가
+
     public PersonManager(Person[] array, Factory factory) {
 //        System.out.println("PersonManager(array[])");
-        pVector = new VectorPerson();
+        pVector = new Vector<>();
         this.factory = factory;
         this.array = array;
         addArray();
         display();
         SmartPhone.setBaseStation(this);
+        cpCount = 0;                     // 7_1 추가
+        rand = new Random(0);  // 0: seed 값임, 7_1 추가
     }
 
     public void run() {
@@ -1603,93 +1608,79 @@ class PersonManager implements BaseStation {
     }
 
     public void display() { // Menu item 1
-        int count = pVector.size();
-//        System.out.println("display(): count " + count);
-        for (int i = 0; i < count; ++i) {
-            System.out.print("[" + i + "] ");
-            System.out.println(pVector.get(i));
-        }
-//        System.out.println("empty():" + pVector.isEmpty() + ", size():" + pVector.size()
-//                + ", capacity():" + pVector.capacity());
+        int count = xxx; // ToDo: pVector의 모든 원소의 개수
+        //System.out.println("display(): count " + count);
+        for (int i = 0; i < count; ++i)
+            // ToDo: pVector의 인덱스 i번째 객체 출력
+            System.out.println("[" + i + "] " + xxx);
+        //System.out.println("empty():" + pVector.isEmpty() + ", size():" + pVector.size()
+        //     + ", capacity():" + pVector.capacity());
     }
 
     public void clear() {  // Menu item 2
-        pVector.clear();
+        xxx; // ToDo: pVector의 모든 원소를 삭제하라.
         display();
     }
 
     public void reset() { // Menu item 3
-        pVector.clear();
+        xxx; // ToDo: pVector의 모든 원소를 삭제하라.
         addArray();
         display();
     }
-
     public void remove() { // Menu item 4
-        if (pVector.size() == 0) {
+        if (xxx) { // ToDo: pVector의 원소가 하나도 없을 경우
             System.out.println("no entry to remove");
             return;
         }
         int index = UI.getIndex("index to delete? ", pVector.size());
-        pVector.remove(index);
+        xxx; // ToDo: pVector의 index 원소를 삭제하라.
         display();
     }
-
     public void copy() { // Menu item 5
         cpCount++;
-        for (int i = 0, size = pVector.size(); i < size; ++i) {
-            Person p = pVector.get(i).clone();
+        // ToDo: pVector의 각각의 원소 인덱스 i에 대해
+        for (int i = 0, size = xxx; i < size; ++i) {
+            Person p = xxx; // ToDo: pVector의 i번째 원소를 복제해서 p에 저장하라.
             String name = p.getName();
             for (int j = 0; j < cpCount; ++j)
-                name = name.charAt(0) + name;
+                name = name.charAt(0)+name;
             p.set(name);
             p.set(p.getId() + 20 * cpCount);
             p.set(p.getWeight() + cpCount);
             if (cpCount % 2 == 1)
                 p.set(!p.getMarried());
-            pVector.add(p);
+            xxx; // ToDo: p를 pVector의 맨 뒤에 추가하라.
         }
         display();
     }
-
-    /*
-    5
-    K p3 11 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
-    P p3 11 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
-    S s3 12 71.5 false :Gwangju Nam-gu Bongseon-dong 21: Computer 3.3 2
-    W w3 13 65 true :Jong-ro 1-gil, Jongno-gu, Seoul: Kia CEO
-    S s4 15 80 true :1001, Jungang-daero, Yeonje-gu, Busan: Biology 3.8 3
-    W w4 16 77 false :Buk-ro 3, Kangdong-gu, Seoul: Naver Department-Head
-    */
-    // 아래 함수는 사용자로부터 새로 추가할 Person 객체의 수를 입력 받고 for문을 이용하여
-    // 그 개수만큼의 Person 객체를 생성하고 인적정보를 입력받은 후 (factory.inputPerson()을 통해)
-    // VectorPerson pVector의 맨 끝에 추가한다.
-    /* append() 실행 시 아래 항목들을 복사해서 순서적으로 입력하면 편하게 인적정보를 입력할 수 있음
-    3
-    HongGilDong 0 71.5 false :Gwangju Nam-gu Bongseon-dong 21:
-    LeeMongRyong 1 65 true :Jong-ro 1-gil, Jongno-gu, Seoul:
-    LeeSoonShin 2 80 true :1001, Jungang-daero, Yeonje-gu, Busan:
-    */
     public void append() { // Menu item 6
         int count = UI.getPosInt("number of persons to append? ");
-        factory.printInputNotice(" " + count, " to append");
+        factory.printInputNotice(" "+Integer.toString(count), " to append");
         for (int i = 0; i < count; ++i) {
-            Person p = factory.inputPerson(UI.scan); // 한 사람의 정보를 입력 받음
-            if (p != null) pVector.add(p);
+            Person p = factory.inputPerson(UI.scan);
+            // ToDo: p가 잘못 입력된 객체가 아닌 경우 p를 pVector의 맨 뒤에 추가하고,
+            //       p가 잘못 입력된 객체인 경우 입력 개수에 포함시키지 않는다.
+            //       (즉, i 값이 증가되지 말아야 함) 과거 코드가 잘못되었을 수 있음
         }
         display();
     }
-
     public void insert() { // Menu item 7
         int index = 0;
         if (pVector.size() > 0) {
-            index = UI.getIndex("index to insert in front? ", pVector.size() + 1);
+            // ToDo: 새로운 원소를 삽입할 장소는 pVector의
+            //       인덱스 0에서부터 마지막 원소 바로 다음 장소까지 삽입 가능하다.
+            index = UI.getIndex("index to insert in front? ", xxx);
             if (index < 0) return;
         }
         factory.printInputNotice("", " to insert");
         Person p = factory.inputPerson(UI.scan);
-        if (p == null) return;
-        pVector.add(index, p);
+        xxx; // ToDo: 객체 p가 잘못 입력된 객체인 경우 여기서 리턴하라.
+        xxx; // ToDo: 객체 p를 pVector의 index 위치에 삽입하라.
         display();
+    }
+
+    private void addArray() {
+        // ToDo: array의 모든 원소를 순서적으로 복사한 후 pVector에 추가하라.
     }
 
     // 사용자로부터 VectorPerson pVector에 저장된 사람들 중에서 로그인할 사람의 이름(name)과 비번을 입력받고
@@ -1778,7 +1769,8 @@ class PersonManager implements BaseStation {
     public void shuffle() { // Menu item 13: ch6_1
         int count = pVector.size();
         for (int i = 0; i < count; i++) {
-            int j = (int) (Math.random() * count);
+//            int j = (int) (Math.random() * count);
+            int j = rand.nextInt(pVector.size()); // [0 ~ (pVector.size()-1)]
             pVector.set(j, pVector.set(i, pVector.get(j)));
         }
         display();
