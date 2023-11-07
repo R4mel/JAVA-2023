@@ -1,0 +1,224 @@
+
+********** Main Menu **********
+* 0.exit 1.PersonManager      *
+* 2.ch2 3.ch3 4.ch5 5.PMbyMap *
+*******************************
+menu item? 5
+
+====== Map Menu =======
+= 0.HashMap 1.TreeMap =
+=======================
+menu item? 1
+Map Size: 10
+---------------------------------------------
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Leem11 1491 75.8 true :Busan Buk-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Shim15 1745 46.2 true :Incheon Buk-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 1
+Map Size: 10
+---------------------------------------------
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Leem11 1491 75.8 true :Busan Buk-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Shim15 1745 46.2 true :Incheon Buk-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 2
+Map Size: 0
+---------------------------------------------
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 3
+Map Size: 10
+---------------------------------------------
+Choi28 1688 91.2 false :Ulsan Nam-gu:
+Johh27 1319 96.7 true :Ulsan Buk-gu:
+Jooh29 1797 92.9 true :Ulsan Nam-gu:
+Kimm23 1135 98.2 true :Gwangju Seo-gu:
+Kimm25 1223 40.5 true :Seoul Dong-gu:
+Park26 1957 82.7 true :Busan Jung-gu:
+Ryoo22 1457 60.9 true :Incheon Buk-gu:
+Seoh24 1905 50.7 true :Ulsan Nam-gu:
+Song21 1451 67.7 true :Daejeon Buk-gu:
+Yang20 1387 83.3 true :Daegu Buk-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 4
+Map Size: 10
+---------------------------------------------
+Choi28 1271 83.4 true :Seoul Seo-gu:
+Johh27 1984 66.4 false :Gwangju Dong-gu:
+Jooh29 1049 70.1 true :Ulsan Buk-gu:
+Kimm23 1294 61.1 false :Incheon Dong-gu:
+Kimm25 1577 41.7 true :Daejeon Nam-gu:
+Park26 1957 82.7 true :Busan Jung-gu:
+Ryoo22 1457 60.9 true :Incheon Buk-gu:
+Seoh24 1905 50.7 true :Ulsan Nam-gu:
+Song21 1451 67.7 true :Daejeon Buk-gu:
+Yang20 1387 83.3 true :Daegu Buk-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 5
+name to delete? Yang20
+Map Size: 9
+---------------------------------------------
+Choi28 1271 83.4 true :Seoul Seo-gu:
+Johh27 1984 66.4 false :Gwangju Dong-gu:
+Jooh29 1049 70.1 true :Ulsan Buk-gu:
+Kimm23 1294 61.1 false :Incheon Dong-gu:
+Kimm25 1577 41.7 true :Daejeon Nam-gu:
+Park26 1957 82.7 true :Busan Jung-gu:
+Ryoo22 1457 60.9 true :Incheon Buk-gu:
+Seoh24 1905 50.7 true :Ulsan Nam-gu:
+Song21 1451 67.7 true :Daejeon Buk-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 6
+name to find? Park26
+Park26 1957 82.7 true :Busan Jung-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 0
+
+********** Main Menu **********
+* 0.exit 1.PersonManager      *
+* 2.ch2 3.ch3 4.ch5 5.PMbyMap *
+*******************************
+menu item? 5
+
+====== Map Menu =======
+= 0.HashMap 1.TreeMap =
+=======================
+menu item? 0
+Map Size: 10
+---------------------------------------------
+Shim15 1745 46.2 true :Incheon Buk-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Leem11 1491 75.8 true :Busan Buk-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 2
+Map Size: 0
+---------------------------------------------
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 3
+Map Size: 10
+---------------------------------------------
+Jooh29 1797 92.9 true :Ulsan Nam-gu:
+Song21 1451 67.7 true :Daejeon Buk-gu:
+Yang20 1387 83.3 true :Daegu Buk-gu:
+Kimm25 1223 40.5 true :Seoul Dong-gu:
+Choi28 1688 91.2 false :Ulsan Nam-gu:
+Seoh24 1905 50.7 true :Ulsan Nam-gu:
+Kimm23 1135 98.2 true :Gwangju Seo-gu:
+Johh27 1319 96.7 true :Ulsan Buk-gu:
+Ryoo22 1457 60.9 true :Incheon Buk-gu:
+Park26 1957 82.7 true :Busan Jung-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 4
+Map Size: 10
+---------------------------------------------
+Jooh29 1271 83.4 true :Seoul Seo-gu:
+Song21 1984 66.4 false :Gwangju Dong-gu:
+Yang20 1049 70.1 true :Ulsan Buk-gu:
+Kimm25 1294 61.1 false :Incheon Dong-gu:
+Choi28 1577 41.7 true :Daejeon Nam-gu:
+Seoh24 1905 50.7 true :Ulsan Nam-gu:
+Kimm23 1135 98.2 true :Gwangju Seo-gu:
+Johh27 1319 96.7 true :Ulsan Buk-gu:
+Ryoo22 1457 60.9 true :Incheon Buk-gu:
+Park26 1957 82.7 true :Busan Jung-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 5
+name to delete? Jooh29
+Map Size: 9
+---------------------------------------------
+Song21 1984 66.4 false :Gwangju Dong-gu:
+Yang20 1049 70.1 true :Ulsan Buk-gu:
+Kimm25 1294 61.1 false :Incheon Dong-gu:
+Choi28 1577 41.7 true :Daejeon Nam-gu:
+Seoh24 1905 50.7 true :Ulsan Nam-gu:
+Kimm23 1135 98.2 true :Gwangju Seo-gu:
+Johh27 1319 96.7 true :Ulsan Buk-gu:
+Ryoo22 1457 60.9 true :Incheon Buk-gu:
+Park26 1957 82.7 true :Busan Jung-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 6
+name to find? Park26
+Park26 1957 82.7 true :Busan Jung-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 0
+
+********** Main Menu **********
+* 0.exit 1.PersonManager      *
+* 2.ch2 3.ch3 4.ch5 5.PMbyMap *
+*******************************
+menu item? 0
+
+Good bye!!

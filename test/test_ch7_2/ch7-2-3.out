@@ -1,0 +1,148 @@
+
+********** Main Menu **********
+* 0.exit 1.PersonManager      *
+* 2.ch2 3.ch3 4.ch5 5.PMbyMap *
+*******************************
+menu item? 5
+
+====== Map Menu =======
+= 0.HashMap 1.TreeMap =
+=======================
+menu item? 0
+Map Size: 10
+---------------------------------------------
+Shim15 1745 46.2 true :Incheon Buk-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Leem11 1491 75.8 true :Busan Buk-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 7
+
+======================= Collections Menu =======================
+= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =
+================================================================
+menu item? 1
+Map Size: 10
+---------------------------------------------
+Shim15 1745 46.2 true :Incheon Buk-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Leem11 1491 75.8 true :Busan Buk-gu:
+
+======================= Collections Menu =======================
+= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =
+================================================================
+menu item? 2
+Baek17 1555 84.7 true :Daegu Nam-gu:
+
+======================= Collections Menu =======================
+= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =
+================================================================
+menu item? 3
+Yang10 1360 54.4 false :Incheon Dong-gu:
+
+======================= Collections Menu =======================
+= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =
+================================================================
+menu item? 4
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Leem11 1491 75.8 true :Busan Buk-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Shim15 1745 46.2 true :Incheon Buk-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+
+======================= Collections Menu =======================
+= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =
+================================================================
+menu item? 1
+Map Size: 10
+---------------------------------------------
+Shim15 1745 46.2 true :Incheon Buk-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Leem11 1491 75.8 true :Busan Buk-gu:
+
+======================= Collections Menu =======================
+= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =
+================================================================
+menu item? 5
+Leem11 1491 75.8 true :Busan Buk-gu:
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Shim15 1745 46.2 true :Incheon Buk-gu:
+
+======================= Collections Menu =======================
+= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =
+================================================================
+menu item? 1
+Map Size: 10
+---------------------------------------------
+Shim15 1745 46.2 true :Incheon Buk-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Leem11 1491 75.8 true :Busan Buk-gu:
+
+======================= Collections Menu =======================
+= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =
+================================================================
+menu item? 6
+Name to search? Leem11
+Leem11 1491 75.8 true :Busan Buk-gu:
+
+======================= Collections Menu =======================
+= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =
+================================================================
+menu item? 0
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 0
+
+********** Main Menu **********
+* 0.exit 1.PersonManager      *
+* 2.ch2 3.ch3 4.ch5 5.PMbyMap *
+*******************************
+menu item? 0
+
+Good bye!!
