@@ -9,7 +9,7 @@ public class Main {
         // chk: 1(자동 오류 체크), 0(키보드에서 직접 입력하여 프로그램 실행)
         //--------------------------------
         // trace: true(오류발생한 곳 출력), false(단순히 O, X만 표시)
-//        int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
+        // int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
             run(new Scanner(System.in));
     }
 
@@ -210,14 +210,13 @@ class GalaxyPhone extends SmartPhone {
         if ((i >= oprs.length))             // expr에 적절한 연산자가 없을 경우
             calculate(0, expr, 0);          // 에러 처리를 위해 호출함
         else {
-            String a = null;
+            String a = "";
             String[] opr = null;
             for (var s : oprs) {
                 if (expr.contains(s)) {
                     a = s;
                 }
             }
-
             switch (a) {
                 case "+":
                     opr = expr.split("\\+");
@@ -1084,7 +1083,7 @@ class Memo {
     private Pair find_line(int lineNum) {
         int start = 0, end = 0;
 
-        if(mStr.isEmpty()){
+        if (mStr.length() == 0) {
             return null;
         }
 
@@ -1094,29 +1093,25 @@ class Memo {
             if (end == -1 || start == mStr.length()) {
                 return null;
             }
-
-            end = mStr.indexOf("\n", start);
-
-            if (end != -1) {
-                end++;
-            }
-            if (end == -1) {
-                end = mStr.length();
-            }
         }
+        end = mStr.indexOf("\n", start);
+
+        if (end != -1) {
+            end++;
+        }
+        if (end == -1) {
+            end = mStr.length();
+        }
+
         return new Pair(start, end);
     }
 
     void delLn() { // Menu item 6
-        int lineNum = UI.getIndex("line number to delete? ", mStr.length());
+        int lineNum = UI.getPosInt("line number to delete? ");
         Pair p;
-        if (mStr.isEmpty() || (p = find_line(lineNum)) == null) {
+        if (mStr.length() == 0 || (p = find_line(lineNum)) == null) {
             System.out.println("Out of line number range");
         } else {
-            p.end = mStr.indexOf("\n", p.start);
-            if(p.end == -1){
-                p.end = mStr.length();
-            }
             mStr.delete(p.start, p.end);
             dispByLn();
         }
@@ -1125,28 +1120,30 @@ class Memo {
     void replLn() { // Menu item 7
         int lineNum = UI.getPosInt("line number to replace? ");
         Pair p;
-        if (mStr.isEmpty() || (p = find_line(lineNum)) == null) {
+        if (mStr.length() == 0 || (p = find_line(lineNum)) == null) {
             System.out.println("Out of line number range");
         } else {
             String text = UI.getNextLine("input content to replace:\n");
             p.end = mStr.indexOf("\n", p.start);
+            if(p.end == -1) {
+                p.end = mStr.length();
+            }
             mStr.replace(p.start, p.end, text);
             dispByLn();
         }
     }
 
     void scrollUp() { // Menu item 8
-        if (mStr.isEmpty()) {
+        if (mStr.length() == 0) {
             dispByLn();
             return;
         } else if (mStr.charAt(mStr.length() - 1) != '\n') {
             mStr.append('\n');
         }
         Pair p = find_line(0);
-        p.end = mStr.indexOf("\n", p.start);
         String text = mStr.substring(p.start, p.end);
         mStr.append(text);
-        mStr.delete(p.start, p.end + 1);
+        mStr.delete(p.start, p.end);
         dispByLn();
     }
 
@@ -1164,7 +1161,7 @@ class Memo {
     }
 
     void scrollDown() { // Menu item 9
-        if (mStr.isEmpty()) {
+        if (mStr.length() == 0) {
             dispByLn();
             return;
         }
