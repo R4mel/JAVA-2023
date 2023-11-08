@@ -32,7 +32,7 @@ class MainMenu {
 //    }
     public static void run() {
         String menuStr = // 7_2 수정
-                "********** Main Menu **********\n" +
+                        "********** Main Menu **********\n" +
                         "* 0.exit 1.PersonManager      *\n" +
                         "* 2.ch2 3.ch3 4.ch5 5.PMbyMap *\n" +
                         "*******************************\n";
@@ -2038,81 +2038,50 @@ class PMbyMap extends BaseManager { // ch7_2
             var p = getNewPerson();
             p.set(name);
             map.put(name, p);
-            // ToDo: 새로 생성된 Person 객체 p의 이름을 name으로 변경하라.
-            //       name과 p를 map에 추가하라. 기존에 동일한 키가 존재하기 때문에 값만 교체됨
             if (++i == REPLACE_SIZE) break; // 초반의 REPLACE_SIZE 개수만큼만 교체함
         }
         display();
     }
 
     public void remove() { // Menu item 5
-        if(map.isEmpty()) {
+        if (map.isEmpty()) {
             System.out.println("no entry to remove");
             return;
         }
         String name = UI.getNext("name to delete? ");
         map.remove(name);
-        // ToDo: map이 비어 있으면 "no entry to remove"를 출력하고 리턴하라.
-        //       PersonManager::login()을 참조하여
-        //          "name to delete? "를 출력하고 name을 입력 받아라.
-        //       map에서 name 엔트리를 제거하라.
         display();
     }
 
     public void find() { // Menu item 6
         String name = UI.getNext("name to find? ");
         Person p = map.get(name);
-        if(p != null) {
+        if (p != null) {
             System.out.println(p);
             return;
         }
         System.out.println(name + ": NOT found");
-        // ToDo: "name to find? "를 출력하고 name을 입력 받아라.
-        //       map에서 name을 검색하여 결과를 저장하라.
-        //       name을 찾았으면 Person 객체를 출력하고
-        //       찾지 못했으면 name + ": NOT found"를 출력하라.
     }
 
     public void collections() { // Menu item 7
-        /*if (hashMap == null)
-            new CollectionsByTreeMap(treeMap).run();*/
-        /*else
-            new CollectionsByHashMap(hashMap).run();*/
+        if (hashMap == null)
+            new CollectionsByTreeMap(treeMap).run();
+        else
+            new CollectionsByHashMap(hashMap).run();
     }
 
     public void clearAllElements() {  // BaseManager::clear()에서 호출됨
         map.clear();
-        // ToDo: map의 모든 원소를 삭제하라.
     }
-
-    /*
-    int i = 0;
-    Set<String> keySet = map.keySet();
-        for (var name : keySet) {
-        var p = getNewPerson();
-        p.set(name);
-        map.put(name, p);
-        // ToDo: 새로 생성된 Person 객체 p의 이름을 name으로 변경하라.
-        //       name과 p를 map에 추가하라. 기존에 동일한 키가 존재하기 때문에 값만 교체됨
-        if (++i == REPLACE_SIZE) break; // 초반의 REPLACE_SIZE 개수만큼만 교체함
-    }
-    display();
-    */
 
     public void addElements() {  // BaseManager::add()에서 호출됨
         for (int i = 0; i < ADD_SIZE; ++i) {
             var p = getNewPerson();
-            map.get(p);
-            // ToDo: 위 replace()를 참고하여 새로운 Person 객체 p를 생성하라.
-            //       생성된 객체를 값으로 해서 map에 추가하라. 키는 p의 이름이다.
+            map.put(p.getName(), p);
         }
     }
 
     public Person getNewPerson() {
-        // ToDo: new를 이용해 새로운 Person 객체를 생성하여 반환한다.
-        //       이 때 Person(name, id, weight, married, address) 생성자를 이용하라.
-        //       각 멤버는 BaseManager 클래스의 getXXX() 함수들을 활용하여 자동 생성하라.
-        //       getNewMarried(id) 호출 시 생성할 객체의 id를 인자로 넘겨 주어야 한다.
         int id = getNewId();
         return new Person(getNewName(), id, getNewWeight(), getNewMarried(id), getNewAddress());
     }
@@ -2222,6 +2191,109 @@ class CollectionsByList extends CollectionsMenu { // ch7_1
         // 주의: 이진 검색하기 전에 먼저 list가 정렬이 되어 있어야 한다.
     }
 }   // ch7_1: CollectionsByList class
+
+abstract class CollectionsByMap extends CollectionsMenu { // ch7_2
+    public void display(Map<String, Person> map) {
+        PMbyMap.display(map);
+    }
+
+    public void searchMap(Map<String, Person> map) {
+        String name = UI.getNext("Name to search? ");
+        Person p = map.get(name);
+        if (p != null) {
+            System.out.println(p);
+            return;
+        }
+        System.out.println(name + ": NOT found");
+    }
+}   // ch7_2: CollectionsByMap class
+
+class CollectionsByTreeMap extends CollectionsByMap { // ch7_2
+    private TreeMap<String, Person> map;
+
+    public CollectionsByTreeMap(TreeMap<String, Person> map) {
+        this.map = map;
+    }
+
+    public void display() {
+        display(map);
+    }
+
+    public void min() {
+        // 첫번째 entry가 키가 가장 작은 엔트리이다. 이름 순서상 가장 앞쪽 이름임
+        Map.Entry<String, Person> e = map.firstEntry();
+        if (e != null) System.out.println(e.getValue());
+    }
+
+    public void max() {
+        // 마지막 entry가 키가 가장 큰 엔트리이다. 이름 순서상 가장 뒤쪽 이름임
+        Map.Entry<String, Person> e = map.lastEntry();
+        if (e != null) System.out.println(e.getValue());
+    }
+
+    public void sort() {
+        display();
+    } // 키가 이미 정렬되어 있으므로 바로 보여 줌
+
+    // descendingMap()을 통해 키의 역순으로 된 map를 구할 수 있음
+    public void reverse() {
+        display(map.descendingMap());
+    }
+
+    public void binarySearch() {
+        searchMap(map);
+    } // 맵에서 바로 검색함
+
+}   // ch7_2: CollectionsByTreeMap class
+
+class CollectionsByHashMap extends CollectionsByMap { // ch7_2
+    private HashMap<String, Person> map;
+
+    public CollectionsByHashMap(HashMap<String, Person> map) {
+        this.map = map;
+    }
+
+    public void display() {
+        display(map);
+    }
+
+    public void min() {
+        if(map.isEmpty()) {
+            return;
+        }
+
+        System.out.println(map.get(Collections.min(map.keySet())));
+    }
+
+    public void max() {
+        if(map.isEmpty()) {
+            return;
+        }
+        System.out.println(map.get(Collections.max(map.keySet())));
+    }
+
+    public void sort() {
+        // map의 keySet을 이용하여 벡터를 생성함
+        var keyList = new Vector<String>(map.keySet());
+        Collections.sort(keyList);
+        for(var key: keyList){
+            System.out.println(map.get(key));
+        }
+    }
+
+    public void reverse() {
+        var keyList = new Vector<String>(map.keySet());
+        Collections.reverse(keyList);
+        for(var key: keyList){
+            System.out.println(map.get(key));
+        }
+    }
+
+    public void binarySearch() {
+        searchMap(map);
+    }  // 맵에서 바로 검색함
+
+}   // ch7_2: CollectionsByHashMap class
 
 class Inheritance {
     Student s;
