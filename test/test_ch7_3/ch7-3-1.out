@@ -1,0 +1,136 @@
+
+************* Main Menu **************
+* 0.exit 1.PersonManager 2.ch2 3.ch3 *
+* 4.ch5 5.PMbyMap 6.MyVectorTest     *
+**************************************
+menu item? 6
+[0] Yang10 1360 54.4 false :Incheon Dong-gu:
+[1] Leem11 1491 75.8 true :Busan Buk-gu:
+[2] Park12 1473 99.0 true :Daejeon Jung-gu:
+[3] Kimm13 1241 56.4 true :Daejeon Buk-gu:
+[4] Kimm14 1652 41.3 false :Gwangju Dong-gu:
+[5] Shim15 1745 46.2 true :Incheon Buk-gu:
+[6] Johh16 1125 86.5 true :Seoul Jung-gu:
+[7] Baek17 1555 84.7 true :Daegu Nam-gu:
+[8] Park18 1112 90.3 false :Ulsan Nam-gu:
+[9] Nahh19 1207 48.0 true :Gwangju Buk-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 2
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 3
+[0] Yang20 1387 83.3 true :Daegu Buk-gu:
+[1] Song21 1451 67.7 true :Daejeon Buk-gu:
+[2] Ryoo22 1457 60.9 true :Incheon Buk-gu:
+[3] Kimm23 1135 98.2 true :Gwangju Seo-gu:
+[4] Seoh24 1905 50.7 true :Ulsan Nam-gu:
+[5] Kimm25 1223 40.5 true :Seoul Dong-gu:
+[6] Park26 1957 82.7 true :Busan Jung-gu:
+[7] Johh27 1319 96.7 true :Ulsan Buk-gu:
+[8] Choi28 1688 91.2 false :Ulsan Nam-gu:
+[9] Jooh29 1797 92.9 true :Ulsan Nam-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 4
+[0] Ryoo30 1534 83.4 false :Seoul Seo-gu:
+[1] Jeon31 1762 66.4 false :Gwangju Dong-gu:
+[2] Yoon32 1245 70.1 true :Ulsan Buk-gu:
+[3] Baeh33 1859 61.1 true :Incheon Dong-gu:
+[4] Jooh34 1778 41.7 false :Daejeon Nam-gu:
+[5] Kimm25 1223 40.5 true :Seoul Dong-gu:
+[6] Park26 1957 82.7 true :Busan Jung-gu:
+[7] Johh27 1319 96.7 true :Ulsan Buk-gu:
+[8] Choi28 1688 91.2 false :Ulsan Nam-gu:
+[9] Jooh29 1797 92.9 true :Ulsan Nam-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 5
+index to delete? 0
+[0] Jeon31 1762 66.4 false :Gwangju Dong-gu:
+[1] Yoon32 1245 70.1 true :Ulsan Buk-gu:
+[2] Baeh33 1859 61.1 true :Incheon Dong-gu:
+[3] Jooh34 1778 41.7 false :Daejeon Nam-gu:
+[4] Kimm25 1223 40.5 true :Seoul Dong-gu:
+[5] Park26 1957 82.7 true :Busan Jung-gu:
+[6] Johh27 1319 96.7 true :Ulsan Buk-gu:
+[7] Choi28 1688 91.2 false :Ulsan Nam-gu:
+[8] Jooh29 1797 92.9 true :Ulsan Nam-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 5
+index to delete? 4
+[0] Jeon31 1762 66.4 false :Gwangju Dong-gu:
+[1] Yoon32 1245 70.1 true :Ulsan Buk-gu:
+[2] Baeh33 1859 61.1 true :Incheon Dong-gu:
+[3] Jooh34 1778 41.7 false :Daejeon Nam-gu:
+[4] Park26 1957 82.7 true :Busan Jung-gu:
+[5] Johh27 1319 96.7 true :Ulsan Buk-gu:
+[6] Choi28 1688 91.2 false :Ulsan Nam-gu:
+[7] Jooh29 1797 92.9 true :Ulsan Nam-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 5
+index to delete? 7
+[0] Jeon31 1762 66.4 false :Gwangju Dong-gu:
+[1] Yoon32 1245 70.1 true :Ulsan Buk-gu:
+[2] Baeh33 1859 61.1 true :Incheon Dong-gu:
+[3] Jooh34 1778 41.7 false :Daejeon Nam-gu:
+[4] Park26 1957 82.7 true :Busan Jung-gu:
+[5] Johh27 1319 96.7 true :Ulsan Buk-gu:
+[6] Choi28 1688 91.2 false :Ulsan Nam-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 6
+name to find? Jooh29
+Jooh29: NOT found
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 6
+name to find? Johh27
+[5] Johh27 1319 96.7 true :Ulsan Buk-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 7
+not supported by MyVector
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 0
+
+************* Main Menu **************
+* 0.exit 1.PersonManager 2.ch2 3.ch3 *
+* 4.ch5 5.PMbyMap 6.MyVectorTest     *
+**************************************
+menu item? 0
+
+Good bye!!
