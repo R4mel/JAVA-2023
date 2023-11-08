@@ -1,0 +1,133 @@
+
+************* Main Menu **************
+* 0.exit 1.PersonManager 2.ch2 3.ch3 *
+* 4.ch5 5.PMbyMap 6.MyVectorTest     *
+**************************************
+menu item? 1
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1)                        =
+================================================================
+menu item? 8
+user name: p0
+password: 
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.isSame 7.update 8.chPasswd(4_2) 9.chSmartPhone(5_3)         +
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) 13.chWeight(6_1) +
++ 14.calcString(6_2) 15.memo(6_2)                               +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 15
+
++++++++++++++++++++++ Memo Management Menu +++++++++++++++++++
++ 0.exit 1.display 2.find 3.findReplace 4.compare 5.dispByLn +
++ 6.delLn 7.replLn 8.scrollUp 9.scrollDown 10.inputMemo      +
++ 11.wordCount 12.countWordList                              +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 10
+--- input memo lines, and then input empty line at the end ---
+The Vector class implements a growable array of objects. 
+Like an array, it contains components that can be accessed 
+using an integer index. However, the size of a Vector can 
+grow or shrink as needed to accommodate adding and removing 
+items after the Vector has been created.
+Each vector tries to optimize storage management by maintaining 
+a capacity and a capacityIncrement. The capacity is always 
+at least as large as the vector size; it is usually larger 
+because as components are added to the vector, the vector's 
+storage increases in chunks the size of capacityIncrement. 
+An application can increase the capacity of a vector 
+before inserting a large number of components; 
+this reduces the amount of incremental reallocation.
+The iterators returned by this class's iterator and 
+listIterator methods are fail-fast: if the vector is 
+structurally modified at any time after the iterator 
+is created, in any way except through the iterator's 
+own remove or add methods, the iterator will throw 
+a ConcurrentModificationException. 
+Thus, in the face of concurrent modification, 
+the iterator fails quickly and cleanly, 
+rather than risking arbitrary, non-deterministic behavior 
+at an undetermined time in the future. 
+The Enumerations returned by the elements method are not fail-fast; 
+if the Vector is structurally modified at any time 
+after the enumeration is created then the results of 
+enumerating are undefined.
+Note that the fail-fast behavior of an iterator cannot be 
+guaranteed as it is, generally speaking, impossible to 
+make any hard guarantees in the presence of unsynchronized 
+concurrent modification. 
+Fail-fast iterators throw ConcurrentModificationException 
+on a best-effort basis. 
+Therefore, it would be wrong to write a program that 
+depended on this exception for its correctness: 
+the fail-fast behavior of iterators should be used only to detect bugs.
+As of the Java 2 platform v1.2, 
+this class was retrofitted to implement the List interface, 
+making it a member of the Java Collections Framework. 
+Unlike the new collection implementations, Vector is synchronized. 
+If a thread-safe implementation is not needed, 
+it is recommended to use ArrayList in place of Vector.
+
+
++++++++++++++++++++++ Memo Management Menu +++++++++++++++++++
++ 0.exit 1.display 2.find 3.findReplace 4.compare 5.dispByLn +
++ 6.delLn 7.replLn 8.scrollUp 9.scrollDown 10.inputMemo      +
++ 11.wordCount 12.countWordList                              +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 12
+----------------
+Count  Words
+----------------
+26     the 
+14     of 
+11     a 
+ 9     is 
+ 8     to 
+ 6     in it 
+ 5     Vector as iterator 
+ 4     The an and any are at be this vector 
+ 3     after behavior by can capacity iterators that time 
+ 2     Java capacityIncrement. class components concurrent fail-fast if large modified not on or returned size storage structurally throw 
+----------------
+
++++++++++++++++++++++ Memo Management Menu +++++++++++++++++++
++ 0.exit 1.display 2.find 3.findReplace 4.compare 5.dispByLn +
++ 6.delLn 7.replLn 8.scrollUp 9.scrollDown 10.inputMemo      +
++ 11.wordCount 12.countWordList                              +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 0
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.isSame 7.update 8.chPasswd(4_2) 9.chSmartPhone(5_3)         +
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) 13.chWeight(6_1) +
++ 14.calcString(6_2) 15.memo(6_2)                               +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 0
+
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1)                        =
+================================================================
+menu item? 0
+
+************* Main Menu **************
+* 0.exit 1.PersonManager 2.ch2 3.ch3 *
+* 4.ch5 5.PMbyMap 6.MyVectorTest     *
+**************************************
+menu item? 0
+
+Good bye!!
