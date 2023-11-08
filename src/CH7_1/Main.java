@@ -345,7 +345,7 @@ class IPhone extends SmartPhone {
     }
 }
 
-class Person {
+class Person implements Comparable<Person> {
     private String name;    // 이름
     private int id;      // Identifier
     private double weight;  // 체중
@@ -537,6 +537,10 @@ class Person {
         return name + " " + id + " " + weight + " " + married + " :" + address + ": ";
     }
 
+    @Override
+    public int compareTo(Person p) {
+        return this.getName().compareTo(p.name);
+    }
 //    private void printMembers() {
 //        System.out.print(name + " " + id + " " + weight + " " + married + " :" + address + ": ");
 //    }
@@ -1550,9 +1554,9 @@ class PersonManager implements BaseStation {
                         "= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =\n" +
                         "= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =\n" +
                         "= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =\n" +
-                        "= 15.chAddress(6_2)                                            =\n" +
+                        "= 15.chAddress(6_2) 16.collections(7_1)                        =\n" +
                         "================================================================\n";
-        final int MENU_COUNT = 16; // 상수 정의
+        final int MENU_COUNT = 17; // 상수 정의
         while (true) {
             int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
             switch (menuItem) {
@@ -1600,6 +1604,9 @@ class PersonManager implements BaseStation {
                     break;
                 case 15:
                     chAddress();
+                    break;
+                case 16:
+                    collections();
                     break;
                 case 0:
                     return;
@@ -1651,7 +1658,7 @@ class PersonManager implements BaseStation {
             p.set(p.getWeight() + cpCount);
             if (cpCount % 2 == 1)
                 p.set(!p.getMarried());
-            pVector.add(p.clone()); // ToDo: p를 pVector의 맨 뒤에 추가하라.
+            pVector.add(p); // ToDo: p를 pVector의 맨 뒤에 추가하라.
         }
         display();
     }
@@ -1661,7 +1668,7 @@ class PersonManager implements BaseStation {
         factory.printInputNotice(" " + Integer.toString(count), " to append");
         for (int i = 0; i < count; ++i) {
             Person p = factory.inputPerson(UI.scan);
-            if(p != null) pVector.add(p);
+            if (p != null) pVector.add(p);
             else i--;
             // ToDo: p가 잘못 입력된 객체가 아닌 경우 p를 pVector의 맨 뒤에 추가하고,
             //       p가 잘못 입력된 객체인 경우 입력 개수에 포함시키지 않는다.
@@ -1675,7 +1682,7 @@ class PersonManager implements BaseStation {
         if (pVector.size() > 0) {
             // ToDo: 새로운 원소를 삽입할 장소는 pVector의
             //       인덱스 0에서부터 마지막 원소 바로 다음 장소까지 삽입 가능하다.
-            index = UI.getIndex("index to insert in front? ", pVector.size());
+            index = UI.getIndex("index to insert in front? ", pVector.size() + 1);
             if (index < 0) return;
         }
         factory.printInputNotice("", " to insert");
@@ -1793,6 +1800,10 @@ class PersonManager implements BaseStation {
         display();
     }
 
+    public void collections() { // Menu item 16: ch7_1
+        new CollectionsByList(pVector).run();
+    }
+
     private String newAddress(String address) {
         address = address.toLowerCase().replaceAll("-gu", "_gu");
         String[] arr = address.split(",");
@@ -1865,6 +1876,118 @@ class MultiManager {
 //        System.out.println("PersonManager::run() returned");
     }
 }
+
+abstract class CollectionsMenu { // ch7_1
+    public void run() {
+        String menuStr =
+                "======================= Collections Menu =======================\n" +
+                        "= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =\n" +
+                        "================================================================\n";
+        final int MENU_COUNT = 7;
+        while (true) {
+            int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
+            switch (menuItem) {
+                case 1:
+                    display();
+                    break;
+                case 2:
+                    min();
+                    break;
+                case 3:
+                    max();
+                    break;
+                case 4:
+                    sort();
+                    break;
+                case 5:
+                    reverse();
+                    break;
+                case 6:
+                    binarySearch();
+                    break;
+                case 0:
+                    return;
+            }
+        }
+    }
+
+    abstract public void display(); // Menu item 1
+
+    abstract public void min(); // Menu item 2
+
+    abstract public void max(); // Menu item 3
+
+    abstract public void sort(); // Menu item 4
+
+    abstract public void reverse(); // Menu item 5
+
+    abstract public void binarySearch(); // Menu item 6
+}
+
+class CollectionsByList extends CollectionsMenu { // ch7_1
+    // List는 인터페이스로 ArrayList, Vector, LinkedList의 수퍼 클래스이다.
+    private List<Person> list; // list는 벡터라 생각하고 사용하면 된다.
+
+    public CollectionsByList(List<Person> list) {
+        this.list = list; // list는 PersonManager의 pVector가 업캐스팅된 것이다.
+    }
+
+    @Override
+    public void display() { // Menu item 1
+        for (int i = 0, count = list.size(); i < count; ++i)
+            System.out.println("[" + i + "] " + list.get(i));
+    }
+
+    @Override
+    public void min() { // Menu item 2
+        if (list.isEmpty()) {
+            return;
+        }
+        Collections.sort(list);
+        System.out.println(list.get(0));
+    }
+
+    @Override
+    public void max() { // Menu item 3
+        if (list.isEmpty()) {
+            return;
+        }
+        Collections.sort(list);
+        System.out.println(list.get(list.size() - 1));
+    }
+
+    @Override
+    public void sort() { // Menu item 4
+        Collections.sort(list);
+        display();
+    }
+
+    @Override
+    public void reverse() { // Menu item 5
+        Collections.reverse(list);
+        display();
+    }
+
+    // ToDo: name을 입력 받은 후 name을 원소로 가지는 임시 Person 객체를 생성한 후
+    //       이 객체와 동일한 이름을 가진 객체를 list에서 이진 검색하여 찾는다.
+    //       (Collectons의 적절한 함수 호출할 것:
+    //        이 함수는 찾은 원소의 인덱스를 반환하고 못 찾은 경우 -1을 반환한다.)
+    //       list에서 찾았으면 해당 객체를 출력하고
+    //           찾지 못했으면 실행결과처럼 "이름 is NOT found." 를 출력하라.
+    @Override
+    public void binarySearch() {  // Menu item 6
+        String name = UI.getNext("For binary search, it's needed to sort in advance. Name to search? ");
+        Person p = new Person(name);
+        Collections.sort(list);
+        int index = Collections.binarySearch(list, name);
+        if (index == -1) {
+            System.out.println(name + " is NOT found.");
+            return;
+        }
+        System.out.println(p);
+        // 주의: 이진 검색하기 전에 먼저 list가 정렬이 되어 있어야 한다.
+    }
+}   // ch7_1: CollectionsByList class
 
 class Inheritance {
     Student s;
