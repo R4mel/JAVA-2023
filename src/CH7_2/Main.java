@@ -32,7 +32,7 @@ class MainMenu {
 //    }
     public static void run() {
         String menuStr = // 7_2 수정
-                        "********** Main Menu **********\n" +
+                "********** Main Menu **********\n" +
                         "* 0.exit 1.PersonManager      *\n" +
                         "* 2.ch2 3.ch3 4.ch5 5.PMbyMap *\n" +
                         "*******************************\n";
