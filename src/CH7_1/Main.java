@@ -9,7 +9,7 @@ public class Main {
         // chk: 1(자동 오류 체크), 0(키보드에서 직접 입력하여 프로그램 실행)
         //--------------------------------
         // trace: true(오류발생한 곳 출력), false(단순히 O, X만 표시)
-        // int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
+//         int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
         run(new Scanner(System.in));
     }
 
@@ -1615,41 +1615,39 @@ class PersonManager implements BaseStation {
     }
 
     public void display() { // Menu item 1
-        int count = pVector.size(); // ToDo: pVector의 모든 원소의 개수
+        int count = pVector.size();
         //System.out.println("display(): count " + count);
         for (int i = 0; i < count; ++i)
-            // ToDo: pVector의 인덱스 i번째 객체 출력
             System.out.println("[" + i + "] " + pVector.get(i));
         //System.out.println("empty():" + pVector.isEmpty() + ", size():" + pVector.size()
         //     + ", capacity():" + pVector.capacity());
     }
 
     public void clear() {  // Menu item 2
-        pVector.clear(); // ToDo: pVector의 모든 원소를 삭제하라.
+        pVector.clear();
         display();
     }
 
     public void reset() { // Menu item 3
-        pVector.clear(); // ToDo: pVector의 모든 원소를 삭제하라.
+        pVector.clear();
         addArray();
         display();
     }
 
     public void remove() { // Menu item 4
-        if (pVector.isEmpty()) { // ToDo: pVector의 원소가 하나도 없을 경우
+        if (pVector.isEmpty()) {
             System.out.println("no entry to remove");
             return;
         }
         int index = UI.getIndex("index to delete? ", pVector.size());
-        pVector.remove(index); // ToDo: pVector의 index 원소를 삭제하라.
+        pVector.remove(index);
         display();
     }
 
     public void copy() { // Menu item 5
         cpCount++;
-        // ToDo: pVector의 각각의 원소 인덱스 i에 대해
         for (int i = 0, size = pVector.size(); i < size; ++i) {
-            Person p = pVector.get(i).clone(); // ToDo: pVector의 i번째 원소를 복제해서 p에 저장하라.
+            Person p = pVector.get(i).clone();
             String name = p.getName();
             for (int j = 0; j < cpCount; ++j)
                 name = name.charAt(0) + name;
@@ -1658,7 +1656,7 @@ class PersonManager implements BaseStation {
             p.set(p.getWeight() + cpCount);
             if (cpCount % 2 == 1)
                 p.set(!p.getMarried());
-            pVector.add(p); // ToDo: p를 pVector의 맨 뒤에 추가하라.
+            pVector.add(p);
         }
         display();
     }
@@ -1670,9 +1668,6 @@ class PersonManager implements BaseStation {
             Person p = factory.inputPerson(UI.scan);
             if (p != null) pVector.add(p);
             else i--;
-            // ToDo: p가 잘못 입력된 객체가 아닌 경우 p를 pVector의 맨 뒤에 추가하고,
-            //       p가 잘못 입력된 객체인 경우 입력 개수에 포함시키지 않는다.
-            //       (즉, i 값이 증가되지 말아야 함) 과거 코드가 잘못되었을 수 있음
         }
         display();
     }
@@ -1680,17 +1675,15 @@ class PersonManager implements BaseStation {
     public void insert() { // Menu item 7
         int index = 0;
         if (pVector.size() > 0) {
-            // ToDo: 새로운 원소를 삽입할 장소는 pVector의
-            //       인덱스 0에서부터 마지막 원소 바로 다음 장소까지 삽입 가능하다.
             index = UI.getIndex("index to insert in front? ", pVector.size() + 1);
             if (index < 0) return;
         }
         factory.printInputNotice("", " to insert");
         Person p = factory.inputPerson(UI.scan);
         if (p == null) {
-            return;// ToDo: 객체 p가 잘못 입력된 객체인 경우 여기서 리턴하라.
+            return;
         }
-        pVector.insertElementAt(p, index);// ToDo: 객체 p를 pVector의 index 위치에 삽입하라.
+        pVector.insertElementAt(p, index);
         display();
     }
 
@@ -1968,23 +1961,16 @@ class CollectionsByList extends CollectionsMenu { // ch7_1
         display();
     }
 
-    // ToDo: name을 입력 받은 후 name을 원소로 가지는 임시 Person 객체를 생성한 후
-    //       이 객체와 동일한 이름을 가진 객체를 list에서 이진 검색하여 찾는다.
-    //       (Collectons의 적절한 함수 호출할 것:
-    //        이 함수는 찾은 원소의 인덱스를 반환하고 못 찾은 경우 -1을 반환한다.)
-    //       list에서 찾았으면 해당 객체를 출력하고
-    //           찾지 못했으면 실행결과처럼 "이름 is NOT found." 를 출력하라.
     @Override
     public void binarySearch() {  // Menu item 6
         String name = UI.getNext("For binary search, it's needed to sort in advance. Name to search? ");
         Person p = new Person(name);
-        Collections.sort(list);
-        int index = Collections.binarySearch(list, name);
-        if (index == -1) {
+        int index;
+        if ((index = Collections.binarySearch(list, p)) < 0) {
             System.out.println(name + " is NOT found.");
             return;
         }
-        System.out.println(p);
+            System.out.println(list.get(index));
         // 주의: 이진 검색하기 전에 먼저 list가 정렬이 되어 있어야 한다.
     }
 }   // ch7_1: CollectionsByList class
