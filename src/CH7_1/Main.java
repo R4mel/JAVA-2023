@@ -1125,7 +1125,7 @@ class Memo {
         } else {
             String text = UI.getNextLine("input content to replace:\n");
             p.end = mStr.indexOf("\n", p.start);
-            if(p.end == -1) {
+            if (p.end == -1) {
                 p.end = mStr.length();
             }
             mStr.replace(p.start, p.end, text);
@@ -1524,12 +1524,12 @@ class Factory {
 }
 
 class PersonManager implements BaseStation {
+
+    //    private final VectorPerson pVector;
     int cpCount = 0;
-//    private final VectorPerson pVector;
     private Vector<Person> pVector;
     private final Factory factory;
     private final Person[] array;
-
     private Random rand; // 7_1 추가
 
     public PersonManager(Person[] array, Factory factory) {
@@ -1608,79 +1608,83 @@ class PersonManager implements BaseStation {
     }
 
     public void display() { // Menu item 1
-        int count = xxx; // ToDo: pVector의 모든 원소의 개수
+        int count = pVector.size(); // ToDo: pVector의 모든 원소의 개수
         //System.out.println("display(): count " + count);
         for (int i = 0; i < count; ++i)
             // ToDo: pVector의 인덱스 i번째 객체 출력
-            System.out.println("[" + i + "] " + xxx);
+            System.out.println("[" + i + "] " + pVector.get(i));
         //System.out.println("empty():" + pVector.isEmpty() + ", size():" + pVector.size()
         //     + ", capacity():" + pVector.capacity());
     }
 
     public void clear() {  // Menu item 2
-        xxx; // ToDo: pVector의 모든 원소를 삭제하라.
+        pVector.clear(); // ToDo: pVector의 모든 원소를 삭제하라.
         display();
     }
 
     public void reset() { // Menu item 3
-        xxx; // ToDo: pVector의 모든 원소를 삭제하라.
+        pVector.clear(); // ToDo: pVector의 모든 원소를 삭제하라.
         addArray();
         display();
     }
+
     public void remove() { // Menu item 4
-        if (xxx) { // ToDo: pVector의 원소가 하나도 없을 경우
+        if (pVector.isEmpty()) { // ToDo: pVector의 원소가 하나도 없을 경우
             System.out.println("no entry to remove");
             return;
         }
         int index = UI.getIndex("index to delete? ", pVector.size());
-        xxx; // ToDo: pVector의 index 원소를 삭제하라.
+        pVector.remove(index); // ToDo: pVector의 index 원소를 삭제하라.
         display();
     }
+
     public void copy() { // Menu item 5
         cpCount++;
         // ToDo: pVector의 각각의 원소 인덱스 i에 대해
-        for (int i = 0, size = xxx; i < size; ++i) {
-            Person p = xxx; // ToDo: pVector의 i번째 원소를 복제해서 p에 저장하라.
+        for (int i = 0, size = pVector.size(); i < size; ++i) {
+            Person p = pVector.get(i).clone(); // ToDo: pVector의 i번째 원소를 복제해서 p에 저장하라.
             String name = p.getName();
             for (int j = 0; j < cpCount; ++j)
-                name = name.charAt(0)+name;
+                name = name.charAt(0) + name;
             p.set(name);
             p.set(p.getId() + 20 * cpCount);
             p.set(p.getWeight() + cpCount);
             if (cpCount % 2 == 1)
                 p.set(!p.getMarried());
-            xxx; // ToDo: p를 pVector의 맨 뒤에 추가하라.
+            pVector.add(p.clone()); // ToDo: p를 pVector의 맨 뒤에 추가하라.
         }
         display();
     }
+
     public void append() { // Menu item 6
         int count = UI.getPosInt("number of persons to append? ");
-        factory.printInputNotice(" "+Integer.toString(count), " to append");
+        factory.printInputNotice(" " + Integer.toString(count), " to append");
         for (int i = 0; i < count; ++i) {
             Person p = factory.inputPerson(UI.scan);
+            if(p != null) pVector.add(p);
+            else i--;
             // ToDo: p가 잘못 입력된 객체가 아닌 경우 p를 pVector의 맨 뒤에 추가하고,
             //       p가 잘못 입력된 객체인 경우 입력 개수에 포함시키지 않는다.
             //       (즉, i 값이 증가되지 말아야 함) 과거 코드가 잘못되었을 수 있음
         }
         display();
     }
+
     public void insert() { // Menu item 7
         int index = 0;
         if (pVector.size() > 0) {
             // ToDo: 새로운 원소를 삽입할 장소는 pVector의
             //       인덱스 0에서부터 마지막 원소 바로 다음 장소까지 삽입 가능하다.
-            index = UI.getIndex("index to insert in front? ", xxx);
+            index = UI.getIndex("index to insert in front? ", pVector.size());
             if (index < 0) return;
         }
         factory.printInputNotice("", " to insert");
         Person p = factory.inputPerson(UI.scan);
-        xxx; // ToDo: 객체 p가 잘못 입력된 객체인 경우 여기서 리턴하라.
-        xxx; // ToDo: 객체 p를 pVector의 index 위치에 삽입하라.
+        if (p == null) {
+            return;// ToDo: 객체 p가 잘못 입력된 객체인 경우 여기서 리턴하라.
+        }
+        pVector.insertElementAt(p, index);// ToDo: 객체 p를 pVector의 index 위치에 삽입하라.
         display();
-    }
-
-    private void addArray() {
-        // ToDo: array의 모든 원소를 순서적으로 복사한 후 pVector에 추가하라.
     }
 
     // 사용자로부터 VectorPerson pVector에 저장된 사람들 중에서 로그인할 사람의 이름(name)과 비번을 입력받고
