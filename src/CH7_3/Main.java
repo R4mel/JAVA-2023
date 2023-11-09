@@ -31,11 +31,11 @@ class MainMenu {
 //        System.out.println("\nGood bye!!");
 //    }
     public static void run() {
-        String menuStr =  // 7_3 수정
-                "************* Main Menu **************\n" +
-                        "* 0.exit 1.PersonManager 2.ch2 3.ch3 *\n" +
-                        "* 4.ch5 5.PMbyMap 6.MyVectorTest     *\n" +
-                        "**************************************\n";
+        String menuStr = // 7_2 수정
+                "********** Main Menu **********\n" +
+                        "* 0.exit 1.PersonManager      *\n" +
+                        "* 2.ch2 3.ch3 4.ch5 5.PMbyMap *\n" +
+                        "*******************************\n";
 
         while (true) {
             int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
@@ -58,8 +58,6 @@ class MainMenu {
                 case 5:
                     new PMbyMap().run();
                     break; // 7_2
-                case 6: /*new MyVectorTest().run();*/
-                    break; // 7_3
             }
         }
     }
@@ -855,7 +853,6 @@ class UI {
     }
 }
 
-// String과 StringBuffer 클래스의 활용을 연습하기 위한 클래스
 class Memo {
     private final StringBuffer mStr;  // 메모를 저장하고 수정하기 위한 문자열 버퍼
 
@@ -1185,16 +1182,6 @@ class Memo {
         dispByLn();
     }
 
-    /*
-    In war, he is daring, boastful, cunning, ruthless, self-denying,
-    and self-devoted; in peace, just, generous, hospitable, revengeful,
-    superstitious, modest, and commonly chaste.
-    These are qualities, it is true, which do not distinguish all alike;
-    but they are so far the predominating traits of these remarkable people
-    as to be characteristic.
-    It is generally believed that the Aborigines of the American continent
-    have an Asiatic origin.
-    */
     void inputMemo() { // Menu item 10
         mStr.setLength(0);
         System.out.println("--- input memo lines, and then input empty line at the end ---");
@@ -1205,16 +1192,8 @@ class Memo {
             }
             mStr.append(text).append("\n");
         }
-        /*
-        while() 문을 이용하여 반복적으로
-            키보드에서 한 행을 한꺼번에 입력 받는다.
-            빈 줄일 경우 while을 빠져 나간다.
-            참고로 입력받은 행 끝에는 "\n"가 없기 때문에 이를 추가해 주어야 한다.
-            그 행을 mStr에 추가한다.
-        */
     }
 }   // Memo class: ch6_2
-
 
 class CurrentUser {
     Person user;
@@ -1443,14 +1422,17 @@ class PersonManager implements BaseStation {
 
     //    private final VectorPerson pVector;
     int cpCount = 0;
-    private Vector<Person> pVector;
+    //    private Vector<Person> pVector;
+
+    private MyVector pVector;
     private final Factory factory;
     private final Person[] array;
     private Random rand; // 7_1 추가
 
     public PersonManager(Person[] array, Factory factory) {
 //        System.out.println("PersonManager(array[])");
-        pVector = new Vector<>();
+//        pVector = new Vector<>();
+        pVector = new MyVector<Person>();
         this.factory = factory;
         this.array = array;
         addArray();
@@ -1595,7 +1577,7 @@ class PersonManager implements BaseStation {
         if (p == null) {
             return;
         }
-        pVector.insertElementAt(p, index);
+        pVector.add(index, p);
         display();
     }
 
@@ -2204,30 +2186,32 @@ class CollectionsByHashMap extends CollectionsByMap { // ch7_2
 
 }   // ch7_2: CollectionsByHashMap class
 
-class VectorPerson {
+class MyVector<E> {
     static final int DEFAULT_SIZE = 10;
 
-    private Person[] persons; // Person 객체 참조들의 배열, 즉 배열에 저장된 값이 Person 객체의 주소이다.
+    private Object[] persons; // Person 객체 참조들의 배열, 즉 배열에 저장된 값이 Person 객체의 주소이다.
     private int count;        // persons 배열에 현재 삽입된 객체의 개수
 
-    public VectorPerson() {
+    public MyVector() {
         this(DEFAULT_SIZE);
     }
 
-    public VectorPerson(int capacity) {
+    public MyVector(int capacity) {
         count = 0; // persons 배열에 현재 삽입된 객체의 개수는 0
 //        System.out.println("VectorPerson::VectorPerson(" + capacity + ")");
-        persons = new Person[capacity]; // 객체 참조 배열 할당
+        persons = new Object[capacity]; // 객체 참조 배열 할당
     }
 
     // persons[index]의 값을 반환
-    public Person get(int index) {
-        return persons[index];
+    @SuppressWarnings("unchecked")
+    public E get(int index) {
+        return (E) persons[index];
     }
 
     // persons[index]의 값을 p로 새로 교체하고 과거의 persons[index] 값을 반환
-    public Person set(int index, Person p) {
-        Person a = persons[index];
+    @SuppressWarnings("unchecked")
+    public E set(int index, E p) {
+        E a = (E) persons[index];
         persons[index] = p;
         return a;
     }
@@ -2264,7 +2248,7 @@ class VectorPerson {
 
     // persons 배열에 마지막 삽입된 원소 뒤에 새로운 원소 p를 삽입하고 현재 삽입된 객체 개수 증가
     // persons[]의 배열 크기가 작으면 extend_capacity()를 호출하여 먼저 배열을 확장한다.
-    public void add(Person p) {
+    public void add(E p) {
         if (count >= persons.length)
             extend_capacity();
         persons[count++] = p;
@@ -2289,14 +2273,13 @@ class VectorPerson {
     // 임시 변수에 있던 기존 값들을 모두 persons[]에 복사한다.
     public void extend_capacity() {
         int personsLength = persons.length;
-        Person[] tmp = new Person[personsLength * 2];
+        Object[] tmp = new Object[personsLength * 2];
         System.arraycopy(persons, 0, tmp, 0, personsLength);
-        persons = new Person[tmp.length];
+        persons = new Object[tmp.length];
         System.arraycopy(tmp, 0, persons, 0, personsLength);
 //        System.out.println("VectorPerson: capacity extended to " + persons.length);
     }
 }
-
 
 class Inheritance {
     Student s;
