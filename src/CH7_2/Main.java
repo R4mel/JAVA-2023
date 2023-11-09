@@ -1686,7 +1686,7 @@ class PersonManager implements BaseStation {
         if (p == null) {
             return;
         }
-        pVector.insertElementAt(p, index);
+        pVector.add(index, p);
         display();
     }
 
