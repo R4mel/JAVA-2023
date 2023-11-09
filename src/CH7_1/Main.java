@@ -1970,7 +1970,7 @@ class CollectionsByList extends CollectionsMenu { // ch7_1
             System.out.println(name + " is NOT found.");
             return;
         }
-            System.out.println(list.get(index));
+        System.out.println(list.get(index));
         // 주의: 이진 검색하기 전에 먼저 list가 정렬이 되어 있어야 한다.
     }
 }   // ch7_1: CollectionsByList class
