@@ -1,7 +1,5 @@
 package CH7_3;
 
-import CH7_1.Main;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;

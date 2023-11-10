@@ -9,7 +9,7 @@ public class Main {
         // chk: 1(자동 오류 체크), 0(키보드에서 직접 입력하여 프로그램 실행)
         //--------------------------------
         // trace: true(오류발생한 곳 출력), false(단순히 O, X만 표시)
-//         int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
+         int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
         run(new Scanner(System.in));
     }
 
@@ -21,21 +21,14 @@ public class Main {
 }
 
 class MainMenu {
-    final static int MENU_COUNT = 6;
+    final static int MENU_COUNT = 7;
 
-    //    public static void run() {
-//        var user = new Student("s1", 1, 65.4, true, "Jongno-gu Seoul", "Physics", 3.8, 1);
-//        Memo m = new Memo(user.getMemo());
-//        m.run();
-//        user.setMemo(m.toString());
-//        System.out.println("\nGood bye!!");
-//    }
     public static void run() {
-        String menuStr = // 7_2 수정
-                "********** Main Menu **********\n" +
-                        "* 0.exit 1.PersonManager      *\n" +
-                        "* 2.ch2 3.ch3 4.ch5 5.PMbyMap *\n" +
-                        "*******************************\n";
+        String menuStr =  // 7_3 수정
+                "************* Main Menu **************\n" +
+                        "* 0.exit 1.PersonManager 2.ch2 3.ch3 *\n" +
+                        "* 4.ch5 5.PMbyMap 6.MyVectorTest     *\n" +
+                        "**************************************\n";
 
         while (true) {
             int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
@@ -58,6 +51,9 @@ class MainMenu {
                 case 5:
                     new PMbyMap().run();
                     break; // 7_2
+                case 6:
+                    new MyVectorTest().run();
+                    break; // 7_3
             }
         }
     }
@@ -866,24 +862,34 @@ class Memo {
         return mStr.toString();
     }
 
-    private final String memoData =
-            "The Last of the Mohicans\n" +
+    private String memoData =
+            "ten ten ten ten ten ten ten ten ten ten\n" +
+                    "eight eight eight eight eight eight eight eight\n" +
+                    "EIGHT EIGHT EIGHT EIGHT EIGHT EIGHT EIGHT EIGHT\n" +
+                    "seven seven seven seven seven seven seven\n" +
+                    "six six six six six six\n" +
+                    "five five five five five\n" +
+                    "four four four four\n" +
+                    "three three three\n" +
+                    "- - - - - - - - - - - - - - - - - - - - -\n" +
+                    "The Last of the Mohicans\n" +
                     "James Fenimore Cooper\n" +
                     "Author's Introduction\n" +
-                    "It is believed that the scene of this tale, and most of the information\n" +
+                    "It is believed that the scene of this tale, and most of the information \n" +
                     "necessary to understand its allusions, are rendered sufficiently \n" +
                     "obvious to the reader in the text itself, or in the accompanying notes.\n" +
-                    "Still there is so much obscurity in the Indian traditions, and so much\n" +
+                    "Still there is so much obscurity in the Indian traditions, and so much \n" +
                     "confusion in the Indian names, as to render some explanation useful.\n" +
                     "Few men exhibit greater diversity, or, if we may so express it, \n" +
                     "greater antithesis of character, \n" +
                     "than the native warrior of North America.";
 
     public void run() {
-        String menuStr =
+        String menuStr =  // ch7_3
                 "+++++++++++++++++++++ Memo Management Menu +++++++++++++++++++\n" +
                         "+ 0.exit 1.display 2.find 3.findReplace 4.compare 5.dispByLn +\n" +
                         "+ 6.delLn 7.replLn 8.scrollUp 9.scrollDown 10.inputMemo      +\n" +
+                        "+ 11.wordCount 12.countWordList                              +\n" +
                         "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 
         // 멤버 mStr이 비었을 경우 위 memoData로 초기화한다.
@@ -923,6 +929,12 @@ class Memo {
                 case 10:
                     inputMemo();
                     break;
+                case 11:
+                    wordCount();
+                    break; // ch7_3
+                case 12:
+                    countWordList();
+                    break; // ch7_3
                 case 0:
                     return;
             }
@@ -1193,6 +1205,14 @@ class Memo {
             mStr.append(text).append("\n");
         }
     }
+
+    void wordCount() { // Menu item 11,  ch7_3
+
+    }
+
+    void countWordList() { // Menu item 12,  ch7_3
+
+    }
 }   // Memo class: ch6_2
 
 class CurrentUser {
@@ -1422,17 +1442,14 @@ class PersonManager implements BaseStation {
 
     //    private final VectorPerson pVector;
     int cpCount = 0;
-    //    private Vector<Person> pVector;
-
-    private MyVector pVector;
+    private Vector<Person> pVector;
     private final Factory factory;
     private final Person[] array;
     private Random rand; // 7_1 추가
 
     public PersonManager(Person[] array, Factory factory) {
 //        System.out.println("PersonManager(array[])");
-//        pVector = new Vector<>();
-        pVector = new MyVector<Person>();
+        pVector = new Vector<>();
         this.factory = factory;
         this.array = array;
         addArray();
@@ -2197,18 +2214,15 @@ class MyVector<E> {
     }
 
     public MyVector(int capacity) {
-        count = 0; // persons 배열에 현재 삽입된 객체의 개수는 0
-//        System.out.println("VectorPerson::VectorPerson(" + capacity + ")");
-        persons = new Object[capacity]; // 객체 참조 배열 할당
+        count = 0;
+        persons = new Object[capacity];
     }
 
-    // persons[index]의 값을 반환
     @SuppressWarnings("unchecked")
     public E get(int index) {
         return (E) persons[index];
     }
 
-    // persons[index]의 값을 p로 새로 교체하고 과거의 persons[index] 값을 반환
     @SuppressWarnings("unchecked")
     public E set(int index, E p) {
         E a = (E) persons[index];
@@ -2216,47 +2230,37 @@ class MyVector<E> {
         return a;
     }
 
-    // 할당 받은 persons 배열의 전체 길이를 반환함 (count가 아님)
     public int capacity() {
         return persons.length;
     }
 
-    // persons 배열에 현재 삽입된 객체의 개수를 0으로 설정
     public void clear() {
         count = 0;
     }
 
-    // 현재 삽입된 객체 참조가 하나도 없으면 true, 있으면 false를 반환한다.
-    // if 문장을 사용하지 말고 한 문장(return 비교연산자)으로 완셩할 것
     public boolean isEmpty() {
         return count == 0;
     }
 
-    // 현재 삽입된 객체의 개수를 반환
     public int size() {
         return count;
     }
 
-    // index 위치의 객체 p를 삭제한다. 즉, index+1부터 끝까지 객체들을 한칸씩 왼쪽으로 밀어 주어야 한다.
-    // 자바에는 객체를 삭제하는 delete 명령어가 없다. 따라서 객체를 별도로 삭제할 필요는 없고 무시하라.
     void remove(int index) {
         for (int i = index; i < count; i++) {
+            if(i +1 == count) break;
             persons[i] = persons[i + 1];
         }
         count--;
     }
 
-    // persons 배열에 마지막 삽입된 원소 뒤에 새로운 원소 p를 삽입하고 현재 삽입된 객체 개수 증가
-    // persons[]의 배열 크기가 작으면 extend_capacity()를 호출하여 먼저 배열을 확장한다.
     public void add(E p) {
         if (count >= persons.length)
             extend_capacity();
         persons[count++] = p;
     }
 
-    // 먼저 index부터 끝까지 객체들을 한칸씩 뒤로 밀어 준 후 index 위치에 객체 p를 삽입한다.
-    // persons[]의 배열 크기가 작으면 extend_capacity()를 호출하여 먼저 배열을 확장한다.
-    public void add(int index, Person p) {
+    public void add(int index, E p) {
         for (int i = count; i >= index; i--) {
             if (count >= persons.length) {
                 extend_capacity();
@@ -2267,19 +2271,113 @@ class MyVector<E> {
         persons[index] = p;
     }
 
-    // persons[]의 배열 크기를 두배로 확장한다.
-    // 기존 persons 변수를 다른 배열 변수에 임시로 저장한 후
-    // 현재의 두배 크기의 배열을 새로 할당 받아 persons에 저장한다.
-    // 임시 변수에 있던 기존 값들을 모두 persons[]에 복사한다.
     public void extend_capacity() {
         int personsLength = persons.length;
         Object[] tmp = new Object[personsLength * 2];
         System.arraycopy(persons, 0, tmp, 0, personsLength);
         persons = new Object[tmp.length];
         System.arraycopy(tmp, 0, persons, 0, personsLength);
-//        System.out.println("VectorPerson: capacity extended to " + persons.length);
     }
 }
+
+class MyVectorTest extends BaseManager // ch7_3
+{
+    private MyVector<String> nameVct;    // Person::name 멤버들을 저장하는 벡터
+    private MyVector<Integer> idVct;      // Person::id 멤버들을 저장하는 벡터
+    private MyVector<Double> weightVct;  // Person::weight 멤버들을 저장하는 벡터
+    private MyVector<Boolean> marriedVct; // Person::married 멤버들을 저장하는 벡터
+    private MyVector<String> addressVct; // Person::address 멤버들을 저장하는 벡터
+
+    public MyVectorTest() {
+        nameVct = new MyVector<>();
+        idVct = new MyVector<>();
+        weightVct = new MyVector<>();
+        marriedVct = new MyVector<>();
+        addressVct = new MyVector<>();
+        // ToDo: MyVector< >의 기본 생성자를 이용하여 5개의 멤버 벡터들을 생성하라.
+
+        // 아래 add()는 각 벡터에 ADD_SIZE개의 원소를 자동 삽입함
+        add();  // BaseManager의 멤버 함수임; 이 함수는 다시 아래의 addElements()를 호출함
+    }
+
+    public void displayPerson(int i) { // 한 사람의 정보를 출력함
+        System.out.println("[" + i + "] " + nameVct.get(i) + " " + idVct.get(i) +
+                " " + weightVct.get(i) + " " + marriedVct.get(i) + " :" + addressVct.get(i) + ":");
+    }
+
+    public void display() { // Menu item 1: 모든 사람들의 정보를 출력함
+        for (int i = 0, count = idVct.size(); i < count; ++i)
+            displayPerson(i);
+    }
+
+    public void replace() { // Menu item 4
+        // 각 벡터의 총 원소 중 초반의 REPLACE_SIZE개의 사람 정보를 모두 수정함
+        int count = Math.min(REPLACE_SIZE, idVct.size());
+        for (int i = 0; i < count; ++i) {
+            nameVct.set(i, getNewName());
+            idVct.set(i, getNewId());
+            weightVct.set(i, getNewWeight());
+            marriedVct.set(i, getNewMarried(idVct.get(i)));
+            addressVct.set(i, getNewAddress());
+        }
+        display();
+    }
+
+    public void remove() { // Menu item 5
+        if (idVct.size() == 0) {
+            System.out.println("no entry to remove");
+            return;
+        }
+        int index = UI.getIndex("index to delete? ", idVct.size());
+        nameVct.remove(index);
+        idVct.remove(index);
+        weightVct.remove(index);
+        marriedVct.remove(index);
+        addressVct.remove(index);
+        // ToDo: 5개의 각각의 멤버 벡터에 대해 index 항목을 삭제하라.
+        display();
+    }
+
+    public void find() { // Menu item 6
+        String name = UI.getNext("name to find? ");
+        for (int i = 0; i < nameVct.size(); i++) {
+            if (name.equals(nameVct.get(i))) {
+                System.out.println("[" + i + "] " + nameVct.get(i) + " " + idVct.get(i) + " " + weightVct.get(i) + " " + marriedVct.get(i) + " :" + addressVct.get(i) + ":");
+                return;
+            }
+        }
+        // ToDo: for를 이용하여 nameVct에서 입력 받은 name 같은 이름을 찾아서
+        //       찾은 경우 그 사람의 정보를 출력하라.
+        //       찾지 못한 경우 아래를 출력하라.
+        System.out.println(name + ": NOT found");
+    }
+
+    public void collections() { // Menu item 7
+        System.out.println("not supported by MyVector");
+    }
+
+    public void clearAllElements() {  // BaseManager::clear()에 의해 호출됨
+        nameVct.clear();
+        idVct.clear();
+        weightVct.clear();
+        marriedVct.clear();
+        addressVct.clear();
+        // ToDo: 5개의 각각의 멤버 벡터에 대해 모든 원소들을 삭제하라.
+    }
+
+    public void addElements() {   // BaseManager::add()에 의해 호출됨
+        // ADD_SIZE개의 Person 정보를 자동 생성하여 별개의 벡터에 보관함
+        for (int i = 0; i < ADD_SIZE; ++i) {
+            // 각각의 벡터의 끝에 자동 생성된 Person 멤버들을 추가한다.
+            int id = getNewId();
+            nameVct.add(getNewName());
+            idVct.add(id);
+            weightVct.add(getNewWeight());
+            marriedVct.add(getNewMarried(id));
+            addressVct.add(getNewAddress());
+        }
+    }
+}   // ch7_3: MyVectorTest class
 
 class Inheritance {
     Student s;
