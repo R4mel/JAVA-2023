@@ -1,4 +1,4 @@
-package operating_system_2;
+package operating_system.operating_system_5;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -19,7 +19,7 @@ class AutoCheck
     private int         autoCheck;
     private Scanner     inScan;
     private String      output;
-    private final String TEST_DIR = "operating_system_test/test_2";
+    private final String TEST_DIR = "operating_system_test/test_5";
     private final String OJ_DIR   = "oj";
     
 

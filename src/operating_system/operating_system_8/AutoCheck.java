@@ -1,8 +1,10 @@
-package operating_system_1;
+package operating_system.operating_system_8;
 
-import java.util.*;
 import java.io.*;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Scanner;
 
 /******************************************************************************
  * 자동 체크 소스 코드 
@@ -17,7 +19,7 @@ class AutoCheck
     private int         autoCheck;
     private Scanner     inScan;
     private String      output;
-    private final String TEST_DIR = "operating_system_test/test_1";
+    private final String TEST_DIR = "operating_system_test/test_8";
     private final String OJ_DIR   = "oj";
     
 

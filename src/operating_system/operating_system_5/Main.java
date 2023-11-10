@@ -1,4 +1,4 @@
-package operating_system_4;
+package operating_system.operating_system_5;
 
 import java.util.*;
 
@@ -290,6 +290,25 @@ class FCFS extends Scheduler {
     }
 }
 
+class SPN extends Scheduler {
+    SPN(String name) {
+        super(name);
+    }
+
+    @Override
+    public void schedule() {
+        super.schedule();
+
+        currentProcess = readyQueue.peek();
+
+        for (Process p : readyQueue) {
+            if (p.getServiceTime() < currentProcess.getServiceTime()) {
+                currentProcess = p;
+            }
+        }
+    }
+}
+
 // 컴퓨터시스템을 시물레이션함
 // 단위시간(100ms) 마다 clock 인터럽트를 걸어주고 그 때마다 스케줄러를 호출한다.
 class ComputerSystem {
@@ -324,7 +343,7 @@ class ComputerSystem {
 
             try { // 우리 스케줄러에서 사용할 시간단위는 100ms: 빠르게 실행하려면 이 값을 10 또는 1로 줄여도 됨
                 // 100ms마다 한번씩 위 scheduler.clockInterrupt()와 schedule()가 한번씩 호출됨
-                Thread.sleep(100); // 100 millisecond 동안 정지했다가 리턴함
+                Thread.sleep(0); // 100 millisecond 동안 정지했다가 리턴함
             }
             // sleep()하는 동안 다른 스레드에 의해 인터럽이 들어 온 경우, 여기서는 전혀 발생하지 않음
             catch (InterruptedException e) {
@@ -364,6 +383,9 @@ class MainMenu {
                 // cs.run()에서 FCFS 스케줄러를 작동시킴; "FCFS"는 스케줄러 이름이다.
                 case 3:
                     cs.run(new FCFS("FCFS")); // cs에 스케줄러를 설정하고 스케줄링을 시작한다.
+                    break;
+                case 4:
+                    cs.run(new SPN("SPN"));
                     break;
                 default:
                     System.out.println("WRONG menu item\n");

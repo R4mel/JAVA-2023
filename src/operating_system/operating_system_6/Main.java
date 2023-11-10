@@ -1,4 +1,4 @@
-package operating_system_7;
+package operating_system.operating_system_6;
 
 import java.util.*;
 
@@ -328,31 +328,6 @@ class HRRN extends Scheduler {
     }
 }
 
-class SRT extends Scheduler {
-    SRT(String name) {
-        super(name);
-    }
-
-    @Override
-    public void schedule() {
-        super.schedule();
-
-        currentProcess = readyQueue.peek();
-
-        for (Process p : readyQueue) {
-            if (p.getRemainingTime() < currentProcess.getRemainingTime()) {
-                currentProcess = p;
-            }
-        }
-    }
-
-    @Override
-    public boolean isSchedulable() {
-        return super.isSchedulable() || isNewProcessArrived;
-    }
-
-}
-
 // 컴퓨터시스템을 시물레이션함
 // 단위시간(100ms) 마다 clock 인터럽트를 걸어주고 그 때마다 스케줄러를 호출한다.
 class ComputerSystem {
@@ -433,9 +408,6 @@ class MainMenu {
                     break;
                 case 5:
                     cs.run(new HRRN("HRRN"));
-                    break;
-                case 6:
-                    cs.run(new SRT("SRT"));
                     break;
                 default:
                     System.out.println("WRONG menu item\n");
