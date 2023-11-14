@@ -23,39 +23,42 @@ public class Main {
 class MainMenu {
     final static int MENU_COUNT = 7;
 
+    //    public static void run() {
+//        String menuStr =  // 7_3 수정
+//                "************* Main Menu **************\n" +
+//                        "* 0.exit 1.PersonManager 2.ch2 3.ch3 *\n" +
+//                        "* 4.ch5 5.PMbyMap 6.MyVectorTest     *\n" +
+//                        "**************************************\n";
+//
+//        while (true) {
+//            int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
+//            switch (menuItem) {
+//                case 0:
+//                    System.out.println("\nGood bye!!");
+//                    return;
+//                case 1:
+//                    new MultiManager().run();
+//                    break;
+//                case 2:
+//                    Ch2.run();
+//                    break;
+//                case 3:
+//                    Ch3.run();
+//                    break;
+//                case 4:
+//                    new Inheritance().run();
+//                    break;
+//                case 5:
+//                    new PMbyMap().run();
+//                    break; // 7_2
+//                case 6:
+//                    new MyVectorTest().run();
+//                    break; // 7_3
+//            }
+//        }
+//    }
     public static void run() {
-        String menuStr =  // 7_3 수정
-                "************* Main Menu **************\n" +
-                        "* 0.exit 1.PersonManager 2.ch2 3.ch3 *\n" +
-                        "* 4.ch5 5.PMbyMap 6.MyVectorTest     *\n" +
-                        "**************************************\n";
-
-        while (true) {
-            int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
-            switch (menuItem) {
-                case 0:
-                    System.out.println("\nGood bye!!");
-                    return;
-                case 1:
-                    new MultiManager().run();
-                    break;
-                case 2:
-                    Ch2.run();
-                    break;
-                case 3:
-                    Ch3.run();
-                    break;
-                case 4:
-                    new Inheritance().run();
-                    break;
-                case 5:
-                    new PMbyMap().run();
-                    break; // 7_2
-                case 6:
-                    new MyVectorTest().run();
-                    break; // 7_3
-            }
-        }
+        new Memo("").run();
     }
 }
 
@@ -894,7 +897,7 @@ class Memo {
 
         // 멤버 mStr이 비었을 경우 위 memoData로 초기화한다.
         if (mStr.length() == 0) mStr.append(memoData);
-        final int MENU_COUNT = 11; // 상수 정의
+        final int MENU_COUNT = 13; // 상수 정의
 
         while (true) {
             int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
@@ -1206,8 +1209,43 @@ class Memo {
         }
     }
 
-    void wordCount() { // Menu item 11,  ch7_3
+    // 이 함수는 Memo::mStr에 들어 있는 문자열을 빼내 이를 단어 단위로 토큰을 자른 후
+    // 각 단어별 출현 횟수를 Map에 저장한 후 해당 Map을 반환한다.
+    // 리턴 데이터 타입인 Map< String, Integer >에서 String은 단어이며,
+    // Integer는 해당 단어의 출현 횟수이다. 반환하는 Map으로는 TreeMap 또는 HashMap 중에서
+    // 단어별 정렬이 미리 되어 있는 적절한 Map을 생성해서 리턴해야 한다.
+    private Map<String, Integer> getWordCountMap() { // ch7_3
+        String[] words = mStr.toString().split("\\s");
+        var wordCountMap = new TreeMap<String, Integer>();
+        for(String w: words){
+            wordCountMap.put(w, 0);
+        }
 
+        for (String w : words) {
+            Integer count = wordCountMap.get(w);
+            if (count == null) {
+                wordCountMap.put(w, 1);
+            } else {
+                wordCountMap.put(w, count++);
+            }
+        }
+        return wordCountMap; // Map으로 자동 업 케스팅되어 리턴됨
+    }
+
+    void wordCount() { // Menu item 11
+        var wordCountMap = getWordCountMap();
+        System.out.println("----------------");
+        System.out.println("Word      Count");
+        System.out.println("----------------");
+
+        Set<Map.Entry<String, Integer>> wcEntries = wordCountMap.entrySet();
+        for (var wc : wcEntries) {
+            var word = wc.getKey();
+            var count = wc.getValue();
+            if (count > 1)  // %-7s: 문자열을 7 칸 안에 출력하되 좌 맞춤
+                System.out.printf("%-7s    %2d\n", word, count);
+        }
+        System.out.println("----------------");
     }
 
     void countWordList() { // Menu item 12,  ch7_3
@@ -2248,7 +2286,7 @@ class MyVector<E> {
 
     void remove(int index) {
         for (int i = index; i < count; i++) {
-            if(i +1 == count) break;
+            if (i + 1 == count) break;
             persons[i] = persons[i + 1];
         }
         count--;
