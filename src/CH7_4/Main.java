@@ -1217,16 +1217,15 @@ class Memo {
     private Map<String, Integer> getWordCountMap() { // ch7_3
         String[] words = mStr.toString().split("\\s");
         var wordCountMap = new TreeMap<String, Integer>();
-        for(String w: words){
+        for (String w : words) {
             wordCountMap.put(w, 0);
         }
 
         for (String w : words) {
-            Integer count = wordCountMap.get(w);
-            if (count == null) {
+            if (wordCountMap.get(w) == null && !w.equals("")) {
                 wordCountMap.put(w, 1);
-            } else {
-                wordCountMap.put(w, count++);
+            } else if(wordCountMap.get(w) != null && !w.equals("")){
+                wordCountMap.put(w, wordCountMap.get(w) + 1);
             }
         }
         return wordCountMap; // Map으로 자동 업 케스팅되어 리턴됨
