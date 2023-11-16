@@ -23,42 +23,39 @@ public class Main {
 class MainMenu {
     final static int MENU_COUNT = 7;
 
-    //    public static void run() {
-//        String menuStr =  // 7_3 수정
-//                "************* Main Menu **************\n" +
-//                        "* 0.exit 1.PersonManager 2.ch2 3.ch3 *\n" +
-//                        "* 4.ch5 5.PMbyMap 6.MyVectorTest     *\n" +
-//                        "**************************************\n";
-//
-//        while (true) {
-//            int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
-//            switch (menuItem) {
-//                case 0:
-//                    System.out.println("\nGood bye!!");
-//                    return;
-//                case 1:
-//                    new MultiManager().run();
-//                    break;
-//                case 2:
-//                    Ch2.run();
-//                    break;
-//                case 3:
-//                    Ch3.run();
-//                    break;
-//                case 4:
-//                    new Inheritance().run();
-//                    break;
-//                case 5:
-//                    new PMbyMap().run();
-//                    break; // 7_2
-//                case 6:
-//                    new MyVectorTest().run();
-//                    break; // 7_3
-//            }
-//        }
-//    }
     public static void run() {
-        new Memo("").run();
+        String menuStr =  // 7_3 수정
+                "************* Main Menu **************\n" +
+                        "* 0.exit 1.PersonManager 2.ch2 3.ch3 *\n" +
+                        "* 4.ch5 5.PMbyMap 6.MyVectorTest     *\n" +
+                        "**************************************\n";
+
+        while (true) {
+            int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
+            switch (menuItem) {
+                case 0:
+                    System.out.println("\nGood bye!!");
+                    return;
+                case 1:
+                    new MultiManager().run();
+                    break;
+                case 2:
+                    Ch2.run();
+                    break;
+                case 3:
+                    Ch3.run();
+                    break;
+                case 4:
+                    new Inheritance().run();
+                    break;
+                case 5:
+                    new PMbyMap().run();
+                    break; // 7_2
+                case 6:
+                    new MyVectorTest().run();
+                    break; // 7_3
+            }
+        }
     }
 }
 
@@ -1224,7 +1221,7 @@ class Memo {
         for (String w : words) {
             if (wordCountMap.get(w) == null && !w.equals("")) {
                 wordCountMap.put(w, 1);
-            } else if(wordCountMap.get(w) != null && !w.equals("")){
+            } else if (wordCountMap.get(w) != null && !w.equals("")) {
                 wordCountMap.put(w, wordCountMap.get(w) + 1);
             }
         }
@@ -1247,8 +1244,39 @@ class Memo {
         System.out.println("----------------");
     }
 
-    void countWordList() { // Menu item 12,  ch7_3
+    void countWordList() {
+        var wordCountMap = getWordCountMap();
+        var wcEntries = wordCountMap.entrySet();
+        var countWordsMap = new TreeMap<Integer, Vector<String>>();
+        for (var wc : wcEntries) {
+            var word = wc.getKey();
+            var count = wc.getValue();
+            var wordVct = countWordsMap.get(count);
+            if (wordVct == null) {
+                wordVct = new Vector<>(Arrays.asList(word));
+                countWordsMap.put(count, wordVct);
+            } else wordVct.add(word);
+        }
 
+        System.out.println("----------------");
+        System.out.println("Count  Words");
+        System.out.println("----------------");
+
+        // 아래는 키의 순서를 역순으로 재배치한 새로운 맵 reverseCWMap을 생성한다.
+        // 이 맵은 단어의 출현 횟수가 큰 수부터 작은 수 순서로 횟수를 저장하고 있다.
+        var reverseCWMap = countWordsMap.descendingMap();
+        var cwEntries = reverseCWMap.entrySet();
+        for (var cw : cwEntries) {
+            var count = cw.getKey();
+            if (count > 1) {
+                System.out.printf("%2d     ", count);
+                for (var w : cw.getValue()) {
+                    System.out.print(w + " ");
+                }
+                System.out.println();
+            }
+        }
+        System.out.println("----------------");
     }
 }   // Memo class: ch6_2
 
