@@ -1,0 +1,549 @@
+
+************* Main Menu **************
+* 0.exit 1.PersonManager 2.ch2 3.ch3 *
+* 4.ch5 5.PMbyMap 6.MyVectorTest     *
+**************************************
+menu item? 1
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1) 17.fileManager(8_1)    =
+================================================================
+menu item? 17
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 6
+-----------------
+[data] directory: 0 files
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 10
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+-----------------
+6 entries
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 12
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+[6] Kimm10 1948 54.4 false :Incheon Dong-gu: Kia CFO
+[7] Park11 1095 98.9 true :Seoul Nam-gu: Computer 1.2 1
+[8] Choi12 1882 72.8 false :Seoul Jung-gu: Computer 1.1 1
+[9] Moon13 1960 81.2 false :Seoul Dong-gu:
+[10] Nahh14 1646 93.9 false :Daejeon Buk-gu:
+[11] Jooh15 1451 61.5 true :Daejeon Dong-gu:
+[12] Moon16 1220 98.2 false :Gwangju Seo-gu:
+[13] Kimm17 1668 64.8 false :Seoul Buk-gu: Samsung CFO
+[14] Kang18 1067 40.8 true :Gwangju Dong-gu:
+[15] Leem19 1290 48.6 false :Gwangju Jung-gu:
+-----------------
+16 entries
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 12
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+[6] Kimm10 1948 54.4 false :Incheon Dong-gu: Kia CFO
+[7] Park11 1095 98.9 true :Seoul Nam-gu: Computer 1.2 1
+[8] Choi12 1882 72.8 false :Seoul Jung-gu: Computer 1.1 1
+[9] Moon13 1960 81.2 false :Seoul Dong-gu:
+[10] Nahh14 1646 93.9 false :Daejeon Buk-gu:
+[11] Jooh15 1451 61.5 true :Daejeon Dong-gu:
+[12] Moon16 1220 98.2 false :Gwangju Seo-gu:
+[13] Kimm17 1668 64.8 false :Seoul Buk-gu: Samsung CFO
+[14] Kang18 1067 40.8 true :Gwangju Dong-gu:
+[15] Leem19 1290 48.6 false :Gwangju Jung-gu:
+[16] Yang20 1753 91.1 true :Incheon Jung-gu: Kia CFO
+[17] Choi21 1577 40.1 true :Gwangju Jung-gu:
+[18] Nahh22 1958 55.3 false :Incheon Jung-gu: Samsung Chief
+[19] Shin23 1098 95.5 false :Busan Buk-gu:
+[20] Song24 1901 92.4 true :Daegu Buk-gu: Electronics 0.6 4
+[21] Park25 1380 69.4 false :Busan Jung-gu: Physics 2.1 2
+[22] Johh26 1362 82.0 false :Seoul Dong-gu: Biology 2.1 3
+[23] Kimm27 1317 74.8 true :Daejeon Jung-gu:
+[24] Shim28 1113 64.5 true :Incheon Jung-gu: Computer 1.5 3
+[25] Jooh29 1050 42.4 false :Busan Seo-gu:
+-----------------
+26 entries
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 12
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+[6] Kimm10 1948 54.4 false :Incheon Dong-gu: Kia CFO
+[7] Park11 1095 98.9 true :Seoul Nam-gu: Computer 1.2 1
+[8] Choi12 1882 72.8 false :Seoul Jung-gu: Computer 1.1 1
+[9] Moon13 1960 81.2 false :Seoul Dong-gu:
+[10] Nahh14 1646 93.9 false :Daejeon Buk-gu:
+[11] Jooh15 1451 61.5 true :Daejeon Dong-gu:
+[12] Moon16 1220 98.2 false :Gwangju Seo-gu:
+[13] Kimm17 1668 64.8 false :Seoul Buk-gu: Samsung CFO
+[14] Kang18 1067 40.8 true :Gwangju Dong-gu:
+[15] Leem19 1290 48.6 false :Gwangju Jung-gu:
+[16] Yang20 1753 91.1 true :Incheon Jung-gu: Kia CFO
+[17] Choi21 1577 40.1 true :Gwangju Jung-gu:
+[18] Nahh22 1958 55.3 false :Incheon Jung-gu: Samsung Chief
+[19] Shin23 1098 95.5 false :Busan Buk-gu:
+[20] Song24 1901 92.4 true :Daegu Buk-gu: Electronics 0.6 4
+[21] Park25 1380 69.4 false :Busan Jung-gu: Physics 2.1 2
+[22] Johh26 1362 82.0 false :Seoul Dong-gu: Biology 2.1 3
+[23] Kimm27 1317 74.8 true :Daejeon Jung-gu:
+[24] Shim28 1113 64.5 true :Incheon Jung-gu: Computer 1.5 3
+[25] Jooh29 1050 42.4 false :Busan Seo-gu:
+[26] Kang30 1324 77.8 false :Seoul Dong-gu: Kia CEO
+[27] Shin31 1771 64.6 true :Incheon Buk-gu: Biology 4.1 1
+[28] Ryoo32 1780 46.8 false :Gwangju Nam-gu: Computer 3.6 2
+[29] Park33 1615 77.2 true :Daegu Nam-gu: Chemistry 3.3 1
+[30] Hong34 1618 57.8 false :Gwangju Buk-gu: KT Chief
+[31] Jeon35 1471 84.1 true :Daejeon Jung-gu: Chemistry 0.7 1
+[32] Seoh36 1384 74.5 false :Daegu Dong-gu: KT CFO
+[33] Nahh37 1298 62.7 false :Gwangju Seo-gu:
+[34] Baek38 1076 48.4 false :Seoul Seo-gu: Naver CTO
+[35] Shin39 1614 54.9 false :Ulsan Nam-gu: Chemistry 1.9 4
+-----------------
+36 entries
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 12
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+[6] Kimm10 1948 54.4 false :Incheon Dong-gu: Kia CFO
+[7] Park11 1095 98.9 true :Seoul Nam-gu: Computer 1.2 1
+[8] Choi12 1882 72.8 false :Seoul Jung-gu: Computer 1.1 1
+[9] Moon13 1960 81.2 false :Seoul Dong-gu:
+[10] Nahh14 1646 93.9 false :Daejeon Buk-gu:
+[11] Jooh15 1451 61.5 true :Daejeon Dong-gu:
+[12] Moon16 1220 98.2 false :Gwangju Seo-gu:
+[13] Kimm17 1668 64.8 false :Seoul Buk-gu: Samsung CFO
+[14] Kang18 1067 40.8 true :Gwangju Dong-gu:
+[15] Leem19 1290 48.6 false :Gwangju Jung-gu:
+[16] Yang20 1753 91.1 true :Incheon Jung-gu: Kia CFO
+[17] Choi21 1577 40.1 true :Gwangju Jung-gu:
+[18] Nahh22 1958 55.3 false :Incheon Jung-gu: Samsung Chief
+[19] Shin23 1098 95.5 false :Busan Buk-gu:
+[20] Song24 1901 92.4 true :Daegu Buk-gu: Electronics 0.6 4
+[21] Park25 1380 69.4 false :Busan Jung-gu: Physics 2.1 2
+[22] Johh26 1362 82.0 false :Seoul Dong-gu: Biology 2.1 3
+[23] Kimm27 1317 74.8 true :Daejeon Jung-gu:
+[24] Shim28 1113 64.5 true :Incheon Jung-gu: Computer 1.5 3
+[25] Jooh29 1050 42.4 false :Busan Seo-gu:
+[26] Kang30 1324 77.8 false :Seoul Dong-gu: Kia CEO
+[27] Shin31 1771 64.6 true :Incheon Buk-gu: Biology 4.1 1
+[28] Ryoo32 1780 46.8 false :Gwangju Nam-gu: Computer 3.6 2
+[29] Park33 1615 77.2 true :Daegu Nam-gu: Chemistry 3.3 1
+[30] Hong34 1618 57.8 false :Gwangju Buk-gu: KT Chief
+[31] Jeon35 1471 84.1 true :Daejeon Jung-gu: Chemistry 0.7 1
+[32] Seoh36 1384 74.5 false :Daegu Dong-gu: KT CFO
+[33] Nahh37 1298 62.7 false :Gwangju Seo-gu:
+[34] Baek38 1076 48.4 false :Seoul Seo-gu: Naver CTO
+[35] Shin39 1614 54.9 false :Ulsan Nam-gu: Chemistry 1.9 4
+[36] Ryoo40 1615 67.0 true :Daejeon Buk-gu: Computer 2.5 2
+[37] Yoon41 1277 52.7 true :Daegu Seo-gu:
+[38] Jooh42 1661 59.9 true :Ulsan Dong-gu:
+[39] Yoon43 1578 66.3 false :Daegu Dong-gu: Hyundai Chief
+[40] Yoon44 1210 81.3 false :Busan Jung-gu: Micanical 4.3 1
+[41] Park45 1889 72.8 true :Gwangju Buk-gu: Chemistry 1.5 4
+[42] Kimm46 1581 47.2 true :Incheon Buk-gu: Kia CTO
+[43] Shin47 1613 54.2 true :Incheon Nam-gu:
+[44] Jeon48 1229 50.1 true :Seoul Jung-gu: Biology 3.7 1
+[45] Kimm49 1614 72.4 false :Daegu Dong-gu: Micanical 4.2 1
+-----------------
+46 entries
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 12
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+[6] Kimm10 1948 54.4 false :Incheon Dong-gu: Kia CFO
+[7] Park11 1095 98.9 true :Seoul Nam-gu: Computer 1.2 1
+[8] Choi12 1882 72.8 false :Seoul Jung-gu: Computer 1.1 1
+[9] Moon13 1960 81.2 false :Seoul Dong-gu:
+[10] Nahh14 1646 93.9 false :Daejeon Buk-gu:
+[11] Jooh15 1451 61.5 true :Daejeon Dong-gu:
+[12] Moon16 1220 98.2 false :Gwangju Seo-gu:
+[13] Kimm17 1668 64.8 false :Seoul Buk-gu: Samsung CFO
+[14] Kang18 1067 40.8 true :Gwangju Dong-gu:
+[15] Leem19 1290 48.6 false :Gwangju Jung-gu:
+[16] Yang20 1753 91.1 true :Incheon Jung-gu: Kia CFO
+[17] Choi21 1577 40.1 true :Gwangju Jung-gu:
+[18] Nahh22 1958 55.3 false :Incheon Jung-gu: Samsung Chief
+[19] Shin23 1098 95.5 false :Busan Buk-gu:
+[20] Song24 1901 92.4 true :Daegu Buk-gu: Electronics 0.6 4
+[21] Park25 1380 69.4 false :Busan Jung-gu: Physics 2.1 2
+[22] Johh26 1362 82.0 false :Seoul Dong-gu: Biology 2.1 3
+[23] Kimm27 1317 74.8 true :Daejeon Jung-gu:
+[24] Shim28 1113 64.5 true :Incheon Jung-gu: Computer 1.5 3
+[25] Jooh29 1050 42.4 false :Busan Seo-gu:
+[26] Kang30 1324 77.8 false :Seoul Dong-gu: Kia CEO
+[27] Shin31 1771 64.6 true :Incheon Buk-gu: Biology 4.1 1
+[28] Ryoo32 1780 46.8 false :Gwangju Nam-gu: Computer 3.6 2
+[29] Park33 1615 77.2 true :Daegu Nam-gu: Chemistry 3.3 1
+[30] Hong34 1618 57.8 false :Gwangju Buk-gu: KT Chief
+[31] Jeon35 1471 84.1 true :Daejeon Jung-gu: Chemistry 0.7 1
+[32] Seoh36 1384 74.5 false :Daegu Dong-gu: KT CFO
+[33] Nahh37 1298 62.7 false :Gwangju Seo-gu:
+[34] Baek38 1076 48.4 false :Seoul Seo-gu: Naver CTO
+[35] Shin39 1614 54.9 false :Ulsan Nam-gu: Chemistry 1.9 4
+[36] Ryoo40 1615 67.0 true :Daejeon Buk-gu: Computer 2.5 2
+[37] Yoon41 1277 52.7 true :Daegu Seo-gu:
+[38] Jooh42 1661 59.9 true :Ulsan Dong-gu:
+[39] Yoon43 1578 66.3 false :Daegu Dong-gu: Hyundai Chief
+[40] Yoon44 1210 81.3 false :Busan Jung-gu: Micanical 4.3 1
+[41] Park45 1889 72.8 true :Gwangju Buk-gu: Chemistry 1.5 4
+[42] Kimm46 1581 47.2 true :Incheon Buk-gu: Kia CTO
+[43] Shin47 1613 54.2 true :Incheon Nam-gu:
+[44] Jeon48 1229 50.1 true :Seoul Jung-gu: Biology 3.7 1
+[45] Kimm49 1614 72.4 false :Daegu Dong-gu: Micanical 4.2 1
+[46] Shin50 1725 62.6 true :Ulsan Seo-gu: Electronics 1.3 1
+[47] Yang51 1033 85.1 true :Gwangju Nam-gu:
+[48] Moon52 1610 90.2 false :Daejeon Seo-gu: SK Director
+[49] Shim53 1224 50.3 false :Gwangju Dong-gu: Kia Director
+[50] Shim54 1751 92.5 true :Incheon Buk-gu:
+[51] Baek55 1469 53.7 true :Daegu Jung-gu: Kakao CTO
+[52] Ryoo56 1415 87.2 true :Daejeon Dong-gu: Computer 2.7 1
+[53] Nahh57 1900 83.7 false :Seoul Buk-gu: Biology 0.6 1
+[54] Choi58 1720 48.5 false :Incheon Buk-gu: Micanical 3.4 2
+[55] Choi59 1537 64.7 true :Busan Seo-gu:
+-----------------
+56 entries
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 12
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+[6] Kimm10 1948 54.4 false :Incheon Dong-gu: Kia CFO
+[7] Park11 1095 98.9 true :Seoul Nam-gu: Computer 1.2 1
+[8] Choi12 1882 72.8 false :Seoul Jung-gu: Computer 1.1 1
+[9] Moon13 1960 81.2 false :Seoul Dong-gu:
+[10] Nahh14 1646 93.9 false :Daejeon Buk-gu:
+[11] Jooh15 1451 61.5 true :Daejeon Dong-gu:
+[12] Moon16 1220 98.2 false :Gwangju Seo-gu:
+[13] Kimm17 1668 64.8 false :Seoul Buk-gu: Samsung CFO
+[14] Kang18 1067 40.8 true :Gwangju Dong-gu:
+[15] Leem19 1290 48.6 false :Gwangju Jung-gu:
+[16] Yang20 1753 91.1 true :Incheon Jung-gu: Kia CFO
+[17] Choi21 1577 40.1 true :Gwangju Jung-gu:
+[18] Nahh22 1958 55.3 false :Incheon Jung-gu: Samsung Chief
+[19] Shin23 1098 95.5 false :Busan Buk-gu:
+[20] Song24 1901 92.4 true :Daegu Buk-gu: Electronics 0.6 4
+[21] Park25 1380 69.4 false :Busan Jung-gu: Physics 2.1 2
+[22] Johh26 1362 82.0 false :Seoul Dong-gu: Biology 2.1 3
+[23] Kimm27 1317 74.8 true :Daejeon Jung-gu:
+[24] Shim28 1113 64.5 true :Incheon Jung-gu: Computer 1.5 3
+[25] Jooh29 1050 42.4 false :Busan Seo-gu:
+[26] Kang30 1324 77.8 false :Seoul Dong-gu: Kia CEO
+[27] Shin31 1771 64.6 true :Incheon Buk-gu: Biology 4.1 1
+[28] Ryoo32 1780 46.8 false :Gwangju Nam-gu: Computer 3.6 2
+[29] Park33 1615 77.2 true :Daegu Nam-gu: Chemistry 3.3 1
+[30] Hong34 1618 57.8 false :Gwangju Buk-gu: KT Chief
+[31] Jeon35 1471 84.1 true :Daejeon Jung-gu: Chemistry 0.7 1
+[32] Seoh36 1384 74.5 false :Daegu Dong-gu: KT CFO
+[33] Nahh37 1298 62.7 false :Gwangju Seo-gu:
+[34] Baek38 1076 48.4 false :Seoul Seo-gu: Naver CTO
+[35] Shin39 1614 54.9 false :Ulsan Nam-gu: Chemistry 1.9 4
+[36] Ryoo40 1615 67.0 true :Daejeon Buk-gu: Computer 2.5 2
+[37] Yoon41 1277 52.7 true :Daegu Seo-gu:
+[38] Jooh42 1661 59.9 true :Ulsan Dong-gu:
+[39] Yoon43 1578 66.3 false :Daegu Dong-gu: Hyundai Chief
+[40] Yoon44 1210 81.3 false :Busan Jung-gu: Micanical 4.3 1
+[41] Park45 1889 72.8 true :Gwangju Buk-gu: Chemistry 1.5 4
+[42] Kimm46 1581 47.2 true :Incheon Buk-gu: Kia CTO
+[43] Shin47 1613 54.2 true :Incheon Nam-gu:
+[44] Jeon48 1229 50.1 true :Seoul Jung-gu: Biology 3.7 1
+[45] Kimm49 1614 72.4 false :Daegu Dong-gu: Micanical 4.2 1
+[46] Shin50 1725 62.6 true :Ulsan Seo-gu: Electronics 1.3 1
+[47] Yang51 1033 85.1 true :Gwangju Nam-gu:
+[48] Moon52 1610 90.2 false :Daejeon Seo-gu: SK Director
+[49] Shim53 1224 50.3 false :Gwangju Dong-gu: Kia Director
+[50] Shim54 1751 92.5 true :Incheon Buk-gu:
+[51] Baek55 1469 53.7 true :Daegu Jung-gu: Kakao CTO
+[52] Ryoo56 1415 87.2 true :Daejeon Dong-gu: Computer 2.7 1
+[53] Nahh57 1900 83.7 false :Seoul Buk-gu: Biology 0.6 1
+[54] Choi58 1720 48.5 false :Incheon Buk-gu: Micanical 3.4 2
+[55] Choi59 1537 64.7 true :Busan Seo-gu:
+[56] Shin60 1165 79.1 true :Gwangju Jung-gu:
+[57] Shin61 1642 67.3 false :Incheon Jung-gu: Micanical 1.6 3
+[58] Jeon62 1981 95.8 true :Seoul Nam-gu:
+[59] Jeon63 1371 64.3 true :Daejeon Dong-gu:
+[60] Kang64 1008 63.6 false :Seoul Nam-gu:
+[61] Hong65 1286 60.4 false :Seoul Dong-gu:
+[62] Yoon66 1230 62.3 false :Gwangju Dong-gu:
+[63] Jooh67 1611 51.1 true :Incheon Nam-gu:
+[64] Nahh68 1294 96.3 false :Busan Nam-gu:
+[65] Johh69 1727 82.6 true :Incheon Jung-gu: KT CTO
+-----------------
+66 entries
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 13
+[0] persons.txt          F 2023-11-15 07:13      3314
+-----------------
+[data] directory: 1 files
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 7
+[0] persons.txt          F 2023-11-15 07:13      3314
+-----------------
+[data] directory: 1 files
+index number of a file to display [-1:stop]? 0
+-----------------
+P p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+P p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+S s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+S s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+W w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+W w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+W Kimm10 1948 54.4 false :Incheon Dong-gu: Kia CFO
+S Park11 1095 98.9 true :Seoul Nam-gu: Computer 1.2 1
+S Choi12 1882 72.8 false :Seoul Jung-gu: Computer 1.1 1
+P Moon13 1960 81.2 false :Seoul Dong-gu:
+P Nahh14 1646 93.9 false :Daejeon Buk-gu:
+P Jooh15 1451 61.5 true :Daejeon Dong-gu:
+P Moon16 1220 98.2 false :Gwangju Seo-gu:
+W Kimm17 1668 64.8 false :Seoul Buk-gu: Samsung CFO
+P Kang18 1067 40.8 true :Gwangju Dong-gu:
+P Leem19 1290 48.6 false :Gwangju Jung-gu:
+W Yang20 1753 91.1 true :Incheon Jung-gu: Kia CFO
+P Choi21 1577 40.1 true :Gwangju Jung-gu:
+W Nahh22 1958 55.3 false :Incheon Jung-gu: Samsung Chief
+P Shin23 1098 95.5 false :Busan Buk-gu:
+S Song24 1901 92.4 true :Daegu Buk-gu: Electronics 0.6 4
+S Park25 1380 69.4 false :Busan Jung-gu: Physics 2.1 2
+S Johh26 1362 82.0 false :Seoul Dong-gu: Biology 2.1 3
+P Kimm27 1317 74.8 true :Daejeon Jung-gu:
+S Shim28 1113 64.5 true :Incheon Jung-gu: Computer 1.5 3
+P Jooh29 1050 42.4 false :Busan Seo-gu:
+W Kang30 1324 77.8 false :Seoul Dong-gu: Kia CEO
+S Shin31 1771 64.6 true :Incheon Buk-gu: Biology 4.1 1
+S Ryoo32 1780 46.8 false :Gwangju Nam-gu: Computer 3.6 2
+S Park33 1615 77.2 true :Daegu Nam-gu: Chemistry 3.3 1
+W Hong34 1618 57.8 false :Gwangju Buk-gu: KT Chief
+S Jeon35 1471 84.1 true :Daejeon Jung-gu: Chemistry 0.7 1
+W Seoh36 1384 74.5 false :Daegu Dong-gu: KT CFO
+P Nahh37 1298 62.7 false :Gwangju Seo-gu:
+W Baek38 1076 48.4 false :Seoul Seo-gu: Naver CTO
+S Shin39 1614 54.9 false :Ulsan Nam-gu: Chemistry 1.9 4
+S Ryoo40 1615 67.0 true :Daejeon Buk-gu: Computer 2.5 2
+P Yoon41 1277 52.7 true :Daegu Seo-gu:
+P Jooh42 1661 59.9 true :Ulsan Dong-gu:
+W Yoon43 1578 66.3 false :Daegu Dong-gu: Hyundai Chief
+S Yoon44 1210 81.3 false :Busan Jung-gu: Micanical 4.3 1
+S Park45 1889 72.8 true :Gwangju Buk-gu: Chemistry 1.5 4
+W Kimm46 1581 47.2 true :Incheon Buk-gu: Kia CTO
+P Shin47 1613 54.2 true :Incheon Nam-gu:
+S Jeon48 1229 50.1 true :Seoul Jung-gu: Biology 3.7 1
+S Kimm49 1614 72.4 false :Daegu Dong-gu: Micanical 4.2 1
+S Shin50 1725 62.6 true :Ulsan Seo-gu: Electronics 1.3 1
+P Yang51 1033 85.1 true :Gwangju Nam-gu:
+W Moon52 1610 90.2 false :Daejeon Seo-gu: SK Director
+W Shim53 1224 50.3 false :Gwangju Dong-gu: Kia Director
+P Shim54 1751 92.5 true :Incheon Buk-gu:
+W Baek55 1469 53.7 true :Daegu Jung-gu: Kakao CTO
+S Ryoo56 1415 87.2 true :Daejeon Dong-gu: Computer 2.7 1
+S Nahh57 1900 83.7 false :Seoul Buk-gu: Biology 0.6 1
+S Choi58 1720 48.5 false :Incheon Buk-gu: Micanical 3.4 2
+P Choi59 1537 64.7 true :Busan Seo-gu:
+P Shin60 1165 79.1 true :Gwangju Jung-gu:
+S Shin61 1642 67.3 false :Incheon Jung-gu: Micanical 1.6 3
+P Jeon62 1981 95.8 true :Seoul Nam-gu:
+P Jeon63 1371 64.3 true :Daejeon Dong-gu:
+P Kang64 1008 63.6 false :Seoul Nam-gu:
+P Hong65 1286 60.4 false :Seoul Dong-gu:
+P Yoon66 1230 62.3 false :Gwangju Dong-gu:
+P Jooh67 1611 51.1 true :Incheon Nam-gu:
+P Nahh68 1294 96.3 false :Busan Nam-gu:
+W Johh69 1727 82.6 true :Incheon Jung-gu: KT CTO
+-----------------
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 11
+-----------------
+0 entries
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 14
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+[6] Kimm10 1948 54.4 false :Incheon Dong-gu: Kia CFO
+[7] Park11 1095 98.9 true :Seoul Nam-gu: Computer 1.2 1
+[8] Choi12 1882 72.8 false :Seoul Jung-gu: Computer 1.1 1
+[9] Moon13 1960 81.2 false :Seoul Dong-gu:
+[10] Nahh14 1646 93.9 false :Daejeon Buk-gu:
+[11] Jooh15 1451 61.5 true :Daejeon Dong-gu:
+[12] Moon16 1220 98.2 false :Gwangju Seo-gu:
+[13] Kimm17 1668 64.8 false :Seoul Buk-gu: Samsung CFO
+[14] Kang18 1067 40.8 true :Gwangju Dong-gu:
+[15] Leem19 1290 48.6 false :Gwangju Jung-gu:
+[16] Yang20 1753 91.1 true :Incheon Jung-gu: Kia CFO
+[17] Choi21 1577 40.1 true :Gwangju Jung-gu:
+[18] Nahh22 1958 55.3 false :Incheon Jung-gu: Samsung Chief
+[19] Shin23 1098 95.5 false :Busan Buk-gu:
+[20] Song24 1901 92.4 true :Daegu Buk-gu: Electronics 0.6 4
+[21] Park25 1380 69.4 false :Busan Jung-gu: Physics 2.1 2
+[22] Johh26 1362 82.0 false :Seoul Dong-gu: Biology 2.1 3
+[23] Kimm27 1317 74.8 true :Daejeon Jung-gu:
+[24] Shim28 1113 64.5 true :Incheon Jung-gu: Computer 1.5 3
+[25] Jooh29 1050 42.4 false :Busan Seo-gu:
+[26] Kang30 1324 77.8 false :Seoul Dong-gu: Kia CEO
+[27] Shin31 1771 64.6 true :Incheon Buk-gu: Biology 4.1 1
+[28] Ryoo32 1780 46.8 false :Gwangju Nam-gu: Computer 3.6 2
+[29] Park33 1615 77.2 true :Daegu Nam-gu: Chemistry 3.3 1
+[30] Hong34 1618 57.8 false :Gwangju Buk-gu: KT Chief
+[31] Jeon35 1471 84.1 true :Daejeon Jung-gu: Chemistry 0.7 1
+[32] Seoh36 1384 74.5 false :Daegu Dong-gu: KT CFO
+[33] Nahh37 1298 62.7 false :Gwangju Seo-gu:
+[34] Baek38 1076 48.4 false :Seoul Seo-gu: Naver CTO
+[35] Shin39 1614 54.9 false :Ulsan Nam-gu: Chemistry 1.9 4
+[36] Ryoo40 1615 67.0 true :Daejeon Buk-gu: Computer 2.5 2
+[37] Yoon41 1277 52.7 true :Daegu Seo-gu:
+[38] Jooh42 1661 59.9 true :Ulsan Dong-gu:
+[39] Yoon43 1578 66.3 false :Daegu Dong-gu: Hyundai Chief
+[40] Yoon44 1210 81.3 false :Busan Jung-gu: Micanical 4.3 1
+[41] Park45 1889 72.8 true :Gwangju Buk-gu: Chemistry 1.5 4
+[42] Kimm46 1581 47.2 true :Incheon Buk-gu: Kia CTO
+[43] Shin47 1613 54.2 true :Incheon Nam-gu:
+[44] Jeon48 1229 50.1 true :Seoul Jung-gu: Biology 3.7 1
+[45] Kimm49 1614 72.4 false :Daegu Dong-gu: Micanical 4.2 1
+[46] Shin50 1725 62.6 true :Ulsan Seo-gu: Electronics 1.3 1
+[47] Yang51 1033 85.1 true :Gwangju Nam-gu:
+[48] Moon52 1610 90.2 false :Daejeon Seo-gu: SK Director
+[49] Shim53 1224 50.3 false :Gwangju Dong-gu: Kia Director
+[50] Shim54 1751 92.5 true :Incheon Buk-gu:
+[51] Baek55 1469 53.7 true :Daegu Jung-gu: Kakao CTO
+[52] Ryoo56 1415 87.2 true :Daejeon Dong-gu: Computer 2.7 1
+[53] Nahh57 1900 83.7 false :Seoul Buk-gu: Biology 0.6 1
+[54] Choi58 1720 48.5 false :Incheon Buk-gu: Micanical 3.4 2
+[55] Choi59 1537 64.7 true :Busan Seo-gu:
+[56] Shin60 1165 79.1 true :Gwangju Jung-gu:
+[57] Shin61 1642 67.3 false :Incheon Jung-gu: Micanical 1.6 3
+[58] Jeon62 1981 95.8 true :Seoul Nam-gu:
+[59] Jeon63 1371 64.3 true :Daejeon Dong-gu:
+[60] Kang64 1008 63.6 false :Seoul Nam-gu:
+[61] Hong65 1286 60.4 false :Seoul Dong-gu:
+[62] Yoon66 1230 62.3 false :Gwangju Dong-gu:
+[63] Jooh67 1611 51.1 true :Incheon Nam-gu:
+[64] Nahh68 1294 96.3 false :Busan Nam-gu:
+[65] Johh69 1727 82.6 true :Incheon Jung-gu: KT CTO
+-----------------
+66 entries
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 6
+-----------------
+[data] directory: 0 files
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 0
+
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1) 17.fileManager(8_1)    =
+================================================================
+menu item? 0
+
+************* Main Menu **************
+* 0.exit 1.PersonManager 2.ch2 3.ch3 *
+* 4.ch5 5.PMbyMap 6.MyVectorTest     *
+**************************************
+menu item? 0
+
+Good bye!!
