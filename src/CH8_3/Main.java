@@ -521,6 +521,10 @@ class Person implements Comparable<Person> {
         return new Person(this);
     }
 
+    public char getDelimChar() {
+        return 'P';
+    } // 8_3
+
     private void inputMembers(Scanner sc) {
         name = sc.next();
         id = sc.nextInt();
@@ -635,6 +639,11 @@ class Student extends Person {
         inputMembers(sc);
     }
 
+    @Override
+    public char getDelimChar() {
+        return 'S';
+    } // 8_3
+
     private void inputMembers(Scanner sc) {
         department = sc.next();
         GPA = sc.nextDouble();
@@ -747,6 +756,11 @@ class Worker extends Person {
         super.input(sc);
         inputMembers(sc);
     }
+
+    @Override
+    public char getDelimChar() {
+        return 'W';
+    } // 8_3
 
     private void inputMembers(Scanner sc) {
         company = sc.next();
@@ -2460,6 +2474,8 @@ class FileManager extends PersonGenerator { // ch8_1
     static final String HOME_DIR = "data"; // 상수 정의: 파일들을 생성할 폴더 이름
     private List list;
 
+    static final String TEXT_PATH_NAME = HOME_DIR + "/persons.txt"; // 8_3
+
     FileManager(List list) {
         var dir = new File(HOME_DIR);
         if (!dir.exists()) dir.mkdir(); // 프로젝트 폴더에 "data" 폴더가 없을 경우 새로 생성
@@ -2471,8 +2487,9 @@ class FileManager extends PersonGenerator { // ch8_1
                 "====================== File Management Menu =====================\n" +
                         "= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =\n" +
                         "= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =\n" +
+                        "= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =\n" +
                         "=================================================================\n";
-        final int MENU_COUNT = 13; // 상수 정의
+        final int MENU_COUNT = 17; // 상수 정의
         while (true) {
             int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
             try {  // ch8_2
@@ -2513,6 +2530,18 @@ class FileManager extends PersonGenerator { // ch8_1
                     case 12:
                         add();
                         break;  // ch8_2
+                    case 13:
+                        saveText();
+                        break;  // ch8_3
+                    case 14:
+                        loadText();
+                        break;  // ch8_3
+                    case 15:
+                        saveTextAs();
+                        break;  // ch8_3
+                    case 16:
+                        loadTextFrom();
+                        break;  // ch8_3
                     case 0:
                         return;
                 }
@@ -2638,7 +2667,9 @@ class FileManager extends PersonGenerator { // ch8_1
     void show() throws IOException { // menu item 7: show file content: 8_2
         var src = selectFile("", "display", true);
         var fi = new FileInputStream(src);
+        System.out.println("-----------------");
         copyFile(fi, System.out);
+        System.out.println("-----------------");
         fi.close();
     }
 
@@ -2656,9 +2687,9 @@ class FileManager extends PersonGenerator { // ch8_1
 
     void append() throws IOException { // menu item 8: file copy: 8_2
         var src = selectFile("source", "append", true);
-        if(src == null) return;
+        if (src == null) return;
         var dst = selectFile("target", "append", true);
-        if(dst == null) return;
+        if (dst == null) return;
         var fi = new FileInputStream(src);
         var fo = new FileOutputStream(dst, true);
         copyFile(fi, fo);
@@ -2683,6 +2714,39 @@ class FileManager extends PersonGenerator { // ch8_1
             list.add(getNewPerson());
         }
         display();
+    }
+
+    void saveTextFile(String pathName) throws IOException { // 8_3
+        var fout = new PrintStream(pathName);
+        for(var t: list){
+            fout.println(t.getDelimChar()+" "+t);
+        }
+        fout.close();
+        fileList();
+        /* ToDo: 강의노트 "텍스트 파일에 println()으로 쓰기" 부분을 참고하여
+        pathName을 주고 PrintStream 객체 fout을 생성한다.
+        for-each 문을 이용하여 list의 각각의 원소 t에 대해
+            fout.println(t.getDelimChar()+" "+t)를 호출한다.
+            // 위 문장은 PersonManager::display(list)에서
+            // System.out.println()을 이용하여 각 객체를 콘솔에 출력하는 것과 비슷함
+            // 즉, 궁극적으로 각 객체의 toString()을 호출하여 출력됨
+            // System.out도 결국은 PrintStream 객체임
+        파일을 닫는다.
+        data 디렉터리의 모든 파일들의 목록을 보여 준다.
+        */
+    }
+
+    void saveText() throws IOException { // menu item 13: 8_3
+        saveTextFile(TEXT_PATH_NAME);
+    }
+
+    void loadText() throws IOException { // menu item 14: 8_3
+    }
+
+    void saveTextAs() throws IOException { // menu item 15: 8_3
+    }
+
+    void loadTextFrom() throws IOException { // menu item 16: 8_3
     }
 }  // ch8_1: FileManager class
 
