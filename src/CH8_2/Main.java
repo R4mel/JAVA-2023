@@ -1,8 +1,6 @@
 package CH8_2;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.*;
 
 public class Main {
@@ -1596,13 +1594,17 @@ class PersonManager implements BaseStation {
         }
     }
 
-    public void display() { // Menu item 1
-        int count = pVector.size();
+    public static void display(List<Person> list) {
+        int count = list.size();
         //System.out.println("display(): count " + count);
         for (int i = 0; i < count; ++i)
-            System.out.println("[" + i + "] " + pVector.get(i));
+            System.out.println("[" + i + "] " + list.get(i));
         //System.out.println("empty():" + pVector.isEmpty() + ", size():" + pVector.size()
         //     + ", capacity():" + pVector.capacity());
+    }
+
+    public void display() { // Menu item 1
+        display(pVector);
     }
 
     public void clear() {  // Menu item 2
@@ -1856,16 +1858,63 @@ class MultiManager {
     }
 }
 
-abstract class BaseManager {
-    protected int ADD_SIZE = 10;
-    protected int REPLACE_SIZE = 5;
-    private Random rand;
-    protected int count;
+class PersonGenerator {
+    static final int ADD_SIZE = 10;
+    static final int REPLACE_SIZE = 5;
 
-    public BaseManager() {
+    private Random rand;
+    int count, id, stYear;
+    String name, address, department, company, position;
+    double weight, GPA;
+    boolean married;
+
+    public PersonGenerator() {
         rand = new Random(0);
         count = 10;
     }
+
+    public Person getNewPerson() {
+        name = families[rand.nextInt(families.length)] + (count++);
+        id = 1000 + rand.nextInt(1000);
+        weight = 40 + rand.nextDouble() * 60;
+        weight = (int) (weight * 10) / (double) 10;
+        married = (id % 2) == 1;
+        address = cities[rand.nextInt(cities.length)] + " " + gus[rand.nextInt(gus.length)];
+        stYear = rand.nextInt(4) + 1;
+        GPA = rand.nextDouble() * 4.5;
+        GPA = (int) (GPA * 10) / (double) 10;
+        department = departs[rand.nextInt(departs.length)];
+        company = companies[rand.nextInt(companies.length)];
+        position = positions[rand.nextInt(positions.length)];
+
+        switch (rand.nextInt(3)) {
+            case 0:
+                return new Person(name, id, weight, married, address);
+            case 1:
+                return new Student(name, id, weight, married, address, department, GPA, stYear);
+            case 2:
+                return new Worker(name, id, weight, married, address, company, position);
+            default:
+                return null;
+        }
+    }
+
+    private String families[] =
+            {"Kimm", "Leem", "Park", "Choi", "Jeon", "Shim", "Shin", "Kang", "Yang", "Yoon",
+                    "Baek", "Ryoo", "Seoh", "Johh", "Baeh", "Moon", "Nahh", "Jooh", "Song", "Hong"};
+    private String cities[] =
+            {"Seoul", "Busan", "Gwangju", "Daejeon", "Incheon", "Daegu", "Ulsan"};
+    private String gus[] =
+            {"Jung-gu", "Nam-gu", "Buk-gu", "Dong-gu", "Seo-gu",};
+    private String departs[] =
+            {"Physics", "Electronics", "Computer", "Chemistry", "Biology", "Micanical"};
+    private String companies[] =
+            {"Samsung", "Hyundai", "Kia", "SK", "LG", "Naver", "Kakao", "KT"};
+    private String positions[] =
+            {"Director", "Manager", "CEO", "CTO", "Chief", "CFO"};
+}   // ch8_2: PersonGenerator class
+
+abstract class BaseManager extends PersonGenerator {
 
     public void run() {
         String menuStr =
@@ -1924,47 +1973,10 @@ abstract class BaseManager {
 
     abstract public void collections(); // Menu item 7
 
-    //-------------------------------------------------------------------------------------------
-    // 기타 abstract functions
-    //-------------------------------------------------------------------------------------------
     abstract public void clearAllElements(); // 컬렉션의 모든 원소를 삭제함
 
     // Person 객체들을 자동으로 생성하여 컬렉션에 추가함; 이때 아래 getXXX() 함수를 활용한다.
     abstract public void addElements();
-
-    //-------------------------------------------------------------------------------------------
-    // Person 객체를 자동으로 생성할 때 아래 함수들을 사용하라.
-    //-------------------------------------------------------------------------------------------
-    protected int getNewId() {
-        return 1000 + rand.nextInt(1000);
-    }
-
-    protected String getNewName() {
-        return families[rand.nextInt(families.length)] + (count++);
-    }
-
-    protected double getNewWeight() {
-        double weight = 40 + rand.nextDouble() * 60; // 40 ~ 100 사이의 몸무게 생성
-        return (int) (weight * 10) / (double) 10; // 소수점 한자리까지만 사용함
-    }
-
-    protected boolean getNewMarried(int id) {
-        return (id % 2) == 1;
-    }
-
-    protected String getNewAddress() {
-        return cities[rand.nextInt(cities.length)] + " " +
-                gus[rand.nextInt(gus.length)];
-    }
-
-    private String families[] =
-            {"Kimm", "Leem", "Park", "Choi", "Jeon", "Shim", "Shin", "Kang", "Yang", "Yoon",
-                    "Baek", "Ryoo", "Seoh", "Johh", "Baeh", "Moon", "Nahh", "Jooh", "Song", "Hong"};
-    private String cities[] =
-            {"Seoul", "Busan", "Gwangju", "Daejeon", "Incheon", "Daegu", "Ulsan"};
-    private String gus[] =
-            {"Jung-gu", "Nam-gu", "Buk-gu", "Dong-gu", "Seo-gu",};
-
 }   // ch7_2: BaseManager class
 
 class PMbyMap extends BaseManager { // ch7_2
@@ -2063,11 +2075,6 @@ class PMbyMap extends BaseManager { // ch7_2
             map.put(p.getName(), p);
         }
     }
-
-    public Person getNewPerson() {
-        int id = getNewId();
-        return new Person(getNewName(), id, getNewWeight(), getNewMarried(id), getNewAddress());
-    }
 }   // ch7_2: PMbyMap class
 
 abstract class CollectionsMenu { // ch7_1
@@ -2127,8 +2134,7 @@ class CollectionsByList extends CollectionsMenu { // ch7_1
 
     @Override
     public void display() { // Menu item 1
-        for (int i = 0, count = list.size(); i < count; ++i)
-            System.out.println("[" + i + "] " + list.get(i));
+        PersonManager.display(list);
     }
 
     @Override
@@ -2388,11 +2394,12 @@ class MyVectorTest extends BaseManager // ch7_3
         // 각 벡터의 총 원소 중 초반의 REPLACE_SIZE개의 사람 정보를 모두 수정함
         int count = Math.min(REPLACE_SIZE, idVct.size());
         for (int i = 0; i < count; ++i) {
-            nameVct.set(i, getNewName());
-            idVct.set(i, getNewId());
-            weightVct.set(i, getNewWeight());
-            marriedVct.set(i, getNewMarried(idVct.get(i)));
-            addressVct.set(i, getNewAddress());
+            Person p = getNewPerson(); // 새로운 객체를 자동으로 생성함
+            nameVct.set(i, p.getName());
+            idVct.set(i, p.getId());
+            weightVct.set(i, p.getWeight());
+            marriedVct.set(i, p.getMarried());
+            addressVct.set(i, p.getAddress());
         }
         display();
     }
@@ -2437,56 +2444,82 @@ class MyVectorTest extends BaseManager // ch7_3
     public void addElements() {   // BaseManager::add()에 의해 호출됨
         // ADD_SIZE개의 Person 정보를 자동 생성하여 별개의 벡터에 보관함
         for (int i = 0; i < ADD_SIZE; ++i) {
+            Person p = getNewPerson();
             // 각각의 벡터의 끝에 자동 생성된 Person 멤버들을 추가한다.
-            int id = getNewId();
-            nameVct.add(getNewName());
+            int id = p.getId();
+            nameVct.add(p.getName());
             idVct.add(id);
-            weightVct.add(getNewWeight());
-            marriedVct.add(getNewMarried(id));
-            addressVct.add(getNewAddress());
+            weightVct.add(p.getWeight());
+            marriedVct.add(p.getMarried());
+            addressVct.add(p.getAddress());
         }
     }
 }   // ch7_3: MyVectorTest class
 
-class FileManager { // ch8_1
+class FileManager extends PersonGenerator { // ch8_1
     static final String HOME_DIR = "data"; // 상수 정의: 파일들을 생성할 폴더 이름
+    private List list;
 
     FileManager(List list) {
         var dir = new File(HOME_DIR);
         if (!dir.exists()) dir.mkdir(); // 프로젝트 폴더에 "data" 폴더가 없을 경우 새로 생성
+        this.list = list;
     }
 
     public void run() {
         String menuStr =
                 "====================== File Management Menu =====================\n" +
                         "= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =\n" +
-                        "= 6.deleteAll                                                   =\n" +
+                        "= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =\n" +
                         "=================================================================\n";
-        final int MENU_COUNT = 7; // 상수 정의
+        final int MENU_COUNT = 13; // 상수 정의
         while (true) {
             int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
-            switch (menuItem) {
-                case 1:
-                    fileList();
-                    break;
-                case 2:
-                    delete();
-                    break;
-                case 3:
-                    rename();
-                    break;
-                case 4:
-                    addFiles();
-                    break;
-                case 5:
-                    addDir();
-                    break;
-                case 6:
-                    deleteAll();
-                    break;
-                case 0:
-                    return;
+            try {  // ch8_2
+                switch (menuItem) {
+                    case 1:
+                        fileList();
+                        break;
+                    case 2:
+                        delete();
+                        break;
+                    case 3:
+                        rename();
+                        break;
+                    case 4:
+                        addFiles();
+                        break;
+                    case 5:
+                        addDir();
+                        break;
+                    case 6:
+                        deleteAll();
+                        break;
+                    case 7:
+                        show();
+                        break;  // ch8_2
+                    case 8:
+                        copy();
+                        break;  // ch8_2
+                    case 9:
+                        append();
+                        break;  // ch8_2
+                    case 10:
+                        display();
+                        break;  // ch8_2
+                    case 11:
+                        clear();
+                        break;  // ch8_2
+                    case 12:
+                        add();
+                        break;  // ch8_2
+                    case 0:
+                        return;
+                }
+            } catch (IOException e) {
+                System.out.println("file I/O error: " + e);
             }
+
         }
     }
 
@@ -2511,31 +2544,36 @@ class FileManager { // ch8_1
         return files;
     }
 
-    File selectFile(String preMsg, String postMsg) {
+    File selectFile(String preMsg, String postMsg, boolean onlyFile) {
         File files[] = fileList();
         if (preMsg.length() != 0) preMsg += " ";
         while (true) {
             String msg = "index number of a " + preMsg + "file to " + postMsg + " [-1:stop]? ";
             int val = UI.getInt(msg);
-            if (val >= 0 && val < files.length) {
-                return files[val];
-            } else if (val == -1) {
+            if (val == -1) {
                 return null;
+            } else if (val >= 0 && val < files.length) {
+                if (onlyFile && files[val].isDirectory()) {
+                    System.out.println("can't select directory: " + files[val].getName());
+                } else {
+                    return files[val];
+                }
             } else {
                 System.out.println("invalid index number: " + val);
             }
         }
+
     }
 
     void delete() { // menu item 2
         File f;
-        if ((f = selectFile("", "delete")) == null) return;
+        if ((f = selectFile("", "delete", false)) == null) return;
         f.delete();
         fileList();
     }
 
     void rename() { // menu item 3
-        File src = selectFile("source", "rename");
+        File src = selectFile("source", "rename", false);
         if (src == null) return; // 사용자가 파일 선택을 취소했을 경우
         String text = UI.getNext("target file name? ");
         var dst = new File(HOME_DIR + "/" + text);
@@ -2588,6 +2626,63 @@ class FileManager { // ch8_1
         }
         System.out.println("-----------------");
         System.out.println("[" + HOME_DIR + "] directory: " + 0 + " files");
+    }
+
+    void copyFile(InputStream in, OutputStream out) throws IOException {
+        byte[] buf = new byte[1024 * 8];
+        for (int n; (n = in.read(buf)) > 0; ) {
+            out.write(buf, 0, n);
+        }
+    }
+
+    void show() throws IOException { // menu item 7: show file content: 8_2
+        var src = selectFile("", "display", true);
+        var fi = new FileInputStream(src);
+        copyFile(fi, System.out);
+        fi.close();
+    }
+
+    void copy() throws IOException { // menu item 8: file copy: 8_2
+        var src = selectFile("source", "copy", true);
+        String target = UI.getNext("target file name? ");
+        var dst = new File(HOME_DIR + "/" + target);
+        var fi = new FileInputStream(src);
+        var fo = new FileOutputStream(dst);
+        copyFile(fi, fo);
+        fi.close();
+        fo.close();
+        fileList();
+    }
+
+    void append() throws IOException { // menu item 8: file copy: 8_2
+        var src = selectFile("source", "append", true);
+        if(src == null) return;
+        var dst = selectFile("target", "append", true);
+        if(dst == null) return;
+        var fi = new FileInputStream(src);
+        var fo = new FileOutputStream(dst, true);
+        copyFile(fi, fo);
+        fi.close();
+        fo.close();
+        fileList();
+    }
+
+    void display() {  // menu item 10: 8_2
+        PersonManager.display(list);
+        System.out.println("-----------------");
+        System.out.println(list.size() + " entries");
+    }
+
+    void clear() {  // menu item 11: 8_2
+        list.clear();
+        display();
+    }
+
+    void add() { // menu item 12: 8_2
+        for (int i = 0; i < ADD_SIZE; i++) {
+            list.add(getNewPerson());
+        }
+        display();
     }
 }  // ch8_1: FileManager class
 
