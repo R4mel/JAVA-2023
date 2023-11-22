@@ -10,7 +10,7 @@ public class Main {
         // chk: 1(자동 오류 체크), 0(키보드에서 직접 입력하여 프로그램 실행)
         //--------------------------------
         // trace: true(오류발생한 곳 출력), false(단순히 O, X만 표시)
-        // int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
+         int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
         run(new Scanner(System.in));
     }
 
@@ -353,7 +353,6 @@ class Person implements Comparable<Person> {
     private String address; // 주소
     private String passwd = ""; // 비밀번호
     private SmartPhone smartPhone; // 스마트폰: 5_3에서 추가
-
     private String memo;       // 메모: 6_2
 
     // 생성자 함수들
@@ -1489,12 +1488,12 @@ class CurrentUser {
 }
 
 class Factory {
-    public void printInputNotice(String preMsg, String postMsg) {
+    public static void printInputNotice(String preMsg, String postMsg) {
         System.out.println("input" + preMsg + " [delimiter(P,S,or W)]" +
                 " [person information]" + postMsg + ":");
     }
 
-    public Person inputPerson(Scanner sc) {
+    public static Person inputPerson(Scanner sc) {
         Person p = null;
         String delimiter = sc.next();
         switch (delimiter) {
@@ -1523,14 +1522,12 @@ class PersonManager implements BaseStation {
     //    private final VectorPerson pVector;
     int cpCount = 0;
     private Vector<Person> pVector;
-    private final Factory factory;
     private final Person[] array;
     private Random rand; // 7_1 추가
 
-    public PersonManager(Person[] array, Factory factory) {
+    public PersonManager(Person[] array) {
 //        System.out.println("PersonManager(array[])");
         pVector = new Vector<>();
-        this.factory = factory;
         this.array = array;
         addArray();
         display();
@@ -1661,9 +1658,9 @@ class PersonManager implements BaseStation {
 
     public void append() { // Menu item 6
         int count = UI.getPosInt("number of persons to append? ");
-        factory.printInputNotice(" " + Integer.toString(count), " to append");
+        Factory.printInputNotice(" " + count, " to append");
         for (int i = 0; i < count; ++i) {
-            Person p = factory.inputPerson(UI.scan);
+            Person p = Factory.inputPerson(UI.scan);
             if (p != null) pVector.add(p);
             else i--;
         }
@@ -1676,8 +1673,8 @@ class PersonManager implements BaseStation {
             index = UI.getIndex("index to insert in front? ", pVector.size() + 1);
             if (index < 0) return;
         }
-        factory.printInputNotice("", " to insert");
-        Person p = factory.inputPerson(UI.scan);
+        Factory.printInputNotice("", " to insert");
+        Person p = Factory.inputPerson(UI.scan);
         if (p == null) {
             return;
         }
@@ -1722,8 +1719,8 @@ class PersonManager implements BaseStation {
 
     public void find() { // Menu item 11: ch6_1
         boolean found = false;
-        factory.printInputNotice("", " to find by equals()");
-        Person p = factory.inputPerson(UI.scan); // 한 사람의 정보를 입력 받음
+        Factory.printInputNotice("", " to find by equals()");
+        Person p = Factory.inputPerson(UI.scan); // 한 사람의 정보를 입력 받음
         if (p == null) return;
         for (int i = 0; i < pVector.size(); i++) {
             if (p.getClass() == pVector.get(i).getClass()) {
@@ -1866,7 +1863,7 @@ class MultiManager {
 
     public void run() {
 //        System.out.println("PersonManager::run() starts");
-        var pm = new PersonManager(allPersons, new Factory());
+        var pm = new PersonManager(allPersons);
         pm.run();
 //        System.out.println("PersonManager::run() returned");
     }
@@ -2472,11 +2469,11 @@ class MyVectorTest extends BaseManager // ch7_3
 
 class FileManager extends PersonGenerator { // ch8_1
     static final String HOME_DIR = "data"; // 상수 정의: 파일들을 생성할 폴더 이름
-    private List<Person> list;
+    private final List<Person> list;
 
     static final String TEXT_PATH_NAME = HOME_DIR + "/persons.txt"; // 8_3
 
-    FileManager(List list) {
+    FileManager(List<Person> list) {
         var dir = new File(HOME_DIR);
         if (!dir.exists()) dir.mkdir(); // 프로젝트 폴더에 "data" 폴더가 없을 경우 새로 생성
         this.list = list;
@@ -2554,7 +2551,7 @@ class FileManager extends PersonGenerator { // ch8_1
 
     void printFileInfo(File f) {
         long t = f.lastModified();
-//        t = 1700000000000L;  // 2023-11-15 오전 07:13; 자동 체크 때 사용할 예정임
+        t = 1700000000000L;  // 2023-11-15 오전 07:13; 자동 체크 때 사용할 예정임
         System.out.printf("%-20s %c %tF %tH:%tM %9d\n",
                 f.getName(), f.isDirectory() ? 'D' : 'F', t, t, t, f.length());
     }
@@ -2718,8 +2715,8 @@ class FileManager extends PersonGenerator { // ch8_1
 
     void saveTextFile(String pathName) throws IOException { // 8_3
         var fout = new PrintStream(pathName);
-        for(var t: list){
-            fout.println(t.getDelimChar()+" "+t);
+        for (var t : list) {
+            fout.println(t.getDelimChar() + " " + t);
         }
         fout.close();
         fileList();
@@ -2729,13 +2726,56 @@ class FileManager extends PersonGenerator { // ch8_1
         saveTextFile(TEXT_PATH_NAME);
     }
 
+    void loadTextFile(String pathName) throws IOException {  // 8_3
+        var fin = new FileInputStream(pathName);
+        Scanner scanner = new Scanner(fin);
+        list.clear();
+        boolean saved_echo_input = UI.echo_input;
+        UI.echo_input = false;  // 자동오류체크시 파일에서 입력될 경우 출력하지 않도록 함
+        while (true) {
+            try {
+                var p = Factory.inputPerson(scanner);
+                if (p != null) list.add(p);
+            } catch (NoSuchElementException e) {
+                break;
+            }
+            // 스캐너로 파일을 끝까지 다 읽었는데 또 읽으면 위 예외가 발생함;
+            // 중요: 스캐너를 통해 파일을 읽을 때는 이걸 통해 읽기를 종료해야 함
+            catch (Exception e) {
+                System.out.println("scanner error: " + e);
+            }
+        }
+        UI.echo_input = saved_echo_input;
+        fin.close();
+        display();
+    }
+
     void loadText() throws IOException { // menu item 14: 8_3
+        loadTextFile(TEXT_PATH_NAME);
+    }
+
+    String getNewFilePath(String msg) {  // 8_3
+        fileList();
+        String fileName = UI.getNext("new " + msg + " file name to save? ");
+        var f = new File(HOME_DIR + "/" + fileName);
+        if (f.exists()) {
+            System.out.println(f.getName() + ": already exists");
+            return null;
+        }
+        return f.getPath();
     }
 
     void saveTextAs() throws IOException { // menu item 15: 8_3
+        String filePath = getNewFilePath("text");
+        if (filePath != null) saveTextFile(filePath);
+        else return;
     }
 
     void loadTextFrom() throws IOException { // menu item 16: 8_3
+        var f = selectFile("text", "load", true);
+        if (f != null) {
+            loadTextFile(f.getPath());
+        } else return;
     }
 }  // ch8_1: FileManager class
 
