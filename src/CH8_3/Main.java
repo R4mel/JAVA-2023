@@ -2472,7 +2472,7 @@ class MyVectorTest extends BaseManager // ch7_3
 
 class FileManager extends PersonGenerator { // ch8_1
     static final String HOME_DIR = "data"; // 상수 정의: 파일들을 생성할 폴더 이름
-    private List list;
+    private List<Person> list;
 
     static final String TEXT_PATH_NAME = HOME_DIR + "/persons.txt"; // 8_3
 
@@ -2723,17 +2723,6 @@ class FileManager extends PersonGenerator { // ch8_1
         }
         fout.close();
         fileList();
-        /* ToDo: 강의노트 "텍스트 파일에 println()으로 쓰기" 부분을 참고하여
-        pathName을 주고 PrintStream 객체 fout을 생성한다.
-        for-each 문을 이용하여 list의 각각의 원소 t에 대해
-            fout.println(t.getDelimChar()+" "+t)를 호출한다.
-            // 위 문장은 PersonManager::display(list)에서
-            // System.out.println()을 이용하여 각 객체를 콘솔에 출력하는 것과 비슷함
-            // 즉, 궁극적으로 각 객체의 toString()을 호출하여 출력됨
-            // System.out도 결국은 PrintStream 객체임
-        파일을 닫는다.
-        data 디렉터리의 모든 파일들의 목록을 보여 준다.
-        */
     }
 
     void saveText() throws IOException { // menu item 13: 8_3
