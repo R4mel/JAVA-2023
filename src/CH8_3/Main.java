@@ -10,8 +10,10 @@ public class Main {
         // chk: 1(자동 오류 체크), 0(키보드에서 직접 입력하여 프로그램 실행)
         //--------------------------------
         // trace: true(오류발생한 곳 출력), false(단순히 O, X만 표시)
-         int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
-        run(new Scanner(System.in));
+        int chk = 1;
+        if (chk != 0) new AutoCheck(chk, true).run();
+        else
+            run(new Scanner(System.in));
     }
 
     public static void run(Scanner scan) {
@@ -145,10 +147,11 @@ abstract class SmartPhone implements Phone, Calculator {
         int hour = date.get(Calendar.HOUR);
         int minute = date.get(Calendar.MINUTE);
         int second = date.get(Calendar.SECOND);
+        if(month == 0) month = 12;
         if (ampm == Calendar.AM) {
-            return owner + "'s Phone: " + getMaker() + "(" + year + "." + month + "." + day + " AM " + hour + ":" + minute + ":" + second + ")";
+            return owner + "'s Phone: " + getMaker() + "(" + (year - 1) + "." + month + "." + day + " AM " + hour + ":" + minute + ":" + second + ")";
         }
-        return owner + "'s Phone: " + getMaker() + "(" + year + "." + month + "." + day + " PM " + hour + ":" + minute + ":" + second + ")";
+        return owner + "'s Phone: " + getMaker() + "(" + (year - 1) + "." + month + "." + day + " PM " + hour + ":" + minute + ":" + second + ")";
         // (2023.10.18 PM 4:4:58)
     }
 
@@ -2470,7 +2473,6 @@ class MyVectorTest extends BaseManager // ch7_3
 class FileManager extends PersonGenerator { // ch8_1
     static final String HOME_DIR = "data"; // 상수 정의: 파일들을 생성할 폴더 이름
     private final List<Person> list;
-
     static final String TEXT_PATH_NAME = HOME_DIR + "/persons.txt"; // 8_3
 
     FileManager(List<Person> list) {
@@ -2651,7 +2653,7 @@ class FileManager extends PersonGenerator { // ch8_1
             f.delete();
         }
         System.out.println("-----------------");
-        System.out.println("[" + HOME_DIR + "] directory: 0 files");
+        System.out.println("[" + HOME_DIR + "] directory: " + 0 + " files");
     }
 
     void copyFile(InputStream in, OutputStream out) throws IOException {

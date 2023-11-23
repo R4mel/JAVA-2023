@@ -1,0 +1,6 @@
+P p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21: 
+P p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul: 
+S s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+S s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+W w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+W w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager

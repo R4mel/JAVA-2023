@@ -74,7 +74,7 @@ menu item? 12
 = 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
 =================================================================
 menu item? 13
-[0] persons.txt          F 2023-11-15 07:13       800
+[0] persons.txt          F 2023-11-15 07:13       808
 -----------------
 [data] directory: 1 files
 
@@ -119,7 +119,7 @@ menu item? 12
 = 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
 =================================================================
 menu item? 15
-[0] persons.txt          F 2023-11-15 07:13       800
+[0] persons.txt          F 2023-11-15 07:13       808
 -----------------
 [data] directory: 1 files
 new text file name to save? persons.txt
@@ -131,12 +131,12 @@ persons.txt: already exists
 = 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
 =================================================================
 menu item? 15
-[0] persons.txt          F 2023-11-15 07:13       800
+[0] persons.txt          F 2023-11-15 07:13       808
 -----------------
 [data] directory: 1 files
 new text file name to save? p.txt
-[0] p.txt                F 2023-11-15 07:13      1305
-[1] persons.txt          F 2023-11-15 07:13       800
+[0] p.txt                F 2023-11-15 07:13      1317
+[1] persons.txt          F 2023-11-15 07:13       808
 -----------------
 [data] directory: 2 files
 
@@ -146,8 +146,8 @@ new text file name to save? p.txt
 = 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
 =================================================================
 menu item? 7
-[0] p.txt                F 2023-11-15 07:13      1305
-[1] persons.txt          F 2023-11-15 07:13       800
+[0] p.txt                F 2023-11-15 07:13      1317
+[1] persons.txt          F 2023-11-15 07:13       808
 -----------------
 [data] directory: 2 files
 index number of a file to display [-1:stop]? 0

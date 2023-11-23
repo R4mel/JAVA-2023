@@ -349,7 +349,7 @@ menu item? 12
 = 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
 =================================================================
 menu item? 13
-[0] persons.txt          F 2023-11-15 07:13      3314
+[0] persons.txt          F 2023-11-15 07:13      3341
 -----------------
 [data] directory: 1 files
 
@@ -359,7 +359,7 @@ menu item? 13
 = 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
 =================================================================
 menu item? 7
-[0] persons.txt          F 2023-11-15 07:13      3314
+[0] persons.txt          F 2023-11-15 07:13      3341
 -----------------
 [data] directory: 1 files
 index number of a file to display [-1:stop]? 0

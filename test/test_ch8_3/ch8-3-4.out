@@ -49,7 +49,7 @@ menu item? 10
 = 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
 =================================================================
 menu item? 13
-[0] persons.txt          F 2023-11-15 07:13       325
+[0] persons.txt          F 2023-11-15 07:13       327
 -----------------
 [data] directory: 1 files
 
@@ -164,7 +164,7 @@ menu item? 12
 = 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
 =================================================================
 menu item? 15
-[0] persons.txt          F 2023-11-15 07:13       325
+[0] persons.txt          F 2023-11-15 07:13       327
 -----------------
 [data] directory: 1 files
 new text file name to save? persons.txt
@@ -176,12 +176,12 @@ persons.txt: already exists
 = 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
 =================================================================
 menu item? 15
-[0] persons.txt          F 2023-11-15 07:13       325
+[0] persons.txt          F 2023-11-15 07:13       327
 -----------------
 [data] directory: 1 files
 new text file name to save? p.txt
-[0] p.txt                F 2023-11-15 07:13      1836
-[1] persons.txt          F 2023-11-15 07:13       325
+[0] p.txt                F 2023-11-15 07:13      1849
+[1] persons.txt          F 2023-11-15 07:13       327
 -----------------
 [data] directory: 2 files
 
@@ -200,8 +200,8 @@ menu item? 11
 = 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
 =================================================================
 menu item? 16
-[0] p.txt                F 2023-11-15 07:13      1836
-[1] persons.txt          F 2023-11-15 07:13       325
+[0] p.txt                F 2023-11-15 07:13      1849
+[1] persons.txt          F 2023-11-15 07:13       327
 -----------------
 [data] directory: 2 files
 index number of a text file to load [-1:stop]? Input an INTEGER. Try again!!
@@ -251,8 +251,8 @@ index number of a text file to load [-1:stop]? 0
 = 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
 =================================================================
 menu item? 16
-[0] p.txt                F 2023-11-15 07:13      1836
-[1] persons.txt          F 2023-11-15 07:13       325
+[0] p.txt                F 2023-11-15 07:13      1849
+[1] persons.txt          F 2023-11-15 07:13       327
 -----------------
 [data] directory: 2 files
 index number of a text file to load [-1:stop]? 1
