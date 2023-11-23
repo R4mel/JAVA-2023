@@ -52,7 +52,7 @@ menu item? 10
 = 17.saveBinary 18.loadBinary 19.saveBinaryAs 20.loadBinaryFrom =
 =================================================================
 menu item? 13
-[0] persons.txt          F 2023-11-15 07:13       325
+[0] persons.txt          F 2023-11-15 07:13       327
 -----------------
 [data] directory: 1 files
 
@@ -64,7 +64,7 @@ menu item? 13
 =================================================================
 menu item? 17
 [0] persons.bin          F 2023-11-15 07:13       338
-[1] persons.txt          F 2023-11-15 07:13       325
+[1] persons.txt          F 2023-11-15 07:13       327
 -----------------
 [data] directory: 2 files
 
@@ -86,7 +86,7 @@ menu item? 11
 =================================================================
 menu item? 20
 [0] persons.bin          F 2023-11-15 07:13       338
-[1] persons.txt          F 2023-11-15 07:13       325
+[1] persons.txt          F 2023-11-15 07:13       327
 -----------------
 [data] directory: 2 files
 index number of a binary file to load [-1:stop]? 0
@@ -107,7 +107,7 @@ index number of a binary file to load [-1:stop]? 0
 =================================================================
 menu item? 20
 [0] persons.bin          F 2023-11-15 07:13       338
-[1] persons.txt          F 2023-11-15 07:13       325
+[1] persons.txt          F 2023-11-15 07:13       327
 -----------------
 [data] directory: 2 files
 index number of a binary file to load [-1:stop]? -1
@@ -120,13 +120,13 @@ index number of a binary file to load [-1:stop]? -1
 =================================================================
 menu item? 19
 [0] persons.bin          F 2023-11-15 07:13       338
-[1] persons.txt          F 2023-11-15 07:13       325
+[1] persons.txt          F 2023-11-15 07:13       327
 -----------------
 [data] directory: 2 files
 new binary file name to save? p.bin
 [0] p.bin                F 2023-11-15 07:13       338
 [1] persons.bin          F 2023-11-15 07:13       338
-[2] persons.txt          F 2023-11-15 07:13       325
+[2] persons.txt          F 2023-11-15 07:13       327
 -----------------
 [data] directory: 3 files
 
@@ -303,7 +303,7 @@ menu item? 12
 menu item? 19
 [0] p.bin                F 2023-11-15 07:13       338
 [1] persons.bin          F 2023-11-15 07:13       338
-[2] persons.txt          F 2023-11-15 07:13       325
+[2] persons.txt          F 2023-11-15 07:13       327
 -----------------
 [data] directory: 3 files
 new binary file name to save? p.bin
@@ -318,14 +318,14 @@ p.bin: already exists
 menu item? 19
 [0] p.bin                F 2023-11-15 07:13       338
 [1] persons.bin          F 2023-11-15 07:13       338
-[2] persons.txt          F 2023-11-15 07:13       325
+[2] persons.txt          F 2023-11-15 07:13       327
 -----------------
 [data] directory: 3 files
 new binary file name to save? p1.bin
 [0] p.bin                F 2023-11-15 07:13       338
 [1] p1.bin               F 2023-11-15 07:13      2354
 [2] persons.bin          F 2023-11-15 07:13       338
-[3] persons.txt          F 2023-11-15 07:13       325
+[3] persons.txt          F 2023-11-15 07:13       327
 -----------------
 [data] directory: 4 files
 
@@ -349,7 +349,7 @@ menu item? 20
 [0] p.bin                F 2023-11-15 07:13       338
 [1] p1.bin               F 2023-11-15 07:13      2354
 [2] persons.bin          F 2023-11-15 07:13       338
-[3] persons.txt          F 2023-11-15 07:13       325
+[3] persons.txt          F 2023-11-15 07:13       327
 -----------------
 [data] directory: 4 files
 index number of a binary file to load [-1:stop]? 1
@@ -412,7 +412,7 @@ menu item? 20
 [0] p.bin                F 2023-11-15 07:13       338
 [1] p1.bin               F 2023-11-15 07:13      2354
 [2] persons.bin          F 2023-11-15 07:13       338
-[3] persons.txt          F 2023-11-15 07:13       325
+[3] persons.txt          F 2023-11-15 07:13       327
 -----------------
 [data] directory: 4 files
 index number of a binary file to load [-1:stop]? 2
@@ -435,7 +435,7 @@ menu item? 20
 [0] p.bin                F 2023-11-15 07:13       338
 [1] p1.bin               F 2023-11-15 07:13      2354
 [2] persons.bin          F 2023-11-15 07:13       338
-[3] persons.txt          F 2023-11-15 07:13       325
+[3] persons.txt          F 2023-11-15 07:13       327
 -----------------
 [data] directory: 4 files
 index number of a binary file to load [-1:stop]? 0
