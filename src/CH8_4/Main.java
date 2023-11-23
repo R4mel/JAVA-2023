@@ -10,7 +10,7 @@ public class Main {
         // chk: 1(자동 오류 체크), 0(키보드에서 직접 입력하여 프로그램 실행)
         //--------------------------------
         // trace: true(오류발생한 곳 출력), false(단순히 O, X만 표시)
-        int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
+//        int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
         run(new Scanner(System.in));
     }
 
@@ -2645,7 +2645,7 @@ class FileManager extends PersonGenerator { // ch8_1
 
     void printFileInfo(File f) {
         long t = f.lastModified();
-        t = 1700000000000L;  // 2023-11-15 오전 07:13; 자동 체크 때 사용할 예정임
+//        t = 1700000000000L;  // 2023-11-15 오전 07:13; 자동 체크 때 사용할 예정임
         System.out.printf("%-20s %c %tF %tH:%tM %9d\n",
                 f.getName(), f.isDirectory() ? 'D' : 'F', t, t, t, f.length());
     }
