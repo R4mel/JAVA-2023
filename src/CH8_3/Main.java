@@ -2651,7 +2651,7 @@ class FileManager extends PersonGenerator { // ch8_1
             f.delete();
         }
         System.out.println("-----------------");
-        System.out.println("[" + HOME_DIR + "] directory: " + 0 + " files");
+        System.out.println("[" + HOME_DIR + "] directory: 0 files");
     }
 
     void copyFile(InputStream in, OutputStream out) throws IOException {
