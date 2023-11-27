@@ -1,31 +1,20 @@
 package programmers;
 
-import java.util.Calendar;
-import java.util.Scanner;
+import java.util.*;
 
-class Calen {
-
-    protected Calendar date = Calendar.getInstance();
-
-    public String aa() {
-        int ampm = date.get(Calendar.AM_PM);
-        int year = date.get(Calendar.YEAR);
-        int month = date.get(Calendar.MONTH) + 1;
-        int day = date.get(Calendar.DAY_OF_MONTH);
-        int hour = date.get(Calendar.HOUR);
-        int minute = date.get(Calendar.MINUTE);
-        int second = date.get(Calendar.SECOND);
-        if (ampm == Calendar.AM) {
-            return "(" + year + "." + month + "." + day + " AM " + hour + ":" + minute + ":" + second + ")";
+class Solution {
+    public int solution(String my_string, String is_suffix) {
+        ArrayList<String> a = new ArrayList<>();
+        for (int i = 0; i < my_string.length(); i++) {
+            a.add(my_string.substring(i, my_string.length()));
         }
-        return "(" + year + "." + month + "." + day + " PM " + hour + ":" + minute + ":" + second + ")";
-        // (2023.10.18 PM 4:4:58)
+        if (a.contains(is_suffix)) return 1;
+        return 0;
     }
 }
 
 public class Main {
     public static void main(String[] args) {
-        var test = new Calen();
-        System.out.println(test.aa());
+        var sol = new Solution();
     }
 }
