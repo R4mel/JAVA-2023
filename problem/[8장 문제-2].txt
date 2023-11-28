@@ -1,0 +1,695 @@
+[8장 문제-2]
+/******************************************************************************
+ * 코드 추가 2
+ ******************************************************************************/
+// 1) FileManager::run()에 menuStr의 메뉴 항목의 일부를 아래처럼 변경하고, 
+//    MENU_COUNT도 수정하라.
+//-----------------------------------------------------------------------------
+            "= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =\n" +
+//-----------------------------------------------------------------------------
+// 2) FileManager::run()의 switch 문장에 아래 case 문장들을 추가하라.
+//-----------------------------------------------------------------------------
+                case 7: show();          break;  // ch8_2
+                case 8: copy();          break;  // ch8_2
+                case 9: append();        break;  // ch8_2
+                case 10: display();      break;  // ch8_2
+                case 11: clear();        break;  // ch8_2
+                case 12: add();          break;  // ch8_2
+//-----------------------------------------------------------------------------
+// 3) FileManager::run()의 switch 문장 전체를 아래 try catch 문장 안으로 옮겨하라.
+            try {  // ch8_2
+            } catch (IOException e) { System.out.println("file I/O error: "+e); }
+//-----------------------------------------------------------------------------
+//    이 문장은 메뉴항목 7~11을 처리하는 show() copy() 함수들(또는 이후 추가될 file I/O 함수들)에서
+//    만약 IOException이 발생할 경우 이들 함수에서 예외를 처리하려면 매 함수마다 try catch 문을
+//    삽입해야 하는데 이는 매우 번거로운 일이다. 따라서 이들 함수에서 IOException을 처리하지 않고
+//    이들 함수를 호출하는 상위 함수인 run()에서 한꺼번에 예외들을 처리하기 위함이다.
+//    이렇게 하기 위해선 아래 함수들 처럼 함수 선언 시 throws IOException을 해 주어야 한다.
+//-----------------------------------------------------------------------------
+// 4) FileManager의 맨 뒤에 멤버 함수로 아래 함수들을 추가하라.
+//-----------------------------------------------------------------------------
+    void show() throws IOException { // menu item 7: show file content: 8_2
+    }
+    void copy() throws IOException { // menu item 8: file copy: 8_2
+    }
+    void append() throws IOException { // menu item 9: file copy: 8_2
+    }
+    void display() {  // menu item 10: 8_2
+    }
+    void clear() {  // menu item 11: 8_2
+    }
+    void add() { // menu item 12: 8_2
+    }
+
+
+/******************************************************************************
+ * 문제: 0
+ * 요점: 고속으로 파일 복사하기
+ ******************************************************************************/
+// 1) FileManager::show() 함수 앞에 아래 함수를 배치하라.
+//    이 함수는 show(), copy(), append()에서 호출될 예정이다.
+//    이 함수는 in 파일의 내용을 모두 읽어 out 파일에 기록하는 함수이다.
+//    이 함수는 throws IOException을 통해 이 함수에서 발생한 IOException을 여기에서 처리하지 
+//    않고 이 함수를 호출한 함수쪽으로 IOException 처리를 떠 넘긴다.
+//    ToDo 부분의 주석을 참고하여 코드를 완성하라.
+//-----------------------------------------------------------------------------
+    void copyFile(InputStream in, OutputStream out) throws IOException {
+        /* ToDo
+        교제 예제 8-11을 참고하여 (강의노트의 짧게 변형시킨 코드를 사용하면 더 좋음)
+        in 파일의 내용을 모두 읽어 out 파일에 기록하는 코드를 삽입하라.
+        단, buf의 크기는 8KB로 하고, 
+        매개변수인 in, out을 이미 열려진 FileInputStream, FileOutputStream이라 
+        생각하고, in, out을 사용하여 파일 내용만 처음부터 끝까지 복사하라.
+        Stream을 새로 생성하지도 말고 close() 하지도 마라. 어떤 출력도 하지 마라.
+        try catch도 여기서 처리하지 마라.
+        */
+    }
+
+/******************************************************************************
+ * 문제: 1
+ * 요점: text 파일 내용 보기
+ ******************************************************************************/
+// 1) FileManager::show() 함수를 아래 함수로 대체하라.
+//    ToDo 부분을 참고하여 코드를 완성하라.
+//    이 함수는 사용자에게 파일을 선택하게 한 다음 해당 파일의 내용을 console에 보여 준다.
+//    선택된 파일이 text 파일이 아닌 경우 이상한 그래픽 문자들이 보여 질 수 있다.
+//    이 함수 역시 throws IOException을 하여 copyFile()에서 넘어 온 예외나 또는 이 함수에서 
+//    발생한 IOException을 여기에서 처리하지 않고 이 함수를 호출한 함수쪽으로(run())
+//    IOException의 처리를 떠 넘긴다.
+//-----------------------------------------------------------------------------
+    void show() throws IOException { // menu item 7: show file content: 8_2
+        /* ToDo
+        selectFile()을 호출하여 console에 출력할 File 객체 src를 구한다.
+        사용자가 파일 선택을 취소한 경우 리턴한다.
+        src 파일에 대한 FileInputStream 객체 fi를 생성한다.
+        copyFile(fi, System.out)을 호출한다. 즉, fi 파일을 console(System.out)에 복사한다.
+        fi를 닫는다.
+        */
+        // 위와 같이 copyFile(fi, System.out)에서 out.write()를 이용하여 파일 내용을 
+        // console에 출력한다. 즉, System.out에 print() println() 뿐만 아니라
+        // write(buf)를 이용해서도 text 파일 내용을 출력할 수 있다는 것을 의미한다. 
+    }
+
+===============================================================================
+==  문제 1 실행 결과
+===============================================================================
+
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+menu item? 6
+menu item? 4  // 실행 후
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+=================================================================
+menu item? 7
+[0] t0.txt               F 2023-11-15 07:13        51
+[1] t1.txt               F 2023-11-15 07:13       102
+[2] t2.txt               F 2023-11-15 07:13       153
+[3] t3.txt               F 2023-11-15 07:13       204
+-----------------
+[data] directory: 4 files
+index number of a file to display [-1:stop]? 3
+This is a text file to test File Management Menu.
+This is a text file to test File Management Menu.
+This is a text file to test File Management Menu.
+This is a text file to test File Management Menu.
+
+
+/******************************************************************************
+ * 문제: 2
+ * 요점: 파일 복사하기
+ ******************************************************************************/
+// 1) FileManager::copy() 함수를 아래 함수로 대체하라.
+//    ToDo 부분을 참고하여 코드를 완성하라.
+//    이 함수는 사용자로부터 소스파일을 선택하게 하고 또한 타겟 파일 이름을 입력 받은 후
+//    소스 파일의 내용을 타겟 파일에 복사한다.
+//-----------------------------------------------------------------------------
+    void copy() throws IOException { // menu item 8: file copy: 8_2
+        /* ToDo
+        selectFile()을 호출하여 복사할 원본 File 객체 src를 구한다.
+        사용자가 파일 선택을 취소한 경우 리턴한다.
+        UI의 함수를 이용하여 "target file name? " 을 출력하고 target 파일이름(한 단어)을 입력 받는다.
+        입력 받은 이름 target을 이용하여 File 객체 dst을 생성한다.
+        (이때 디렉터리는 src의 부모 디렉터리(src.getParent())를 얻어와 
+         동일하게 설정해 주어야 한다. rename() 함수 참조)
+        src 파일에 대한 FileInputStream 객체 fi를 생성한다.
+        dst 파일에 대한 FileOutputStream 객체 fo를 생성한다.
+        copyFile()을 호출하여 파일 내용을 복사한다.
+        열러진 파일들을 닫는다.
+        파일 목록을 보여 준다.
+        */
+    }
+
+===============================================================================
+==  문제 2 실행 결과
+===============================================================================
+
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+menu item? 6
+menu item? 4  // 실행 후
+
+====================== File Management Menu ... 8.copy ...
+menu item? 8
+[0] t0.txt               F 2023-11-15 07:13        51
+...
+[3] t3.txt               F 2023-11-15 07:13       204
+-----------------
+[data] directory: 4 files
+index number of a source file to copy [-1:stop]? 3
+target file name? t33.txt
+[0] t0.txt               F 2023-11-15 07:13        51
+...
+[3] t3.txt               F 2023-11-15 07:13       204
+[4] t33.txt              F 2023-11-15 07:13       204
+-----------------
+[data] directory: 5 files
+
+====================== File Management Menu ... 8.copy ...
+menu item? 8
+// 위 출력과 동일
+-----------------
+[data] directory: 5 files
+index number of a source file to copy [-1:stop]? 0
+target file name? t00.txt
+[0] t0.txt               F 2023-11-15 07:13        51
+[1] t00.txt              F 2023-11-15 07:13        51
+...
+[5] t33.txt              F 2023-11-15 07:13       204
+-----------------
+[data] directory: 6 files
+
+====================== File Management Menu ... 8.copy ...
+menu item? 8
+// 위 출력과 동일
+-----------------
+[data] directory: 6 files
+index number of a source file to copy [-1:stop]? 5
+target file name? t00.txt                                 // 기존에 존재하는 파일임
+[0] t0.txt               F 2023-11-15 07:13        51
+[1] t00.txt              F 2023-11-15 07:13       204     // 기존 파일에 복사할 수 있음
+...
+[5] t33.txt              F 2023-11-15 07:13       204
+-----------------
+[data] directory: 6 files
+
+
+/******************************************************************************
+ * 문제: 3
+ * 요점: 파일 뒤에 추가하기
+ ******************************************************************************/
+// 1) FileManager::append() 함수를 아래 함수로 대체하라.
+//    ToDo 부분을 참고하여 코드를 완성하라.
+//    이 함수는 사용자로부터 소스파일과 타겟파일을 선택하게 하고 
+//    소스 파일의 내용을 타겟 파일의 끝에 추가한다.
+//-----------------------------------------------------------------------------
+    void append() throws IOException { // menu item 8: file copy: 8_2
+        /* ToDo: 위 copy() 내용을 복사해 온 후 아래 내용을 참고하여 수정하라.
+        selectFile()을 호출하여 원본 File 객체 src를 구한다.
+        사용자가 파일 선택을 취소한 경우 리턴한다.
+        selectFile()을 호출하여 원본 파일을 추가할 타켓 File 객체 dst를 구한다.
+        사용자가 파일 선택을 취소한 경우 리턴한다.
+        src 파일에 대한 FileInputStream 객체 fi를 생성한다.
+        dst 파일에 대한 FileOutputStream 객체 fo를 생성하되, 
+            항상 파일 끝에 데이타를 추가할 수 있게 옵션을 설정해 준다.
+        copyFile()을 호출하여 파일 내용을 복사한다. 그러면 자동으로 dst의 뒤에 src 내용이 추가된다.
+        열러진 파일들을 닫는다.
+        파일 목록을 보여 준다.
+        */
+    }
+
+===============================================================================
+==  문제 3 실행 결과
+===============================================================================
+
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+menu item? 6
+menu item? 4  // 실행 후
+
+====================== File Management Menu ... 9.append ...
+menu item? 9
+[0] t0.txt               F 2023-11-15 07:13        51
+...
+[3] t3.txt               F 2023-11-15 07:13       204
+-----------------
+[data] directory: 4 files
+index number of a source file to append [-1:stop]? 3
+// 위 출력과 동일
+-----------------
+[data] directory: 4 files
+index number of a target file to append [-1:stop]? 0
+[0] t0.txt               F 2023-11-15 07:13       255
+...
+[3] t3.txt               F 2023-11-15 07:13       204
+-----------------
+[data] directory: 4 files
+
+====================== File Management Menu ... 9.append ...
+menu item? 9
+// 위 출력과 동일
+-----------------
+[data] directory: 4 files
+index number of a source file to append [-1:stop]? 3
+// 위 출력과 동일
+-----------------
+[data] directory: 4 files
+index number of a target file to append [-1:stop]? 0
+[0] t0.txt               F 2023-11-15 07:13       459
+...
+[3] t3.txt               F 2023-11-15 07:13       204
+-----------------
+[data] directory: 4 files
+
+====================== File Management Menu ... 9.append ...
+menu item? 9
+// 위 출력과 동일
+-----------------
+[data] directory: 4 files
+index number of a source file to append [-1:stop]? 3
+// 위 출력과 동일
+-----------------
+[data] directory: 4 files
+index number of a target file to append [-1:stop]? 0
+[0] t0.txt               F 2023-11-15 07:13       663
+...
+[3] t3.txt               F 2023-11-15 07:13       204
+-----------------
+[data] directory: 4 files
+
+
+/******************************************************************************
+ * 문제: 4
+ * 요점: selectFile()에 파일만 선택하는 옵션 추가
+ ******************************************************************************/
+// 문제점: 7.show 8.copy 9.append 메뉴 항목 실행 시 파일을 선택할 때 selectFile()을 호출하는데
+//       만약 사용자가 디렉터리를 선택할 경우 에러가 발생할 수 있다. 
+//       이 경우 selectFile()에서 파일만 선택할 수 있도록 강제해야 할 필요가 있다.
+//       이 문제를 해결하기 위해 
+//-----------------------------------------------------------------------------
+// 1) 아래처럼 기존 FileManager::selectFile() 함수에 세번째 매개변수를 추가하라.
+//-----------------------------------------------------------------------------
+    File selectFile(String preMsg, String postMsg, boolean onlyFile) { 
+//-----------------------------------------------------------------------------
+// 2) selectFile() 함수에서 사용자가 선택한 File 객체를 리턴하기 직전에
+//    만약 (onlyFile이 true 이고 선택한 객체가 디렉터리)이면 
+//        "can't select directory: "와 [선택한 파일 이름]을 출력하고 
+//        리턴하지 말고 다시 다른 파일 인덱스 번호를 선택하게 하라.
+//    그렇지 않은 경우에만 File 객체를 리턴하라.
+//-----------------------------------------------------------------------------
+// 3) 아래 각 함수에서 selectFile() 함수를 호출할 때 세번째 매개변수를 적절히 추가하라.
+//    delete()와 rename()은 파일 또는 디렉터리를 선택해도 된다.
+//    show(), copy(), append()는 파일만 선택해야 한다.
+//-----------------------------------------------------------------------------
+
+===============================================================================
+==  문제 4 실행 결과
+===============================================================================
+
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+menu item? 6
+menu item? 4  // 실행 후
+
+====================== File Management Menu ... 5.addDir ...
+menu item? 5
+[0] d0                   D 2023-11-15 07:13         0
+[1] d1                   D 2023-11-15 07:13         0
+[2] t0.txt               F 2023-11-15 07:13        51
+...
+-----------------
+[data] directory: 6 files
+
+====================== File Management Menu ... 7.show ...
+menu item? 7
+// 위 출력과 동일
+-----------------
+[data] directory: 6 files
+index number of a file to display [-1:stop]? 0
+can't select directory: d0
+index number of a file to display [-1:stop]? 1
+can't select directory: d1
+index number of a file to display [-1:stop]? 2
+This is a text file to test File Management Menu.
+
+====================== File Management Menu ... 8.copy ...
+menu item? 8
+[0] d0                   D 2023-11-15 07:13         0
+[1] d1                   D 2023-11-15 07:13         0
+...
+[5] t3.txt               F 2023-11-15 07:13       204
+-----------------
+[data] directory: 6 files
+index number of a source file to copy [-1:stop]? 0
+can't select directory: d0
+index number of a source file to copy [-1:stop]? 5
+target file name? t33.txt
+[0] d0                   D 2023-11-15 07:13         0
+[1] d1                   D 2023-11-15 07:13         0
+...
+[5] t3.txt               F 2023-11-15 07:13       204
+[6] t33.txt              F 2023-11-15 07:13       204
+-----------------
+[data] directory: 7 files
+
+====================== File Management Menu ... 9.append ...
+menu item? 9
+// 위 출력과 동일
+-----------------
+[data] directory: 7 files
+index number of a source file to append [-1:stop]? 1
+can't select directory: d1
+index number of a source file to append [-1:stop]? -1
+
+====================== File Management Menu ... 9.append ...
+menu item? 9
+// 위 출력과 동일
+-----------------
+[data] directory: 7 files
+index number of a source file to append [-1:stop]? -1
+
+====================== File Management Menu ... 3.rename ...
+menu item? 3
+// 위 출력과 동일
+-----------------
+[data] directory: 7 files
+index number of a source file to rename [-1:stop]? 0
+target file name? d2
+[0] d1                   D 2023-11-15 07:13         0
+[1] d2                   D 2023-11-15 07:13         0
+[2] t0.txt               F 2023-11-15 07:13        51
+[3] t1.txt               F 2023-11-15 07:13       102
+...
+-----------------
+[data] directory: 7 files
+
+====================== File Management Menu ... 3.rename ...
+menu item? 3
+// 위 출력과 동일
+-----------------
+[data] directory: 7 files
+index number of a source file to rename [-1:stop]? 2
+target file name? t00.txt
+[0] d1                   D 2023-11-15 07:13         0
+[1] d2                   D 2023-11-15 07:13         0
+[2] t00.txt              F 2023-11-15 07:13        51
+[3] t1.txt               F 2023-11-15 07:13       102
+...
+-----------------
+[data] directory: 7 files
+
+====================== File Management Menu ... 2.delete ...
+menu item? 2
+// 위 출력과 동일
+-----------------
+[data] directory: 7 files
+index number of a file to delete [-1:stop]? 0
+[0] d2                   D 2023-11-15 07:13         0
+[1] t00.txt              F 2023-11-15 07:13        51
+[2] t1.txt               F 2023-11-15 07:13       102
+[2] t2.txt               F 2023-11-15 07:13       153
+...
+-----------------
+[data] directory: 6 files
+
+====================== File Management Menu ... 2.delete ...
+menu item? 2
+// 위 출력과 동일
+-----------------
+[data] directory: 6 files
+index number of a file to delete [-1:stop]? 1
+[0] d2                   D 2023-11-15 07:13         0
+[1] t1.txt               F 2023-11-15 07:13       102
+[2] t2.txt               F 2023-11-15 07:13       153
+...
+-----------------
+[data] directory: 5 files
+
+
+/******************************************************************************
+ * 코드 추가 3
+ ******************************************************************************/
+// 지금까지 PersonManager::display()와 CollectionsByList::display()가 사실은 동일한 
+// 기능을 수행했다. 즉, PersonManager::pVector의 모든 객체를 순서적으로 출력하였다.
+// FileManager::display() 또한 똑 같은 기능을 수행해야 한다.
+// 따라서 이런 중복된 코드를 여기저기 매번 똑 같이 반복해서 구현하지 말고 한곳으로 모아보자.
+//-----------------------------------------------------------------------------
+// 1) PersonManager의 display() 함수 앞에 아래 함수를 추가하라.
+//    그리고 PersonManager::display() 함수 내용을 복사해서 이 함수에 삽입하라.
+//    그리고 pVector 변수 이름을 list로 변경하라.
+//    이 함수는 public static 함수(전역함수)이므로 프로그램 어디에서든 호출할 수 있다.
+//-----------------------------------------------------------------------------
+    public static void display(List< Person > list) {
+    }
+//-----------------------------------------------------------------------------
+// 2) PersonManager::display()의 기존 내용을 모두 지워라.
+//    그리고 위 static void display(List< Person > list) 함수를 호출하라.
+//    같은 클래스 안에 있는 static 함수이므로 함수이름 앞에 클래스 이름 지정하지 않아도 된다.
+//    함수 호출 시 매개변수는 pVector를 주면 된다. pVector는 Vector이지만
+//    List가 Vector의 상위 super 인터페이스(클래스)이므로 자동으로 업캐스팅된다. 
+//-----------------------------------------------------------------------------
+// 3) CollectionsByList::display()의 기존 내용을 모두 지우고 대신 static 함수인
+//    PersonManager의 display(List< Person > list) 함수를 호출하라.
+//-----------------------------------------------------------------------------
+
+
+/******************************************************************************
+ * 문제: 5
+ * 요점: list 내의 Person 객체 보여 주기
+ ******************************************************************************/
+// 1) FileManager에 아래 멤버를 추가하라. 
+//    그리고 생성자 함수에서 생성자의 매개변수 값으로 이 멤버를 초기화하라.
+//-----------------------------------------------------------------------------
+    private List< Person > list;
+//-----------------------------------------------------------------------------
+// 2) FileManager::display() 함수를 구현하라. 
+//    이 함수 구현 시 
+//    static 함수인 PersonManager의 display(List< Person > list) 함수를 호출하라.
+//    이 함수를 호출 한 뒤에 아래 코드를 추가하고 코드를 완성하라.
+//-----------------------------------------------------------------------------
+        System.out.println("-----------------");
+        /* ToDo: 실행 결과처럼 list의 원소의 개수와 " entries"를 출력한다. */
+
+===============================================================================
+==  문제 5 실행 결과
+===============================================================================
+
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+
+====================== File Management Menu ...
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add ...
+menu item? 10
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+-----------------
+6 entries
+
+
+/******************************************************************************
+ * 문제: 6
+ * 요점: list 내의 새로운 Person 객체 생성하여 추가하기
+ ******************************************************************************/
+// 1) FileManager의 clear() 함수를 구현하라. 
+//    이 함수 구현 시
+//    i) list의 모든 원소를 삭제한다.
+//    ii) 그런 후 display()를 호출한다.
+
+===============================================================================
+==  문제 6 실행 결과
+===============================================================================
+
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+
+====================== File Management Menu ... 10.display ...
+menu item? 10
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+...
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+-----------------
+6 entries
+
+====================== File Management Menu ... 11.clear ...
+menu item? 11
+-----------------
+0 entries
+
+====================== File Management Menu ... 10.display ...
+menu item? 10
+-----------------
+0 entries
+
+
+/******************************************************************************
+ * 코드 추가 4
+ ******************************************************************************/
+// 새로운 Person 객체를 생성하려면 기존에는 PMbyMap::getNewPerson()에서 처럼 
+// BaseManager에 있는 각각의 Person 멤버를 생성하는 함수를 호출하여 객체를 생성하였다.
+// 여기서도 자동으로 Person 객체를 생성하여 list에 삽입하는 기능이 필요한다.
+// 그래서 Person 객체를 생성하는 기능을 보다 확대할 필요가 있다.
+//-----------------------------------------------------------------------------
+// 1) 아래 PersonGenerator 클래스를 BaseManager 앞에 배치하라.
+//    이 클래스의 getNewPerson()는 Person, Student, Work 객체들을 자동으로 생성하여 반환한다.
+//    객체의 종류와 멤버들은 전부 난수를 이용해서 생성한다.
+//-----------------------------------------------------------------------------
+class PersonGenerator
+{
+    static final int ADD_SIZE = 10;
+    static final int REPLACE_SIZE = 5;
+
+    private Random rand;
+    int count, id, stYear;
+    String name, address, department, company, position;
+    double weight, GPA;
+    boolean married;
+
+    public PersonGenerator() {
+        rand = new Random(0);
+        count = 10;
+    }
+    public Person getNewPerson() {
+        name = families[rand.nextInt(families.length)] + (count++);
+        id = 1000+rand.nextInt(1000);
+        weight = 40 + rand.nextDouble() * 60;
+        weight = (int)(weight * 10) / (double)10;
+        married = (id % 2) == 1;
+        address = cities[rand.nextInt(cities.length)] + " " + gus[rand.nextInt(gus.length)]; 
+        stYear = rand.nextInt(4)+1;
+        GPA = rand.nextDouble() * 4.5;
+        GPA = (int)(GPA * 10) / (double)10;
+        department = departs[rand.nextInt(departs.length)];
+        company = companies[rand.nextInt(companies.length)];
+        position = positions[rand.nextInt(positions.length)];
+
+        switch (rand.nextInt(3)) {
+        case 0: return new Person(name, id, weight, married, address);
+        case 1: return new Student(name, id, weight, married, address, department, GPA, stYear);
+        case 2: return new Worker(name, id, weight, married, address, company, position);
+        default: return null;
+        }
+    }
+    private String families[] = 
+        { "Kimm", "Leem", "Park", "Choi", "Jeon", "Shim", "Shin", "Kang", "Yang", "Yoon",
+          "Baek", "Ryoo", "Seoh", "Johh", "Baeh", "Moon", "Nahh", "Jooh", "Song", "Hong" };
+    private String cities[] =
+        { "Seoul", "Busan", "Gwangju", "Daejeon", "Incheon", "Daegu", "Ulsan" }; 
+    private String gus[] =
+        { "Jung-gu", "Nam-gu", "Buk-gu", "Dong-gu", "Seo-gu", }; 
+    private String departs[] =
+        { "Physics", "Electronics", "Computer", "Chemistry", "Biology", "Micanical" }; 
+    private String companies[] =
+        { "Samsung", "Hyundai", "Kia", "SK", "LG", "Naver", "Kakao", "KT" }; 
+    private String positions[] =
+        { "Director", "Manager", "CEO", "CTO", "Chief", "CFO" }; 
+}   // ch8_2: PersonGenerator class
+
+//-----------------------------------------------------------------------------
+// 2) 이제 BaseManager에서 객체 생성하는 함수들은 필요없게 되었다.
+//    i) BaseManager에서 rand, count, ADD_SIZE, REPLACE_SIZE 멤버 변수들,
+//       BaseManager 생성자, getNewXXX() 함수들,  
+//       families, cities, gus 등과 같은 배열들도 모두 삭제하라.
+//    ii) 대신 BaseManager에서에서 PersonGenerator를 상속하라.
+//    iii) PMbyMap::getNewPerson()를 삭제하라.
+//-----------------------------------------------------------------------------
+// 3) MyVectorTest::replace() 함수의 for 문장 안에서 제일 먼저 아래 문장을 추가하라.
+             Person p = getNewPerson(); // 새로운 객체를 자동으로 생성함
+//    그런 후 각 벡터의 내용을 변경할 때 getNewXXX() 함수를 호출하는 대신
+//    위 새로 생성한 객체 p에서 상응하는 멤버 값을 얻어와 각 벡터의 값을 변경하시오. 
+//    예를 들어, 이름 벡터의 내용을 변경할 때 아래와 같이 하라.
+            nameVct.set(i, p.getName());
+//-----------------------------------------------------------------------------
+// 4) MyVectorTest::addElements() 함수의 for 문장 안에서 제일 먼저 아래 문장을 추가하라.
+             Person p = getNewPerson();
+//    그런 후 위 3)처럼 객체 p에서 상응하는 멤버 값을 얻어와 벡터에 추가하시오. 
+//    예를 들어, 이름을 벡터에 추가할 때 아래와 같이 하라.
+            nameVct.add(p.getName()); 
+//-----------------------------------------------------------------------------
+
+/******************************************************************************
+ * 문제: 7
+ * 요점: list 내의 새로운 Person 객체 생성하여 추가하기
+ ******************************************************************************/
+// 1) FileManager에서 PersonGenerator를 상속하도록 하라. 
+// 2) FileManager의 add() 함수를 구현하라. 
+//    이 함수는 ADD_SIZE개의 Person 객체들을 생성하여 list에 추가한 후 이를 모두 화면에 보여준다.
+//    이 함수 구현 시
+//    i) PMbyMap::addElements() 함수의 내용을 모두 복사해와 이 함수에 삽입한다.
+//    ii) 새로 Person 객체를 생성한 후 바로 list에 추가하도록 수정하라.
+//        list는 실제 Vector이므로 Vector라 생각하고 원소를 추가하라.
+//        객체 생성과 list에 추가하는 것을 하나의 문장으로 완성하라.
+//    iii) 마지막에 list의 모든 객체들을 모두 화면에 출력하도록 적절한 함수를 호출하라.
+//-----------------------------------------------------------------------------
+
+===============================================================================
+==  문제 7 실행 결과
+===============================================================================
+
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+=================================================================
+menu item? 10
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+...
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+-----------------
+6 entries
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+=================================================================
+menu item? 12
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+...
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+[6] Kimm10 1948 54.4 false :Incheon Dong-gu: Kia CFO
+[7] Park11 1095 98.9 true :Seoul Nam-gu: Computer 1.2 1
+[8] Choi12 1882 72.8 false :Seoul Jung-gu: Computer 1.1 1
+[9] Moon13 1960 81.2 false :Seoul Dong-gu:
+[10] Nahh14 1646 93.9 false :Daejeon Buk-gu:
+[11] Jooh15 1451 61.5 true :Daejeon Dong-gu:
+[12] Moon16 1220 98.2 false :Gwangju Seo-gu:
+[13] Kimm17 1668 64.8 false :Seoul Buk-gu: Samsung CFO
+[14] Kang18 1067 40.8 true :Gwangju Dong-gu:
+[15] Leem19 1290 48.6 false :Gwangju Jung-gu:
+-----------------
+16 entries
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+=================================================================
+menu item? 11
+-----------------
+0 entries
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+=================================================================
+menu item? 12
+[0] Yang20 1753 91.1 true :Incheon Jung-gu: Kia CFO
+[1] Choi21 1577 40.1 true :Gwangju Jung-gu:
+[2] Nahh22 1958 55.3 false :Incheon Jung-gu: Samsung Chief
+[3] Shin23 1098 95.5 false :Busan Buk-gu:
+[4] Song24 1901 92.4 true :Daegu Buk-gu: Electronics 0.6 4
+[5] Park25 1380 69.4 false :Busan Jung-gu: Physics 2.1 2
+[6] Johh26 1362 82.0 false :Seoul Dong-gu: Biology 2.1 3
+[7] Kimm27 1317 74.8 true :Daejeon Jung-gu:
+[8] Shim28 1113 64.5 true :Incheon Jung-gu: Computer 1.5 3
+[9] Jooh29 1050 42.4 false :Busan Seo-gu:
+-----------------
+10 entries
+
+
+/******************************************************************************
+ * 중요: 자동오류체크를 위해 수정해야 하는 것 
+ ******************************************************************************/
+// 1) FileManager::printFileInfo(File f) 함수 내의 주석을 아래처럼 해제하라. 
+//    이는 자동오류체크에서 마지막 파일 수정 시간을 항상 일정한 시간으로 출력되게 하기 위함이다. 
+//-----------------------------------------------------------------------------
+        t = 1700000000000L;  // 2023-11-15 오전 07:13; 자동 체크 때 사용할 예정임

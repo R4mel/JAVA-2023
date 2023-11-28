@@ -1,0 +1,647 @@
+[6장 문제-1]       
+/******************************************************************************
+ * 문제: 1
+ * 요점: Object 클래스의 toString() 오버라이딩
+ ******************************************************************************/
+// 기존의 Person, Student, Worker 클래스는 print() 또는 println() 멤버 함수를 이용하여
+// 객체의 내용을 출력하였다. 이제 Object의 toString()을 오버라이딩하여 동일하게 이 기능을 구현해 보자.
+// 1) Person의 println(), println(String msg), print(), printMembers()를 
+//    모두 주석처리하라. 그런 후 printMembers()를 참고하여 toString()을 구현하라.
+// 2) Student의 print(), printMembers()를 주석처리한 후 toString()을 구현하라.
+// 3) Worker의 print(), printMembers()를 주석처리한 후 toString()을 구현하라.
+// 4) SmartPhone의 print(), println()를 주석처리한 후 toString()을 구현하라.
+// 5) 위의 각 toString() 앞줄에 @Override 추가하여 이 함수가 오버라이딩하는 것임을 명확히 하라.
+// 6) 이후 Person, Student, Worker, SmartPhone 객체를 출력하는 모든 컴파일 에러 문장을 찾아 
+//    System.out.print() 또는 System.out.println()으로 문장을 수정하라. 
+//    특히 p.println("user: ")와 같은 문장은 System.out.println("user: "+p)로 변환하여 
+//    메시지인 "user: "를 직접 System.out.println() 문장에서 출력하도록 하라.
+//    CurrentUser, Factory, PersonManager, Inheritance 클래스 등에서 수정해야 한다.
+//-----------------------------------------------------------------------------
+
+===============================================================================
+==  프로그램 실행 결과 1
+=============================================================================== 
+
+******* Main Menu ********
+* 0.exit 1.PersonManager ...
+**************************
+menu item? 1
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+=============== Person Management Menu ...
+= 10.dispPhone(5_3)                                   =
+=======================================================
+menu item? 10
+dispPhones(): count 6
+[0] p0's Phone: Apple
+[1] p1's Phone: SAMSUNG
+[2] s1's Phone: SAMSUNG
+[3] s2's Phone: Apple
+[4] w1's Phone: SAMSUNG
+[5] w2's Phone: Apple
+
+=============== Person Management Menu ...
+= 5.copy 6.append 7.insert 8.login 9.dispStudent(5_3) ...
+=======================================================
+menu item? 8
+user name: s1
+password: 
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing ...
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 1
+s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+s1's Phone: SAMSUNG
+
+
+/******************************************************************************
+ * 문제: 2
+ * 요점: Object 클래스의 equals(Object obj) 오버라이딩
+ ******************************************************************************/
+// 1) 기존의 Person, Student, Worker 클래스에 boolean equals(Person p) 함수가 있다.
+//    이를 Object 클래스의 boolean equals(Object o)를 오버라이딩하도록 수정하라.
+//    Student, Worker에서처럼 매개변수 o를 해당 클래스 타입으로 변형해 주어야 한다.
+//    함수 앞 줄에 @Override를 추가하라.
+
+===============================================================================
+==  프로그램 실행 결과 2
+=============================================================================== 
+******* Main Menu ...
+* 2.ch2 3.ch3 4.ch5      *
+**************************
+menu item? 4
+
+***** Inheritance Menu ******
+* 0.exit 1.Student 2.Worker *
+*****************************
+menu item? 2
+--------------------
+p1: w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+p2: w2 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+p1.equals(p2) : false
+--------------------
+p1: w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+p2: w1 3 33.3 false :Kangnam-gu Seoul: Samsung-Hyundai Director
+p1.equals(p2) : false
+--------------------
+p1: w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+p2: w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director-Manager
+p1.equals(p2) : false
+--------------------
+p1: w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+p2: w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+p1.equals(p2) : true
+--------------------
+!!!!!!!!!!!!!!!! Worker::whatAreYouDoing()!!!!!!!!!!!!!!!!!
+w2 works in Samsung as Director
+w2 is now enjoying his(her) vacation.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+!!!!!!!!!!!!!!!! Worker::whatAreYouDoing()!!!!!!!!!!!!!!!!!
+w2 works in Samsung as Director
+w2 is now enjoying his(her) vacation.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+w3: w2 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+--------------------
+w2: w2 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+w2:  0 0.0 false ::  
+--------------------
+input worker: w2 3 44.4 true :Jongno-gu Seoul: Samsung Director
+w2: w2 3 44.4 true :Jongno-gu Seoul: Samsung Director
+--------------------
+input new worker: w4 3 44.4 true :Jongno-gu Seoul: Samsung Director
+w4: w4 3 44.4 true :Jongno-gu Seoul: Samsung Director
+
+***** Inheritance Menu ******
+* 0.exit 1.Student 2.Worker *
+*****************************
+menu item? 1
+--------------------
+p1: s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+p2: s2 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+p1.equals(p2) : false
+--------------------
+p1: s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+p2: s1 1 65.4 true :Jongno-gu Seoul: Physics 2.8 1
+p1.equals(p2) : true
+--------------------
+p1: s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+p2: s1 1 65.4 true :Jongno-gu Seoul: Physics-Electronics 2.8 1
+p1.equals(p2) : false
+--------------------
+p1: s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+p2: s1 1 65.4 true :Jongno-gu Seoul: Physics 2.8 2
+p1.equals(p2) : false
+--------------------
+p1: s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+p2: s1 1 65.4 true :Jongno-gu Seoul: Physics 2.8 1
+p1.equals(p2) : true
+--------------------
+~~~~~~~~~~~~~~~~ Student::whatAreYouDoing() ~~~~~~~~~~~~~~~~
+s2 is studying as a 1-year student in Physics
+s2 took several courses and got GPA 2.8
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~ Student::whatAreYouDoing() ~~~~~~~~~~~~~~~~
+s2 is studying as a 1-year student in Physics
+s2 took several courses and got GPA 2.8
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+s3: s2 1 65.4 true :Jongno-gu Seoul: Physics 2.8 1
+--------------------
+s2: s2 1 65.4 true :Jongno-gu Seoul: Physics 2.8 1
+s2:  0 0.0 false ::  0.0 0
+--------------------
+input student: s2 1 56.9 false :Gangnam-gu Seoul: Physics 2.0 1
+s2: s2 1 56.9 false :Gangnam-gu Seoul: Physics 2.0 1
+--------------------
+input new student: s4 1 56.9 false :Gangnam-gu Seoul: Physics 2.0 1
+s4: s4 1 56.9 false :Gangnam-gu Seoul: Physics 2.0 1
+
+
+/******************************************************************************
+ * 문제: 3
+ * 요점: Object 클래스의 equals(Object obj)와 getClass()의 응용
+ ******************************************************************************/
+// 1) PersonManager::run() 내의 menuStr을 아래 내용으로 교체하고 MENU_COUNT를 수정하라.
+//-----------------------------------------------------------------------------
+        String menuStr =
+            "=================== Person Management Menu =====================\n" +
+            "= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =\n" +
+            "= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =\n" +
+            "= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =\n" +
+            "================================================================\n";
+//-----------------------------------------------------------------------------
+// 2) PersonManager의 dispPhone() 뒤쪽에 아래의 find() 함수를 추가하고 11 메뉴항목을 선택할 경우 
+//    이 함수를 호출하라. 아래 실행결과를 참고하여 이 함수의 TODO 부분을 완성하라.
+//-----------------------------------------------------------------------------
+    public void find() { // Menu item 11: ch6_1
+        boolean found = false;
+        /* TODO:
+        PersonManager::append() 함수를 참고하여 화면에 아래 메시지가 출력되도록 하고
+        input [delimiter(P,S,or W)] [person information] to find by equals():
+        한 사람의 정보를 입력 받아 적절한 객체를 생성하고 이를 넘겨 받아 p에 저장하라.
+        만약 p가 객체 정보가 잘못 입력되었으면(Q: WRONG delimiter인 경우) 바로 리턴하라.
+        for 문을 이용하여 pVector에 저장된 각각의 원소에 대해
+            p와 동일한 클래스(getClass())인지 비교(==)하고 같은 클래스일 경우 
+            equals()를 이용하여 객체 내용이 동일한 객체일 경우 실행결과처럼 출력하라.
+            주의: 실행결과에서는 없지만 동일한 객체가 여러개 나올 수 있음
+        동일한 객체가 하나도 없을 경우(!found) 실행결과처럼 출력하라.
+        */
+    }
+
+===============================================================================
+==  프로그램 실행 결과 3
+=============================================================================== 
+
+******* Main Menu ********
+* 0.exit 1.PersonManager ...
+menu item? 1
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.setDate(6_1) 13.shuffle(6_1) 14.wrapper(6_1) =
+================================================================
+menu item? 15
+15: OUT of selection range(0 ~ 14) Try again!!
+
+=================== Person Management Menu ...
+= 11.find(6_1) 12.setDate(6_1) 13.shuffle(6_1) 14.wrapper(6_1) ...
+menu item? 11
+input [delimiter(P,S,or W)] [person information] to find by equals():
+Q p1
+Q: WRONG delimiter
+
+=================== Person Management Menu ...
+= 11.find(6_1) 12.setDate(6_1) 13.shuffle(6_1) 14.wrapper(6_1) ...
+menu item? 11
+input [delimiter(P,S,or W)] [person information] to find by equals():
+P p0 10 0 true :Jeju:
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+
+=================== Person Management Menu ...
+= 11.find(6_1) 12.setDate(6_1) 13.shuffle(6_1) 14.wrapper(6_1) ...
+menu item? 11
+input [delimiter(P,S,or W)] [person information] to find by equals():
+P p0 11 0 true :Jeju:
+NOT found by equals()
+
+=================== Person Management Menu ...
+= 11.find(6_1) 12.setDate(6_1) 13.shuffle(6_1) 14.wrapper(6_1) ...
+menu item? 11
+input [delimiter(P,S,or W)] [person information] to find by equals():
+S s1 1 0 false : : Physics 0 1
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+
+=================== Person Management Menu ...
+= 11.find(6_1) 12.setDate(6_1) 13.shuffle(6_1) 14.wrapper(6_1) ...
+menu item? 11
+input [delimiter(P,S,or W)] [person information] to find by equals():
+S s1 1 0 false :Busan: Physics 0 2
+NOT found by equals()
+
+=================== Person Management Menu ...
+= 11.find(6_1) 12.setDate(6_1) 13.shuffle(6_1) 14.wrapper(6_1) ...
+menu item? 11
+input [delimiter(P,S,or W)] [person information] to find by equals():
+W w1 3 33.3 false :Kangnam-gu Seoul: Samsung Manager
+NOT found by equals()
+
+=================== Person Management Menu ...
+= 11.find(6_1) 12.setDate(6_1) 13.shuffle(6_1) 14.wrapper(6_1) ...
+menu item? 11
+input [delimiter(P,S,or W)] [person information] to find by equals():
+W w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+
+/******************************************************************************
+ * 문제: 4
+ * 요점: Wapper 클래스들의 toString(), parseXXXX(), 기타 멤버 함수들 활용
+ ******************************************************************************/
+// 1) PersonManager의 find() 뒤쪽에 아래의 wrapper() 함수를 추가하고 
+//    12 메뉴항목을 선택할 경우 이 함수를 호출하라. 그리고 이 함수의 TODO 부분을 완성하라.
+//-----------------------------------------------------------------------------
+    void wrapper() { // Menu item 12: ch6_1
+        /* 
+        TODO: 
+        for을 이용하여 pVector의 각 멤버(pVector.get(i))에 대해 Person p에 저장한 후
+        p의 name, id, weight, married 멤버에 대해
+        아래의 2)의 dispPersonInfo(String, String, String, String)
+        함수를 호출하라. 이때 필요한 매개변수는 String으로 변환한 후 호출해야 한다.
+        주의: 절대 dispPersonInfo(String, int, double, boolean)를
+             바로 호출하지 마라.
+        */
+    }
+//-----------------------------------------------------------------------------
+// 2) PersonManager의 맨 뒤쪽에 아래의 함수들을 추가하고 이 함수들의 TODO 부분을 완성하라.
+//-----------------------------------------------------------------------------
+    private void dispPersonInfo(String sname, String sid, String sweight, String smarried) {
+      	/* 
+        TODO: 
+        sname의 첫 글자와 끝 글자를 서로 바꾸어라. 예를 들어 "Park" -> "karP"
+        sid의 끝 글자가 '0'이면 '1'로 변환하라. "2340" -> "2341"
+        dispPersonInfo(String, int, double, boolean)를 호출하라.
+        이때 필요한 매개변수는 int, double, boolean 으로 변환한 후 호출해야 한다.
+        변환한 후 married의 경우 true는 false로, false는 true로 바꾼 후 호출하라.
+        */
+    }
+    private void dispPersonInfo(String sname, int id, double weight, boolean married) {
+      	/* 
+        TODO: 실행 결과를 참고하여 
+        sname id 0x(id의 16진수 문자열) 0(id의 8진수 문자열) 0b(id의 2진수 문자열) weight married
+        순서로 출력하라.
+        */
+    }
+
+===============================================================================
+==  프로그램 실행 결과 4
+=============================================================================== 
+
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+================================================================
+menu item? 1
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+=================== Person Management Menu ...
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+================================================================
+menu item? 12
+[0] 0p 11 0xb 013 0b1011 70.0 true
+[1] 1p 11 0xb 013 0b1011 61.1 false
+[2] 1s 1 0x1 01 0b1 65.4 false
+[3] 2s 2 0x2 02 0b10 54.3 true
+[4] 1w 3 0x3 03 0b11 33.3 true
+[5] 2w 4 0x4 04 0b100 44.4 false
+
+
+/******************************************************************************
+ * 문제: 5
+ * 요점: Math 클래스의 random() 메소드 활용
+ ******************************************************************************/
+// 1) PersonManager의 wrapper() 뒤쪽에 아래의 shuffle() 함수를 추가하고 
+//    13 메뉴항목을 선택할 경우 이 함수를 호출하라. 그리고 이 함수의 TODO 부분을 완성하라.
+//    아래 함수는 난수를 활용하여 pVector의 원소들의 위치를 임의의 위치로 바꾸어 주는 함수이다.
+//-----------------------------------------------------------------------------
+    public void shuffle() { // Menu item 13: ch6_1
+        /* 
+        TODO: 
+        for을 이용하여 각각의 인덱스 i에 대해
+           [0 ~ pVector.size()-1] 사이의 임의의 정수 j를 구함 (Math.random()을 활용)
+           pVector.set(j, pVector.set(i, pVector.get(j)))를 호출함
+        */
+        display();
+    }
+//-----------------------------------------------------------------------------
+// 2) VectorPerson의 get(int index) 뒤쪽에 아래의 set() 함수를 추가하고 
+//    이 함수의 TODO 부분을 완성하라.
+//-----------------------------------------------------------------------------
+    // persons[index]의 값을 p로 새로 교체하고 과거의 persons[index] 값을 반환
+    public Person set(int index, Person p) {
+        /* 
+        TODO: persons[index]의 값을 p로 새로 교체하고 예전의 persons[index] 값을 반환
+        */
+    }
+
+===============================================================================
+==  프로그램 실행 결과 5
+=============================================================================== 
+
+******* Main Menu ********
+* 0.exit 1.PersonManager ...
+menu item? 1
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+=================== Person Management Menu ...
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) = ...
+menu item? 13
+[0] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[3] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[4] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[5] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+
+=================== Person Management Menu ...
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) = ...
+menu item? 13
+[0] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[1] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[2] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+[3] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[4] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[5] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+
+
+/******************************************************************************
+ * 문제: 6
+ * 요점: Math 클래스 멤버 함수들 활용
+ ******************************************************************************/
+// 1) CurrentUser::run() 내의 menuStr의 마지막 메뉴 항목 줄을 아래 내용으로 교체하고 
+//    MENU_COUNT를 수정하라.
+//-----------------------------------------------------------------------------
+                "+ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) 13.chWeight(6_1) +\n" +
+//-----------------------------------------------------------------------------
+// 2) CurrentUser의 맨 뒤쪽에 아래의 chWeight() 함수를 추가하고 13 메뉴항목을 선택할 경우 
+//    이 함수를 호출하라. 아래 실행결과를 참고하여 이 함수의 TODO 부분을 완성하라.
+//-----------------------------------------------------------------------------
+    void chWeight() { // Menu item 13
+        /* 
+        TODO: 
+        현재 사용자 user의 몸 무게의 제곱근을 sr라 했을 때 실행결과를 참고하여
+        [몸무게 sr (sr의 ceil) (sr의 floor) (sr의 반올림)] 순서로 출력하라.
+        user의 몸무게를 (sr의 ceil)과 (sr의 floor)를 곱한 값으로 새로 설정하라.
+        user를 출력하라.
+        */
+    }
+
+===============================================================================
+==  프로그램 실행 결과 6
+=============================================================================== 
+
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    = ...
+menu item? 1
+...
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+...
+
+=================== Person Management Menu ===================== ...
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        = ...
+menu item? 8
+user name: s1
+password: 
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.isSame 7.update 8.chPasswd(4_2) 9.chSmartPhone(5_3)         +
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) 13.chWeight(6_1) +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 1
+s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+s1's Phone: SAMSUNG
+
+++++++++++++++++++++++ Current User Menu ...
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) 13.chWeight(6_1) + ...
+menu item? 13
+weight:65.4 sqrt:8.087026647662292 ceil:9.0 floor:8.0 round:8
+s1 1 72.0 true :Jongno-gu Seoul: Physics 3.8 1         // 몸무게 변경되었음
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++ ...
+menu item? 0
+
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    = ...
+menu item? 1
+...
+[2] s1 1 72.0 true :Jongno-gu Seoul: Physics 3.8 1     // 몸무게 변경되었음
+...
+
+
+/******************************************************************************
+ * 문제: 7
+ * 요점: Calendar 클래스 활용
+ ******************************************************************************/
+// 1) SmartPhone 클래스에 아래 멤버를 BaseStation baseStation 뒤에 배치하라.
+//-----------------------------------------------------------------------------
+    protected static Calendar userDate = null; // ch6_1
+//-----------------------------------------------------------------------------
+// 2) SmartPhone 클래스에 아래 멤버를 String owner; 뒤에 배치하라.
+//    이 멤버는 SmartPhone을 구입(객체 생성)한 날짜와 시간을 저장하고 있다.
+//-----------------------------------------------------------------------------
+    protected Calendar date; // ch6_1
+//-----------------------------------------------------------------------------
+// 3) SmartPhone(String owner) 생성자의 끝에 아래 코드를 삽입하라.
+//    이 코드는 스마트 폰이 생성될 때 userDate가 null이면 현재 시간을 date에 저장하고
+//    아니면 userDate를 복사해서 date에 저장한다. Object.clone()은 교재에서는 소개가 되지 
+//    않았지만 Object 클래스의 멤버 중에 하나다. 객체 자신을 복사해 주는 함수인데 리턴 데이타 타입이 
+//    Object이므로 (Calendar)처럼 원하는 타입으로 다시 변환해 주어야 한다.
+//-----------------------------------------------------------------------------
+        date = (userDate == null)? Calendar.getInstance(): (Calendar)userDate.clone();  // ch6_1
+//-----------------------------------------------------------------------------
+// 4) 아래 실행결과를 참고하여 SmartPhone::toString()을 적절히 수정하라.
+
+===============================================================================
+==  프로그램 실행 결과 7
+=============================================================================== 
+
+=================== Person Management Menu ===================== ...
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        = ...
+================================================================
+menu item? 10
+dispPhones(): count 6                                 // userDate가 null이므로
+[0] p0's Phone: Apple Phone (2023.10.18 PM 4:4:58)    // 옆의 시간과 다르게 여러분은
+[1] p1's Phone: SAMSUNG Phone (2023.10.18 PM 4:4:58)  // 지금 현재 시간으로 설정되어야 함
+[2] s1's Phone: SAMSUNG Phone (2023.10.18 PM 4:4:58)
+[3] s2's Phone: Apple Phone (2023.10.18 PM 4:4:58)
+[4] w1's Phone: SAMSUNG Phone (2023.10.18 PM 4:4:58)
+[5] w2's Phone: Apple Phone (2023.10.18 PM 4:4:58)
+
+
+/******************************************************************************
+ * 문제: 8
+ * 요점: 
+ ******************************************************************************/
+// 1) PersonManager의 shuffle() 뒤쪽에 아래의 setDate() 함수를 추가하고 
+//    14 메뉴항목을 선택할 경우 이 함수를 호출하라.
+//-----------------------------------------------------------------------------
+    // setDate() 후, copy()하면 SmartPhone에 바뀐 날짜가 적용됨; 
+    // setDate()시 그냥 엔터하면 현재시간이 설정됨
+    public void setDate() { // Menu item 14: ch6_1
+        String line = UI.getNextLine("date and time(ex: 2021 10 1 18 24 30)? ");
+        SmartPhone.setDate(line);
+    }
+//-----------------------------------------------------------------------------
+// 2) SmartPhone 클래스에 아래 멤버 함수를 setBaseStation(BaseStation bs) { } 함수 뒤에 
+//    배치한 후 이 함수의 TODO 부분을 완성하라.
+//    이 함수는 사용자로부터 날짜와 시간 정보를 입력 받아 userDate에 저장하는 함수이다.
+//-----------------------------------------------------------------------------
+    public static void setDate(String line) { // ch6_1
+        /* 
+        TODO: 
+        line이 빈 문자열이면 userDate를 null로 설정하고 바로 리턴한다.
+        Scanner s = new Scanner(line); 
+        // 참고로 스캐너는 키보드가 아닌 문자열인 line에서도 데이타를 입력 받을 수 있다.
+        // 또한 스캐너는 텍스트(.txt) 파일에서도 입력 받을 수 있다. (추후 파일에서 예제 나옴)
+        Calendar에서 현재 날짜와 시간 정보를 가지는 새로운 객체를 생성하여 userDate에 저장한다.
+        userDate의 날짜와 시간 정보를 모두 지운다.
+        스캐너 s에서 연속적으로 정수(nextInt()) 값을 입력 받아 userDate에 설정한다.
+        즉, s에서 (년 월 일 시 분 초)를 순서적으로 정수 값으로 입력 받아 
+        userDate의 적절한 set()을 호출하여 설정하면 된다. 
+        s.close();
+        */
+    }
+//-----------------------------------------------------------------------------
+// 참고로 위 기능을 이용하여 날짜 시간 정보를 userDate에 설정하고 나면 추후 생성되는 
+// 모든 SmartPhone 객체의 date 멤버는 현재 시간이 아닌 userDate 값으로 설정된다.
+
+===============================================================================
+==  프로그램 실행 결과 8
+=============================================================================== 
+
+=================== Person Management Menu ===================== ...
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        = ...
+menu item? 10
+dispPhones(): count 6
+[0] p0's Phone: Apple Phone (2023.10.18 PM 4:39:28)    // 현재 날짜와 시간
+[1] p1's Phone: SAMSUNG Phone (2023.10.18 PM 4:39:28)
+[2] s1's Phone: SAMSUNG Phone (2023.10.18 PM 4:39:28)
+[3] s2's Phone: Apple Phone (2023.10.18 PM 4:39:28)
+[4] w1's Phone: SAMSUNG Phone (2023.10.18 PM 4:39:28)
+[5] w2's Phone: Apple Phone (2023.10.18 PM 4:39:28)
+
+=================== Person Management Menu ===================== ...
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) = ...
+menu item? 14
+date and time(ex: 2021 10 1 18 24 30)? 2021 10 1 18 24 30
+
+=================== Person Management Menu ===================== ...
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    = ...
+menu item? 5
+...
+[6] pp0 30 71.0 true :Gwangju Nam-gu Bongseon-dong 21:
+[7] pp1 31 62.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[8] ss1 21 66.4 false :Jongno-gu Seoul: Physics 3.8 1
+[9] ss2 22 55.3 true :Yeonje-gu Busan: Electronics 2.5 4
+[10] ww1 23 34.3 true :Kangnam-gu Seoul: Samsung Director
+[11] ww2 24 45.4 false :Dobong-gu Kwangju: Hyundai Manager
+
+=================== Person Management Menu ===================== ...
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        = ...
+menu item? 10
+dispPhones(): count 12
+...
+[4] w1's Phone: SAMSUNG Phone (2023.10.18 PM 4:39:28) // 앞전 결과와 동일
+[5] w2's Phone: Apple Phone (2023.10.18 PM 4:39:28)   // 기존 것들은 변동 없음
+[6] pp0's Phone: Apple Phone (2021.10.1 PM 6:24:30)   // 새로 생성(복사)되는 것에 대해
+[7] pp1's Phone: SAMSUNG Phone (2021.10.1 PM 6:24:30) // 새로 설정된 userDate가
+[8] ss1's Phone: SAMSUNG Phone (2021.10.1 PM 6:24:30) // 적용됨
+[9] ss2's Phone: Apple Phone (2021.10.1 PM 6:24:30)
+[10] ww1's Phone: SAMSUNG Phone (2021.10.1 PM 6:24:30)
+[11] ww2's Phone: Apple Phone (2021.10.1 PM 6:24:30)
+
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    = ...
+menu item? 3
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21: // 객체들을 새로 생성함
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+=================== Person Management Menu ===================== ...
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        = ...
+menu item? 10
+dispPhones(): count 6
+[0] p0's Phone: Apple Phone (2021.10.1 PM 6:24:30)  // userDate가 적용됨
+[1] p1's Phone: SAMSUNG Phone (2021.10.1 PM 6:24:30)
+[2] s1's Phone: SAMSUNG Phone (2021.10.1 PM 6:24:30)
+[3] s2's Phone: Apple Phone (2021.10.1 PM 6:24:30)
+[4] w1's Phone: SAMSUNG Phone (2021.10.1 PM 6:24:30)
+[5] w2's Phone: Apple Phone (2021.10.1 PM 6:24:30)
+
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+================================================================
+menu item? 14
+date and time(ex: 2021 10 1 18 24 30)?         // 입력 없이 그냥 엔터
+//-----------------------------------------------------------------------------
+// 위처럼 그냥 엔터치면 UI.getNextLine()에 의해 입력된 문자열은 "" 빈 문자열임 
+// SmartPhone::setDate()에서 userDate = null로 설정됨; 그러면
+// SmartPhone(String owner) 생성시 현재 날짜와 시간이 설정됨
+//-----------------------------------------------------------------------------
+
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+================================================================
+menu item? 3
+[0] p0 10 70.0 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+================================================================
+menu item? 10
+dispPhones(): count 6
+[0] p0's Phone: Apple Phone (2023.10.18 PM 4:48:7)    // userDate = null이므로
+[1] p1's Phone: SAMSUNG Phone (2023.10.18 PM 4:48:7)  // 현재 날짜와 시간으로 설정됨
+[2] s1's Phone: SAMSUNG Phone (2023.10.18 PM 4:48:7)  // 여러분의 실행결과는 
+[3] s2's Phone: Apple Phone (2023.10.18 PM 4:48:7)    // 옆의 날짜와 시간과 달라야함
+[4] w1's Phone: SAMSUNG Phone (2023.10.18 PM 4:48:7)
+[5] w2's Phone: Apple Phone (2023.10.18 PM 4:48:7)

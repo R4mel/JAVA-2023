@@ -1,0 +1,501 @@
+[8장 문제-1]
+/******************************************************************************
+ * 코드 추가 2
+ ******************************************************************************/
+// 0) PersonManager::pVector 멤버는 private Vector< Person > 이어야 한다.
+//-----------------------------------------------------------------------------
+// 1) PersonManager::run()에 menuStr의 메뉴 항목의 일부를 아래처럼 변경하고, 
+//    MENU_COUNT도 수정하라.
+//-----------------------------------------------------------------------------
+            "= 15.chAddress(6_2) 16.collections(7_1) 17.fileManager(8_1)    =\n" +
+//-----------------------------------------------------------------------------
+// 2) PersonManager::run()의 switch 문장에 아래 case 문장을 추가하라.
+//-----------------------------------------------------------------------------
+            case 17:fileManager();     break;   // ch8_1
+//-----------------------------------------------------------------------------
+// 3) PersonManager의 collections() 함수 뒤에 아래 함수를 추가하라.
+//-----------------------------------------------------------------------------
+    public void fileManager() {
+        new FileManager(pVector).run();
+    }
+
+
+/******************************************************************************
+ * 코드 추가 3
+ ******************************************************************************/
+// 아래 FileManager 클래스를 Inheritance 클래스 앞쪽에 배치하라.
+//-----------------------------------------------------------------------------
+class FileManager  // ch8_1
+{
+    static final String HOME_DIR = "data"; // 상수 정의: 파일들을 생성할 폴더 이름
+    
+    FileManager(List< Person > list) { 
+        var dir = new File(HOME_DIR);
+        if (!dir.exists()) dir.mkdir(); // 프로젝트 폴더에 "data" 폴더가 없을 경우 새로 생성
+    }
+    public void run() {
+        String menuStr = 
+            "====================== File Management Menu =====================\n" +
+            "= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =\n" +
+            "= 6.deleteAll                                                   =\n" +
+            "=================================================================\n";
+        final int MENU_COUNT = 7; // 상수 정의
+        while (true) {
+            int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
+            switch(menuItem) {
+            case 1: fileList();      break;
+            case 2: delete();        break;
+            case 3: rename();        break;
+            case 4: addFiles();      break;
+            case 5: addDir();        break;
+            case 6: deleteAll();     break;
+            case 0:                  return;
+            }
+        }
+    }
+    void printFileInfo(File f) {
+        long t = f.lastModified();
+        //t = 1700000000000L;  // 2023-11-15 오전 07:13; 자동 체크 때 사용할 예정임
+        System.out.printf("%-20s %c %tF %tH:%tM %9d\n", 
+                f.getName(), f.isDirectory()? 'D':'F', t, t, t, f.length());
+    }
+    File[] fileList() { // menu item 1
+        var dir = new File(HOME_DIR);
+        File files[] = dir.listFiles();
+        if (files == null) return null; // HOME_DIR이 존재하지 않을 경우 null
+        for (int i=0; i < files.length; i++) {
+            File f = files[i];
+            System.out.printf("[%d] ", i);
+            printFileInfo(f);
+        }
+        System.out.println("-----------------");
+        System.out.println("["+HOME_DIR+"] directory: "+files.length+" files");
+        return files;
+    }
+    File selectFile(String preMsg, String postMsg) { 
+    }
+    void delete() { // menu item 2
+    }
+    void rename() { // menu item 3
+        File src = selectFile("source", "rename");
+        if (src == null) return;  // 사용자가 파일 선택을 취소했을 경우
+        System.out.println(src.getPath()+", "+src.getParent()+", "+src.getName());
+    }
+    void addFiles() { // menu item 4: 4개의 text 파일을 자동 생성함
+        for (int i = 0, count = 0; count < 4; ++i, ++count) {
+            var f = new File(HOME_DIR + "/t" + i + ".txt"); // 파일 이름이 t0부터 시작함
+            if (f.exists()) { --count; continue; }          // 동일한 이름이 있을 경우 건너 뜀
+            try {
+                var fout = new PrintStream(f);
+                for (int j = 0; j <= i; ++j)
+                    fout.println("This is a text file to test File Management Menu.");
+                fout.close();
+            } catch (IOException e) { System.out.println(e); }
+        }
+        fileList();
+    }
+    void addDir() { // menu item 5: 2개의 디렉터리를 자동으로 생성함
+    }
+    void deleteAll() { // menu item 6: 모든 파일들을 삭제함
+    }
+}  // ch8_1: FileManager class
+
+===============================================================================
+==  프로그램 실행 결과
+==  위 프로그램을 실행하면 다음과 같이 출력된다.
+===============================================================================
+
+************* Main Menu **************
+* 0.exit 1.PersonManager 2.ch2 3.ch3 ...
+menu item? 1
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+...
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2) 16.collections(7_1) 17.fileManager(8_1)    =
+================================================================
+menu item? 17
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll                                                   =
+=================================================================
+menu item? 1    // 디렉토리 내의 파일들의 목록을 보여줌
+-----------------
+[data] directory: 0 files
+
+// 이클립스의 Package Explorer에서 CH8-1 프로젝트를 선택한 후 
+// F5를 누르면 새로 생성된 data 디렉토리가 보여질 것이다.  
+
+// 참고: 아래 파일 목록은 Windows상의 이클립스에서 실행한 결과이다.
+//      리눅스나 맥과 같은 운영체제에서는 파일 목록이 정렬되어 보여지지 않을 수 있음
+
+====================== File Management Menu ... 4.addFiles ...
+menu item? 4    // data 디렉토리(폴더)에 4개의 text 파일을 자동 생성함
+[0] t0.txt               F 2023-11-13 11:50        51
+[1] t1.txt               F 2023-11-13 11:50       102
+[2] t2.txt               F 2023-11-13 11:50       153
+[3] t3.txt               F 2023-11-13 11:50       204
+-----------------
+[data] directory: 4 files  
+
+// 파일의 생성 날짜와 시간은 현재 시간으로 표시되어야 한다.
+//
+// 이클립스의 Package Explorer에서 CH8-1 프로젝트 밑에 data 폴더를 선택한 후 
+// F5를 누르면 새로 생성된 4개의 파일을 확인할 수 있을 것이다.  
+
+====================== File Management Menu ... 1.fileList ...
+menu item? 1    // 디렉토리 내의 파일들의 목록을 보여줌
+[0] t0.txt               F 2023-11-13 11:50        51
+[1] t1.txt               F 2023-11-13 11:50       102
+[2] t2.txt               F 2023-11-13 11:50       153
+[3] t3.txt               F 2023-11-13 11:50       204
+-----------------
+[data] directory: 4 files
+    
+
+/******************************************************************************
+ * 문제: 0
+ * 요점: 디렉토리 내의 파일 목록 구하기와 파일 속성들 보여 주기
+ ******************************************************************************/
+// 불필요한 여러 에러를 줄이기 위해 위 소스 코드에서 printFileInfo()와 fileList() 함수의
+// 코드를 미리 주었지만 중요한 내용이므로 이 함수들의 내용도 잘 숙지 해 놓기 바란다.
+//-----------------------------------------------------------------------------
+
+/******************************************************************************
+ * 문제: 1
+ * 요점: 모든 파일 및 디렉토리 삭제하기
+ ******************************************************************************/
+// 1) FileManager::deleteAll() 함수를 아래 함수로 대체하라.
+// 2) FileManager::fileList()을 참고하고 또한 ToDo 부분을 참고하여 이 함수를 구현하라.
+//    이 함수는 data 디렉터리 밑의 모든 파일들과 빈 서브 디렉터리들을 삭제한다.
+//-----------------------------------------------------------------------------
+    void deleteAll() { // menu item 6: 모든 파일 및 빈 디렉터리들을 삭제함
+        /* ToDo: 먼저 fileList() 함수의 내용을 복사해서 삽입하라.
+        for 문 내에서 
+            files[i]의 파일을 삭제한다. 
+            나머지 문장들은 모두 삭제한다.
+	    파일 목록을 보여 준다.
+        */
+    }
+
+===============================================================================
+==  문제 1 실행 결과
+===============================================================================
+// 참고: 아래 파일 목록은 Windows상의 이클립스에서 실행한 결과이다.
+//      리눅스나 맥과 같은 운영체제에서는 파일 목록이 정렬되어 보여지지 않을 수 있음
+
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+
+====================== File Management Menu ... 1.fileList ...
+menu item? 1    // 디렉토리 내의 파일들의 목록을 보여줌
+[0] t0.txt               F 2023-11-13 11:50        51
+[1] t1.txt               F 2023-11-13 11:50       102
+[2] t2.txt               F 2023-11-13 11:50       153
+[3] t3.txt               F 2023-11-13 11:50       204
+-----------------
+[data] directory: 4 files  // 그 전에 생성한 파일이 더 있었으면 더 많은 파일들이 보여질 것이다.
+    
+====================== File Management Menu ... 6.deleteAll  ...
+menu item? 6    // 디렉토리 내의 모든 text 파일 또는 빈 디렉토리를 삭제함
+-----------------
+[data] directory: 0 files
+
+====================== File Management Menu ... 1.fileList ...
+menu item? 1
+-----------------
+[data] directory: 0 files
+
+
+/******************************************************************************
+ * 문제: 2
+ * 요점: 디렉토리 자동 생성하기
+ ******************************************************************************/
+// 1) FileManager::addDir() 함수를 아래 함수로 대체하라.
+// 2) FileManager::addFiles()을 참고하고 또한 ToDo 부분을 참고하여 addDir() 함수를 구현하라.
+//    이 함수는 2개의 디렉토리를 자동 생성한다. 디렉토리 이름은 d0에서부터 시작하여 숫자를 증가시키면서
+//    디렉토리를 생성하되 만약 동일한 이름이 있을 경우 그 다음 숫자로 넘어가라. 
+//    이런식으로 어쨋든 2개의 디렉토리를 생성해야 한다.
+//-----------------------------------------------------------------------------
+    void addDir() { // menu item 5: 2개의 디렉터리를 자동으로 생성함
+        /* ToDo: 먼저 addFiles() 함수의 내용을 복사해서 삽입하라.
+        count를 수정하고 아래 실행 결과를 참고하여 생성할 디렉토리 이름을 적절하게 지정하라. 
+        try catch 문장 전체를 삭제하고 대신 그 자리에 디렉토리를 생성하라.
+        */
+    }
+
+===============================================================================
+==  문제 2 실행 결과
+===============================================================================
+// 참고: 아래 파일 목록은 Windows상의 이클립스에서 실행한 결과이다.
+//      리눅스나 맥과 같은 운영체제에서는 파일 목록이 정렬되어 보여지지 않을 수 있음
+
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+
+====================== File Management Menu ... 6.deleteAll ...
+menu item? 6
+-----------------
+[data] directory: 0 files
+
+====================== File Management Menu ... 5.addDir ...
+menu item? 5
+[0] d0                   D 2023-11-13 11:59         0
+[1] d1                   D 2023-11-13 11:59         0
+-----------------
+[data] directory: 2 files
+
+====================== File Management Menu ... 5.addDir ...
+menu item? 4
+[0] d0                   D 2023-11-13 12:28         0
+[1] d1                   D 2023-11-13 12:28         0
+[2] t0.txt               F 2023-11-13 12:28        51
+[3] t1.txt               F 2023-11-13 12:28       102
+[4] t2.txt               F 2023-11-13 12:28       153
+[5] t3.txt               F 2023-11-13 12:28       204
+-----------------
+[data] directory: 6 files
+
+====================== File Management Menu ... 5.addDir ...
+menu item? 5
+[0] d0                   D 2023-11-13 12:28         0
+[1] d1                   D 2023-11-13 12:28         0
+[2] d2                   D 2023-11-13 12:28         0
+[3] d3                   D 2023-11-13 12:28         0
+[4] t0.txt               F 2023-11-13 12:28        51
+[5] t1.txt               F 2023-11-13 12:28       102
+[6] t2.txt               F 2023-11-13 12:28       153
+[7] t3.txt               F 2023-11-13 12:28       204
+-----------------
+[data] directory: 8 files
+
+
+/******************************************************************************
+ * 문제: 3-0
+ * 요점: (삭제할 또는 이름 변경할) 파일 선택
+ ******************************************************************************/
+// 1) FileManager::selectFile() 함수를 아래 함수로 대체하라.
+// 2) ToDo 부분을 참고하여 이 함수의 코드를 완성하라.
+//    이 함수는 파일 목록을 사용자에게 보여 주고 이 중 삭제할 또는 이름 변경할 파일의
+//    인덱스 값을 사용자로부터 입력 받고 선택된 파일의 File 객체를 리턴한다.
+//-----------------------------------------------------------------------------
+	File selectFile(String preMsg, String postMsg) { 
+		File files[] = fileList();
+        if (preMsg.length() != 0) preMsg += " ";
+        while (true) {
+        	String msg = "index number of a "+preMsg+"file to "+postMsg+" [-1:stop]? ";
+        	/* ToDo
+        	UI의 적절한 함수를 사용하여 msg를 출력하고 정수 값(val)을 입력 받는다.
+        	val이 정상적인 인덱스 값이면 해당 File 객체를 리턴한다.
+        	사용자가 파일 선택을 취소한 경우 즉 val이 -1이면 null을 리턴한다. 그렇지 않으면
+        	에러 메시지("invalid index number: ")와 val을 출력한다.(다시 입력 받아야 함) 
+        	*/
+        }
+	}
+
+===============================================================================
+==  문제 3-0 실행 결과
+===============================================================================
+// 참고: 아래 파일 목록은 Windows상의 이클립스에서 실행한 결과이다.
+//      리눅스나 맥과 같은 운영체제에서는 파일 목록이 정렬되어 보여지지 않을 수 있음
+
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+// menu item? 6
+// menu item? 4 실행 후
+
+====================== File Management Menu ... 3.rename ...
+menu item? 3
+[0] t0.txt               F 2023-11-13 12:30        51
+[1] t1.txt               F 2023-11-13 12:30       102
+[2] t2.txt               F 2023-11-13 12:30       153
+[3] t3.txt               F 2023-11-13 12:30       204
+-----------------
+[data] directory: 4 files
+index number of a source file to rename [-1:stop]? -1
+
+====================== File Management Menu ... 3.rename ...
+menu item? 3
+[0] t0.txt               F 2023-11-13 12:30        51
+[1] t1.txt               F 2023-11-13 12:30       102
+[2] t2.txt               F 2023-11-13 12:30       153
+[3] t3.txt               F 2023-11-13 12:30       204
+-----------------
+[data] directory: 4 files
+index number of a source file to rename [-1:stop]? -2
+invalid index number: -2
+index number of a source file to rename [-1:stop]? 4
+invalid index number: 4
+index number of a source file to rename [-1:stop]? 3
+data\t3.txt, data, t3.txt
+
+
+/******************************************************************************
+ * 문제: 3
+ * 요점: 파일 또는 빈 디렉터리 삭제하기
+ ******************************************************************************/
+// 1) FileManager::delete() 함수를 아래 함수로 대체하라.
+// 2) ToDo 부분을 참고하여 이 함수의 코드를 완성하라.
+//    이 함수는 삭제할 파일의 File 객체를 구한 후 해당 파일을 삭제한다..
+//-----------------------------------------------------------------------------
+	void delete() { // menu item 2
+	    /* ToDo
+	    selectFile() 함수를 호출하여 삭제할 파일의 File 객체 f를 구한다.
+	        selectFile() 함수 호출 시 필요한 경우 인자를 ""로 지정해 주어도 된다.
+	    사용자가 파일 선택을 취소했을 경우 바로 리턴한다.
+	    File 객체 f를 이용하여 해당 파일을 삭제한다.
+	    파일 목록을 보여 준다.
+	    */
+	}
+
+===============================================================================
+==  문제 3 실행 결과
+===============================================================================
+// 참고: 아래 파일 목록은 Windows상의 이클립스에서 실행한 결과이다.
+//      리눅스나 맥과 같은 운영체제에서는 파일 목록이 정렬되어 보여지지 않을 수 있음
+
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+// menu item? 6
+// menu item? 4    //  실행 후
+
+====================== File Management Menu ... 2.delete ...
+menu item? 2
+[0] t0.txt               F 2023-11-13 13:39        51
+[1] t1.txt               F 2023-11-13 13:39       102
+[2] t2.txt               F 2023-11-13 13:39       153
+[3] t3.txt               F 2023-11-13 13:39       204
+-----------------
+[data] directory: 4 files
+index number of a file to delete [-1:stop]? 2
+[0] t0.txt               F 2023-11-13 13:39        51
+[1] t1.txt               F 2023-11-13 13:39       102
+[2] t3.txt               F 2023-11-13 13:39       204
+-----------------
+[data] directory: 3 files
+
+====================== File Management Menu ... 2.delete ...
+menu item? 2
+[0] t0.txt               F 2023-11-13 13:39        51
+[1] t1.txt               F 2023-11-13 13:39       102
+[2] t3.txt               F 2023-11-13 13:39       204
+-----------------
+[data] directory: 3 files
+index number of a file to delete [-1:stop]? 0
+[0] t1.txt               F 2023-11-13 13:39       102
+[1] t3.txt               F 2023-11-13 13:39       204
+-----------------
+[data] directory: 2 files
+
+====================== File Management Menu ... 5.addDir ...
+menu item? 5
+[0] d0                   D 2023-11-13 13:40         0
+[1] d1                   D 2023-11-13 13:40         0
+[2] t1.txt               F 2023-11-13 13:39       102
+[3] t3.txt               F 2023-11-13 13:39       204
+-----------------
+[data] directory: 4 files
+
+====================== File Management Menu ... 2.delete ...
+menu item? 2
+[0] d0                   D 2023-11-13 13:40         0
+[1] d1                   D 2023-11-13 13:40         0
+[2] t1.txt               F 2023-11-13 13:39       102
+[3] t3.txt               F 2023-11-13 13:39       204
+-----------------
+[data] directory: 4 files
+index number of a file to delete [-1:stop]? 0
+[0] d1                   D 2023-11-13 13:40         0
+[1] t1.txt               F 2023-11-13 13:39       102
+[2] t3.txt               F 2023-11-13 13:39       204
+-----------------
+[data] directory: 3 files
+
+====================== File Management Menu ... 5.addDir ...
+menu item? 5
+[0] d0                   D 2023-11-13 13:40         0
+[1] d1                   D 2023-11-13 13:40         0
+[2] d2                   D 2023-11-13 13:40         0
+[3] t1.txt               F 2023-11-13 13:39       102
+[4] t3.txt               F 2023-11-13 13:39       204
+-----------------
+[data] directory: 5 files
+
+
+/******************************************************************************
+ * 문제: 4
+ * 요점: 파일 이름 변경하기
+ ******************************************************************************/
+// 1) FileManager::rename() 함수를 아래 함수로 대체하라.
+// 2) ToDo 부분을 참고하여 이 함수의 코드를 완성하라.
+//    이 함수는 이름 변경할 파일의 File 객체를 구한 후 해당 파일을 다른 이름으로 변경한다.
+//-----------------------------------------------------------------------------
+	void rename() { // menu item 3
+		File src = selectFile("source", "rename");
+        if (src == null) return; // 사용자가 파일 선택을 취소했을 경우
+	    /* ToDo
+	    UI의 적절한 함수를 사용하여 "target file name? "을 출력하고 
+	    변경할 새 파일 이름(한 단어로)을 입력 받는다.
+	    변경할 이름의 File 객체 dst를 생성한다.
+	    (이때 디렉터리는 src의 부모 디렉터리(src.getParent())를 얻어와 동일하게 설정해 주어야 한다. 
+	     addFiles()의 새로 생성할 파일의 File 객체 생성 참조)
+	    파일이 이미 존재하면 파일이름과 함께 " already exists" 출력하고 리턴한다.
+	    src의 이름을 dst의 이름으로 변경한다.
+	    파일 목록을 보여 준다.
+	    */
+	}
+
+===============================================================================
+==  문제 4 실행 결과
+===============================================================================
+// 참고: 아래 파일 목록은 Windows상의 이클립스에서 실행한 결과이다.
+//      리눅스나 맥과 같은 운영체제에서는 파일 목록이 정렬되어 보여지지 않을 수 있음
+
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+// menu item? 6
+menu item? 4     // 실행 후
+[0] t0.txt               F 2023-11-13 13:21        51
+[1] t1.txt               F 2023-11-13 13:21       102
+[2] t2.txt               F 2023-11-13 13:21       153
+[3] t3.txt               F 2023-11-13 13:21       204
+-----------------
+[data] directory: 4 files
+
+====================== File Management Menu ... 3.rename ...
+menu item? 3
+[0] t0.txt               F 2023-11-13 13:21        51
+[1] t1.txt               F 2023-11-13 13:21       102
+[2] t2.txt               F 2023-11-13 13:21       153
+[3] t3.txt               F 2023-11-13 13:21       204
+-----------------
+[data] directory: 4 files
+index number of a source file to rename [-1:stop]? 0
+target file name? t1.txt
+t1.txt already exists
+
+====================== File Management Menu ... 3.rename ...
+menu item? 3
+[0] t0.txt               F 2023-11-13 13:21        51
+[1] t1.txt               F 2023-11-13 13:21       102
+[2] t2.txt               F 2023-11-13 13:21       153
+[3] t3.txt               F 2023-11-13 13:21       204
+-----------------
+[data] directory: 4 files
+index number of a source file to rename [-1:stop]? 0
+target file name? t10.txt
+[0] t1.txt               F 2023-11-13 13:21       102
+[1] t10.txt              F 2023-11-13 13:21        51
+[2] t2.txt               F 2023-11-13 13:21       153
+[3] t3.txt               F 2023-11-13 13:21       204
+-----------------
+[data] directory: 4 files
+
+
+/******************************************************************************
+ * 중요: 자동오류체크를 위해 수정해야 하는 것 
+ ******************************************************************************/
+// 1) FileManager::printFileInfo(File f) 함수 내의 주석을 아래처럼 해제하라. 
+//    이는 자동오류체크에서 마지막 파일 수정 시간을 항상 일정한 시간으로 출력되게 하기 위함이다. 
+//-----------------------------------------------------------------------------
+		t = 1700000000000L;  // 2023-11-15 오전 07:13; 자동 체크 때 사용할 예정임

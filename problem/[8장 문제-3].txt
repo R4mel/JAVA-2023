@@ -1,0 +1,603 @@
+[8장 문제-3]
+/******************************************************************************
+ * 코드 추가 2
+ ******************************************************************************/
+// 1) FileManager::run()에 menuStr의 메뉴에 아래 항목들을 추가하고, 
+//    MENU_COUNT도 수정하라.
+//-----------------------------------------------------------------------------
+            "= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =\n" +
+//-----------------------------------------------------------------------------
+// 2) FileManager::run()의 switch 문장에 아래 case 문장들을 추가하라.
+//-----------------------------------------------------------------------------
+                case 13: saveText();     break;  // ch8_3
+                case 14: loadText();     break;  // ch8_3
+                case 15: saveTextAs();   break;  // ch8_3
+                case 16: loadTextFrom(); break;  // ch8_3
+//-----------------------------------------------------------------------------
+// 3) FileManager에 아래 멤버 변수를 HOME_DIR 뒤에 배치하라.
+    static final String TEXT_PATH_NAME = HOME_DIR+"/persons.txt"; // 8_3
+//-----------------------------------------------------------------------------
+// 4) FileManager의 맨 뒤에 멤버 함수로 아래 함수들을 추가하라.
+//-----------------------------------------------------------------------------
+    void saveText() throws IOException { // menu item 13: 8_3
+    }
+    void loadText() throws IOException { // menu item 14: 8_3
+    }
+    void saveTextAs() throws IOException { // menu item 15: 8_3
+    }
+    void loadTextFrom() throws IOException { // menu item 16: 8_3
+    }
+//-----------------------------------------------------------------------------
+// 5) FileManager::show()에서 copyFile(..., ...) 함수 호출의 앞과 뒤에 
+//    아래 문장을 삽입하라.
+//-----------------------------------------------------------------------------
+        System.out.println("-----------------");
+//-----------------------------------------------------------------------------
+
+
+===============================================================================
+==  [문제 1] 실행 결과 미리보기
+==  ---------------------------------------------------------------------------
+==  아래는 [문제 1]을 구현한 후의 실행결과이다. list의 모든 Person 객체의 내용을
+==  persons.txt에 기록하고 이 파일의 내용을 다시 화면에 출력한 것이다. 
+===============================================================================
+
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 1
+-----------------
+[data] directory: 0 files
+
+====================== File Management Menu ... 10.display ...
+menu item? 10
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+-----------------
+6 entries
+
+====================== File Management Menu ... 13.saveText ...
+menu item? 13
+[0] persons.txt          F 2023-11-15 07:13       325  
+// 참고: 파일 크기는 encoding 방식에 따라 조금씩 차이가 날 수 있으니 무시하세요. 
+-----------------
+[data] directory: 1 files
+
+====================== File Management Menu ... 7.show ...
+menu item? 7
+[0] persons.txt          F 2023-11-15 07:13       325
+-----------------
+[data] directory: 1 files
+index number of a file to display [-1:stop]? 0
+-----------------
+P p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+P p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+S s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+S s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+W w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+W w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+-----------------
+
+/******************************************************************************
+ * 문제 1
+ * 요점: 텍스트 파일로 저장하기
+ ******************************************************************************/
+// saveText() 함수를 완성하라.
+// 이 함수는 list에 저장된 Person, Student, Worker 객체들을 모두 TEXT_PATH_NAME에 저장한다.
+// 단, 이 파일은 text 파일로 기록해야 한다.
+// 이 함수를 구현하기 위해 
+//----------------------------------------------------------------------------
+// 1) 파일에 각 객체를 기록하기 전에 먼저  Person, Student, Worker 객체를 구분할 수 있는 
+//    구분자를 파일에 쓰고 그 다음에 해당 객체의 멤버들을 출력해야 한다. 
+//    이를 위한 사전 작업으로  Person, Student, Worker 클래스에 아래 함수를  
+//    private void inputMembers(sc) 앞쪽에 추가하라.
+//    Student, Worker는 구분자로 각각 'S', 'W'를 리턴하라. 함수 앞에 @Override도 추가 
+//----------------------------------------------------------------------------
+    public char getDelimChar() { return 'P'; } // 8_3
+//----------------------------------------------------------------------------
+// 2) FileManager::saveText() 함수 앞쪽에 아래 함수를 배치하고,
+//    ToDo를 참고하여 코드를 완성하라.
+//    이 함수는 list의 모든 객체를 text 파일 형식으로 pathName에 저장한다.
+//----------------------------------------------------------------------------
+    void saveTextFile(String pathName) throws IOException { // 8_3
+        /* ToDo: 강의노트 "텍스트 파일에 println()으로 쓰기" 부분을 참고하여
+        pathName을 주고 PrintStream 객체 fout을 생성한다.
+        for-each 문을 이용하여 list의 각각의 원소 t에 대해
+            fout.println(t.getDelimChar()+" "+t)를 호출한다.
+            // 위 문장은 PersonManager::display(list)에서 
+            // System.out.println()을 이용하여 각 객체를 콘솔에 출력하는 것과 비슷함
+            // 즉, 궁극적으로 각 객체의 toString()을 호출하여 출력됨
+            // System.out도 결국은 PrintStream 객체임
+        파일을 닫는다.
+        data 디렉터리의 모든 파일들의 목록을 보여 준다.
+        */ 
+    }
+//----------------------------------------------------------------------------
+// 3) saveText() 함수를 구현하라.
+//    이 함수는 위 saveTextFile(pathName)을 호출하여 구현하면 된다. (한 문장이면 됨)
+//    함수 호출 시 인자는 TEXT_PATH_NAME를 지정하라.
+//----------------------------------------------------------------------------
+
+===============================================================================
+==  [문제 1] 실행 결과
+===============================================================================
+// 위 "[문제 1] 실행 결과 미리보기"를 참고하기 바란다.
+// 이클립스에서 data 폴터 밑에 있는 "persons.txt" 파일을 편집기로 띄워 내용을 확인하기 바란다.
+
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 6   // 6.deleteAll
+menu item? 10  // 10.display
+menu item? 12  // 12.add
+
+// 위 메뉴를 5번 더 반복 실행한 후
+
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+...
+[65] Johh69 1727 82.6 true :Incheon Jung-gu: KT CTO
+-----------------
+66 entries
+
+menu item? 13  // 13.saveText
+[0] persons.txt          F 2023-11-15 07:13      3314    // 파일 크기 확인
+// 참고: 파일 크기는 encoding 방식에 따라 조금씩 차이가 날 수 있으니 무시하세요. 
+-----------------
+[data] directory: 1 files
+
+menu item? 7  // 7.show 
+[0] persons.txt          F 2023-11-15 07:13      3314
+-----------------
+[data] directory: 1 files
+index number of a file to display [-1:stop]? 0
+-----------------
+P p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+P p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+S s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+...
+P Jooh67 1611 51.1 true :Incheon Nam-gu:
+P Nahh68 1294 96.3 false :Busan Nam-gu:
+W Johh69 1727 82.6 true :Incheon Jung-gu: KT CTO
+-----------------
+
+
+/******************************************************************************
+ * 기존 코드 변경
+ * 요점: Factory 멤버 모두 static으로 선언
+/******************************************************************************
+// Factory 클래스를 다시 살펴 보면 멤버 변수가 전혀 없다. 따라서 Factory 클래스의 멤버 함수들을
+// 모두 static 함수로 변경해도 아무런 문제도 없다. 모든 멤버가 static이므로 Factory 객체를 
+// 생성할 필요없이 바로 전역 함수인 Factory.static함수()로 호출할 수 있다.
+//----------------------------------------------------------------------------
+// 1) Factory 클래스의 멤버 함수들을 모두 static 함수로 변경하라.
+// 2) PersonManager에서 
+//    i) factory 멤버를 삭제하라.
+//    ii) PersonManager 생성자 함수에서 매개변수 factory를 삭제하라.
+//    iii) 생성자 함수 내의 this.factory 멤버 초기화시키는 문장도 삭제하라.
+//    iv) append(), insert(), find()에서 Factory의 static 함수를 호출하도록 수정하라.
+// 3) MultiManager::run()에서 PersonManager 객체 생성 시 두 번째 인자를 삭제하라.
+//----------------------------------------------------------------------------
+
+
+/******************************************************************************
+ * 문제 2
+ * 요점: 텍스트 파일에서 읽어 오기
+ ******************************************************************************/
+// loadText() 함수를 완성하라.
+// 이 함수는 TEXT_PATH_NAME에 저장된 Person, Student, Worker 객체들을 모두 읽어 들여 
+// 상응하는 객체를 생성한 후 이를 list에 추가한다.
+// 단, 이 파일은 text 파일이므로 텍스트로 읽어 들여야 한다.
+// 이 함수를 구현하기 위해 
+//----------------------------------------------------------------------------
+// 1) 잠깐 PersonManager::append() 함수를 복습해 보자.
+//    이 함수는 Person, Student, Worker 객체를 스캐너를 이용해 키보드에서 읽어 들이다.
+//    파일에 저장된 각 객체의 데이타는 키보드에서 읽어 들일 때와 동일한 양식으로 저장되어 있다.
+//    따라서 이 텍스트 파일을 스캐너로 읽어 들인다면 우리는 기존의 함수를 그대로 이용할 수 있다. 
+//----------------------------------------------------------------------------
+// 2) FileManager::saveTextFile() 함수 뒤쪽에 아래 함수를 배치하고,
+//    ToDo를 참고하여 코드를 완성하라.
+//----------------------------------------------------------------------------
+    void loadTextFile(String pathName) throws IOException {  // 8_3
+        /* ToDo 
+        (강의노트 "텍스트 파일을 Scanner로 읽기" 부분을 참고하여)
+        pathName을 주고 FileInputStream 객체 fin을 생성한다.
+        fin을 주고 Scanner 객체 sc을 생성한다.
+           list의 모든 객체를 모두 삭제한다.
+        boolean saved_echo_input = UI.echo_input;
+        UI.echo_input = false;  // 자동오류체크시 파일에서 입력될 경우 출력하지 않도록 함
+        while (true) {
+            try {
+                PersonManager::append()를 참고하여 아래를 완성하라.
+                Factory의 inputPerson(sc)를 호출하여 한 객체 p를 읽어 낸다.
+                (어떻게 해서 각 객체가 읽혀 졌는지 코드를 복습하기 바란다.)
+                p가 정상 객체이면 list에 추가하고 정상이 아니면 무시하라. 
+            }
+            catch (NoSuchElementException e) { break; }
+            // 스캐너로 파일을 끝까지 다 읽었는데 또 읽으면 위 예외가 발생함; 
+            // 중요: 스캐너를 통해 파일을 읽을 때는 이걸 통해 읽기를 종료해야 함
+            catch (Exception e) { System.out.println("scanner error: "+e); }
+        }
+        UI.echo_input = saved_echo_input;
+        스캐너을 닫는다. (그러면 자동으로 fin도 닫아줌)
+        list의 모든 객체를 보여 준다.
+        */
+    }
+//----------------------------------------------------------------------------
+// 3) 위 loadTextFile(pathName)을 호출하여 loadText() 함수를 구현하라.
+//----------------------------------------------------------------------------
+
+===============================================================================
+==  [문제 2] 실행 결과
+===============================================================================
+// 위 "[문제 1] 실행 결과 미리보기"를 참고하기 바란다.
+// 이클립스에서 data 폴터 밑에 있는 "persons.txt" 파일을 편집기로 띄워 내용을 확인하기 바란다.
+
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 6   // 6.deleteAll
+menu item? 10  // 10.display
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+-----------------
+6 entries
+
+menu item? 12  // 12.add
+...
+[7] Park11 1095 98.9 true :Seoul Nam-gu: Computer 1.2 1
+[8] Choi12 1882 72.8 false :Seoul Jung-gu: Computer 1.1 1
+[9] Moon13 1960 81.2 false :Seoul Dong-gu:
+[10] Nahh14 1646 93.9 false :Daejeon Buk-gu:
+[11] Jooh15 1451 61.5 true :Daejeon Dong-gu:
+[12] Moon16 1220 98.2 false :Gwangju Seo-gu:
+[13] Kimm17 1668 64.8 false :Seoul Buk-gu: Samsung CFO
+[14] Kang18 1067 40.8 true :Gwangju Dong-gu:
+[15] Leem19 1290 48.6 false :Gwangju Jung-gu:
+-----------------
+16 entries
+
+menu item? 12  // 12.add
+...
+[16] Yang20 1753 91.1 true :Incheon Jung-gu: Kia CFO
+[17] Choi21 1577 40.1 true :Gwangju Jung-gu:
+[18] Nahh22 1958 55.3 false :Incheon Jung-gu: Samsung Chief
+[19] Shin23 1098 95.5 false :Busan Buk-gu:
+[20] Song24 1901 92.4 true :Daegu Buk-gu: Electronics 0.6 4
+[21] Park25 1380 69.4 false :Busan Jung-gu: Physics 2.1 2
+[22] Johh26 1362 82.0 false :Seoul Dong-gu: Biology 2.1 3
+[23] Kimm27 1317 74.8 true :Daejeon Jung-gu:
+[24] Shim28 1113 64.5 true :Incheon Jung-gu: Computer 1.5 3
+[25] Jooh29 1050 42.4 false :Busan Seo-gu:
+-----------------
+26 entries
+
+menu item? 13  // 13.saveText
+[0] persons.txt          F 2023-11-15 07:13      1305
+// 참고: 파일 크기는 encoding 방식에 따라 조금씩 차이가 날 수 있으니 무시하세요. 
+-----------------
+[data] directory: 1 files
+
+menu item? 11  // 11.clear 
+-----------------
+0 entries
+
+menu item? 14  // 14.loadText
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+... // 위 메뉴 12 항목과 출력이 동일해야 함 
+[25] Jooh29 1050 42.4 false :Busan Seo-gu:
+-----------------
+26 entries
+
+
+/******************************************************************************
+ * 기존 프로그램의 버그
+ ******************************************************************************/
+// PersonManager::append()와 위 loadTextFile(pathName)에서 동일하게 
+// Factory의 inputPerson(Scanner)를 호출하여 키보드 또는 파일에서 Person 객체를 읽어 온다.
+// inputPerson(Scanner)->Person(sc)->inputMembers(sc)를 호출한다.
+// 그런데 [문제 2] 실행 결과에서 실행 한 후 계속 해서 아래처럼 실행해 보자.
+//----------------------------------------------------------------------------
+// 14번 메뉴 항목을 실행한 후
+
+====================== File Management Menu ... 0.exit ...
+menu item? 0
+
+=================== Person Management Menu ... 1.display ...
+menu item? 1
+// 위 14번 메뉴 항목의 실행 결과와 동일
+
+=================== Person Management Menu ... 10.dispPhone(5_3) ...
+menu item? 10
+dispPhones(): count 6
+[0] null                 // p.smartPhone 멤버가 모두 null이다.
+[1] null                 // 스마트폰 정보가 출력되어야 하는데 null로 되어 있다.
+...
+[25] null
+
+=================== Person Management Menu ... 5.copy ...
+menu item? 5
+Exception in thread "main" java.lang.NullPointerException: Cannot invoke "SmartPhone.clone()" because "p.smartPhone" is null
+    at Person.assign(Main.java:346)
+    at Person.(Main.java:291)
+    at Person.clone(Main.java:348)
+    at PersonManager.copy(Main.java:1165)
+    ...
+
+//----------------------------------------------------------------------------
+// 위처럼 프로그램이 비정상적으로 종료한다. 마지막으로 죽은 시점이 Person::assign()인데
+//----------------------------------------------------------------------------
+    public void assign(Person p) { 
+        set(p.name, p.passwd, p.id, p.weight, p.married, p.address, p.smartPhone.clone()); 
+    } 
+//----------------------------------------------------------------------------
+// set() 함수 호출할 때 마지막 인자인 p.smartPhone.clone() 호출하는데 
+// 여기서 p.smartPhone이 null 포인터라 프로그램이 종료하게 되었다.
+// 문제점: 파일 또는 키보드에서 객체를 읽을 때 
+//       inputPerson(Scanner)->Person(sc)->inputMembers(sc) 순서로 함수를 호출하는데
+//       Person::inputMembers(sc)에서 대부분의 멤버들은 파일에서 읽어 들이는데
+//       passwd, smartPhone, memo 멤버들은 정상적으로 초기화를 해 주지 않았을 가능성이 있다.
+//       각자의 Person::inputMembers(sc) 함수를 확인해 보기 바란다.
+//----------------------------------------------------------------------------
+
+/******************************************************************************
+ * 문제 2-1
+ * 요점: 기존의 버그 수정하기
+ ******************************************************************************/
+// 위 문제를 해결하기 위해 Person::inputMembers(sc) 함수의 마지막 부분에 아래 문장을 추가하라.
+//----------------------------------------------------------------------------
+        set(name, "", id, weight, married, address, null); // 8_3
+//----------------------------------------------------------------------------
+// 위 Person::set() 함수에서는 smartPhone, memo 멤버들을 초기화시켜 주는 
+// 아래 코드가 이미 존재하고 있어야 한다.
+// 아래 setSmartPhone() 함수는 매개변수인 smartPhone이 null인 경우 자동으로 새로 생성한다.
+//----------------------------------------------------------------------------
+        setSmartPhone(smartPhone); // smartPhone은 set()의 마지막 매개변수 이름이다.
+        memo = ""; // 6_2
+//----------------------------------------------------------------------------
+
+===============================================================================
+==  [문제 2-1] 실행 결과
+===============================================================================
+// Main Menu -> Person Management Menu 로 진입한 후 
+menu item? 14  // setDate(6_1)
+date and time(ex: 2021 10 1 18 24 30)? 2023 1 1 1 1 1
+
+menu item? 17  // File Management Menu로 진입한 후
+menu item? 13  // saveText
+menu item? 14  // loadText
+menu item? 0  // exit
+
+=================== Person Management Menu =====================
+...
+menu item? 10  // dispPhone(5_3)
+dispPhones(): count 6
+[0] p0's Phone: Apple Phone (2023.1.1 AM 1:1:1)
+[1] p1's Phone: SAMSUNG Phone (2023.1.1 AM 1:1:1)
+[2] s1's Phone: SAMSUNG Phone (2023.1.1 AM 1:1:1)
+[3] s2's Phone: Apple Phone (2023.1.1 AM 1:1:1)
+[4] w1's Phone: SAMSUNG Phone (2023.1.1 AM 1:1:1)
+[5] w2's Phone: Apple Phone (2023.1.1 AM 1:1:1)
+
+menu item? 5  // copy
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+[6] pp0 30 71.0 true :Gwangju ,Nam-gu , Bongseon-dong 21:
+[7] pp1 31 62.1 false :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[8] ss1 21 66.4 false :Jongno-gu Seoul: Physics 3.8 1
+[9] ss2 22 55.3 true :Yeonje-gu Busan: Electronics 2.5 4
+[10] ww1 23 34.3 true :Kangnam-gu Seoul: Samsung Director
+[11] ww2 24 45.4 false :Dobong-gu Kwangju: Hyundai Manager
+
+
+/******************************************************************************
+ * 문제 3-0
+ * 요점: 기존에 존재하지 않는 새로운 파일 이름 입력 받기
+ ******************************************************************************/
+// saveTextAs() 함수를 구현하기 위해서는 먼저 아래 함수를 구현해야 한다.
+// 아래 함수를 saveTextAs() 함수 앞에 배치하라.
+// 이 함수는 [다른 이름으로 저장]할 새로운 파일 이름을 입력 받는 함수이다.
+// 입력 받은 파일 이름은 기존에 존재하지 않는 새로운 이름이어야 한다.
+// ToDo를 참고하여 코드를 완성하라.
+//----------------------------------------------------------------------------
+    String getNewFilePath(String msg) {  // 8_3
+        /* ToDo
+        파일의 목록을 보여 주어라.
+        UI의 적절한 함수를 호출하여 "new "+msg+" file name to save? " 보여 주고
+        새로운 파일 이름 fileName을 한 단어로 입력 받아라.
+        HOME_DIR과 fileName을 이용하여 File 객체 f를 생성하라. (addFiles() 참고)
+        파일이 이미 존재하는 파일이라면 
+            파일 이름과 ": already exists"를 출력한 후 null을 반환하라.
+        객체 f의 path를 리턴하라.
+        */
+    }
+
+/******************************************************************************
+ * 문제 3
+ * 요점: 다른 이름으로 텍스트 파일 저장하기
+ ******************************************************************************/
+// saveTextAs() 함수를 완성하라.
+// 이 함수 구현 시 먼저 위 getNewFilePath(...) 함수를 호출하여 저장할 파일 이름를 구한 후
+// 파일 이름이 정상적이라면 saveTextFile(...)을 호출하라. (잘못된 파일 이름이면 그냥 리턴하라.)
+
+===============================================================================
+==  [문제 3] 실행 결과
+===============================================================================
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 6   // 6.deleteAll
+menu item? 10  // 10.display
+menu item? 12  // 12.add
+menu item? 13  // 13.saveText
+[0] persons.txt          F 2023-11-15 07:13       800
+// 참고: 파일 크기는 encoding 방식에 따라 조금씩 차이가 날 수 있으니 무시하세요. 
+-----------------
+[data] directory: 1 files
+
+menu item? 15  // 15.saveTextAs
+[0] persons.txt          F 2023-11-15 07:13       800
+-----------------
+[data] directory: 1 files
+new text file name to save? persons.txt
+persons.txt: already exists
+
+menu item? 15  // 15.saveTextAs
+[0] persons.txt          F 2023-11-15 07:13       800
+-----------------
+[data] directory: 1 files
+new text file name to save? p.txt
+[0] p.txt                F 2023-11-15 07:13       800
+[1] persons.txt          F 2023-11-15 07:13       800
+-----------------
+[data] directory: 2 files
+
+menu item? 7  // 7.show
+[0] p.txt                F 2023-11-15 07:13       800
+[1] persons.txt          F 2023-11-15 07:13       800
+-----------------
+[data] directory: 2 files
+index number of a file to display [-1:stop]? 0
+-----------------
+P p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+P p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+S s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+S s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+W w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+W w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+W Kimm10 1948 54.4 false :Incheon Dong-gu: Kia CFO
+S Park11 1095 98.9 true :Seoul Nam-gu: Computer 1.2 1
+S Choi12 1882 72.8 false :Seoul Jung-gu: Computer 1.1 1
+P Moon13 1960 81.2 false :Seoul Dong-gu:
+P Nahh14 1646 93.9 false :Daejeon Buk-gu:
+P Jooh15 1451 61.5 true :Daejeon Dong-gu:
+P Moon16 1220 98.2 false :Gwangju Seo-gu:
+W Kimm17 1668 64.8 false :Seoul Buk-gu: Samsung CFO
+P Kang18 1067 40.8 true :Gwangju Dong-gu:
+P Leem19 1290 48.6 false :Gwangju Jung-gu:
+-----------------
+
+
+/******************************************************************************
+ * 문제 4
+ * 요점: 주어진 이름의 텍스트 파일에서 읽어 오기
+ ******************************************************************************/
+// loadTextFrom() 함수를 완성하라.
+// 이 함수 구현 시 먼저 selectFile(...) 함수를 호출하여 읽어 올 파일의 File 객체 f를 구한 후
+// f가 정상적인 객체이라면 loadTextFile(...)을 호출하라. (잘못된 객체라면 그냥 리턴하라.)
+
+===============================================================================
+==  [문제 3] 실행 결과
+===============================================================================
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 6   // 6.deleteAll
+menu item? 10  // 10.display
+menu item? 13  // saveText
+menu item? 12  // add
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+[6] Kimm10 1948 54.4 false :Incheon Dong-gu: Kia CFO
+[7] Park11 1095 98.9 true :Seoul Nam-gu: Computer 1.2 1
+[8] Choi12 1882 72.8 false :Seoul Jung-gu: Computer 1.1 1
+[9] Moon13 1960 81.2 false :Seoul Dong-gu:
+[10] Nahh14 1646 93.9 false :Daejeon Buk-gu:
+[11] Jooh15 1451 61.5 true :Daejeon Dong-gu:
+[12] Moon16 1220 98.2 false :Gwangju Seo-gu:
+[13] Kimm17 1668 64.8 false :Seoul Buk-gu: Samsung CFO
+[14] Kang18 1067 40.8 true :Gwangju Dong-gu:
+[15] Leem19 1290 48.6 false :Gwangju Jung-gu:
+-----------------
+16 entries
+
+menu item? 15  // saveTextAs
+[0] persons.txt          F 2023-11-15 07:13       325
+// 참고: 파일 크기는 encoding 방식에 따라 조금씩 차이가 날 수 있으니 무시하세요. 
+-----------------
+[data] directory: 1 files
+new text file name to save? p.txt
+[0] p.txt                F 2023-11-15 07:13       800
+[1] persons.txt          F 2023-11-15 07:13       325
+-----------------
+[data] directory: 2 files
+
+menu item? 11  // clear
+-----------------
+0 entries
+
+menu item? 16  // loadTextFrom
+[0] p.txt                F 2023-11-15 07:13       800
+[1] persons.txt          F 2023-11-15 07:13       325
+-----------------
+[data] directory: 2 files
+index number of a text file to load [-1:stop]? p.txt
+Input an INTEGER. Try again!!
+index number of a text file to load [-1:stop]? 0
+// 위 12번 메뉴 항목 출력과 동일함
+-----------------
+16 entries
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+=================================================================
+menu item? 16  // loadTextFrom
+[0] p.txt                F 2023-11-15 07:13       800
+[1] persons.txt          F 2023-11-15 07:13       325
+-----------------
+[data] directory: 2 files
+index number of a text file to load [-1:stop]? 1
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+-----------------
+6 entries
+
+
+/******************************************************************************
+ * 중요: 자동오류체크를 위해 수정해야 하는 것 
+ ******************************************************************************/
+// 1) FileManager::printFileInfo(File f) 함수 내의 주석을 아래처럼 해제하라. 
+//    이는 자동오류체크에서 마지막 파일 수정 시간을 항상 일정한 시간으로 출력되게 하기 위함이다. 
+//-----------------------------------------------------------------------------
+        t = 1700000000000L;  // 2023-11-15 오전 07:13; 자동 체크 때 사용할 예정임

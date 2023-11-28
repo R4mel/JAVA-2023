@@ -1,0 +1,1212 @@
+[6장 문제-2]
+/******************************************************************************
+ * 문제: 1
+ * 요점: String 클래스 활용
+ ******************************************************************************/
+// 1) MultiManager 내의 persons[0], persons[1]의 내용을 각각 아래 내용으로 수정하라.
+//-----------------------------------------------------------------------------
+        // ch6_2: p0, p1 주소 변경되었음(공백문자와 ,를 의도적으로 띄우거나 붙여 놓았음)
+        new Person("p0", 10, 70.0, false, "Gwangju ,Nam-gu , Bongseon-dong 21"),
+        new Person("p1", 11, 61.1, true,  "Jong-ro 1-gil,Jongno-gu,   Seoul"),
+//-----------------------------------------------------------------------------
+// 2) PersonManager::run() 내의 menuStr의 아래 메뉴항목을 추가하고 MENU_COUNT를 수정하라.
+//-----------------------------------------------------------------------------
+            "= 15.chAddress(6_2)                                            =\n" +
+//-----------------------------------------------------------------------------
+// 3) PersonManager의 setDate() 뒤쪽에 아래의 함수를 추가하고 
+//    15 메뉴항목을 선택할 경우 이 함수를 호출하도록 하라. 그리고 이 함수의 TODO 부분을 완성하라.
+//-----------------------------------------------------------------------------
+    void chAddress() { // Menu item 14: ch6_2
+        for (int i = 0; i < pVector.size(); ++i) {
+            Person p = pVector.get(i);
+                /* TODO: 
+                p의 주소를 얻어와 아래 newAddress(String)를 호출하여 
+                수정한 주소를 얻어 온 후 이를 다시 p의 주소로 설정하라. (한 줄로 완성해 보라)
+                */
+        }
+        display();
+    }
+//-----------------------------------------------------------------------------
+// 4) PersonManager의 맨 뒤쪽에 아래의 함수를 추가하고 
+//    아래 실행결과를 참고하여 이 함수의 TODO 부분을 완성하라.
+//-----------------------------------------------------------------------------
+    private String newAddress(String address) {
+        /* 
+        TODO: 
+        address를 모두 소문자로 변경하라.
+        address에서 "-gu"를 "_gu"로 교체하라.
+
+        address에서 ","의 앞뒤 공백(','를 포함하여)을 하나의 공백문자 " "로 교체한 
+        새로운 address 문자열을 만든 다음 이를 반환하라. (아래 힌트 참고)
+
+        힌트: address에서 ","를 구분자로 사용하여 여러 개의 토큰으로 잘라라. split() 사용
+             address = "";
+             for 문: 각 토큰의 양쪽 끝쪽에 있는 공백(스페이스, 탭, 엔터) 문자를 모두 제거하라.
+             for 문: 각 토큰을 address의 뒤에 추가하여(+) 새로운 address를 만들고 
+                    그 뒤에 매번 " "를 추가(+)하라. (가능하면 두 개의 for를 하나로 만들어 보라)
+             새로 완성된 address를 반환하라.
+        */
+    }
+
+===============================================================================
+==  프로그램 실행 결과 1
+=============================================================================== 
+
+******* Main Menu ********
+* 0.exit 1.PersonManager ...
+menu item? 1
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:   // 수정된 주소
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:      // 수정된 주소
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2)                                            =
+================================================================
+menu item? 15
+[0] p0 10 70.0 false :gwangju nam_gu bongseon-dong 21:  // 주소 변환되었음
+[1] p1 11 61.1 true :jong-ro 1-gil jongno_gu seoul:     // 주소 변환되었음
+... // 나머지는 앞전 출력과 동일
+
+            
+/******************************************************************************
+ * 문제: 2
+ ******************************************************************************/
+// 1) interface Calculator에 아래 함수 선언을 추가하라.
+//-----------------------------------------------------------------------------
+    void calculate(String expr);                     // 예: ("3+2") ("2+ 3")
+//-----------------------------------------------------------------------------
+// 2) GalaxyPhone과 IPhone에 위 인터페이스 함수를 오버라이딩하라. 
+//    이 함수는 기존 calculate(double, String, double) 뒤에 배치하고
+//    함수 몸체는 임시로 { System.out.println(expr); }로 하라.
+//    주의: 적절한 함수의 접근지정자를 지정하고 오버라이딩한다는 사실을 확실히 밝혀라.
+//         기존 calculate(double, String, double) 함수를 참고하라.
+//-----------------------------------------------------------------------------
+// 3) CurrentUser::run() 내의 menuStr의 아래 메뉴항목을 추가하고 MENU_COUNT를 수정하라.
+//-----------------------------------------------------------------------------
+                "+ 14.calcString(6_2) 15.memo(6_2)                               +\n" +
+//-----------------------------------------------------------------------------
+// 4) CurrentUser의 맨 뒤쪽에 아래의 함수를 추가하고 
+//    14 메뉴항목을 선택할 경우 이 함수를 호출하도록 하라.
+//-----------------------------------------------------------------------------
+    // Menu item 14:ch6_2: "2+3", "2+ 3"처럼 연산자와 피연산자가 붙어 있어도 됨
+    void calcString() {
+        /* TODO:
+        화면에 "expression: "을 출력하고 한줄을 통채로 입력 받아 
+        문자열 변수 line에 저장하라. (PersonManager의 setDate() 참고) 
+        user 계산기의 calculate(line)을 호출하라. (CurrentUser::calc() 참고)
+        */
+    }
+
+===============================================================================
+==  프로그램 실행 결과 2
+=============================================================================== 
+
+=================== Person Management Menu ===================== ...
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        = ...
+menu item? 8
+user name: s1
+password: 
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.isSame 7.update 8.chPasswd(4_2) 9.chSmartPhone(5_3)         +
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) 13.chWeight(6_1) +
++ 14.calcString(6_2) 15.memo(6_2)                               +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 14
+expression: 5+3
+5+3
+
+            
+/******************************************************************************
+ * 문제: 2-1
+ * 요점: String 클래스 활용
+ ******************************************************************************/
+// 1) GalaxyPhone의 calculate(String expr) 함수의 본체를 아래 내용으로 교체한 후
+//    TODO 부분을 구현하라.
+//-----------------------------------------------------------------------------
+        String oprs[] = { "+", "-", "*", "/" };
+        int i;
+        for (i = 0; i < oprs.length; i++)
+            if (expr.indexOf(oprs[i]) >= 0) // expr에 oprs[i] 있는지 조사하고
+                break;                      // 있으면 expr 내의 인덱스, 없으면 음수 반환 
+        if ((i >= oprs.length))             // expr에 적절한 연산자가 없을 경우
+            calculate(0, expr, 0);          // 에러 처리를 위해 호출함
+        else {
+            /* TODO:
+            연산자 oprs[i]을 구분자로해서 두 개의 피연산자(토큰)로 자른다. (split() 사용)
+            구분자 지정시 oprs[i]만 지정해서는 안되고 ("\\"+oprs[i]) 해서 지정해야 함 
+            두 개의 피연산자(토큰)를 각각 double로 변환한다.
+            계산을 위해 기존 calculate(double, String, double)를 호출하라.
+            */
+        }
+
+===============================================================================
+==  프로그램 실행 결과 2-1
+=============================================================================== 
+
+// s1으로 login한 후
+
+++++++++++++++++++++++ Current User Menu ... + 14.calcString(6_2)  ...
+menu item? 14
+expression: 3+2
+3.0 + 2.0 = 5.0 @ s1's Galaxy Calculator
+
+++++++++++++++++++++++ Current User Menu ... + 14.calcString(6_2)  ...
+menu item? 14
+expression: 2 -1
+2.0 - 1.0 = 1.0 @ s1's Galaxy Calculator
+
+++++++++++++++++++++++ Current User Menu ... + 14.calcString(6_2)  ...
+menu item? 14
+expression: 12* 10
+12.0 * 10.0 = 120.0 @ s1's Galaxy Calculator
+
+++++++++++++++++++++++ Current User Menu ... + 14.calcString(6_2)  ...
+menu item? 14
+expression: 10 + 20
+10.0 + 20.0 = 30.0 @ s1's Galaxy Calculator
+
+++++++++++++++++++++++ Current User Menu ... + 14.calcString(6_2)  ...
+menu item? 14
+expression: 1%2
+0.0 1%2 0.0 = NOT supported operator @ s1's Galaxy Calculator
+
+
+/******************************************************************************
+ * 문제: 3
+ * 요점: String 클래스 활용과 문자열 스캐너 활용
+ ******************************************************************************/
+// 1) IPhone의 calculate(String expr) 함수의 본체를 위 GalaxyPhone 코드로 교체하라.
+//    그런 후 위 TODO 부분을 아래 TODO로 구현하라. 
+//    GalaxyPhone에서 split()을 사용했지만 여기서는 스캐너를 사용하여 피연산자와 연산자를 읽어 들임
+//-----------------------------------------------------------------------------
+            /* TODO:
+            expr.indexOf(oprs[i])를 이용해 expr 내에서 연산자의 위치(인덱스)를 구해 j에 저장
+            String의 substring()을 이용해 expr 내에서 피연산자1, 연산자, 피연산자2 등 세 개의 
+            서브 문자열을 발췌하라. substring() 호출 시 인덱스 j를 활용하여 j의 바로 앞까지, 
+            j에서 j+1까지, j 바로 뒤에서 끝까지 세 개의 서브 문자열을 구할 수 있다. 
+            참고로 피연산자에는 공백 문자가 포함되어 있어도 괜찮다.
+            피연산자1, 연산자, 피연산자2 서브 문자열들을 +를 이용하여 다시 하나의 문자열로 결합하여  
+            expr에 저장하라. 이때 피연산자와 연산자가 분리되게 중간에 " "를 무조건 추가하라.
+
+            새로운 Scanner 변수 s를 만들어라. 이때 함수 인자로 새로 결합된 expr 문자열을 지정하라. 
+            [SmartPhone의 setDate(String line) 함수 참고]
+            스캐너를 통해 실수값(피연산자1), 문자열(연산자), 실수값(피연산자2)를 읽어 들여라.
+            (이 스캐너는 실수값과 문자열을 expr에서 읽어 들인다.)
+            계산을 위해 기존 calculate(double, String, double)를 호출하라.
+            스캐너를 닫아라.
+            */
+
+===============================================================================
+==  프로그램 실행 결과 3
+=============================================================================== 
+
+// s2로 login한 후
+
+++++++++++++++++++++++ Current User Menu ... + 14.calcString(6_2)  ...
+menu item? 14
+expression: 2+3
+s2's IPhone 13: 2.0 + 3.0 = 5.0
+
+++++++++++++++++++++++ Current User Menu ... + 14.calcString(6_2)  ...
+menu item? 14
+expression: 2 -3
+s2's IPhone 13: 2.0 - 3.0 = -1.0
+
+++++++++++++++++++++++ Current User Menu ... + 14.calcString(6_2)  ...
+menu item? 14
+expression: 2* 3
+s2's IPhone 13: 2.0 * 3.0 = 6.0
+
+++++++++++++++++++++++ Current User Menu ... + 14.calcString(6_2)  ...
+menu item? 14
+expression: 2 / 3
+s2's IPhone 13: 2.0 / 3.0 = 0.6666666666666666
+
+++++++++++++++++++++++ Current User Menu ... + 14.calcString(6_2)  ...
+menu item? 14
+expression: 2%3
+s2's IPhone 13: 2%3 = NOT supported operator
+
+
+/******************************************************************************
+ * [코드 추가 2]
+ ******************************************************************************/
+// 1) Person 클래스의 smartPhone 멤버 뒤에 아래 memo 멤버를 추가하라.
+    private String     memo;       // 메모: 6_2
+//----------------------------------------------------------------------------
+// 2) Person 클래스에 아래 멤버 함수들을 추가하고 적절히 구현하라.
+//    getMemo()는 getxxxx() 맨 뒤에, setMemo()는 setxxxx() 맨 뒤에 배치하라.
+//----------------------------------------------------------------------------
+    public String  getMemo()    { /* TODO: 적절히 구현할 것 */ } // 6_2
+    public void setMemo(String m) { /* TODO: 적절히 구현할 것 */ } // 6_2
+//----------------------------------------------------------------------------
+// 3) Person 클래스의 set(name,passwd,id,weight,married,address,smartPhone)
+//    함수의 맨 마지막 부분에 아래 코드를 추가하라.
+//----------------------------------------------------------------------------
+        memo = ""; // 6_2
+
+/******************************************************************************
+ * [코드 추가 3]
+ ******************************************************************************/
+// 1) 아래 Memo 클래스를 UI와 CurrentUser 사이에 배치하라.
+//----------------------------------------------------------------------------
+
+// String과 StringBuffer 클래스의 활용을 연습하기 위한 클래스
+class Memo
+{
+    private StringBuffer mStr;  // 메모를 저장하고 수정하기 위한 문자열 버퍼
+
+    // 문자열 m을 이용하여 StringBuffer를 생성한다.
+    public Memo(String m)    { mStr = new StringBuffer(m); }
+
+    // StringBuffer mStr을 문자열로 변환하여 리턴한다.
+    public String toString() { return mStr.toString(); }
+
+    private String memoData =  
+        "The Last of the Mohicans\n"+
+        "James Fenimore Cooper\n"+
+        "Author's Introduction\n"+
+        "It is believed that the scene of this tale, and most of the information\n"+
+        "necessary to understand its allusions, are rendered sufficiently \n"+
+        "obvious to the reader in the text itself, or in the accompanying notes.\n"+
+        "Still there is so much obscurity in the Indian traditions, and so much\n"+
+        "confusion in the Indian names, as to render some explanation useful.\n"+
+        "Few men exhibit greater diversity, or, if we may so express it, \n"+
+        "greater antithesis of character, \n"+
+        "than the native warrior of North America.";
+    
+    public void run() {
+        String menuStr =
+        "+++++++++++++++++++++ Memo Management Menu +++++++++++++++++++\n"+
+        "+ 0.exit 1.display 2.find 3.findReplace 4.compare 5.dispByLn +\n"+
+        "+ 6.delLn 7.replLn 8.scrollUp 9.scrollDown 10.inputMemo      +\n"+
+        "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+
+        // 멤버 mStr이 비었을 경우 위 memoData로 초기화한다.
+        if (mStr.length() == 0) mStr.append(memoData);
+        final int MENU_COUNT = 11; // 상수 정의
+
+        while (true) {
+            int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
+            switch(menuItem) {
+            case 1: display();     break;
+            case 2: find();        break;
+            case 3: findReplace(); break;
+            case 4: compare();     break;
+            case 5: dispByLn();    break;
+            case 6: delLn();       break;
+            case 7: replLn();      break;
+            case 8: scrollUp();    break;
+            case 9: scrollDown();  break;
+            case 10:inputMemo();   break;
+            case 0:                return;
+            }
+        }
+    }
+    void display() { // Menu item 1
+        System.out.println("------- Memo -------");
+        System.out.print(mStr);
+        if (mStr.length() > 0 && mStr.charAt(mStr.length()-1) != '\n')
+            System.out.println();
+        System.out.println("--------------------");
+    }
+    void find() { // Menu item 2
+    }
+    void findReplace() { // Menu item 3
+    }
+    void compare() { // Menu item 4
+    }
+    void dispByLn() { // Menu item 5
+    }
+    void delLn() { // Menu item 6
+    }
+    void replLn() { // Menu item 7
+    }
+    void scrollUp() { // Menu item 8
+    }
+    void scrollDown() { // Menu item 9
+    }
+/*
+In war, he is daring, boastful, cunning, ruthless, self-denying,
+and self-devoted; in peace, just, generous, hospitable, revengeful,
+superstitious, modest, and commonly chaste.
+These are qualities, it is true, which do not distinguish all alike;
+but they are so far the predominating traits of these remarkable people
+as to be characteristic.
+It is generally believed that the Aborigines of the American continent
+have an Asiatic origin.
+*/
+    void inputMemo() { // Menu item 10
+    }
+}   // Memo class: ch6_2
+
+/******************************************************************************
+ * [코드 추가 4]
+ ******************************************************************************/
+// 1) CurrentUser 클래스 맨 뒤에 아래 함수를 추가하고 
+//    메뉴항목 15가 선택되었을 경우 이 함수가 호출되게 하라.
+//----------------------------------------------------------------------------
+    void memo() { // Menu item 15: ch6_2
+        Memo m = new Memo(user.getMemo());
+        m.run();
+        user.setMemo(m.toString());
+    }
+
+===============================================================================
+==  프로그램 실행 결과
+=============================================================================== 
+
+// s1으로 login한 후
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++ ...
++ 14.calcString(6_2) 15.memo(6_2)                               +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 15
+
++++++++++++++++++++++ Memo Management Menu +++++++++++++++++++
++ 0.exit 1.display 2.find 3.findReplace 4.compare 5.dispByLn +
++ 6.delLn 7.replLn 8.scrollUp 9.scrollDown 10.inputMemo      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 1
+------- Memo -------
+The Last of the Mohicans
+James Fenimore Cooper
+Author's Introduction
+It is believed that the scene of this tale, and most of the information
+necessary to understand its allusions, are rendered sufficiently 
+obvious to the reader in the text itself, or in the accompanying notes.
+Still there is so much obscurity in the Indian traditions, and so much
+confusion in the Indian names, as to render some explanation useful.
+Few men exhibit greater diversity, or, if we may so express it, 
+greater antithesis of character, 
+than the native warrior of North America.
+--------------------
+
+
+/******************************************************************************
+ * [코드 추가 5]
+ ******************************************************************************/
+// 앞으로 Memo 클래스에서 작업해야할 일이 많다. 그런데 매번 s1으로 login한 후 15번 메뉴항목을
+// 선택하는 것은 매우 번거로운 일이다. 따라서 프로그램 실행 후 바로 메모 메뉴가 나오게 프로그램을
+// 임시로 변경해 보자.
+// 1) MainMenu 클래스의 기존 run 함수를 전부 주석처리하고 그 밑에 아래 함수를 추가하라. 
+//----------------------------------------------------------------------------
+    public static void run() {
+        var user = new Student("s1", 1, 65.4, true,  "Jongno-gu Seoul", "Physics", 3.8, 1);
+    	Memo m = new Memo(user.getMemo());
+        m.run();
+        user.setMemo(m.toString());
+        System.out.println("\nGood bye!!");
+    }
+
+===============================================================================
+==  프로그램 실행 결과
+=============================================================================== 
+//  프로그램을 실행하면 바로 아래와 같이 출력될 것이다.
+
++++++++++++++++++++++ Memo Management Menu +++++++++++++++++++
++ 0.exit 1.display 2.find 3.findReplace 4.compare 5.dispByLn +
++ 6.delLn 7.replLn 8.scrollUp 9.scrollDown 10.inputMemo      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item?
+
+
+/******************************************************************************
+ * 문제: 4
+ * 요점: String과 StringBuffer 활용
+ ******************************************************************************/
+// 1) 아래 함수를 Memo 클래스의 find() 함수 앞에 배치하라.
+//-----------------------------------------------------------------------------
+    // content 문자열의 start 인덱스부터 word 문자열 단어를 찾아 그 단어의 시작 인덱스를 반환함
+    // 찾지 못한 경우 -1를 반환함
+    // " "로 분리된 word 단어만 찾고 다른 긴 단어 속에 포함된 경우에는 스킵한다.
+    private int findWord(String content, String word, int start) {
+        // content.indexOf(word, start): 
+        //    content 문자열의 start 인덱스 위치부터 word를 검색하고 
+        //    찾은 경우 찾은 시작 위치를, 못 찾은 경우 -1를 반환함
+        //    word가 다른 긴 단어의 속에 포함되어 있어도 검색이 된다.
+        if ((start = content.indexOf(word, start)) == -1) 
+        	return -1; // 못 찾은 경우
+        if (start > 0) {
+            // 찾은 단어의 앞이 공백이 아닌 경우 (긴 단어 속에 포함되어 있는 경우임)
+            //    찾은 단어 뒤쪽으로 계속 찾음; 재귀 함수
+            if (!Character.isWhitespace(content.charAt(start-1))) 
+                return findWord(content, word, start+word.length());
+        }
+        // 찾은 단어가 content의 끝에 있을 경우
+        if ((start+word.length()) == content.length()) 
+            return start; // 찾은 경우
+        // 찾은 단어의 뒤가 공백이 아닌 경우 (긴 단어 속에 포함되어 있는 경우임)
+        //    찾은 단어 뒤쪽으로 계속 찾음; 재귀 함수
+        if(!Character.isWhitespace(content.charAt(start+word.length()))) 
+            return findWord(content, word, start+word.length());
+        return start; // 찾은 경우
+    }
+//-----------------------------------------------------------------------------
+// 2) 아래 코드를 Memo::find() 함수에 추가하고 TODO 부분을 완성하라.
+//    이 함수는 찾을 단어를 입력 받고 그 단어가 포함된 행을 출력한 후 찾은 단어의 총 횟수를 출력한다.
+//-----------------------------------------------------------------------------
+        String word = UI.getNext("word to find? ");
+        // 전체 메모 mStr를 문자열로 변환한 후 이를 행 단위로 쪼갬
+        // 아래 구분자 "\\v"은 행 단위로 쪼개라는 구분자를 의미함; 즉, '\n','\r','\f'등을 의미함 
+        String lines[] = mStr.toString().split("\\v");
+        int tot_count = 0; // 단어를 찾은 총 횟수 
+        /*
+        TODO:
+        for(i)문을 이용하여 각각의 lines[i]에 대해
+            int count = 0;  // lines[i]에서 단어 word를 찾은 횟수
+            // 아래 for문은 lines[i] 내에서 word 단어를 반복적으로 찾는다.
+            for(j=0)문을 이용하여 j=findWord(lines[i],word,j)를 호출하여 
+               lines[i] 내의 i 위치에서부터 word를 찾고
+               이 단어를 찾은 경우 j+=word.length()한 후 반복하여 findWord()를 호출하고
+               찾은 회수(count)도 증가시킨다. 찾지 못한 경우 for문 종료한다.
+            lines[i]내 word가 하나라도 존재할 경우(count) 실행결과처럼 
+                행 인덱스 [i] 와 함께 lines[i]를 출력하고 tot_count를 적절히 증가시킨다.
+        System.out.println("--------------------");
+        찾은 단어의 총 회수를 출력한다.
+        */
+
+===============================================================================
+==  프로그램 실행 결과 4
+=============================================================================== 
+
++++++++++++++++++++++ Memo Management Menu ... 2.find ...
+menu item? 2
+word to find? ,
+--------------------
+0 words found                // 다른 단어와 붙어 있지 않고 단독으로 " , "가 존재해야만 찾음
+
++++++++++++++++++++++ Memo Management Menu ... 2.find ...
+menu item? 2
+word to find? the
+[0] The Last of the Mohicans
+[3] It is believed that the scene of this tale, and most of the information
+[5] obvious to the reader in the text itself, or in the accompanying notes.
+[6] Still there is so much obscurity in the Indian traditions, and so much
+[7] confusion in the Indian names, as to render some explanation useful.
+[10] than the native warrior of North America.
+--------------------
+9 words found
+
+            
+/******************************************************************************
+ * 문제: 5
+ * 요점: StringBuffer 활용
+ ******************************************************************************/
+// 1) 위의 findWord(String content, String word, int start) 함수를 그대로 복사해서
+//    Memo 클래스의 findReplace() 함수 앞에 배치하라. 
+//-----------------------------------------------------------------------------
+//    그런 후 첫번째 매개변수의 데이타 타입을 String이 아닌 StringBuffer로 변경하라.
+//    그러면 문제 4의 findWord()와는 함수이름이 같고 매개변수 타입이 다른 함수 중복이 된다.
+//-----------------------------------------------------------------------------
+//        이 함수는 StringBuffer인 content의 start 인덱스부터 word 단어를 찾아 
+//        그 단어의 시작 인덱스를 반환하게 된다.
+//-----------------------------------------------------------------------------
+// 2) 아래 코드를 findReplace() 함수에 추가하고 TODO 부분을 완성하라.
+//    이 함수는 [찾을 단어]와 [교체할 단어]를 입력 받고 StringBuffer인 mStr 내에서
+//    [찾을 단어]를 모두 찾아 이를 [교체할 단어]로 교체한다.
+//-----------------------------------------------------------------------------
+        String find = UI.getNext("word to find? ");
+        String repl = UI.getNext("word to replace? ");
+        int count = 0; // 단어를 교체(찾은)한 횟수
+        /*
+        TODO:
+        for(i=0)문을 이용하여 i=findWord(mStr,find,i))를 호출하여 
+            mStr 내의 i위치에서부터 word를 찾고
+            이 단어를 찾은 경우 이 단어를 repl 단어로 교체한다. count도 수정
+                다음 찾을 위치 i를 repl의 길이만큼 증가한 후 반복적으로 findWord()를 호출한다.
+            찾지 못한 경우 for문 종료한다.
+        display();
+        교체(찾은)된 횟수를 출력한다.
+        */
+
+===============================================================================
+==  프로그램 실행 결과 5
+=============================================================================== 
+
++++++++++++++++++++++ Memo Management Menu ... 3.findReplace ...
+menu item? 3
+word to find? the
+word to replace? THE
+------- Memo -------
+The Last of THE Mohicans
+James Fenimore Cooper
+Author's Introduction
+It is believed that THE scene of this tale, and most of THE information
+necessary to understand its allusions, are rendered sufficiently 
+obvious to THE reader in THE text itself, or in THE accompanying notes.
+Still there is so much obscurity in THE Indian traditions, and so much
+confusion in THE Indian names, as to render some explanation useful.
+Few men exhibit greater diversity, or, if we may so express it, 
+greater antithesis of character, 
+than THE native warrior of North America.
+--------------------
+9 words replaced
+
+            
+/******************************************************************************
+ * 문제: 6
+ ******************************************************************************/
+// 1) 아래 코드를 Memo::compare() 함수에 추가하고 실행결과를 참고하여 TODO 부분을 완성하라.
+//    이 함수는 비교할 단어를 입력 받고 mStr 내에서 사전적 순서로 따져서 입력 받은 단어보다 
+//    앞쪽에 있는 단어 수, 동일한 단어 수, 뒤쪽에 있는 단어의 개수를 세어 그 결과를 출력한다.
+//-----------------------------------------------------------------------------
+        String word = UI.getNext("word to compare? ");
+        /*
+        TODO:
+        mStr을 String 문자열로 변환한 후 
+        이 문자열을 구분자 "\\s"를 사용하여 모두 토큰으로 잘라 tokens[] 문자열 배열에 저장한다.
+        여기서 구분자 "\\s"는 공백 문자들(' ', '\t', '\n')을 의미한다. 
+        for를 사용하여 각각의 tokens[i]에 대해
+            tokens[i]가 빈 문자열일 경우 스킵한다.
+            word와 비교하여 less, same, larger 단어의 개수를 센다.
+        less, same, larger 값을 출력하라.
+        */
+
+===============================================================================
+==  프로그램 실행 결과 6
+=============================================================================== 
+
++++++++++++++++++++++ Memo Management Menu ... 4.compare ...
+menu item? 4
+word to compare? is
+less: 37
+same: 2
+larger: 53
+
++++++++++++++++++++++ Memo Management Menu ... 4.compare ...
+menu item? 4
+word to compare? of
+less: 53
+same: 5
+larger: 34
+
+        
+/******************************************************************************
+ * 문제: 7
+ ******************************************************************************/
+// 1) 아래 코드를 Memo::dispByLn() 함수에 추가하고 실행결과를 참고하여 TODO 부분을 완성하라.
+//    이 함수는 mStr을 문자열로 변환한 후 이를 행 단위로 자르고 각 행을 행의 인덱스와 함께 출력한다.
+//-----------------------------------------------------------------------------
+        System.out.println("--- Memo by line ---");
+        /*
+        TODO:
+        mStr이 빈 문자열이 아닌 경우
+            mStr을 String 문자열로 변환한 후 
+            이 문자열을 구분자 "\\v"를 사용하여 행 단위로 토큰으로 잘라 
+            lines[] 문자열 배열에 저장한다.
+            여기서 구분자 "\\v"는 행 분리 문자들('\r', '\f', '\n')을 의미한다. 
+            for를 사용하여 각각의 lines[i]에 대해
+                lines[i]를 인덱스 i와 함께 출력한다. lines[i]가 빈 행이거나 
+                또는 행의 끝에 '\n'이 없을 경우(마지막 행처럼) 행 끝에 줄 바꾸기를 출력한다.
+        */
+        System.out.println("--------------------");
+
+===============================================================================
+==  프로그램 실행 결과 7
+=============================================================================== 
+
++++++++++++++++++++++ Memo Management Menu ... 5.dispByLn ...
+menu item? 5
+--- Memo by line ---
+[0] The Last of the Mohicans
+[1] James Fenimore Cooper
+[2] Author's Introduction
+[3] It is believed that the scene of this tale, and most of the information
+[4] necessary to understand its allusions, are rendered sufficiently 
+[5] obvious to the reader in the text itself, or in the accompanying notes.
+[6] Still there is so much obscurity in the Indian traditions, and so much
+[7] confusion in the Indian names, as to render some explanation useful.
+[8] Few men exhibit greater diversity, or, if we may so express it, 
+[9] greater antithesis of character, 
+[10] than the native warrior of North America.
+--------------------
+
+            
+/******************************************************************************
+ * 문제: 8
+ ******************************************************************************/
+// 1) 아래 코드를 Memo 클래스의 delLn() 함수 앞에 배치하라.
+//-----------------------------------------------------------------------------
+    // 두 개의 정수 값(start, end)을 가지는 클래스
+    // 함수에서 두 개의 값을 한꺼번에 리턴하고자 할 때 이 클래스의 객체를 생성하여 반환한다.
+    // private 클래스이므로 이 클래스는 Memo 클래스 내에서만 사용가능하다.
+    private class Pair {
+        public int start, end;
+        Pair(int s, int e) { start = s; end = e; }
+    }
+    // 행번호 lineNum(행은 0부터 시작)인 행의 시작 위치인 start와 (행의 끝+1)의 위치인 end를 찾아줌.
+    // end는 사실 그 다음 행(lineNum+1)의 시작 위치이며 마지막 행인 경우 mStr.length()와 같다.
+    // 해당 행 번호를 찾았으면 start, end 값을 가진 Pair 객체를, 찾지 못했으면 null을 반환
+    private Pair find_line(int lineNum) {
+        int start = 0, end = 0;
+        /*
+        TODO: 
+        for 문을 이용하여 lineNum만큼 반복하여 각 행의 끝을 찾는다. 
+            각 행의 끝을 찾을 때는 indexOf("\n", start) 함수를 활용하라.
+            [indexOf()의 사용법은 findWord(StringBuffer, ...)를 참고하라.]
+            즉, mStr 내에서 각 행의 끝 문자인 "\n"를 찾은 후 위치를 end에 저장한다.
+            이때 매번 그 다음 행의 시작 위치(start)는 end+1이 된다.
+            중간에 행의 끝인 "\n"를 찾지 못한 경우 null을 반환한다.
+        만약 start가 mStr.length()와 같다면 
+           즉 lineNum이 (마지막 행+1) 행이라면 리턴(이 경우 못 찾은 것임)
+        시작 위치를 찾았으면 이제 행의 끝 위치('\n')인 end를 찾아라.
+        end를 찾았으면 end 값이 그 다음 행(lineNum+1)의 시작 위치가 되게 end 값을 조정하고 
+        end를 찾지 못한 경우(lineNum이 마지막 행인 경우) end를 mStr.length()로 설정하라.
+        start, end를 이용하여 Pair 객체를 생성한 후 이 객체를 리턴한다.
+        */
+    }
+//-----------------------------------------------------------------------------
+// 2) 아래 코드를 Memo::delLn() 함수에 추가하고 TODO 부분을 완성하라.
+//    이 함수는 mStr 내의 삭제할 행 번호를 입력 받고 해당 행을 삭제한다.
+//-----------------------------------------------------------------------------
+        int lineNum = UI.getPosInt("line number to delete? ");
+        Pair p;
+        if (mStr.length() == 0 || (p=find_line(lineNum)) == null)
+            System.out.println("Out of line number range");
+        else {
+            /*
+            TODO: mStr의 내용 중 p.start에서 p.end 앞까지 삭제하라.
+            */
+            dispByLn();
+        }
+
+===============================================================================
+==  프로그램 실행 결과 8
+=============================================================================== 
+
++++++++++++++++++++++ Memo Management Menu ... 5.dispByLn ...
+menu item? 5
+--- Memo by line ---
+[0] The Last of the Mohicans
+[1] James Fenimore Cooper
+[2] Author's Introduction
+[3] It is believed that the scene of this tale, and most of the information
+[4] necessary to understand its allusions, are rendered sufficiently 
+[5] obvious to the reader in the text itself, or in the accompanying notes.
+[6] Still there is so much obscurity in the Indian traditions, and so much
+[7] confusion in the Indian names, as to render some explanation useful.
+[8] Few men exhibit greater diversity, or, if we may so express it, 
+[9] greater antithesis of character, 
+[10] than the native warrior of North America.
+--------------------
+
++++++++++++++++++++++ Memo Management Menu ... 6.delLn ...
+menu item? 6
+line number to delete? 11
+Out of line number range
+
++++++++++++++++++++++ Memo Management Menu ... 6.delLn ...
+menu item? 6
+line number to delete? 0
+--- Memo by line ---
+[0] James Fenimore Cooper
+[1] Author's Introduction
+[2] It is believed that the scene of this tale, and most of the information
+[3] necessary to understand its allusions, are rendered sufficiently 
+... 
+[8] greater antithesis of character, 
+[9] than the native warrior of North America.
+--------------------
+
++++++++++++++++++++++ Memo Management Menu ... 6.delLn ...
+menu item? 6
+line number to delete? 2
+--- Memo by line ---
+[0] James Fenimore Cooper
+[1] Author's Introduction
+[2] necessary to understand its allusions, are rendered sufficiently 
+... 
+[7] greater antithesis of character, 
+[8] than the native warrior of North America.
+--------------------
+
++++++++++++++++++++++ Memo Management Menu ... 6.delLn ...
+menu item? 6
+line number to delete? 7
+--- Memo by line ---
+[0] James Fenimore Cooper
+...
+[6] Few men exhibit greater diversity, or, if we may so express it, 
+[7] than the native warrior of North America.
+--------------------
+
++++++++++++++++++++++ Memo Management Menu ... 6.delLn ...
+menu item? 6
+line number to delete? 7
+--- Memo by line ---
+[0] James Fenimore Cooper
+...
+[6] Few men exhibit greater diversity, or, if we may so express it, 
+--------------------
+
++++++++++++++++++++++ Memo Management Menu ... 6.delLn ...
+menu item? 6
+line number to delete? 7
+Out of line number range
+
+            
+/******************************************************************************
+ * 문제: 9
+ ******************************************************************************/
+// 1) 아래 코드를 Memo::replLn() 함수에 추가하고 TODO 부분을 완성하라. 이 함수는 mStr 내의  
+//    교체할 행 번호와 행의 새로운 내용을 입력 받고 해당 행을 입력 받은 내용으로 교체한다.
+//-----------------------------------------------------------------------------
+        /*
+        TODO: 
+        위 delLn() 함수와 실행 결과를 참고하여 교체할 행번호를 입력 받아라.
+        find_line(lineNum)를 호출하여 해당 행의 start와 다음 행의 시작 위치(end)를 구한다.
+        해당 행을 찾지 못한 경우 적절한 에러 메시지를 출력하고 리턴한다.
+        교체할 행의 내용을 입력 받아라(한 줄 전체를 입력 받을 것).
+        mStr 내에서 start에서 end 앞까지의 내용을 [새로 입력 받은 내용+"\n"]으로 교체하라.
+        dispByLn();
+        */
+
+===============================================================================
+==  프로그램 실행 결과 9
+=============================================================================== 
+
++++++++++++++++++++++ Memo Management Menu ... 5.dispByLn ...
+menu item? 5
+--- Memo by line ---
+[0] The Last of the Mohicans
+[1] James Fenimore Cooper
+...
+[10] than the native warrior of North America.
+--------------------
+
++++++++++++++++++++++ Memo Management Menu ... 7.replLn ...
+menu item? 7
+line number to replace? 0
+input content to replace:
+In war, he is daring, boastful, cunning, ruthless, self-denying // 사용자 입력
+--- Memo by line ---
+[0] In war, he is daring, boastful, cunning, ruthless, self-denying // 교체된 내용
+[1] James Fenimore Cooper
+...
+[8] Few men exhibit greater diversity, or, if we may so express it, 
+[9] and self-devoted; in peace, just, generous, hospitable, revengeful,
+[10] than the native warrior of North America.
+--------------------
+
++++++++++++++++++++++ Memo Management Menu ... 7.replLn ...
+menu item? 7
+line number to replace? 9
+input content to replace:
+and self-devoted; in peace, just, generous, hospitable, revengeful, // 사용자 입력
+--- Memo by line ---
+[0] In war, he is daring, boastful, cunning, ruthless, self-denying
+...
+[8] Few men exhibit greater diversity, or, if we may so express it, 
+[9] and self-devoted; in peace, just, generous, hospitable, revengeful, // 교체된 내용
+[10] than the native warrior of North America.
+--------------------
+
++++++++++++++++++++++ Memo Management Menu ... 7.replLn ...
+menu item? 7
+line number to replace? 10
+input content to replace:
+superstitious, modest, and commonly chaste. // 사용자 입력
+--- Memo by line ---
+[0] In war, he is daring, boastful, cunning, ruthless, self-denying
+...
+[8] Few men exhibit greater diversity, or, if we may so express it, 
+[9] and self-devoted; in peace, just, generous, hospitable, revengeful,
+[10] superstitious, modest, and commonly chaste. // 교체된 내용
+--------------------
+
++++++++++++++++++++++ Memo Management Menu ... 7.replLn ...
+menu item? 7
+line number to replace? -1
+Input a positive INTEGER. Try again!!
+line number to replace? 11
+Out of line number range
+
+            
+/******************************************************************************
+ * 문제: 10
+ ******************************************************************************/
+// 1) 아래 코드를 Memo::scrollUp() 함수에 추가하고 TODO 부분을 완성하라.
+//    이 함수는 mStr 내의 모든 행들을 한 줄씩 스크롤 업시킨다.
+//    즉, 맨 처음 행을 맨 끝 행으로 옮긴다.
+//-----------------------------------------------------------------------------
+        /*
+        TODO: 
+        mStr이 비어 있으면 dispByLn()을 호출하고 바로 리턴한다.
+        mStr의 마지막 문자(즉 마지막 행의 끝에)가 '\n'가 아닌 경우 
+            mStr의 마지막에 '\n'를 추가한다.
+        find_line(?)를 호출하여 첫 행의 start와 다음 행의 시작 위치(end)를 구한다.
+        mStr의 첫 행을 서브 문자열로 얻어 내어 별도의 문자열로 저장한다.
+        첫 행을 mStr의 맨 뒤에 추가한다.
+        mStr의 첫 행을 삭제한다.
+        dispByLn();
+        */
+
+===============================================================================
+==  프로그램 실행 결과 10
+=============================================================================== 
+
++++++++++++++++++++++ Memo Management Menu ... 5.dispByLn ...
+menu item? 5
+--- Memo by line ---
+[0] The Last of the Mohicans
+[1] James Fenimore Cooper
+[2] Author's Introduction
+[3] It is believed that the scene of this tale, and most of the information
+[4] necessary to understand its allusions, are rendered sufficiently 
+[5] obvious to the reader in the text itself, or in the accompanying notes.
+[6] Still there is so much obscurity in the Indian traditions, and so much
+[7] confusion in the Indian names, as to render some explanation useful.
+[8] Few men exhibit greater diversity, or, if we may so express it, 
+[9] greater antithesis of character, 
+[10] than the native warrior of North America.
+--------------------
+
++++++++++++++++++++++ Memo Management Menu +++++++++++++++++++
++ 0.exit 1.display 2.find 3.findReplace 4.compare 5.dispByLn +
++ 6.delLn 7.replLn 8.scrollUp 9.scrollDown 10.inputMemo      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++ Memo Management Menu ... 8.scrollUp ...
+menu item? 8
+--- Memo by line ---
+[0] James Fenimore Cooper
+[1] Author's Introduction
+... 
+[9] than the native warrior of North America.
+[10] The Last of the Mohicans
+--------------------
+
++++++++++++++++++++++ Memo Management Menu ... 8.scrollUp ...
+menu item? 8
+--- Memo by line ---
+[0] Author's Introduction
+[1] It is believed that the scene of this tale, and most of the information
+...
+[9] The Last of the Mohicans
+[10] James Fenimore Cooper
+--------------------
+
++++++++++++++++++++++ Memo Management Menu ... 8.scrollUp ...
+menu item? 8
+--- Memo by line ---
+[0] It is believed that the scene of this tale, and most of the information
+[1] necessary to understand its allusions, are rendered sufficiently 
+...
+[9] James Fenimore Cooper
+[10] Author's Introduction
+--------------------
+
++++++++++++++++++++++ Memo Management Menu ... 8.scrollUp ...
+menu item? 8
+--- Memo by line ---
+[0] necessary to understand its allusions, are rendered sufficiently 
+[1] obvious to the reader in the text itself, or in the accompanying notes.
+...
+[9] Author's Introduction
+[10] It is believed that the scene of this tale, and most of the information
+--------------------
+
+
+/******************************************************************************
+ * 문제: 11
+ ******************************************************************************/
+// 1) 아래 코드를 Memo 클래스의 scrollDown() 함수 앞에 배치하고 TODO 부분을 완성하라.
+//-----------------------------------------------------------------------------
+
+    // 마지막 행의 시작 위치를 구하여 반환한다.
+    private int find_last_line() {
+        int start = 0, pos;
+        /*
+        TODO: 
+        for 문을 이용하여 반복적으로 
+            "\n"의 위치를 찾아 pos에 저장한다.
+            (찾는 방법은 find_line(int)을 참고할 것.)
+            매번 "\n"을 찾은 경우 위치(pos)를 start에 저장한다.
+            찾지 못했거나(마지막 행 끝에 '\n'가 없는 경우) 또는 
+            찾았다면 찾은 '\n'가 마지막 행인 경우(pos+1이 mStr.length()와 같은 경우)
+                이 때의 start 값이 마지막 행의 시작 위치이다.
+        */
+    }
+//-----------------------------------------------------------------------------
+// 2) 아래 코드를 Memo::scrollDown() 함수에 추가하고 TODO 부분을 완성하라.
+//    이 함수는 mStr 내의 모든 행들을 한 줄씩 스크롤 다운시킨다.
+//    즉, 맨 끝 행을 맨 처음 행으로 옮긴다.
+//-----------------------------------------------------------------------------
+        /* 
+        TODO: 
+        mStr이 비어 있으면 dispByLn()을 호출하고 바로 리턴한다.
+        mStr의 마지막 문자(즉 마지막 행의 끝에)가 '\n'가 아닌 경우 
+            mStr의 마지막에 '\n'를 추가한다.
+        find_last_line()를 호출하여 마지막 행의 시작 위치를 구한다.
+        참고로 마지막 행의 끝 위치는 mStr.length()이다.
+        mStr의 마지막 행을 서브 문자열로 얻어 내어 별도의 문자열로 저장한다.
+        mStr의 마지막 행을 삭제한다.
+        별도로 저장한 마지막 행을 mStr의 맨 처음에 삽입한다.
+        dispByLn();
+        */
+
+===============================================================================
+==  프로그램 실행 결과 11
+=============================================================================== 
+
++++++++++++++++++++++ Memo Management Menu +++++++++++++++++++
++ 0.exit 1.display 2.find 3.findReplace 4.compare 5.dispByLn +
++ 6.delLn 7.replLn 8.scrollUp 9.scrollDown 10.inputMemo      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++ Memo Management Menu ... 8.scrollUp ...
+menu item? 5
+--- Memo by line ---
+[0] The Last of the Mohicans
+[1] James Fenimore Cooper
+...
+[9] greater antithesis of character, 
+[10] than the native warrior of North America.
+--------------------
+
++++++++++++++++++++++ Memo Management Menu ... 9.scrollDown ...
+menu item? 9
+--- Memo by line ---
+[0] than the native warrior of North America.
+[1] The Last of the Mohicans
+[2] James Fenimore Cooper
+...
+[9] Few men exhibit greater diversity, or, if we may so express it, 
+[10] greater antithesis of character, 
+--------------------
+
++++++++++++++++++++++ Memo Management Menu ... 9.scrollDown ...
+menu item? 9
+--- Memo by line ---
+[0] greater antithesis of character, 
+[1] than the native warrior of North America.
+...
+[9] confusion in the Indian names, as to render some explanation useful.
+[10] Few men exhibit greater diversity, or, if we may so express it, 
+--------------------
+
++++++++++++++++++++++ Memo Management Menu ... 9.scrollDown ...
+menu item? 9
+--- Memo by line ---
+[0] Few men exhibit greater diversity, or, if we may so express it, 
+[1] greater antithesis of character, 
+...
+[9] Still there is so much obscurity in the Indian traditions, and so much
+[10] confusion in the Indian names, as to render some explanation useful.
+--------------------
+
+
+/******************************************************************************
+ * 문제: 12
+ ******************************************************************************/
+// 1) 아래 코드를 Memo::inputMemo() 함수에 추가하고 TODO 부분을 완성하라.
+//    이 함수는 mStr의 기존 내용을 모두 지우고 사용자가 연속적으로 입력한 내용을 mStr에 계속 추가한다.
+//    빈 줄을 입력하면(그냥 엔터) 입력이 종료된다.
+//-----------------------------------------------------------------------------
+        /* 
+        TODO: 
+        setLength(...)를 사용하여 mStr의 내용을 모두 비워라.
+        System.out.println("--- input memo lines, and then input empty line at the end ---");
+        while() 문을 이용하여 반복적으로
+            키보드에서 한 행을 한꺼번에 입력 받는다.
+            빈 줄일 경우 while을 빠져 나간다.
+            참고로 입력받은 행 끝에는 "\n"가 없기 때문에 이를 추가해 주어야 한다.
+            그 행을 mStr에 추가한다.
+        */
+
+===============================================================================
+==  프로그램 실행 결과 12
+=============================================================================== 
+
++++++++++++++++++++++ Memo Management Menu ... 10.inputMemo ...
+menu item? 10
+--- input memo lines, and then input empty line at the end ---
+// 여기서 아무것도 입력하지 않고 그냥 엔터를 친다. 입력이 끝났음을 알린다. 
+
++++++++++++++++++++++ Memo Management Menu ... 1.display ...
+menu item? 1
+------- Memo -------
+--------------------
+
++++++++++++++++++++++ Memo Management Menu ... 5.dispByLn ...
+menu item? 5
+--- Memo by line ---
+--------------------
+
++++++++++++++++++++++ Memo Management Menu ... 10.inputMemo ...
+menu item? 10
+--- input memo lines, and then input empty line at the end ---
+In war, he is daring, boastful, cunning, ruthless, self-denying,
+and self-devoted; in peace, just, generous, hospitable, revengeful,
+superstitious, modest, and commonly chaste.
+These are qualities, it is true, which do not distinguish all alike;
+but they are so far the predominating traits of these remarkable people
+as to be characteristic.
+It is generally believed that the Aborigines of the American continent
+have an Asiatic origin.
+// 입력이 끝났음을 알리기 위해 여기서 그냥 엔터 (빈줄 삽입)
+
++++++++++++++++++++++ Memo Management Menu ... 1.display ...
+menu item? 1
+------- Memo -------
+In war, he is daring, boastful, cunning, ruthless, self-denying,
+and self-devoted; in peace, just, generous, hospitable, revengeful,
+superstitious, modest, and commonly chaste.
+These are qualities, it is true, which do not distinguish all alike;
+but they are so far the predominating traits of these remarkable people
+as to be characteristic.
+It is generally believed that the Aborigines of the American continent
+have an Asiatic origin.
+--------------------
+
+
+/******************************************************************************
+ * 문제: 13
+ ******************************************************************************/
+// 프로그램이 정상적으로 구현되었고 mStr이 비어 있을 경우 아래와 같이 출력되어야 한다.
+===============================================================================
+==  프로그램 실행 결과 13
+=============================================================================== 
+
++++++++++++++++++++++ Memo Management Menu +++++++++++++++++++
++ 0.exit 1.display 2.find 3.findReplace 4.compare 5.dispByLn +
++ 6.delLn 7.replLn 8.scrollUp 9.scrollDown 10.inputMemo      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 10
+--- input memo lines, and then input empty line at the end ---
+// 여기서 아무것도 입력하지 않고 그냥 엔터를 친다. 
+
+...
+menu item? 1
+------- Memo -------
+--------------------
+
+...
+menu item? 2
+word to find? the
+--------------------
+0 words found
+
+...
+menu item? 3
+word to find? the
+word to replace? THE
+------- Memo -------
+--------------------
+0 words replaced
+
+...
+menu item? 4
+word to compare? the
+less: 0
+same: 0
+larger: 0
+
+...
+menu item? 5
+--- Memo by line ---
+--------------------
+
+...
+menu item? 6
+line number to delete? 0
+Out of line number range
+
+...
+menu item? 7
+line number to replace? 0
+Out of line number range
+
+...
+menu item? 8
+--- Memo by line ---
+--------------------
+
+...
+menu item? 9
+--- Memo by line ---
+--------------------
+
+
+/******************************************************************************
+ * MainMenu::run()의 원상 복구
+ ******************************************************************************/
+// 프로그램 실행의 번거로움을 피하기 위해 MainMenu 클래스에 임시로 run() 함수를 만들어 사용했었다.
+// 임시로 추가한 이 run()을 이제 주석 처리하고 기존 주석처리한 run()의 주석을 해제하여 원상 복구하여라.
+//-----------------------------------------------------------------------------
+// 중요: 자동오류체크 또는 프로그램 제출 시 반드시 코드를 원상 복구한 후 제출해야 한다.
+//-----------------------------------------------------------------------------
+
+===============================================================================
+==  원상 복구한 프로그램의 실행 결과
+=============================================================================== 
+
+******* Main Menu ********
+* 0.exit 1.PersonManager *
+* 2.ch2 3.ch3 4.ch5      *
+**************************
+menu item? 1
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+
+=================== Person Management Menu =====================
+= 0.exit 1.display 2.clear 3.reset 4.remove 5.copy 6.append    =
+= 7.insert 8.login 9.dispStudent(5_3) 10.dispPhone(5_3)        =
+= 11.find(6_1) 12.wrapper(6_1) 13.shuffle(6_1) 14.setDate(6_1) =
+= 15.chAddress(6_2)                                            =
+================================================================
+menu item? 8
+user name: s1
+password: 
+
+++++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++
++ 0.logout 1.display 2.getter 3.setter 4.copy 5.whatAreYouDoing +
++ 6.isSame 7.update 8.chPasswd(4_2) 9.chSmartPhone(5_3)         +
++ 10.clone(5_3) 11.calc(5_3) 12.phoneCall(5_3) 13.chWeight(6_1) +
++ 14.calcString(6_2) 15.memo(6_2)                               +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 15
+
++++++++++++++++++++++ Memo Management Menu +++++++++++++++++++
++ 0.exit 1.display 2.find 3.findReplace 4.compare 5.dispByLn +
++ 6.delLn 7.replLn 8.scrollUp 9.scrollDown 10.inputMemo      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu item? 
+
+
+/******************************************************************************
+ * 프로그램의 자동오류체크 방법
+ ******************************************************************************/
+// clc.chosun.ac.kr의 [강의자료실]의 "자동_오류_체크_방법" 파일을 참고하기 바란다.
+
+// Main.java의 main() 함수 내에서 아래 문장의 [주석]을 제거하고 실행하면 자동오류체크가 실행된다.
+        //int chk = 1; if (chk != 0) new AutoCheck(chk, true).run(); else
+
+/******************************************************************************
+ * 자동오류체크 실행결과
+ ******************************************************************************/
+test_1 : O
+test_10 : O
+test_11 : O
+test_12 : O
+test_13 : O
+test_2 : O
+test_3 : O
+test_4 : O
+test_5 : O
+test_6 : O
+test_7 : O
+test_8 : O
+test_9 : O
+Good bye!!

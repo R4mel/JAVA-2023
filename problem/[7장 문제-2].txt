@@ -1,0 +1,714 @@
+[7장 문제-2]
+/******************************************************************************
+ * 코드 추가 2
+ ******************************************************************************/
+// 1) MainMenu::run()에 메뉴 문자열을 아래처럼 변경하고, MENU_COUNT도 수정하라.
+//-----------------------------------------------------------------------------
+        String menuStr = // 7_2 수정
+            "********** Main Menu **********\n" +
+            "* 0.exit 1.PersonManager      *\n" +
+            "* 2.ch2 3.ch3 4.ch5 5.PMbyMap *\n" +
+            "*******************************\n";
+//-----------------------------------------------------------------------------
+// 2) MainMenu::run()에 switch 문장에 아래 case 문장을 추가하라.
+//-----------------------------------------------------------------------------
+            case 5: new PMbyMap().run(); break; // 7_2
+
+
+/******************************************************************************
+ * 코드 추가 3
+ ******************************************************************************/
+// 아래 클래스를 기존 MultiManager 클래스 뒤에 배치하라.
+// 이 클래스는 기존 PersonManager를 축소한 추상 클래스이다.
+// 이후 우리는 이 BaseManager 클래스를 상속 받아 
+// i) Vector 대신 Map을 활용하여 Person 객체들을 관리하는 PMbyMap 클래스를 구현한다.
+// ii) 또한 우리가 구현한 VectorPerson을 활용하여 Person 객체들을 관리하는 
+//     MyVectorTest 클래스를 구현할 예정이다.(과제 7-3에서)
+//-----------------------------------------------------------------------------
+abstract class BaseManager
+{
+    protected int ADD_SIZE = 10;
+    protected int REPLACE_SIZE = 5;
+    private Random rand;
+    protected int count;
+
+    public BaseManager() {
+        rand = new Random(0);
+        count = 10;
+    }
+    public void run() {
+        String menuStr = 
+            "======= Base Person Management Menu ========\n" +
+            "= 0.exit 1.display 2.clear 3.add 4.replace =\n" +
+            "= 5.remove 6.find 7.collections            =\n" +
+            "============================================\n";
+        final int MENU_COUNT = 9; // 상수 정의
+        while (true) {
+            int menuItem = UI.selectMenu(menuStr, MENU_COUNT);
+            switch(menuItem) {
+            case 1: display();       break;
+            case 2: clear();         break;
+            case 3: add();           break;
+            case 4: replace();       break;
+            case 5: remove();        break;
+            case 6: find();          break;
+            case 7: collections();   break;
+            case 0:                  return;
+            }
+        }
+    }
+    abstract public void display(); // Menu item 1
+
+    public void clear() {  // Menu item 2
+    	clearAllElements(); // 아래 추상함수 설명 참고
+        display();
+    }
+    public void add() { // Menu item 3
+    	addElements();
+        display();
+    }
+    abstract public void replace(); // Menu item 4
+    abstract public void remove(); // Menu item 5
+    abstract public void find(); // Menu item 6
+    abstract public void collections(); // Menu item 7
+    //-------------------------------------------------------------------------------------------
+    // 기타 abstract functions
+    //-------------------------------------------------------------------------------------------
+    abstract public void clearAllElements(); // 컬렉션의 모든 원소를 삭제함
+    // Person 객체들을 자동으로 생성하여 컬렉션에 추가함; 이때 아래 getXXX() 함수를 활용한다.
+    abstract public void addElements(); 
+    //-------------------------------------------------------------------------------------------
+    // Person 객체를 자동으로 생성할 때 아래 함수들을 사용하라.
+    //-------------------------------------------------------------------------------------------
+    protected int getNewId() { return 1000+rand.nextInt(1000); }
+    protected String getNewName() { return families[rand.nextInt(families.length)] + (count++); }
+    protected double getNewWeight() { 
+    	double weight = 40 + rand.nextDouble() * 60; // 40 ~ 100 사이의 몸무게 생성
+    	return (int)(weight * 10) / (double)10; // 소수점 한자리까지만 사용함
+    }
+    protected boolean getNewMarried(int id) { return (id % 2) == 1; }
+    protected String getNewAddress() { 
+    	return cities[rand.nextInt(cities.length)] + " " +
+    		   gus[rand.nextInt(gus.length)]; 
+    }
+    private String families[] = 
+    	{ "Kimm", "Leem", "Park", "Choi", "Jeon", "Shim", "Shin", "Kang", "Yang", "Yoon",
+    	  "Baek", "Ryoo", "Seoh", "Johh", "Baeh", "Moon", "Nahh", "Jooh", "Song", "Hong" };
+    private String cities[] =
+    	{ "Seoul", "Busan", "Gwangju", "Daejeon", "Incheon", "Daegu", "Ulsan" }; 
+    private String gus[] =
+    	{ "Jung-gu", "Nam-gu", "Buk-gu", "Dong-gu", "Seo-gu", }; 
+
+}   // ch7_2: BaseManager class
+
+
+/******************************************************************************
+ * 코드 추가 4
+ ******************************************************************************/
+// 아래 클래스를 위 BaseManager 클래스 뒤에 배치하라.
+//-----------------------------------------------------------------------------
+class PMbyMap extends BaseManager // ch7_2
+{
+    // Map은 HashMap과 TreeMap의 수퍼 클래스(인터페이스)이며 map = hashMap으로 업캐스팅 가능함
+    private Map< String, Person > map;
+    private HashMap< String, Person > hashMap = null;
+    private TreeMap< String, Person > treeMap = null;
+
+    public PMbyMap() {
+        String menuStr = 
+                "====== Map Menu =======\n" +
+                "= 0.HashMap 1.TreeMap =\n" +
+                "=======================\n";
+        int mapType = UI.selectMenu(menuStr, 2);
+        if (mapType == 0)
+            map = hashMap = new HashMap< String, Person >();
+        else if (mapType == 1)
+            map = treeMap = new TreeMap< String, Person >();
+            
+        // 위에서 선택된 Map의 종류에 상관없이 이 이후부터는 map을 교재의 예제에서 보여준
+        // HashMap이라 생각하고 멤버 함수들을 사용하여 코딩하면 된다.
+        add(); // BaseManager 멤버 함수
+    }
+    static public void display(Map< String, Person > map) {
+        System.out.println("Map Size: "+map.size());
+        System.out.println("---------------------------------------------");
+        // 교재에서 소개된 이 방식은 간단하기는 하나 각 키에 대해 매번 다시 map.get(name)을 통해
+        // map 검색을 다시 해야 하는 오버헤드가 있다.
+        /* 
+        Set< String > keySet = map.keySet();
+        for (var name: keySet)
+            System.out.println(map.get(name));
+        */
+        // 아래 방식은 EntrySet을 구하는데 map의 모든 entry를 다 가지고 있는 집합이다.
+        // 각 entry는 { 키, 값 }으로 구성된다.
+        // 각 entry e에 저장된 키와 값은 e.getKey(), e.getValue()를 통해 얻을 수 있다.
+        // 이 방식을 사용하면 매번 map을 다시 검색하지 않아도 된다.
+        Set< Map.Entry< String, Person > > entrySet = map.entrySet();
+        for (var e: entrySet)
+            System.out.println(e.getValue());
+    }
+    public void display() { // Menu item 1
+        display(map);
+    }
+    // 모든 키 값에 대해 새로운 객체를 생성한 후 이름은 기존과 동일하게 설정한다.
+    // 그런 후 동일한 키에 대해 값(객체)만 교체한다.  
+    public void replace() { // Menu item 4
+    	int i = 0;
+        Set< String > keySet = map.keySet();
+        for (var name: keySet) {
+        	var p = getNewPerson();
+            // ToDo: 새로 생성된 Person 객체 p의 이름을 name으로 변경하라.
+            //       name과 p를 map에 추가하라. 기존에 동일한 키가 존재하기 때문에 값만 교체됨
+        	if (++i == REPLACE_SIZE) break; // 초반의 REPLACE_SIZE 개수만큼만 교체함
+        }
+        display();
+    }
+    public void remove() { // Menu item 5
+        // ToDo: map이 비어 있으면 "no entry to remove"를 출력하고 리턴하라.
+        //       PersonManager::login()을 참조하여 
+        //          "name to delete? "를 출력하고 name을 입력 받아라.
+        //       map에서 name 엔트리를 제거하라.
+        display();
+    }
+    public void find() { // Menu item 6
+        // ToDo: "name to find? "를 출력하고 name을 입력 받아라.
+        //       map에서 name을 검색하여 결과를 저장하라.
+        //       name을 찾았으면 Person 객체를 출력하고
+        //       찾지 못했으면 name + ": NOT found"를 출력하라.
+    }
+    public void collections() { // Menu item 7
+        /*if (hashMap == null)
+            new CollectionsByTreeMap(treeMap).run();*/
+        /*else
+            new CollectionsByHashMap(hashMap).run();*/
+    }
+    public void clearAllElements() {  // BaseManager::clear()에서 호출됨
+        // ToDo: map의 모든 원소를 삭제하라.
+    }
+
+    public void addElements() {  // BaseManager::add()에서 호출됨
+        for (int i = 0; i < ADD_SIZE; ++i) {
+            // ToDo: 위 replace()를 참고하여 새로운 Person 객체 p를 생성하라.
+            //       생성된 객체를 값으로 해서 map에 추가하라. 키는 p의 이름이다.
+    	}
+    }
+    public Person getNewPerson() { 
+        // ToDo: new를 이용해 새로운 Person 객체를 생성하여 반환한다.
+        //       이 때 Person(name, id, weight, married, address) 생성자를 이용하라.
+        //       각 멤버는 BaseManager 클래스의 getXXX() 함수들을 활용하여 자동 생성하라.
+        //       int id = getNewId();를 먼저 호출하고 그 다음에
+        //       이름, 체중, 결혼여부, 주소 순서로 getXXX()를 호출하라. 
+        //       getNewMarried(id) 호출 시 생성할 객체의 id를 인자로 넘겨 주어야 한다.
+    }
+}   // ch7_2: PMbyMap class
+
+
+/******************************************************************************
+ * 문제: 1
+ * 요점: Map의 멤버 함수 활용
+ ******************************************************************************/
+// 위의 PMbyMap 클래스는 메인메뉴 5.PMbyMap에 의해 실행되며 자동생성된 Person 객체들을 Map에 
+// 넣고 관리한다. Map은 사용자의 선택에 의해 TreeMap 또는 HashMap을 사용할 수 있다.
+// 1) PMbyMap 클래스의 ToDo 부분을 참고하여 미완성된 멤버 함수들을 구현하라.
+
+===============================================================================
+==  문제 1 실행 결과
+=============================================================================== 
+
+********** Main Menu **********
+* 0.exit 1.PersonManager      *
+* 2.ch2 3.ch3 4.ch5 5.PMbyMap *
+*******************************
+menu item? 5
+
+====== Map Menu =======
+= 0.HashMap 1.TreeMap =
+=======================
+menu item? 1
+Map Size: 10   // TreeMap을 사용하므로 모든 원소들이 키(이름) 순으로 정렬되어 있다.
+---------------------------------------------
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Leem11 1491 75.8 true :Busan Buk-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Shim15 1745 46.2 true :Incheon Buk-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 1
+Map Size: 10
+---------------------------------------------
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Leem11 1491 75.8 true :Busan Buk-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Shim15 1745 46.2 true :Incheon Buk-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+
+======= Base Person Management Menu ... 2.clear ...
+menu item? 2
+Map Size: 0
+---------------------------------------------
+
+======= Base Person Management Menu ... 3.add ...
+menu item? 3
+Map Size: 10
+---------------------------------------------
+Choi28 1688 91.2 false :Ulsan Nam-gu:
+Johh27 1319 96.7 true :Ulsan Buk-gu:
+Jooh29 1797 92.9 true :Ulsan Nam-gu:
+Kimm23 1135 98.2 true :Gwangju Seo-gu:
+Kimm25 1223 40.5 true :Seoul Dong-gu:
+Park26 1957 82.7 true :Busan Jung-gu:
+Ryoo22 1457 60.9 true :Incheon Buk-gu:
+Seoh24 1905 50.7 true :Ulsan Nam-gu:
+Song21 1451 67.7 true :Daejeon Buk-gu:
+Yang20 1387 83.3 true :Daegu Buk-gu:
+
+======= Base Person Management Menu ... 4.replace ...
+menu item? 4
+Map Size: 10
+---------------------------------------------
+Choi28 1271 83.4 true :Seoul Seo-gu:
+Johh27 1984 66.4 false :Gwangju Dong-gu:
+Jooh29 1049 70.1 true :Ulsan Buk-gu:
+Kimm23 1294 61.1 false :Incheon Dong-gu:
+Kimm25 1577 41.7 true :Daejeon Nam-gu:   // 여기까지 반만 수정되고 이 이후는 수정되지 않음
+Park26 1957 82.7 true :Busan Jung-gu:
+Ryoo22 1457 60.9 true :Incheon Buk-gu:
+Seoh24 1905 50.7 true :Ulsan Nam-gu:
+Song21 1451 67.7 true :Daejeon Buk-gu:
+Yang20 1387 83.3 true :Daegu Buk-gu:
+
+======= Base Person Management Menu ... 5.remove ...
+menu item? 5
+name to delete? Yang20
+Map Size: 9
+---------------------------------------------
+Choi28 1271 83.4 true :Seoul Seo-gu:
+Johh27 1984 66.4 false :Gwangju Dong-gu:
+Jooh29 1049 70.1 true :Ulsan Buk-gu:
+Kimm23 1294 61.1 false :Incheon Dong-gu:
+Kimm25 1577 41.7 true :Daejeon Nam-gu:
+Park26 1957 82.7 true :Busan Jung-gu:
+Ryoo22 1457 60.9 true :Incheon Buk-gu:
+Seoh24 1905 50.7 true :Ulsan Nam-gu:
+Song21 1451 67.7 true :Daejeon Buk-gu:
+
+======= Base Person Management Menu ... 6.find ...
+menu item? 6
+name to find? Park26
+Park26 1957 82.7 true :Busan Jung-gu:
+
+======= Base Person Management Menu ... 0.exit ...
+menu item? 0
+
+********** Main Menu **********
+* 0.exit 1.PersonManager      *
+* 2.ch2 3.ch3 4.ch5 5.PMbyMap *
+*******************************
+menu item? 5
+
+====== Map Menu =======
+= 0.HashMap 1.TreeMap =
+=======================
+menu item? 0
+Map Size: 10   // HashMap을 사용하므로 키(이름)가 정렬되어 있지 않다.
+---------------------------------------------
+Shim15 1745 46.2 true :Incheon Buk-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Leem11 1491 75.8 true :Busan Buk-gu:
+
+======= Base Person Management Menu ... 2.clear ...
+menu item? 2
+Map Size: 0
+---------------------------------------------
+
+======= Base Person Management Menu ... 3.add ...
+menu item? 3
+Map Size: 10
+---------------------------------------------
+Jooh29 1797 92.9 true :Ulsan Nam-gu:
+Song21 1451 67.7 true :Daejeon Buk-gu:
+Yang20 1387 83.3 true :Daegu Buk-gu:
+Kimm25 1223 40.5 true :Seoul Dong-gu:
+Choi28 1688 91.2 false :Ulsan Nam-gu:
+Seoh24 1905 50.7 true :Ulsan Nam-gu:
+Kimm23 1135 98.2 true :Gwangju Seo-gu:
+Johh27 1319 96.7 true :Ulsan Buk-gu:
+Ryoo22 1457 60.9 true :Incheon Buk-gu:
+Park26 1957 82.7 true :Busan Jung-gu:
+
+======= Base Person Management Menu ... 4.replace ...
+menu item? 4
+Map Size: 10
+---------------------------------------------
+Jooh29 1271 83.4 true :Seoul Seo-gu:
+Song21 1984 66.4 false :Gwangju Dong-gu:
+Yang20 1049 70.1 true :Ulsan Buk-gu:
+Kimm25 1294 61.1 false :Incheon Dong-gu:
+Choi28 1577 41.7 true :Daejeon Nam-gu:   // 여기까지만 수정되고 이 이후는 수정되지 않음
+Seoh24 1905 50.7 true :Ulsan Nam-gu:
+Kimm23 1135 98.2 true :Gwangju Seo-gu:
+Johh27 1319 96.7 true :Ulsan Buk-gu:
+Ryoo22 1457 60.9 true :Incheon Buk-gu:
+Park26 1957 82.7 true :Busan Jung-gu:
+
+======= Base Person Management Menu ... 5.remove ...
+menu item? 5
+name to delete? Jooh29
+Map Size: 9
+---------------------------------------------
+Song21 1984 66.4 false :Gwangju Dong-gu:
+Yang20 1049 70.1 true :Ulsan Buk-gu:
+Kimm25 1294 61.1 false :Incheon Dong-gu:
+Choi28 1577 41.7 true :Daejeon Nam-gu:
+Seoh24 1905 50.7 true :Ulsan Nam-gu:
+Kimm23 1135 98.2 true :Gwangju Seo-gu:
+Johh27 1319 96.7 true :Ulsan Buk-gu:
+Ryoo22 1457 60.9 true :Incheon Buk-gu:
+Park26 1957 82.7 true :Busan Jung-gu:
+
+======= Base Person Management Menu ... 6.find ...
+menu item? 6
+name to find? Park26
+Park26 1957 82.7 true :Busan Jung-gu:
+
+
+/******************************************************************************
+ * 코드 추가 5
+ ******************************************************************************/
+// 아래 클래스들을 기존 CollectionsByList 클래스 뒤에 배치하라.
+//-----------------------------------------------------------------------------
+abstract class CollectionsByMap extends CollectionsMenu // ch7_2
+{
+    public void display(Map< String, Person > map) {
+        // ToDo: PMbyMap의 display(map)을 호출하라.
+    }
+    public void searchMap(Map< String, Person > map) {
+        // ToDo: PMbyMap::find()를 참고하여 "Name to search? " 출력한 후
+        //       이름을 입력 받아라. 나머지는 PMbyMap::find()의 내용을 복사해 와라.
+        //       즉, 이름을 map에서 검색하고 찾은 객체를 출력하라.
+    }
+}   // ch7_2: CollectionsByMap class
+
+//-----------------------------------------------------------------------------
+// CollectionsByTreeMap의 모든 함수들은 CollectionsByHashMap(문제 3)과 동일하게 구현해도 된다.
+// 그러나 TreeMap의 경우 미리 정렬이 되어 있으므로 보다 빠르고 쉽게 구현할 수 있다.
+// 아래 클래스는 메인메뉴 5.PMbyMap에 의해 실행된 PMbyMap의 7.collections 메뉴항목에 의해 
+// 생성되고 호출된다. 따라서 map의 키는 이름이고, 값은 자동생성된 Person 객체로 구성되었다.
+//-----------------------------------------------------------------------------
+class CollectionsByTreeMap extends CollectionsByMap // ch7_2
+{
+    private TreeMap< String, Person > map;
+
+    public CollectionsByTreeMap(TreeMap< String, Person > map) { this.map = map; }
+    
+    public void display() { display(map); }
+    public void min() {
+        // 첫번째 entry가 키가 가장 작은 엔트리이다. 이름 순서상 가장 앞쪽 이름임
+        Map.Entry< String, Person > e = map.firstEntry();
+        if (e != null) System.out.println(e.getValue());
+    }
+    public void max() {
+        // 마지막 entry가 키가 가장 큰 엔트리이다. 이름 순서상 가장 뒤쪽 이름임
+        Map.Entry< String, Person > e = map.lastEntry();
+        if (e != null) System.out.println(e.getValue());
+    }
+    public void sort() { display(); } // 키가 이미 정렬되어 있으므로 바로 보여 줌
+    
+    // descendingMap()을 통해 키의 역순으로 된 map를 구할 수 있음
+    public void reverse() { display(map.descendingMap()); }
+    
+    public void binarySearch() { searchMap(map); } // 맵에서 바로 검색함
+    
+}   // ch7_2: CollectionsByTreeMap class
+//-----------------------------------------------------------------------------
+
+
+/******************************************************************************
+ * 문제: 2
+ * 요점: Map의 멤버 함수 활용
+ ******************************************************************************/
+// 1) 위 CollectionsByMap 클래스의 ToDo 부분을 참고하여 멤버 함수들을 구현하라.
+// 2) PMbyMap::collections() 함수 내의 if 문장의 주석만 풀고, 
+//    아직 else 문장의 주석은 풀지마라.
+
+===============================================================================
+==  문제 2 실행 결과
+=============================================================================== 
+
+********** Main Menu ...
+* 2.ch2 3.ch3 4.ch5 5.PMbyMap ...
+menu item? 5
+
+====== Map Menu =======
+= 0.HashMap 1.TreeMap =
+=======================
+menu item? 1
+Map Size: 10
+---------------------------------------------
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Leem11 1491 75.8 true :Busan Buk-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Shim15 1745 46.2 true :Incheon Buk-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 7
+
+======================= Collections Menu =======================
+= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =
+================================================================
+menu item? 1
+Map Size: 10
+---------------------------------------------
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Leem11 1491 75.8 true :Busan Buk-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Shim15 1745 46.2 true :Incheon Buk-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+
+======================= Collections Menu ... 2.min ...
+menu item? 2
+Baek17 1555 84.7 true :Daegu Nam-gu:
+
+======================= Collections Menu ... 3.max ...
+menu item? 3
+Yang10 1360 54.4 false :Incheon Dong-gu:
+
+======================= Collections Menu ... 4.sort ...
+menu item? 4
+Map Size: 10
+---------------------------------------------
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Leem11 1491 75.8 true :Busan Buk-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Shim15 1745 46.2 true :Incheon Buk-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+
+======================= Collections Menu ... 5.reverse ...
+menu item? 5
+Map Size: 10
+---------------------------------------------
+Yang10 1360 54.4 false :Incheon Dong-gu:
+Shim15 1745 46.2 true :Incheon Buk-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Leem11 1491 75.8 true :Busan Buk-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Baek17 1555 84.7 true :Daegu Nam-gu:
+
+======================= Collections Menu ... 6.binarySearch ...
+menu item? 6
+Name to search? Leem11
+Leem11 1491 75.8 true :Busan Buk-gu:
+
+======================= Collections Menu ... 6.binarySearch ...
+menu item? 6
+Name to search? xxx
+xxx: NOT found
+
+
+/******************************************************************************
+ * 코드 추가 6
+ ******************************************************************************/
+// 아래 클래스를 기존 CollectionsByTreeMap 클래스 뒤에 배치하라.
+// 이 클래스는 메인메뉴 5.PMbyMap에 의해 실행된 PMbyMap의 7.collections 메뉴항목에 의해 
+// 생성되고 호출된다. 따라서 map의 키는 이름이고, 값은 자동생성된 Person 객체로 구성되었다.
+//-----------------------------------------------------------------------------
+class CollectionsByHashMap extends CollectionsByMap // ch7_2
+{
+    private HashMap< String, Person > map;
+
+    public CollectionsByHashMap(HashMap< String, Person > map) { this.map = map; }
+    
+    public void display() {  display(map); }
+    public void min() { 
+        // ToDo: map이 비었을 경우는 그냥 리턴하라.
+        //       CollectionsByList::min()을 참조하라.
+        //       map의 keySet()을 매개변수로 넘겨 주어 Collections.min() 호출하라.
+        //       (Collections.min(), max()는 List와 Set을 매개변수로 줄 수 있다.)
+        //       그러면 가장 작은 키(사전 순으로 가장 빠른 이름)를 얻을 수 있다.
+        //       이 키를 이용하여 map을 검색하여 값(Person 객체)을 찾아 출력하라.
+    }
+    public void max() { 
+        // ToDo: 위 min() 함수를 참고하여 가장 큰 키를 얻고 그 키의 값인 객체를 출력하라. 
+    }
+    public void sort() { 
+        // map의 keySet을 이용하여 벡터를 생성함
+        var keyList = new Vector< String >(map.keySet());
+        // ToDo: keyList를 정렬하라. 정렬 시 CollectionsByList::sort()을 참조하라.
+        //       for-each 문을 이용하여 keyList의 각각 원소 key에 대해
+        //           key를 이용하여 map을 검색하여 값(Person 객체)을 찾아 출력하라.
+        //       위 for-each 구현 시 PMbyMap::display(Map< String, Person > map)의 
+        //           주석 처리된 /* */ 부분 코드 참고하라. 차이점은 여기서는 keySet이 아니고 
+        //           keyList 즉, Vector라는 것이고 구현 코드는 동일하다.
+    }
+    public void reverse() { 
+        // ToDo: 위 sort() 함수를 참고하되 
+        //       keyList를 원소들의 배치 순서를 역으로 배치한 후 출력하라.
+        //       keyList의 역순 배치 시 CollectionsByList::reverse() 참고
+    }
+    public void binarySearch() { searchMap(map); }  // 맵에서 바로 검색함
+    
+}   // ch7_2: CollectionsByHashMap class
+
+
+/******************************************************************************
+ * 문제: 3
+ * 요점: HashMap, Collections의 멤버 함수 활용
+ ******************************************************************************/
+// 1) 위 CollectionsByHashMap 클래스의 ToDo 부분을 참고하여 멤버 함수들을 구현하라.
+// 2) PMbyMap::collections() 함수 내의 else 문장의 주석을 풀어라.
+
+===============================================================================
+==  문제 3 실행 결과
+=============================================================================== 
+
+********** Main Menu ...
+* 2.ch2 3.ch3 4.ch5 5.PMbyMap ...
+menu item? 5
+
+====== Map Menu =======
+= 0.HashMap 1.TreeMap =
+=======================
+menu item? 0
+Map Size: 10
+---------------------------------------------
+Shim15 1745 46.2 true :Incheon Buk-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Leem11 1491 75.8 true :Busan Buk-gu:
+
+======= Base Person Management Menu ========
+= 0.exit 1.display 2.clear 3.add 4.replace =
+= 5.remove 6.find 7.collections            =
+============================================
+menu item? 7
+
+======================= Collections Menu =======================
+= 0.exit 1.display 2.min 3.max 4.sort 5.reverse 6.binarySearch =
+================================================================
+menu item? 1
+Map Size: 10
+---------------------------------------------
+Shim15 1745 46.2 true :Incheon Buk-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Leem11 1491 75.8 true :Busan Buk-gu:
+
+======================= Collections Menu ... 2.min ...
+menu item? 2
+Baek17 1555 84.7 true :Daegu Nam-gu:
+
+======================= Collections Menu ... 3.max ...
+menu item? 3
+Yang10 1360 54.4 false :Incheon Dong-gu:
+
+======================= Collections Menu ... 4.sort ...
+menu item? 4
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Leem11 1491 75.8 true :Busan Buk-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Shim15 1745 46.2 true :Incheon Buk-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+
+======================= Collections Menu ... 1.display ...
+menu item? 1
+Map Size: 10
+---------------------------------------------
+Shim15 1745 46.2 true :Incheon Buk-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Leem11 1491 75.8 true :Busan Buk-gu:
+
+======================= Collections Menu ... 5.reverse ...
+menu item? 5
+Leem11 1491 75.8 true :Busan Buk-gu:
+Baek17 1555 84.7 true :Daegu Nam-gu:
+Park12 1473 99.0 true :Daejeon Jung-gu:
+Nahh19 1207 48.0 true :Gwangju Buk-gu:
+Johh16 1125 86.5 true :Seoul Jung-gu:
+Yang10 1360 54.4 false :Incheon Dong-gu:
+Kimm14 1652 41.3 false :Gwangju Dong-gu:
+Kimm13 1241 56.4 true :Daejeon Buk-gu:
+Park18 1112 90.3 false :Ulsan Nam-gu:
+Shim15 1745 46.2 true :Incheon Buk-gu:
+
+======================= Collections Menu ... 1.display ...
+menu item? 1
+// 위 display와 결과가 동일함
+
+======================= Collections Menu ... 6.binarySearch ...
+menu item? 6
+Name to search? Leem11
+Leem11 1491 75.8 true :Busan Buk-gu:
+
+
+===============================================================================
+==  Map이 비어 있을 때의 실행 결과
+===============================================================================
+// 자동오류체크파일 중 ch7-2-4.out과 같은 결과가 나와야 한다.

@@ -1,0 +1,567 @@
+[8장 문제-4]
+/******************************************************************************
+ * 코드 추가 2
+ ******************************************************************************/
+// 1) FileManager::run()에 menuStr의 메뉴에 아래 항목들을 추가하고, 
+//    MENU_COUNT도 수정하라.
+//-----------------------------------------------------------------------------
+              "= 17.saveBinary 18.loadBinary 19.saveBinaryAs 20.loadBinaryFrom =\n" +
+//-----------------------------------------------------------------------------
+// 2) FileManager::run()의 switch 문장에 아래 case 문장들을 추가하라.
+//-----------------------------------------------------------------------------
+                case 17: saveBinary();     break;  // ch8_4
+                case 18: loadBinary();     break;  // ch8_4
+                case 19: saveBinaryAs();   break;  // ch8_4
+                case 20: loadBinaryFrom(); break;  // ch8_4
+//-----------------------------------------------------------------------------
+// 3) FileManager에 아래 멤버 변수를 TEXT_PATH_NAME 뒤에 배치하라.
+    static final String BINARY_PATH_NAME = HOME_DIR+"/persons.bin"; // 8_4
+//-----------------------------------------------------------------------------
+// 4) FileManager의 맨 뒤에 멤버 함수로 아래 함수들을 추가하라.
+//-----------------------------------------------------------------------------
+    void saveBinary() throws IOException { // menu item 17: 8_4
+    }
+    void loadBinary() throws IOException { // menu item 18: 8_4
+    }
+    void saveBinaryAs() throws IOException { // menu item 19: 8_4
+    }
+    void loadBinaryFrom() throws IOException { // menu item 20: 8_4
+    }
+//-----------------------------------------------------------------------------
+// 5) Factory 클래스의 inputPerson(Scanner sc) 함수 뒤에 아래 함수를 추가하라.
+//    ToDo를 참고하여 코드를 완성하라.
+//-----------------------------------------------------------------------------
+    static public void outputPerson(PrintStream fout, Person t) { 
+        /*ToDo
+        FileManager::saveTextFile(...) 함수 내의 for 문 안쪽에 있는 코드를 
+        여기로 옮겨라. for 문 전체가 아니다. 
+        즉, 이 함수는 하나의 객체 t를 텍스트 형식으로 출력하는 함수이다.
+        */
+    }
+//-----------------------------------------------------------------------------
+// 5) FileManager::saveTextFile(...) 함수 내의 for 문에서 각각의 list 객체 t를 
+//    위 Factory의 outputPerson(...)을 호출하여 파일에 기록하도록 수정하라.
+//    이렇게 되면 saveTextFile()과 loadTextFile()에서 모두 Factory의 함수를 통해
+//    객체를 파일(또는 키보드, 화면)에 기록하거나 읽어 들인다.
+//-----------------------------------------------------------------------------
+
+
+===============================================================================
+==  [문제 1] 실행 결과 미리보기
+==  ---------------------------------------------------------------------------
+==  아래는 [문제 1]을 구현한 후의 실행결과이다. list의 모든 Person 객체의 내용을 binary 저장형식으로 
+==  persons.bin에 기록하고 이 파일의 내용을 다시 화면에 텍스트형식으로 출력한 것이다. 
+===============================================================================
+
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+menu item? 6  // deleteAll 실행 후 
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+= 17.saveBinary 18.loadBinary 19.saveBinaryAs 20.loadBinaryFrom =
+=================================================================
+menu item? 17
+[0] persons.bin          F 2023-11-15 07:13       338
+-----------------
+[data] directory: 1 files
+
+====================== File Management Menu ... 7.show ...
+menu item? 7
+[0] persons.bin          F 2023-11-15 07:13       338
+-----------------
+[data] directory: 1 files
+index number of a file to display [-1:stop]? 0
+// binary 파일을 텍스트 형식으로 읽어 화면에 출력했기 때문에 이상한 그래픽 문자와 문자들이 보일 것이다.
+// 이름과 주소, 부서, 학과, 회사 등과 같은 문자열로 된 멤버들은 읽을 수 있지만 
+// 그 외 정수, 실수, 불린 값을 읽은 수 없을 것이다.
+
+
+/******************************************************************************
+ * 문제 1-1
+ * 요점: 각 Person 클래스 객체를 이진(binary) 파일에 저장하기
+ ******************************************************************************/
+// 1) Person에 각 멤버 변수를 이진 파일에 기록하는 아래 함수를 getDelimChar() 함수 뒤에 배치하라.
+//    이 함수는 Person 클래스의 멤버들을 이진 데이타로 out 파일에 저장한다.
+//    ToDo 부분을 참고해서 이 함수를 완성하라.
+//----------------------------------------------------------------------------
+    public void writeBinary(DataOutputStream dout) throws IOException {  // 8_4
+        /* ToDo: 강의노트 끝 부분의 "바이너리 파일에 기본 타입 변수들 쓰기"를 참고하라.
+        각 name, id, weight, married, address 멤버들을 
+        순서적으로 dout 파일에 이진 데이타로 저장하라.
+        (dout은 이미 열려져 있는 파일이니 여기서 파일을 열거나 닫지 말고 그냥 멤버들만 저장하라.)
+        */
+    }    
+//----------------------------------------------------------------------------
+// 2) Student, Worker 클래스에 위 함수를 오버라딩시켜서 구현하라.
+//    ToDo 부분을 참고해서 이 함수들을 완성하라.
+//----------------------------------------------------------------------------
+    @Override
+    public void writeBinary(DataOutputStream dout) throws IOException {  // 8_4
+        /* ToDo: 강의노트 끝 부분의 "바이너리 파일에 기본 타입 변수들 쓰기"를 참고하라.
+        먼저 상위 클래스의 writeBinary()를 호출하여 Person 멤버들을 파일에 저장한다.
+        그런 후 현 클래스의 멤버들을 순서적으로 dout 파일에 이진 데이타로 저장하라.
+        */
+    }    
+
+/******************************************************************************
+ * 문제 1-2
+ * 요점: Factory에 하나의 객체를 저장하는 함수 추가하기
+ ******************************************************************************/
+// 1) Factory에 아래 함수를 outputPerson(PrintStream, Person) 함수 뒤에 배치하라.
+//    이 함수는 객체 p의 객체 구분자를 이진 데이타로 먼저 out 파일에 저장하고 
+//    그런 후 객체 p를 이진 데이타로 out 파일에 저장한다.
+//    ToDo 부분을 참고해서 이 함수를 완성하라.
+//----------------------------------------------------------------------------
+    static public void outputPerson(DataOutputStream dataOut, Person p) throws IOException { 
+        /* ToDo: 
+        p의 getDelimChar() 호출하여 객체의 구분자를 얻어 온 후 (구분자는 char형이다.)
+        이를 바로 이진 데이타로 out 파일에 저장하라. 
+        (DataOutputStream에 writeChar(char c); 라는 멤버함수가 있다. 이를 이용하라.)
+        p의 writeBinary(...)를 호출하여 p 객체를 이진 데이타로 out 파일에 저장하라.
+        */
+    }
+
+/******************************************************************************
+ * 문제 1-3
+ * 요점: list의 모든 객체를 이진(binary) 파일에 저장하기
+ ******************************************************************************/
+ // 1) FileManager::saveBinary() 함수 앞쪽에 아래 함수를 배치하고,
+//    ToDo를 참고하여 코드를 완성하라.
+//    이 함수는 list의 모든 객체를 이진 파일 형식으로 pathName에 저장한다.
+//----------------------------------------------------------------------------
+   void saveBinaryFile(String pathName) throws IOException { // 8_4
+        /* ToDo: 
+        강의노트 끝 부분의 "바이너리 파일에 기본 타입 변수들 쓰기" 페이지를 참고하여
+        // 바이트 단위의 데이타를 실제 파일에 기록하는 객체
+        pathName을 주고 FileOutputStream 객체 fileOut을 생성한다. 
+
+        // 8KB 버퍼를 가진 버퍼링 객체: 
+        // dataOut에서 기록된 데이타는 bufOut에서 보관되며 버퍼를 초과하면 그때 fileOut에 기록
+        // 강의노트 "BufferedInputStream / BufferedOutputStream" 페이지 참고
+        fileOut을 주고 BufferedOutputStream 객체 bufOut을 생성한다.
+
+        // 각 멤버 변수를 바이트 단위로 쪼개서 bufOut에 기록
+        bufOut을 주고 DataOutputStream 객체 dataOut을 생성한다.
+
+        for-each 문을 이용하여 list의 각각의 원소 p에 대해
+            Factory의 outputPerson(DataOutputStream, Person)을 호출한다.
+
+        dataOut 파일을 닫는다. // 이 문장이 내부적으로 bufOut, fileOut을 자동으로 닫아 준다.
+        data 디렉터리의 모든 파일 목록을 보여 준다.
+        */ 
+    }
+
+
+/******************************************************************************
+ * 문제 1-4
+ * 요점: 디폴트 이진(binary) 파일(persons.bin)에 저장하기
+ ******************************************************************************/
+// 1) saveBinary() 함수를 구현하라.
+//    이 함수는 위 saveBinaryFile(pathName)을 호출하여 구현하면 된다. (한 문장이면 됨)
+//    함수 호출 시 인자는 BINARY_PATH_NAME을 지정하라.
+//----------------------------------------------------------------------------
+
+===============================================================================
+==  [문제 1] 실행 결과
+===============================================================================
+// 위 [문제 1] 실행 결과 미리보기를 먼저 실행하라.
+//----------------------------------------------------------------------------
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+
+menu item? 6  // deleteAll 실행 후 
+menu item? 12  // add
+menu item? 12  // add
+menu item? 12  // add
+menu item? 17  // saveBinary
+[0] persons.bin          F 2023-11-15 07:13      1833   // 파일 크기가 늘었음
+-----------------
+[data] directory: 1 files
+
+menu item? 11  // clear
+menu item? 17  // saveBinary
+[0] persons.bin          F 2023-11-15 07:13         0   // 파일 크기가 0
+-----------------
+[data] directory: 1 files
+
+menu item? 12  // add
+menu item? 17  // saveBinary
+[0] persons.bin          F 2023-11-15 07:13       521
+-----------------
+[data] directory: 1 files
+
+
+/******************************************************************************
+ * 문제 2
+ * 요점: 다른 이름으로 이진 파일 저장하기
+ ******************************************************************************/
+// saveBinaryAs() 함수를 완성하라.
+// 이 함수 구현 시 
+// 1) 먼저 getNewFilePath(...) 함수를 호출하여 저장할 파일 이름를 구한 후
+// 2) 파일 이름이 정상적이라면 saveBinaryFile(...)을 호출하라. (잘못된 파일 이름이면 그냥 리턴하라.)
+
+===============================================================================
+==  [문제 2] 실행 결과
+===============================================================================
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+
+====================== File Management Menu =====================
+= 0.exit 1.fileList 2.delete 3.rename 4.addFiles 5.addDir       =
+= 6.deleteAll 7.show 8.copy 9.append 10.display 11.clear 12.add =
+= 13.saveText   14.loadText   15.saveTextAs   16.loadTextFrom   =
+= 17.saveBinary 18.loadBinary 19.saveBinaryAs 20.loadBinaryFrom =
+=================================================================
+menu item? 6   // 6.deleteAll
+menu item? 10  // 10.display
+
+====================== File Management Menu ... 19.saveBinaryAs ...
+menu item? 19
+-----------------
+[data] directory: 0 files
+new binary file name to save? persons.bin
+[0] persons.bin          F 2023-11-15 07:13       338
+-----------------
+[data] directory: 1 files
+
+====================== File Management Menu ... 12.add ...
+menu item? 12
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+...
+[15] Leem19 1290 48.6 false :Gwangju Jung-gu:
+-----------------
+16 entries
+
+====================== File Management Menu ... 12.add ...
+menu item? 12
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+...
+[25] Jooh29 1050 42.4 false :Busan Seo-gu:
+-----------------
+26 entries
+
+====================== File Management Menu ... 19.saveBinaryAs ...
+menu item? 19
+[0] persons.bin          F 2023-11-15 07:13       338
+-----------------
+[data] directory: 1 files
+new binary file name to save? p.bin
+[0] p.bin                F 2023-11-15 07:13      1296
+[1] persons.bin          F 2023-11-15 07:13       338
+-----------------
+[data] directory: 2 files
+
+
+===============================================================================
+==  [문제 3] 실행 결과 미리보기
+==  ---------------------------------------------------------------------------
+==  아래는 [문제 3]을 구현한 후의 실행결과이다. 
+==  list의 모든 Person 객체의 내용을 이진 파일인 persons.bin에 기록하고 list의 모든 내용을 
+==  지운 후 다시 이 파일의 내용을 읽어 들여 list에 저장한 후 이를 출력한 것이다. 
+===============================================================================
+
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+menu item? 6   // deleteAll
+menu item? 10  // display
+menu item? 17  // saveBinary
+[0] persons.bin          F 2023-11-15 07:13       338
+-----------------
+[data] directory: 1 files
+
+menu item? 11  // clear
+-----------------
+0 entries
+
+menu item? 18  // loadBinary: 위 10번 메뉴항목의 결과와 동일해야 함
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+-----------------
+6 entries
+
+
+/******************************************************************************
+ * 문제 3-1
+ * 요점: 이진 파일을 읽기 위한 기본 함수들 삽입
+ ******************************************************************************/
+// 1) i) Person 클래스에 아래 생성자를 추가하라. 
+//    ii) 그런 후 Student, Worker 클래스에도 동일한 매개변수를 가지는 생성자를 추가하라.
+//    이 함수들은 새로 생성된 객체의 멤버들을 이진 파일에서 읽어 초기화하는 함수들이다.
+//----------------------------------------------------------------------------
+    public Person(DataInputStream in) throws IOException {  } // 8_4
+
+/******************************************************************************
+ * 문제 3-2
+ * 요점: Factory에 이진 파일에서 객체를 읽어 들이는 함수 추가
+ ******************************************************************************/
+// 1) 아래 함수를 Factory의 outputPerson(DataOutputStream, Person) 함수 앞에 배치하라. 
+//    이 함수는 사람 구분자을 먼저 이진 파일에서 읽고 거기에 해당하는 객체를 생성한 후
+//    해당 객체의 생성자를 호출하여 객체 멤버들을 초기화하게 한다.
+//----------------------------------------------------------------------------
+    static public Person inputPerson(DataInputStream dataIn) throws IOException { // 8_4
+        char delimiter = dataIn.readChar();   // Person, Student, Worker 구분자 읽기
+        if(delimiter=='P')
+            return new Person(dataIn);
+        /* ToDo
+        사람 구분자가 'P'가 아닌 경우 Student, Worker 대해서도 위처럼 체크하고 
+            적절한 객체를 생성하고 멤버 데이타를 파일로부터 읽어 들인 후 해당 객체를 리턴하라.
+        잘못된 사람 구분자인 경우 delimiter와 ": WRONG delimiter"를 출력하고 null을 리턴하라.
+        */
+    }
+
+/******************************************************************************
+ * 문제 3-3
+ * 요점: Factory에 Person 객체를 생성하고 이진 파일로부터 멤버들를 읽어 들이는 함수 추가
+ ******************************************************************************/
+// 1) 아래 loadBinaryFile() 함수를 FileManager::saveBinaryFile() 함수 뒤쪽에 배치하고,
+//    ToDo를 참고하여 코드를 완성하라.
+//----------------------------------------------------------------------------
+    void loadBinaryFile(String pathName) throws IOException {  // 8_4
+        /* ToDo: 
+        강의노트 끝 부분의 "바이너리 파일에 기본 타입 변수들 읽기" 페이지를 참고하여
+        // 바이트 단위로 데이타를 파일에서 읽어 들이는 객체
+        pathName을 주고 FileInputStream 객체 fileIn을 생성한다. 
+
+        // 8KB 버퍼를 가진 버퍼링 객체: 
+        // fileIn에서 미리 데이터를 읽어 내 버퍼에 저장하고 있으며 
+        // 아래 dataIn은 이 버퍼에서 읽어감
+        // 강의노트 "BufferedInputStream / BufferedOutputStream" 페이지 참고
+        fileIn을 주고 BufferedInputStream 객체 bufIn을 생성한다.
+
+        // 여러 바이트들을 읽은 후 조합해서 하나의 멤버 변수를 구성한 뒤 반환해 줌
+        bufIn을 주고 DataInputStream 객체 dataIn을 생성한다.
+
+        list의 객체들을 모두 삭제한다.
+        while (true) {
+            try { 
+                Factory의 inputPerson(DataInputStream)을 호출하여
+                이진 파일에서 읽어 낸 한 사람 객체 p를 구한다.
+                p가 정상적인 객체라면(잘못된 사람 구분자가 아닌 경우) p를 list에 추가한다. 
+            }
+            catch (EOFException e) { // DataInputStream에서 파일 끝까지 다  
+                break;               // 읽었는데 또 읽으라고 요청하면 이 예외를 발생시킴.
+            } // 중요: 이 예외을 이용해 파일을 다 읽었는지 판단하고 while을 빠져 나감
+        }
+        dataIn 파일을 닫는다. // 이 문장이 내부적으로 bufIn, fileIn을 자동으로 닫아 준다.
+        list의 모든 객체를 화면에 보여 준다.
+        */ 
+    }
+
+/******************************************************************************
+ * 문제 3-4
+ * 요점: 이진 파일을 읽기 위한 기본 함수들 구현
+ ******************************************************************************/
+// 이진파일을 읽어 들이기 위한 대략적인 함수들은 모두 구현되었다. 
+// 이제 [문제 3-1]로 되돌아 가서 마무리를 지어 보자.
+//----------------------------------------------------------------------------
+// 1) Person 클래스의 아래 생성자를 아래처럼 수정하라. 
+//----------------------------------------------------------------------------
+    public Person(DataInputStream in) throws IOException { inputMembers(in); } // 8_4
+//----------------------------------------------------------------------------
+// 2) Person 클래스에 아래 멤버를 추가하고, ToDo 부분을 완성하라. 
+//----------------------------------------------------------------------------
+    private void inputMembers(DataInputStream in) throws IOException { // 8_4
+        /* ToDo: 
+        강의노트 끝 부분의 "바이너리 파일에 기본 타입 변수들 읽기" 페이지를 참고하여
+        이진 파일에 저장된 name, id, weight, married, address 멤버들을 
+        순서적으로 읽어 들여라. 
+        inputMembers(Scanner sc)을 참고하여 set() 함수를 호출하라.
+        (이 set() 함수는 smartPhone, memo 멤버을 초기화하기 위함이다.)
+        */ 
+    }
+//----------------------------------------------------------------------------
+// 3) Student, Worker 클래스에 대해서도 생성자를 Person과 동일한 방식으로 수정하라.
+//    이 생성자들 구현시 
+//    1) Student(Scanner sc)에서 하는 것처럼 슈퍼 클래스의 동일한 매개변수를 가진 생성자를 먼저
+//       호출하여 슈퍼 클래스인 Person 클래스의 멤버들을 파일에서 읽어 들여 초기화해야 한다.
+//    2) 그런 후 Student::inputMembers(DataInputStream)를 호출해야 한다.
+//----------------------------------------------------------------------------
+// 4) Student, Worker 클래스에 private void inputMembers(DataInputStream in)를 구현하라.
+//    inputMembers(Scanner sc)를 참조하여 각 클래스의 멤버들을 이진 파일에서 읽어 들여야 한다.
+//    위 생성자에서 이미 슈퍼 클래스의 멤버들은 읽어 들였기 때문에 
+//    여기서 부모 클래스의 멤버들은 읽어 들이지 않아도 된다.
+//    또한 이 함수는 private 함수이므로 부모 클래스의 동일한 함수를 오버라이딩하는 것은 아니다.
+//----------------------------------------------------------------------------
+
+/******************************************************************************
+ * 문제 3-4
+ * 요점: 디폴트 이진 파일로부터 사람 객체들 읽어 들이기
+ ******************************************************************************/
+// 1) loadBinary() 함수를 구현하라. 
+//    이 함수는 디폴트 이진 파일인 BINARY_PATH_NAME에서 사람 객체들 읽어 들인다.
+//    위 loadBinaryFile(pathName)을 호출하여 구현하라.
+//----------------------------------------------------------------------------
+
+===============================================================================
+==  [문제 3] 실행 결과
+===============================================================================
+
+// 위 [문제 3 실행 결과 미리보기]를 참고하라.
+
+
+/******************************************************************************
+ * 문제 4
+ * 요점: 주어진 이름의 이진 파일로부터 사람 객체들 읽어 들이기
+ ******************************************************************************/
+// loadBinaryFrom() 함수를 완성하라.
+// 이 함수 구현 시 
+// 1) 먼저 selectFile(...) 함수를 호출하여 읽어 올 파일의 File 객체 f를 구한 후
+// 2) f가 정상적인 객체이라면 loadBinaryFile(...)을 호출하라. (잘못된 객체라면 그냥 리턴하라.)
+//----------------------------------------------------------------------------
+
+===============================================================================
+==  [문제 4] 실행 결과
+===============================================================================
+
+// Main Menu -> Person Management Menu -> File Management Menu로 진입한 후
+
+menu item? 6   // deleteAll
+menu item? 10  // display
+menu item? 13  // saveText
+menu item? 17  // saveBinary
+[0] persons.bin          F 2023-11-15 07:13       338
+[1] persons.txt          F 2023-11-15 07:13       325
+-----------------
+[data] directory: 2 files
+
+menu item? 11  // clear
+-----------------
+0 entries
+
+menu item? 20  // loadBinaryFrom
+[0] persons.bin          F 2023-11-15 07:13       338
+[1] persons.txt          F 2023-11-15 07:13       325
+-----------------
+[data] directory: 2 files
+index number of a binary file to load [-1:stop]? 0
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+[2] s1 1 65.4 true :Jongno-gu Seoul: Physics 3.8 1
+[3] s2 2 54.3 false :Yeonje-gu Busan: Electronics 2.5 4
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+-----------------
+6 entries
+
+menu item? 20  // loadBinaryFrom
+[0] persons.bin          F 2023-11-15 07:13       338
+[1] persons.txt          F 2023-11-15 07:13       325
+-----------------
+[data] directory: 2 files
+index number of a binary file to load [-1:stop]? -1
+
+menu item? 20  // loadBinaryFrom
+[0] persons.bin          F 2023-11-15 07:13       338
+[1] persons.txt          F 2023-11-15 07:13       325
+-----------------
+[data] directory: 2 files
+index number of a binary file to load [-1:stop]? 1
+?: WRONG delimiter
+?: WRONG delimiter
+... // 수 십개 계속 반복
+-----------------
+0 entries
+
+menu item? 19  // saveBinaryAs
+[0] persons.bin          F 2023-11-15 07:13       338
+[1] persons.txt          F 2023-11-15 07:13       325
+-----------------
+[data] directory: 2 files
+new binary file name to save? p.bin
+[0] p.bin                F 2023-11-15 07:13         0
+[1] persons.bin          F 2023-11-15 07:13       338
+[2] persons.txt          F 2023-11-15 07:13       325
+-----------------
+[data] directory: 3 files
+
+menu item? 12  // add
+menu item? 12  // add
+menu item? 12  // add
+menu item? 12  // add
+[0] Kimm10 1948 54.4 false :Incheon Dong-gu: Kia CFO
+...
+[39] Kimm49 1614 72.4 false :Daegu Dong-gu: Micanical 4.2 1
+-----------------
+40 entries
+
+menu item? 19  // saveBinaryAs
+[0] p.bin                F 2023-11-15 07:13         0
+[1] persons.bin          F 2023-11-15 07:13       338
+[2] persons.txt          F 2023-11-15 07:13       325
+-----------------
+[data] directory: 3 files
+new binary file name to save? p.bin
+p.bin: already exists
+
+menu item? 19  // saveBinaryAs
+[0] p.bin                F 2023-11-15 07:13         0
+[1] persons.bin          F 2023-11-15 07:13       338
+[2] persons.txt          F 2023-11-15 07:13       325
+-----------------
+[data] directory: 3 files
+new binary file name to save? p1.bin
+[0] p.bin                F 2023-11-15 07:13         0
+[1] p1.bin               F 2023-11-15 07:13      2016
+[2] persons.bin          F 2023-11-15 07:13       338
+[3] persons.txt          F 2023-11-15 07:13       325
+-----------------
+[data] directory: 4 files
+
+menu item? 11  // clear
+-----------------
+0 entries
+
+menu item? 20  // loadBinaryFrom
+[0] p.bin                F 2023-11-15 07:13         0
+[1] p1.bin               F 2023-11-15 07:13      2016
+[2] persons.bin          F 2023-11-15 07:13       338
+[3] persons.txt          F 2023-11-15 07:13       325
+-----------------
+[data] directory: 4 files
+index number of a binary file to load [-1:stop]? 1
+[0] Kimm10 1948 54.4 false :Incheon Dong-gu: Kia CFO
+[1] Park11 1095 98.9 true :Seoul Nam-gu: Computer 1.2 1
+...
+[38] Jeon48 1229 50.1 true :Seoul Jung-gu: Biology 3.7 1
+[39] Kimm49 1614 72.4 false :Daegu Dong-gu: Micanical 4.2 1
+-----------------
+40 entries
+
+menu item? 20  // loadBinaryFrom
+[0] p.bin                F 2023-11-15 07:13         0
+[1] p1.bin               F 2023-11-15 07:13      2016
+[2] persons.bin          F 2023-11-15 07:13       338
+[3] persons.txt          F 2023-11-15 07:13       325
+-----------------
+[data] directory: 4 files
+index number of a binary file to load [-1:stop]? 2
+[0] p0 10 70.0 false :Gwangju ,Nam-gu , Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil,Jongno-gu,   Seoul:
+...
+[4] w1 3 33.3 false :Kangnam-gu Seoul: Samsung Director
+[5] w2 4 44.4 true :Dobong-gu Kwangju: Hyundai Manager
+-----------------
+6 entries
+
+menu item? 20  // loadBinaryFrom
+[0] p.bin                F 2023-11-15 07:13         0
+[1] p1.bin               F 2023-11-15 07:13      2016
+[2] persons.bin          F 2023-11-15 07:13       338
+[3] persons.txt          F 2023-11-15 07:13       325
+-----------------
+[data] directory: 4 files
+index number of a binary file to load [-1:stop]? 0
+-----------------
+0 entries
+
+
+/******************************************************************************
+ * 중요: 자동오류체크를 위해 수정해야 하는 것 
+ ******************************************************************************/
+// 1) FileManager::printFileInfo(File f) 함수 내의 주석을 아래처럼 해제하라. 
+//    이는 자동오류체크에서 마지막 파일 수정 시간을 항상 일정한 시간으로 출력되게 하기 위함이다. 
+//-----------------------------------------------------------------------------
+        t = 1700000000000L;  // 2023-11-15 오전 07:13; 자동 체크 때 사용할 예정임
