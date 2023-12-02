@@ -81,7 +81,7 @@ class Solution {
     }
 }
 
-class Application {
+public class Application {
     public static void main(String[] args) {
         var data1 = new ArrayList<>(Arrays.asList("55", "7E", "AA", "F0", "1B", "0A"));
         var data2 = new ArrayList<>(Arrays.asList("7E", "7C", "BA", "78", "1B", "1B", "B6", "7E"));
