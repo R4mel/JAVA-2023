@@ -3,6 +3,7 @@ package programmers;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
 
 public class Main extends JFrame {
     private JCheckBox[] fruits = new JCheckBox[3];
