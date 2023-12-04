@@ -370,10 +370,10 @@ class RR extends Scheduler {
     }
 
     @Override
-    public void schedule(){
+    public void schedule() {
         super.schedule();
 
-        if(timeQuantumExausted()){
+        if (timeQuantumExausted()) {
             readyQueue.add(readyQueue.pop());
         }
 
@@ -383,7 +383,7 @@ class RR extends Scheduler {
     }
 
     @Override
-    public boolean isSchedulable(){
+    public boolean isSchedulable() {
         return (super.isSchedulable() || timeQuantumExausted());
     }
 
