@@ -1,0 +1,86 @@
+[6장-1]
+- 본 프로그램은 사용자로부터 2대의 차량정보를 입력받아, 
+제조사/모델명/타입/색상/가격에 따라 2대의 차량을 비교하는 과정을 수행한다.
+
+[입력정보]
+
+- 2대의 차량정보가 하나의 라인으로 입력
+- 2대의 차량정보는 "&"로 구분
+- 각각의 차량의 정보는 "/"로 구분하여, 제조사/모델명/타입/색상/가격으로 입력
+예) Hyundai/Sonata/Sedan/White/3000 & Kia/Sorento/SUV/Black/4000
+
+[필요기능]
+- 하나의 라인으로 입력된 2대의 차량정보를 바탕으로, Car클래스로 객체를 생성
+- Car 클래스에는 toString()과 equals() 함수를 overriding 해야함
+- 2대의 차량 정보에서, 제조사/모델명/타입/색상을 비교
+
+1) 차량 2대의 제조사/모델명/타입/색상이 모두 동일한 경우, 
+   "Two cars are the same."을 출력하고 해당 차량의 정보를 출력
+1-1) 만약, 차량 2대의 제조사/모델명/타입/색상이 모두 동일하고 가격도 동일한 경우는 
+     추가 출력문구 없음
+
+==============================
+Two cars are the same.
+[Hyundai]Sonata(Sedan, White)
+
+==============================
+
+1-2) 만약, 차량 2대의 제조사/모델명/타입/색상이 모두 동일하나 가격이 다를 경우, 
+     가격 정보를 아래와 같이 출력
+==============================
+Two cars are the same.
+[Hyundai]Sonata(Sedan, White)
+(The prices of two cars are 3000 and 4000.)
+==============================
+
+
+3) 차량 2대의 제조사/모델명/타입/색상 중 하나라도 다를 경우, 
+   "Two cars are different."을 출력하고 각각의 차량 정보를 아래와 같이 출력
+==============================
+Two cars are different.
+<First Car>
+[Hyundai]Sonata(Sedan, White) : 3000
+<Second Car>
+[Kia]Sorento(SUV, Black) : 4000
+==============================
+
+- "exit"가 입력되면 프로그램 종료
+
+[입력예시]
+Hyundai/Sonata/Sedan/White/3000 & Hyundai/Sonata/Sedan/White/3000
+Hyundai/Sonata/Sedan/White/3000 & Hyundai/Sonata/Sedan/White/4000
+Kia/Sorento/SUV/White/4000 & Kia/Sorento/SUV/Black/4000
+exit
+
+[출력예시]
+Two cars are the same.
+[Hyundai]Sonata(Sedan, White)
+
+Two cars are the same.
+[Hyundai]Sonata(Sedan, White)
+(The prices of two cars are 3000 and 4000.)
+
+Two cars are different.
+<First Car>
+[Kia]Sorento(SUV, White) : 4000
+<Second Car>
+[Kia]Sorento(SUV, Black) : 4000
+
+=======================================================================
+
+[Car 클래스 주요 구성]
+
+class Car {
+	private String model;
+	private String name;
+	private String type;
+	private String color;
+	private int price;
+	public Car(String model, String name, String type, String color, int price) { }
+	@Override
+	public String toString() { }	
+	@Override
+	public boolean equals(Object obj) { }
+}
+
+=======================================================================

@@ -1,0 +1,734 @@
+
+// 먼저 구현하고자 하는 프로그램의 아래 [프로그램 실행 결과 1]를 보고 프로그램의 기능을 파악하라.
+//
+// 이 프로그램은 어떤 사이트의 가입자(User) 객체의 정보를 메모리상의 사용자 리스트에서 보관하고 관리하다가
+// userdb.txt 파일에 저장하고 그 파일에서 다시 사용자 정보를 읽어 오는 프로그램이다.
+// 이 파일은 한 행에 한 사람의 가입자 정보를 "사용자계정,비밀번호\n" 형태로 저장하고 있다.
+// 
+// 이를 위해 먼저 임의의 난수 seed 값을 입력 받고 이를 기반으로 사용자 객체들을 자동 생성하고,
+// 생성된 객체들은 UserManager 클래스 내의 사용자 리스트(ArrayList<User> userList)에
+// 저장되어 있다가 파일에 기록하고 다시 읽어 오게 된다.
+
+===============================================================================
+== 프로그램 실행 결과 1
+== 실행 결과에서 오른쪽 끝에 있는 //는 주석이다.
+=============================================================================== 
+***********************
+random numer seed? 0             // 0: 사용자 입력, 임의의 숫자를 입력하면 됨
+***********************
+userList cleared: []             // ArrayList<User> userList 모든 원소 삭제
+userdb.txt: deleted              // userdb.txt 삭제
+--------------------------------
+userdb.txt:                      // userdb.txt 파일 내용 보기
+-----------
+not found                        // 삭제했기 때문에 파일 없다는 에러 메시지
+--------------------------------
+userList: [jane(6789), alice(3456), tom(5678), bob(1234)] //자동 생성된 사용자정보:계정(비번)
+
+saved to userdb.txt              // 파일 저장: userList를 userdb.txt에 텍스트 파일로 저장
+--------------------------------
+userdb.txt:                      // 저장된 userdb.txt 파일 내용
+-----------
+jane,6789                        // "사용자계정,비밀번호\n" 형식으로 저장됨
+alice,3456                       // 한 행에 한 사람만 저장
+tom,5678
+bob,1234
+--------------------------------
+
+userList cleared: []             // 파일에서 새로 읽어 오기 위해 userList 모든 원소 삭제
+loaded from userdb.txt           // 파일 불러오기: userdb.txt에서 사용자 정보를 읽어 userList에 저장
+userList: [jane(6789), alice(3456), tom(5678), bob(1234)] // 파일에서 읽어 낸 사용자 정보
+
+jane removed from userList       // userList의 앞쪽 두개 원소 삭제
+alice removed from userList
+userList: [tom(5678), bob(1234)] // 처음 두 원소 삭제되었는지 확인
+
+saved to userdb.txt              // 다시 파일 저장
+--------------------------------
+userdb.txt:                      // 저장된 userdb.txt 파일 내용
+-----------                      // 남은 2개 원소만 저장되어야 함
+tom,5678
+bob,1234
+--------------------------------
+
+userList cleared: []             // 파일에서 새로 읽어 오기 위해 userList 모든 원소 삭제
+loaded from userdb.txt           // 파일 불러오기
+userList: [tom(5678), bob(1234)] // 파일에서 읽어 낸 사용자 정보: 2개 원소만 있어야 함
+
+***********************
+random numer seed? -1            // 프로그램 종료하기 위해 -1 입력
+***********************
+
+/******************************************************************************
+ * 코드 추가
+ ******************************************************************************/
+// 이클립스에서 새로운 프로젝트 P4을 만들고 소스 파일 이름을 반드시 P4.java로 하고 
+// 아래 클래스들을 소스 파일에 복사하라.
+===============================================================================
+
+import java.util.*;
+import java.io.*;
+import java.nio.file.*;
+
+class User 
+{
+    private String id, password;
+    public User(String id, String password) {
+        this.id = id;
+        this.password = password;
+    }
+    public String getId() { return id; }
+    public String getPassword() { return password; }
+    public String toString() { return id+"("+password+")"; }
+}
+
+class UserManager 
+{
+    private final String FILEPATH = "userdb.txt";
+    private ArrayList<User> userList = new ArrayList<>();
+
+    public void add(User user)    { userList.add(user); } // 사용자를 userList에 추가
+    
+    public void remove(int index) { // 인덱스 위치의 사용자를 userList에서 제거
+        if (index >= userList.size()) return;
+        System.out.println(userList.get(index).getId()+" removed from userList");
+        userList.remove(index); 
+    } 
+    
+    public void displayUserList() { // userList 보여주기
+        System.out.println("userList: "+userList+"\n"); 
+    }
+
+    public void clearUserList() {   // userList의 모든 원소 삭제
+        userList.clear(); 
+        System.out.println("userList cleared: "+userList); 
+    }
+
+    public void displayFile() {     // "userdb.txt" 파일 내용 보여주기
+        System.out.println("--------------------------------");
+        System.out.println(FILEPATH+":");
+        System.out.println("-----------");
+    	try {
+            File file = new File(FILEPATH);
+            if(!file.exists()) {
+                System.out.println("not found");
+                System.out.println("--------------------------------");
+                return ;
+            }
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String l;
+            while((l = reader.readLine()) != null) {
+                System.out.println(l);
+            }
+            reader.close();
+    	} catch (IOException e) {
+            System.out.println("not found");
+        }
+        System.out.println("--------------------------------");
+    }
+
+    public void deleteFile() {     // "userdb.txt" 파일 삭제
+        // 문제 4-1: FILEPATH를 삭제하는 코드를 삽입하라.
+        System.out.println(FILEPATH+": deleted");
+    }
+
+    public void saveFile() {     // userList의 모든 사용자를 "userdb.txt" 파일에 저장
+        /*
+        try {
+            // 문제 4-2: userList의 모든 사용자를 FILEPATH에 저장하는 코드를 삽입하라.
+        } catch (IOException e) { System.out.println(e); }
+        */
+        System.out.println("saved to "+FILEPATH);
+        displayFile();
+        System.out.println(); 
+    }
+
+    public void loadFile() { // "userdb.txt" 파일에서 사용자를 읽어 와 userList에 추가
+        clearUserList();
+        Scanner s = null;
+        /*
+        try {
+            // 문제 4-3: FILEPATH에서 사용자를 모두 읽어 와 userList에 추가하는 코드를 삽입하라.
+        } catch (IOException e) { 
+            System.out.println(FILEPATH + ": not found");
+            return;
+        } catch (NoSuchElementException e) { 
+            s.close(); // 에러 아님: 이 예외를 통해 파일을 끝까지 다 읽었다는 것을 확인함
+        }
+        */
+        System.out.println("loaded from "+FILEPATH);
+        displayUserList();
+    }
+}
+
+class Executor
+{
+    public static Scanner scanner = new Scanner(System.in);
+    public static boolean autoCheck = false;
+    public static int seed;
+    private static List<String> ids;
+    private static List<String> passwds;
+    public static UserManager um = new UserManager();
+    
+    // 사용자을 자동생성 한 후 UserManager um내의 userList에 사용자를 추가함
+    public static void addUsers() {
+        ids = new ArrayList<String>();
+        ids.add("bob"); ids.add("sandy"); ids.add("alice"); ids.add("nana"); 
+        ids.add("tom"); ids.add("jane");  ids.add("john");
+        passwds = new ArrayList<String>();
+        passwds.add("1234"); passwds.add("2345"); passwds.add("3456");  passwds.add("4567"); 
+        passwds.add("5678"); passwds.add("6789"); passwds.add("7890");
+
+        Random rnd = new Random(seed);
+        boolean check[] = new boolean[ids.size()];
+        for (int i = 0; i < 4; ) {
+            int idx = rnd.nextInt(ids.size());
+            if (check[idx]) continue;
+            check[idx] = true;
+            um.add(new User(ids.get(idx), passwds.get(idx))); // um::userList에 사용자를 추가
+            i++;
+        }
+    }
+
+    public static void deleteTest() {
+        um.clearUserList();   // 사용자 리스트의 모든 원소 삭제
+        addUsers();           // 사용자 자동생성 후 사용자 리스트에 추가
+        um.deleteFile();                                        // 문제 4-1 호출
+        um.displayFile();     // 파일 내용 보기
+        um.displayUserList(); // 사용자 리스트 보기
+    }
+    
+    public static void saveTest() { um.saveFile(); }           // 문제 4-2 호출
+    public static void loadTest() { um.loadFile(); }           // 문제 4-3 호출
+    
+    public static void removeSaveLoadTest() {
+        um.remove(0);         // userList의 앞쪽 2개의 원소를 삭제함
+        um.remove(0);
+        um.displayUserList(); // 앞쪽 원소 2개의 삭제되었는지 확인
+        um.saveFile();        // 새로 저장하고(2개 원소만 저장되었는지 확인)
+        um.loadFile();        // 불러오기 (2개 원소만 존재하는지 확인)
+    }
+    
+    public static void run() {
+        deleteTest(); 
+        saveTest(); 
+        loadTest(); 
+        removeSaveLoadTest();
+    }
+
+    // 난수 발생을 위한 임의의 seed 값 하나를 입력 받음
+    public static boolean getInput() {
+        System.out.println("***********************");
+        System.out.print("random numer seed? "); // 난수 발생을 위한 seed 값 입력 받음: -1이면 종료
+        seed = scanner.nextInt();
+        if (autoCheck)
+            System.out.println(seed);
+        System.out.println("***********************");
+        return seed != -1;                       // -1이면 프로그램 종료
+    }
+}
+
+public class P4 
+{
+    public static void main(String[] args) {
+        while (Executor.getInput()) // -1 입력한 경우, 프로그램 종료
+            Executor.run();
+        //new AutoCheck(false);
+    }
+}
+
+===============================================================================
+== 일단 여기까지의 코드를 복사한 후 수정없이 컴파일하여 실행하면 아래와 같이 출력될 것이다.
+=============================================================================== 
+***********************
+random numer seed? 0
+***********************
+userList cleared: []
+userdb.txt: deleted
+--------------------------------
+userdb.txt:
+-----------
+not found
+--------------------------------
+userList: [jane(6789), alice(3456), tom(5678), bob(1234)]
+
+saved to userdb.txt
+--------------------------------
+userdb.txt:
+-----------
+not found
+--------------------------------
+
+userList cleared: []
+loaded from userdb.txt
+userList: []
+
+userList: []
+
+saved to userdb.txt
+--------------------------------
+userdb.txt:
+-----------
+not found
+--------------------------------
+
+userList cleared: []
+loaded from userdb.txt
+userList: []
+
+***********************
+random numer seed? -1
+***********************
+
+/******************************************************************************
+ * 문제 4-1
+ ******************************************************************************/
+// UserManager 클래스 내의 deleteFile() 메소드에서 FILEPATH 파일을 삭제하는 코드를 삽입하라.
+// 기존 출력문 앞에 삽입하되 에러 발생은 체크하지 않아도 된다.(있으면 삭제, 없으면 상관없음)
+// 그런 후 프로그램을 실행하면 아래처럼 실행되어야 한다.
+
+***********************
+random numer seed? 0
+***********************
+userList cleared: []
+userdb.txt: deleted  // FILEPATH 파일 삭제(있으면 삭제, 없으면 상관없음)
+--------------------------------
+userdb.txt:
+-----------
+not found            // 파일이 삭제되었기 때문에 파일이 없다고 출력되어야 함
+--------------------------------
+userList: [jane(6789), alice(3456), tom(5678), bob(1234)]
+...
+
+/******************************************************************************
+ * 문제 4-2
+ ******************************************************************************/
+// UserManager 클래스 내의 saveFile() 메소드에서 userList의 각 사용자 정보를 순서대로
+// FILEPATH 파일에 저장하는 코드를 삽입하라.
+// 아래 예제처럼 "사용자계정,비밀번호\n" 형식으로 저장하되 한 행에 한 사람의 정보만 저장하라.
+jane,6789
+// 힌트: PrintStream을 이용하고 System.out을 이용하여 출력하는 방식과 동일하게 출력하면 된다.
+// saveFile() 메소드 내의 /*  */ 주석은 제거하고 작성하라.
+// 그런 후 프로그램을 실행하면 아래처럼 실행되어야 한다.
+
+***********************
+random numer seed? 0
+***********************
+... // 이상은 문제 4-1 출력과 동일
+
+saved to userdb.txt              // saveFile()에서 출력
+-------------------------------- // 이후는 displayFile()에서 저장된 파일 내용 출력
+userdb.txt:                      
+-----------
+jane,6789 
+alice,3456
+tom,5678
+bob,1234
+--------------------------------
+...
+
+/******************************************************************************
+ * 문제 4-3
+ ******************************************************************************/
+// UserManager 클래스 내의 loadFile() 메소드에서 
+// FILEPATH 파일에 저장된 사용자 정보를 한 행씩 읽은 후 
+// 사용자 계정과 비밀번호를 따로 분리하고, 
+// User 객체를 생성한 후 userList에 삽입하는 코드를 추가하라.
+// 힌트: FileInputStream 객체를 생성하고 이를 이용하여 Scanner를 객체를 생성한 후
+        이 Scanner 객체를 통해 한줄씩 읽어 들이면 쉽게 구현할 수 있다.
+// loadFile() 메소드 내의 /* */ 주석은 제거하고 작성하라.
+// 그런 후 프로그램을 실행하면 아래처럼 실행되어야 한다.
+
+***********************
+random numer seed? 0
+***********************
+... // 이상은 문제 4-1, 4-2 출력과 동일
+
+userList cleared: []             // clearUserList():파일에서 새로 읽어 오기 위해 userList 모든 원소 삭제
+loaded from userdb.txt           // loadFile()에서 출력
+userList: [jane(6789), alice(3456), tom(5678), bob(1234)] // 파일에서 읽어 낸 사용자 정보
+
+===============================================================================
+== 정상적으로 구현되었다면 나머지 출력 결과도 아래와 같아야 한다. 
+=============================================================================== 
+
+jane removed from userList       // userList의 앞쪽 두개 원소 삭제
+alice removed from userList
+userList: [tom(5678), bob(1234)] // 처음 두 원소 삭제되었는지 확인
+
+saved to userdb.txt              // 다시 파일 저장
+--------------------------------
+userdb.txt:                      // 저장된 userdb.txt 파일 내용
+-----------                      // 남은 2개 원소만 저장되어야 함
+tom,5678
+bob,1234
+--------------------------------
+
+userList cleared: []             // 파일에서 새로 읽어 오기 위해 userList 모든 원소 삭제
+loaded from userdb.txt           // 파일 불러오기
+userList: [tom(5678), bob(1234)] // 파일에서 읽어 낸 사용자 정보: 2개 원소만 있어야 함
+
+***********************
+random numer seed? -1            // 프로그램 종료하기 위해 -1 입력
+***********************
+
+
+
+/******************************************************************************
+ * 프로그램이 정상적으로 실행되면 아래 내용을 추가적으로 수행하라.
+ * ----------------------------------------------------------------------------
+ * 오타 및 간단한 오류 체크를 위한 자동 체크 기능 삽입
+ ******************************************************************************/
+// 1. main() 메소드 내의 //new AutoCheck(false); 문장의 주석을 아래와 같이 풀어라.
+        new AutoCheck(false);
+//
+// 2. 그리고 아래 [자동 체크 소스 코드]에 있는 AutoCheck, Diff, InputOutput 등 
+//    세 개의 클래스를 복사해 소스 파일의 P4 클래스 뒤쪽에 추가하라.
+//
+// 3. 그런 후 프로그램을 아래와 같이 실행하여 "OK" 출력이 나오면 [정상적]으로 구현된 것이다.
+//
+// AutoCheck 클래스는 사전에 정의된 추가 입력 세트에 대해 여러분의 프로그램을 대신 실행한 후
+// 실행 결과를 정답 결과와 비교한다.
+===============================================================================
+// 여러분의 프로그램이 정상적으로 작동할 경우 아래와 같이 출력된다. 
+===============================================================================
+***********************
+random numer seed? -1
+***********************
+
+auto check: OK  // 정상적으로 구현된 경우 OK가 출력되고
+auto check: X   // 출력이 틀린 경우 X가 출력됨
+
+/******************************************************************************
+ * 어디가 잘못되었는지 찾고자 할 경우 
+ ******************************************************************************/
+// 만약 어디에서 잘못되었는지 확인하고 싶으면 아래처럼 매개변수를 true로 설정해 주면 된다.
+        new AutoCheck(true);
+===============================================================================
+
+
+/******************************************************************************
+ * 자동 체크 소스 코드 
+ ******************************************************************************/
+
+class AutoCheck 
+{
+  private ByteArrayOutputStream outStream;
+  private Scanner     scanner;
+  private PrintStream out;
+  private PrintStream outBackup = System.out;
+  private Scanner     scannerBackup = Executor.scanner;
+  private Diff        diff;
+
+  public AutoCheck(boolean debug) {
+      System.out.println();
+      Executor.autoCheck = true;
+      diff = new Diff(debug);
+      InputStream in = new ByteArrayInputStream(InputOutput.getInput());
+      scanner = new Scanner(in);
+      outStream = new ByteArrayOutputStream();
+      out = new PrintStream(outStream);
+      simaulate();
+      out.close();
+  }
+
+  private void simaulate() {
+      int scores[] = { 0 };
+      setStreams();
+      while (Executor.getInput()) {
+      	Executor.run();
+          scores[0] += evaluate();
+          if (InputOutput.eof()) break;
+      }
+      restoreStreams();
+      //System.out.println("score: "+scores[0]+" / "+InputOutput.getScore());
+      boolean result = (scores[0] == InputOutput.getScore());
+      System.out.println("auto check: "+(result? "OK": "X"));
+  }
+
+  private void setStreams() {
+      Executor.scanner = scanner;
+      outStream.reset();
+      System.setOut(out);
+  }
+  private void restoreStreams() {
+      Executor.scanner = scannerBackup;
+      System.setOut(outBackup);
+  }
+  private int evaluate() {
+      restoreStreams();
+      int score = InputOutput.getScore();
+      String answer = new String(InputOutput.getAnswer());
+      boolean error = diff.check(outStream.toString(), answer);
+      setStreams();
+      InputOutput.next();
+      return error? 0: score;
+  }
+}
+
+class Diff 
+{
+  private String userLines[], correctLines[];
+  private String userLine, correctLine;
+  private String userTokens[], correctTokens[];
+  private int userLnNum, correctLnNum;
+  private int userIdx, correctIdx;
+  private int lastErrorLine;
+  private boolean debug;
+
+  public Diff(boolean debug) {
+      this.debug = debug;
+  }
+  
+  private void reset() {
+      userLine = "";
+      correctLine = "";
+      userTokens = new String[0];
+      correctTokens = new String[0];
+      userLnNum = correctLnNum = userIdx = correctIdx = lastErrorLine = 0;
+ }
+
+  public boolean check(String output, String correctString) { // true: error, false: ok
+      if (printOutput) {
+          printUserOutput(output);
+          return false;
+       }
+      reset();
+      userLines = output.split("\n");
+      //for (int i = 0; i < userLines.length; i++)
+      //    userLines[i] = userLines[i].stripTrailing();
+      correctLines = correctString.split("\n");
+      return diff();
+  }
+  
+  private boolean diff() {
+      String userToken, correctToken;
+      boolean err = false;
+      while (true) {
+          userToken  = getUserNextToken();
+          correctToken = getCorrectNextToken();
+          if ((userToken == null) || (correctToken == null))
+              break;
+          if (!userToken.equals(correctToken)) {
+              err = true;
+              if (debug) printDebugMessage(userToken, correctToken);
+              getUserNextLine();
+              getCorrectNextLine();
+           }
+       }
+      if ((userToken == null) && (correctToken == null))
+          return err;
+
+      if (debug && userToken != null) {
+          System.out.println("User output has more lines than correct answer as follows.");
+          printRemainingLines(userLines, "user line #", userLnNum-1, userLine);
+       }
+      else if (debug && correctToken != null) {
+          System.out.println("Correct answer has more lines than user output as follows.");
+          printRemainingLines(correctLines, "correct line #", correctLnNum-1, correctLine);
+       }
+      return true;
+  }
+
+  private void printDebugMessage(String userToken, String correctToken) {
+      for (int i = lastErrorLine; i < userLnNum; i++)
+          System.out.println(userLines[i]);
+      lastErrorLine = userLnNum;
+      System.out.println(correctLine+" [correct line]");
+      System.out.println("User output(\""+userToken +"\") is not equal to correct output(\""+correctToken+"\")");
+      System.out.print("continue[y/n]? ");
+      String next = Executor.scanner.next();
+      if (!next.equals("y") && !next.equals("Y")) {
+          System.out.println("Good bye.");
+          System.exit(0);
+      }
+  }
+
+  private String getUserNextToken() {
+      if (userLine == null)
+          return null;
+      if (userIdx == userTokens.length) {
+          if (getUserNextLine() == null)
+              return null;
+       }
+      return userTokens[userIdx++];
+  }
+
+  private String getCorrectNextToken() {
+      if (correctLine == null)
+          return null;
+      if (correctIdx == correctTokens.length) {
+          if (getCorrectNextLine() == null)
+              return null;
+       }
+      return correctTokens[correctIdx++];
+  }
+
+  private String getUserNextLine() {
+      for (int idx = -1; idx != 0; userLnNum++) {
+          if (userLnNum == userLines.length)
+              return (userLine = null);
+          userLine = userLines[userLnNum].trim();
+          if (userLine.equals(""))
+              continue;
+          userTokens = userLine.split("\\s");
+          if (userTokens.length == 0)
+              continue;
+          idx = 0;
+       }
+      userIdx = 0;
+      return userLine;
+  }
+
+  private String getCorrectNextLine() {
+      for (correctIdx = -1; correctIdx != 0; correctLnNum++) {
+          if (correctLnNum == correctLines.length)
+              return (correctLine = null);
+          correctLine = correctLines[correctLnNum].trim();
+          if (correctLine.equals(""))
+              continue;
+          correctTokens = correctLine.split("\\s");
+          if (correctTokens.length == 0)
+              continue;
+          correctIdx = 0;
+       }
+      return correctLine;
+  }
+
+  private void printRemainingLines(String lines[], String msg, int lnNum, String ln) {
+      System.out.println(msg+":"+(++lnNum)+":"+ln);
+      for (; lnNum < lines.length; lnNum++)
+          System.out.println(msg+":"+(lnNum+1)+":"+lines[lnNum]);
+  }
+  
+  private void printUserOutput(String output) {
+      byte bytes[] = output.getBytes();
+      for (int i = 0; i < bytes.length; ) {
+          System.out.print("        ");
+          for (int cnt = 0 ; cnt < 18 && i < bytes.length; cnt++, ++i)
+              System.out.printf("%3d,", bytes[i]);
+          System.out.println();
+       }
+      System.out.println("    }, {");
+      //System.out.println(output);
+  }
+
+  private boolean printOutput = false;
+}
+
+class InputOutput {
+  private static int answerIdx = 0;
+
+  public static int getScore()     { return scores[answerIdx]; }
+  public static byte[] getInput()  { return input.getBytes(); }
+  public static byte[] getAnswer() { return answers[answerIdx]; }
+  public static void next()        { answerIdx++; }
+  public static boolean eof()      { return answerIdx >= answers.length; }
+  
+  private static int scores[] = { 25,    25,   50, };
+  private static String input = "111 222 -1";
+  private static byte answers[][] = { 
+      {
+          42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42,
+          42, 42, 42, 42, 42, 13, 10,114, 97,110,100,111,109, 32,110,117,109,101,
+         114, 32,115,101,101,100, 63, 32, 49, 49, 49, 13, 10, 42, 42, 42, 42, 42,
+          42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42,
+          13, 10,117,115,101,114, 76,105,115,116, 32, 99,108,101, 97,114,101,100,
+          58, 32, 91, 93, 13, 10,117,115,101,114,100, 98, 46,116,120,116, 58, 32,
+         100,101,108,101,116,101,100, 13, 10, 45, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 45, 45, 13, 10,117,115,101,114,100, 98, 46,116,120,116, 58,
+          13, 10, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 13, 10,110,111,116,
+          32,102,111,117,110,100, 13, 10, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 45, 13, 10,117,115,101,114, 76,105,115,116, 58, 32, 91,106,
+          97,110,101, 40, 54, 55, 56, 57, 41, 44, 32,106,111,104,110, 40, 55, 56,
+          57, 48, 41, 44, 32, 98,111, 98, 40, 49, 50, 51, 52, 41, 44, 32,115, 97,
+         110,100,121, 40, 50, 51, 52, 53, 41, 93, 10, 13, 10,115, 97,118,101,100,
+          32,116,111, 32,117,115,101,114,100, 98, 46,116,120,116, 13, 10, 45, 45,
+          45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 13, 10,117,115,101,114,
+         100, 98, 46,116,120,116, 58, 13, 10, 45, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 13, 10,106, 97,110,101, 44, 54, 55, 56, 57, 13, 10,106,111,104,
+         110, 44, 55, 56, 57, 48, 13, 10, 98,111, 98, 44, 49, 50, 51, 52, 13, 10,
+         115, 97,110,100,121, 44, 50, 51, 52, 53, 13, 10, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 45, 45, 45, 45, 45, 13, 10, 13, 10,117,115,101,114, 76,105,
+         115,116, 32, 99,108,101, 97,114,101,100, 58, 32, 91, 93, 13, 10,108,111,
+          97,100,101,100, 32,102,114,111,109, 32,117,115,101,114,100, 98, 46,116,
+         120,116, 13, 10,117,115,101,114, 76,105,115,116, 58, 32, 91,106, 97,110,
+         101, 40, 54, 55, 56, 57, 41, 44, 32,106,111,104,110, 40, 55, 56, 57, 48,
+          41, 44, 32, 98,111, 98, 40, 49, 50, 51, 52, 41, 44, 32,115, 97,110,100,
+         121, 40, 50, 51, 52, 53, 41, 93, 10, 13, 10,106, 97,110,101, 32,114,101,
+         109,111,118,101,100, 32,102,114,111,109, 32,117,115,101,114, 76,105,115,
+         116, 13, 10,106,111,104,110, 32,114,101,109,111,118,101,100, 32,102,114,
+         111,109, 32,117,115,101,114, 76,105,115,116, 13, 10,117,115,101,114, 76,
+         105,115,116, 58, 32, 91, 98,111, 98, 40, 49, 50, 51, 52, 41, 44, 32,115,
+          97,110,100,121, 40, 50, 51, 52, 53, 41, 93, 10, 13, 10,115, 97,118,101,
+         100, 32,116,111, 32,117,115,101,114,100, 98, 46,116,120,116, 13, 10, 45,
+          45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 13, 10,117,115,101,
+         114,100, 98, 46,116,120,116, 58, 13, 10, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 13, 10, 98,111, 98, 44, 49, 50, 51, 52, 13, 10,115, 97,110,
+         100,121, 44, 50, 51, 52, 53, 13, 10, 45, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 45, 45, 13, 10, 13, 10,117,115,101,114, 76,105,115,116, 32,
+          99,108,101, 97,114,101,100, 58, 32, 91, 93, 13, 10,108,111, 97,100,101,
+         100, 32,102,114,111,109, 32,117,115,101,114,100, 98, 46,116,120,116, 13,
+          10,117,115,101,114, 76,105,115,116, 58, 32, 91, 98,111, 98, 40, 49, 50,
+          51, 52, 41, 44, 32,115, 97,110,100,121, 40, 50, 51, 52, 53, 41, 93, 10,
+          13, 10,
+     }, {
+          42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42,
+          42, 42, 42, 42, 42, 13, 10,114, 97,110,100,111,109, 32,110,117,109,101,
+         114, 32,115,101,101,100, 63, 32, 50, 50, 50, 13, 10, 42, 42, 42, 42, 42,
+          42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42,
+          13, 10,117,115,101,114, 76,105,115,116, 32, 99,108,101, 97,114,101,100,
+          58, 32, 91, 93, 13, 10,117,115,101,114,100, 98, 46,116,120,116, 58, 32,
+         100,101,108,101,116,101,100, 13, 10, 45, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 45, 45, 13, 10,117,115,101,114,100, 98, 46,116,120,116, 58,
+          13, 10, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 13, 10,110,111,116,
+          32,102,111,117,110,100, 13, 10, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 45, 13, 10,117,115,101,114, 76,105,115,116, 58, 32, 91,115,
+          97,110,100,121, 40, 50, 51, 52, 53, 41, 44, 32,106,111,104,110, 40, 55,
+          56, 57, 48, 41, 44, 32,106, 97,110,101, 40, 54, 55, 56, 57, 41, 44, 32,
+          97,108,105, 99,101, 40, 51, 52, 53, 54, 41, 93, 10, 13, 10,115, 97,118,
+         101,100, 32,116,111, 32,117,115,101,114,100, 98, 46,116,120,116, 13, 10,
+          45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 13, 10,117,115,
+         101,114,100, 98, 46,116,120,116, 58, 13, 10, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 45, 13, 10,115, 97,110,100,121, 44, 50, 51, 52, 53, 13, 10,
+         106,111,104,110, 44, 55, 56, 57, 48, 13, 10,106, 97,110,101, 44, 54, 55,
+          56, 57, 13, 10, 97,108,105, 99,101, 44, 51, 52, 53, 54, 13, 10, 45, 45,
+          45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 13, 10, 13, 10,117,115,
+         101,114, 76,105,115,116, 32, 99,108,101, 97,114,101,100, 58, 32, 91, 93,
+          13, 10,108,111, 97,100,101,100, 32,102,114,111,109, 32,117,115,101,114,
+         100, 98, 46,116,120,116, 13, 10,117,115,101,114, 76,105,115,116, 58, 32,
+          91,115, 97,110,100,121, 40, 50, 51, 52, 53, 41, 44, 32,106,111,104,110,
+          40, 55, 56, 57, 48, 41, 44, 32,106, 97,110,101, 40, 54, 55, 56, 57, 41,
+          44, 32, 97,108,105, 99,101, 40, 51, 52, 53, 54, 41, 93, 10, 13, 10,115,
+          97,110,100,121, 32,114,101,109,111,118,101,100, 32,102,114,111,109, 32,
+         117,115,101,114, 76,105,115,116, 13, 10,106,111,104,110, 32,114,101,109,
+         111,118,101,100, 32,102,114,111,109, 32,117,115,101,114, 76,105,115,116,
+          13, 10,117,115,101,114, 76,105,115,116, 58, 32, 91,106, 97,110,101, 40,
+          54, 55, 56, 57, 41, 44, 32, 97,108,105, 99,101, 40, 51, 52, 53, 54, 41,
+          93, 10, 13, 10,115, 97,118,101,100, 32,116,111, 32,117,115,101,114,100,
+          98, 46,116,120,116, 13, 10, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 13, 10,117,115,101,114,100, 98, 46,116,120,116, 58, 13, 10,
+          45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 13, 10,106, 97,110,101, 44,
+          54, 55, 56, 57, 13, 10, 97,108,105, 99,101, 44, 51, 52, 53, 54, 13, 10,
+          45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45,
+          45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 13, 10, 13, 10,
+         117,115,101,114, 76,105,115,116, 32, 99,108,101, 97,114,101,100, 58, 32,
+          91, 93, 13, 10,108,111, 97,100,101,100, 32,102,114,111,109, 32,117,115,
+         101,114,100, 98, 46,116,120,116, 13, 10,117,115,101,114, 76,105,115,116,
+          58, 32, 91,106, 97,110,101, 40, 54, 55, 56, 57, 41, 44, 32, 97,108,105,
+          99,101, 40, 51, 52, 53, 54, 41, 93, 10, 13, 10,
+     },  
+  };
+}
+
