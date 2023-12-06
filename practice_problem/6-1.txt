@@ -1,0 +1,79 @@
+[문제 6-1]
+## 문제 설명
+고객명, 이메일, 전화번호, 나이, 포인트 등 고객 정보를 하나의 문자열로 조합하여 입력받은 다음 각 데이터를 분리 추출한 다음 Customer 객체를
+생성하고 출력하는 프로그램을 작성한다.
+Customer : 이름, 이메일, 전화번호, 나이, 포인트 변수를 가지는 클래스
+Main : main 메소드를 가지는 클래스 
+
+## 프로그램 코드
+class Customer {
+    private String name, email, telno;
+    private int age;
+    private double point;
+
+    // 매개변수를 가지는 생성자 정의 : 멤버변수 모두를 초기화하는 생성자임
+
+
+    @Override
+    public String toString() {
+    // StringBuffer 클래스의 append 메소드를 이용하여 아래 실행결과에 보이는 것과 같이 출력이 나올 수 있도록 문자열 생성
+
+
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+    // 전화번호와 나이를 비교하여 두 값이 일치하면 true 아니면 false를 반환한다.
+        
+
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner scn =  new Scanner(System.in);
+        String line;
+        final int COUNT = 3;
+        Customer[] list = new Customer[COUNT];
+
+        for(int i=0; i < COUNT; i++) {
+
+        // 고객이름#이메일#전화번호#나이#포인트 형식으로 문자열을 line 변수에 입력받기
+        // #을 기준으로 데이터를 분리하고 각 데이터들로 Customer 객체 생성하고 배열에 저장하기
+
+
+        }
+	System.out.println("Print customers >>>>> ");
+
+        for(Customer c : list) System.out.println(c);
+
+        // 배열에 저장된 첫번째 고객과 두번째 고객을 비교하여 같은지 다른지 결과애 따라 출력하기
+
+        if (list[0].equals(list[1])) System.out.println("Customer 1 and 2 are same.");
+        else System.out.println("Customer 1 and 2 are different");
+    }
+}
+
+## 실행 결과
+Customer: Narae Park#narae@ab.com#010-3445-7789#32#8.6
+Customer: Haha Hoho#haha@aa.com#010-4325-9878#34#9.1
+Customer: Bongsoo Lee#bong@abc.com#010-3878-9884#31#9.2
+Print customers >>>>>
+Name: Narae Park
+Email: narae@ab.com
+Telno: 010-3445-7789
+Age: 32
+Point: 8.6
+
+Name: Haha Hoho
+Email: haha@aa.com
+Telno: 010-4325-9878
+Age: 34
+Point: 9.1
+
+Name: Bongsoo Lee
+Email: bong@abc.com
+Telno: 010-3878-9884
+Age: 31
+Point: 9.2
+
+Customer 1 and 2 are different

@@ -1,0 +1,221 @@
+// CH7_1 문제
+
+// 먼저 구현하고자 하는 프로그램의 아래 [프로그램 실행 결과 1]을 참조하라.
+// 이 프로그램은 난수 발생을 위한 임의의 seed 값 하나를 입력 받고 
+// 이를 기반으로 자동으로 전화번호 객체 리스트와 Person 객체 리스트를 생성한 후 이를 출력한다.
+// Person 객체는 id(전화번호)로 구성되어 있다.
+
+===============================================================================
+== 프로그램 실행 결과 1
+== 오른쪽 끝에 있는 //는 주석이다.
+=============================================================================== 
+seed[0~9] for random? 0  // 0: 사용자 입력, [0 ~ 9] 사이의 임의의 숫자를 입력하면 됨
+
+Phone  List: [360-5948, 447-3515, 491-9761, 854-1077] // 전화번호(문자열) 리스트
+Person List: [59(360-5948), 93(447-3515), 79(491-9761), 27(854-1077)] // Person 객체 리스트: id(전화번호)
+
+0.exit 1.makeMap 2.sortRreverse 3.treeToHashMap 4.findPhones >>   // 메뉴선택:사용자 입력
+
+/******************************************************************************
+ * 코드 추가
+ ******************************************************************************/
+// 아래 프로그램에서 Main::makePersonArrrayList(long seed)에서 
+// 전화번호 객체 리스트와 Person 객체 리스트를 생성하고 출력한다. (굳이 이해하지 않아도 된다.)
+// 아래 클래스들을 소스 파일에 복사하라.
+// 아래 세부 문제들을 참고하여 PersonManager 클래스의 멤버 함수들을 구현하라.
+
+// Map< >은 TreeMap< >과 HashMap< >의 수퍼 클래스인 인터페이스이고,
+// List< >는 ArrayList< >, Vector< >, LinkedList< >의 수퍼 클래스인 인터페이스이다.
+
+===============================================================================
+
+import java.util.*;
+
+class Person 
+{
+    public int id;
+    public String phone;
+    public Person(int id, String phone) { this.phone = phone; this.id = id; }
+    @Override
+    public String toString() { return id+"("+phone+")"; } // 객체 출력시 사용됨
+}
+
+class PersonManager 
+{
+    // 문제 1
+    // TreeMap을 생성한 후 list에 있는 모든 항목을 TreeMap에 삽입한 후 이 Map을 반환하라.
+    // 이때 Map의 키로 Person의 id를 활용하라.
+    // TreeMap은 HashMap과 생성 및 사용방법이 동일하다. 
+    // 다만, TreeMap은 키 순으로 원소를 관리하며 출력시 키순으로 출력된다.
+    public Map< Integer, Person> makeMap(List< Person> list) { 
+        return null; // 구현 시 적절히 교체할 것
+    }
+
+    // 문제 2
+    // 이 list의 원소들을 문자열의 [역순]으로 재배치하라. 
+    // list의 값으로 phoneList가 넘어 오는데 전화번호들이
+    // 큰 전화번호에서 작은 전화번호 순으로 배치되어야 함
+    public void sortReverse(List< String> list) { 
+    }
+
+    // 문제 3
+    // treeMap의 모든 키와 값을 가지는 새로운 HashMap을 만든 후
+    // 이 HashMap의 키들의 집합인 Set< Integer>을 반환한다.
+    public Set< Integer> treeToHashKeySet(Map< Integer, Person> treeMap) {
+        return null; // 구현 시 적절히 교체할 것
+    }
+
+    // 문제 4
+    // 새로운 List< Person> foundList를 생성한 후 (ArrayList< >, Vector< >, LinkedList< > 중 하나 택일)
+    // 매개변수 phoneList에 저장된 각각의 전화번호(phone)에 대해 
+    //     이 phone 번호가 매개변수인 map에 내에 존재하는 전화번호일 경우 
+    //         (map 내의 모든 Person 객체의 전화번호와 phone 번호를 일일히 비교해서 찾아야 함)
+    //     map 내의 해당 Person 객체를 foundList에 추가한다.
+    // 마지막에 foundList을 반환함
+    public List< Person> findPhones(Map< Integer, Person> map, List< String> phoneList) {
+        return null; // 구현 시 적절히 교체할 것
+    }
+}
+
+
+public class Main {
+
+    static List< String> phoneList;
+    static List< Person> personList;
+    static Map< Integer, Person> treeMap;
+
+    // phoneList와 personList를 자동으로 생성한 후 리스트를 출력한다. 
+    public static void makePersonArrrayList(long seed) {
+        Random rand = new Random(seed);
+        phoneList = new ArrayList< String>();
+        personList = new ArrayList< Person>();
+        for (int i=0; i < 4; ++i) {
+            String phone = rand.nextInt(1000)+"-"+rand.nextInt(10000);
+            phoneList.add(phone);
+            personList.add(new Person(rand.nextInt(90)+10, phone));
+        }
+        System.out.println("\nPhone  List: "+phoneList);
+        System.out.println("Person List: "+personList); // 리스트의 모든 항목을 출력함
+    }
+
+    public static void main(String[] args) 
+    {
+        Scanner in = new Scanner(System.in);
+        System.out.print("seed[0~9] for random? ");
+        makePersonArrrayList(in.nextLong()); // Person 객체들의 리스트를 생성
+        PersonManager pm = new PersonManager();
+
+        while(true) {
+            System.out.print("\n0.exit 1.makeMap 2.sortRreverse 3.treeToHashMap 4.findPhones >> ");
+            int input = in.nextInt();
+            if (input == 0) break;
+            switch (input) {
+            case 1: treeMap = pm.makeMap(personList);
+                    System.out.println("\nTree Map: "+treeMap);
+                    break;
+            case 2: pm.sortReverse(phoneList);
+                    System.out.println("\nPhone List: "+phoneList);
+                    break;
+            case 3: Set< Integer> keySet = pm.treeToHashKeySet(treeMap);
+                    System.out.println("\nHash Key Set: "+keySet);
+                    break;
+            case 4: phoneList.remove(0);
+                    phoneList.remove(0);
+                    List< Person> pList = pm.findPhones(treeMap, phoneList);
+                    System.out.println("\nFound List: "+pList);
+                    break;
+            }
+        }
+        System.out.print("\nGood bye! ");
+        in.close();
+    }
+}
+
+===============================================================================
+== 일단 여기까지의 코드를 복사하라.
+=============================================================================== 
+
+/******************************************************************************
+ * 문제 1
+ ******************************************************************************/
+// 1번 메뉴 항목을 선택했을 때 호출되는 PersonManager의 makeMap() 멤버함수를 구현하라.
+// 문제 1을 구현하지 못해도 문제 2를 구현할 수 있음
+// 프로그램의 실행결과는 다음과 같다.
+
+seed[0~9] for random? 0 // 사용자 입력
+
+Phone  List: [360-5948, 447-3515, 491-9761, 854-1077]
+Person List: [59(360-5948), 93(447-3515), 79(491-9761), 27(854-1077)]
+
+0.exit 1.makeMap 2.sortRreverse 3.treeToHashMap 4.findPhones >> 1  // 사용자 입력
+
+Tree Map: {27=27(854-1077), 59=59(360-5948), 79=79(491-9761), 93=93(447-3515)}
+                                                      // 키의 순서가 정렬되어 있음
+
+/******************************************************************************
+ * 문제 2
+ ******************************************************************************/
+// 2번 메뉴 항목을 선택했을 때 호출되는 PersonManager의 sortReverse() 멤버함수를 구현하라.
+// (문제 1을 구현하지 않아도 됨) 프로그램의 실행결과는 다음과 같다. random seed: 0
+
+0.exit 1.makeMap 2.sortRreverse 3.treeToHashMap 4.findPhones >> 2  // 사용자 입력
+
+Phone List: [854-1077, 491-9761, 447-3515, 360-5948] 
+                                         // 참고: 큰 전화번호에서 작은 전화번호 순으로 출력됨
+
+/******************************************************************************
+ * 문제 3
+ ******************************************************************************/
+// 3번 메뉴 항목을 선택했을 때 호출되는 PersonManager의 treeToHashKeySet() 멤버함수를 구현하라.
+// 이 함수는 treeMap의 모든 원소를 HashMap에 삽입한 후 HashMap의 키들의 Set< Integer>을 반환한다.
+// 문제 1을 수행한 후(문제 2를 구현하지 않아도 됨) 이어서 프로그램의 실행결과는 다음과 같다. random seed: 0
+
+0.exit 1.makeMap 2.sortRreverse 3.treeToHashMap 4.findPhones >> 3
+
+Hash Key Set: [27, 59, 93, 79]           // 키의 순서가 정렬되어 있지 않음
+
+/******************************************************************************
+ * 문제 4
+ ******************************************************************************/
+// 4번 메뉴 항목을 선택했을 때 phoneList의 처음 2개의 항목을 삭제한다.
+// 그런 후 호출되는 PersonManager의 findPhones() 멤버함수를 구현하라.
+// 문제 1을 수행한 후(문제 2, 3을 구현하지 않아도 됨) 
+// 이어서 프로그램의 실행결과는 다음과 같다. random seed: 0
+
+0.exit 1.makeMap 2.sortRreverse 3.treeToHashMap 4.findPhones >> 4
+
+Found List: [79(491-9761), 27(854-1077)]     // 메뉴 1, 메뉴 4 순서로 실행한 경우
+
+//------------------------------------------------------------------------------
+
+Found List: [93(447-3515), 59(360-5948)]     // 메뉴 1, 2, 4 순서로 실행한 경우
+
+
+===============================================================================
+== 모든 코드가 다 작성되었다면 (random seed = 9)에 대해
+== 모든 메뉴항목을 연속으로 선택했을 경우의 출력은 아래와 같다.
+=============================================================================== 
+seed[0~9] for random? 9
+
+Phone  List: [989-5596, 535-4759, 273-6776, 893-1446]
+Person List: [98(989-5596), 37(535-4759), 53(273-6776), 26(893-1446)]
+
+0.exit 1.makeMap 2.sortRreverse 3.treeToHashMap 4.findPhones >> 1
+
+Tree Map: {26=26(893-1446), 37=37(535-4759), 53=53(273-6776), 98=98(989-5596)}
+
+0.exit 1.makeMap 2.sortRreverse 3.treeToHashMap 4.findPhones >> 2
+
+Phone List: [989-5596, 893-1446, 535-4759, 273-6776]
+
+0.exit 1.makeMap 2.sortRreverse 3.treeToHashMap 4.findPhones >> 3
+
+Hash Key Set: [98, 37, 53, 26]
+
+0.exit 1.makeMap 2.sortRreverse 3.treeToHashMap 4.findPhones >> 4
+
+Found List: [37(535-4759), 53(273-6776)]
+
+0.exit 1.makeMap 2.sortRreverse 3.treeToHashMap 4.findPhones >> 0
+
+Good bye!

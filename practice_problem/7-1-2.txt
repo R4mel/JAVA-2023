@@ -1,0 +1,305 @@
+// 이 프로그램은 난수 발생을 위한 임의의 seed 값 하나를 입력 받고 
+// 이 난수 발생기를 기반으로 ID(정수) 리스트와  phone(전화번호:문자열) 리스트를 생성한다.
+
+/******************************************************************************
+ * 코드 추가
+ ******************************************************************************/
+// 먼저 아래 코드를 소스 파일에 복사한 후 실행해 보라.
+===============================================================================
+
+import java.util.*;
+
+// 문제 2: 제네릭 클래스로 변환하라.
+class GVector_Int {
+    private int size;
+    private int arr[];
+
+    public GVector_Int() { size = 0; arr = new int[10]; }
+
+    public int size() { 
+        return size;
+    }
+
+    public int get(int idx) { 
+        return arr[idx];
+    }
+
+    public void add(int value) { 
+        arr[size++] = value;
+    }
+
+    public int set(int idx, int value) {
+        int prev = arr[idx];
+        arr[idx] = value;
+        return prev;
+    }
+
+    @Override
+    public String toString() { // 코드를 수정하지 마라.
+        StringBuffer sb = new StringBuffer();
+        sb.append("[");
+        if (size > 0) sb.append(arr[0]);
+        for (int i = 1; i < size; ++i)
+            sb.append(", " + arr[i]);
+        sb.append("]");
+        return sb.toString();
+    }
+}
+
+class GenericMethod 
+{
+    // 문제 2, 문제 3
+    static public TreeMap< String, Integer> toTreeMap(List< String> keyList, GVector_Int valueV) {
+        TreeMap< String, Integer> map = new TreeMap< >();
+        for (int i = 0; i < keyList.size(); ++i) {
+            int value = valueV.get(i);
+            map.put(keyList.get(i), value);
+        }
+        return map;
+    }
+
+    static public void swap(List< Integer> list, int i, int j) { // 문제 1
+        Integer tmp = list.get(i);
+        list.set(i, list.get(j));
+        list.set(j, tmp);
+    }
+}
+
+public class Main 
+{
+    static Random rand;
+    static List< Integer>   idL;
+    static List< String>    phoneL;
+    static GVector_Int     idV;                                         // 문제 2
+    //static GVector< String> phoneV;                                    // 문제 2
+
+    // idL와 phoneL를 자동 생성함
+    public static void makeList() {
+        idL    = new ArrayList< Integer>();
+        phoneL = new ArrayList< String>();
+        for (int i=0; i < 4; ++i) {
+            idL.add(rand.nextInt(90)+10);
+            phoneL.add(rand.nextInt(1000)+"-"+rand.nextInt(10000));
+        }
+        System.out.println("ID    List: " + idL);
+        System.out.println("Phone List: " + phoneL);
+    }
+
+    public static void main(String[] args) 
+    {
+        Scanner in = new Scanner(System.in);
+        System.out.print("seed[0~9] for random? ");
+        rand = new Random(in.nextLong());
+        System.out.println();
+        makeList(); // idL와 phoneL를 자동 생성함
+        idV    = new GVector_Int();                                       // 문제 2
+        //phoneV = new GVector< >();                                       // 문제 2
+
+        while(true) {
+            System.out.print("\n0.exit 1.swap 2.makeVector 3.makeMap >> ");
+            int input = in.nextInt();
+            System.out.println();
+            if (input == 0) break;
+            switch (input) {
+            case 1: 
+                for (int i = 0; i < idL.size(); i++)
+                    GenericMethod.swap(idL,    i, rand.nextInt(idL.size()));
+                //for (int i = 0; i < phoneL.size(); i++)                 // 문제 1
+                //    GenericMethod.swap(phoneL, i, rand.nextInt(phoneL.size()));
+                System.out.println("ID    List: " + idL);
+                System.out.println("Phone List: " + phoneL);
+                break;
+            case 2: 
+                for (int i = 0; i < idL.size(); ++i) {
+                    idV.add(idL.get(i));
+                    //phoneV.add(phoneL.get(i));                         // 문제 2
+                }
+                System.out.println("ID    Vector: " + idV);
+                //System.out.println("Phone Vector: "  + phoneV);        // 문제 2
+                int id = idV.get(0);
+                for (int i = 0; i < 3; ++i)
+                    idV.set(i, idV.get(i+1));
+                idV.set(3, id);
+
+                //String phone = phoneV.get(0);                          // 문제 2
+                //for (int i = 0; i < 3; ++i)                            // 문제 2
+                //    phoneV.set(i, phoneV.get(i+1));                    // 문제 2
+                //phoneV.set(3, phone);                                  // 문제 2
+                System.out.println();
+                System.out.println("ID    Vector: " + idV);
+                //System.out.println("Phone Vector: "  + phoneV);        // 문제 2
+                break;
+            case 3: 
+                TreeMap< String, Integer> mapPhoneId = GenericMethod.toTreeMap(phoneL, idV);
+                System.out.println("< Phone, ID> Map: " + mapPhoneId);
+                //TreeMap< Integer, String> mapIdPhone = GenericMethod.toTreeMap(idL,   phoneV); // 문제 3
+                //System.out.println("< ID, Phone> Map: " + mapIdPhone);                         // 문제 3
+                break;
+            }
+        }
+        System.out.print("Good bye! ");
+        in.close();
+    }
+}
+
+
+===============================================================================
+== 위 프로그램의 실행 결과는 다음과 같다. 오른쪽 끝에 있는 //는 주석이다.
+=============================================================================== 
+seed[0~9] for random? 1       // 1: 사용자 입력, [0~9] 사이의 임의의 숫자를 입력할 수 있음
+
+ID    List: [25, 43, 24, 38]                          // 자동 생성된 ID(정수) 리스트
+Phone List: [588-1847, 254-4904, 606-9978, 569-8473]  // 자동 생성된 전화번호(문자열) 리스트
+
+0.exit 1.swap 2.makeVector 3.makeMap >> 
+
+
+/******************************************************************************
+ * 문제 1
+ ******************************************************************************/
+// 위 실행 후 1번 메뉴항목을 선택하면 결과는 아래와 같다. seed[0~9] for random? 1
+//----------------------------------------------------------------------------
+0.exit 1.swap 2.makeVector 3.makeMap >> 1 // 사용자 입력: 메뉴 선택
+
+ID    List: [43, 38, 24, 25]                 // 원소들의 위치가 임의의 순서로 서로 바뀌었음
+Phone List: [588-1847, 254-4904, 606-9978, 569-8473] // 원소들의 위치가 바뀌지 않았음
+//----------------------------------------------------------------------------
+
+// 위 GenericMethod.swap()은 인자로 넘어 온 list 내의 인덱스 i와 j를 가진 원소의 값을 
+// 서로 바꾸어 주는 메소드다.
+// 1) 이 메소드가 List< Integer> 와 List< String> 등 서로 다른 타입의 리스트에 대해서도
+//    호출될 수 있도록 swap() 메소드를 [제네릭 메소드]로 변경하라. (제네릭 클래스가 아님)
+//
+// 위에서 구현한 제네릭 메소드 swap()이 정상적으로 구현되었는지 확인하기 위해 
+// 2) main() 함수의 switch() case 1: 내의 
+//    //for (int i = 0; i < phoneL.size(); i++) 문장의 주석을 아래처럼 풀어라.
+
+     for (int i = 0; i < phoneL.size(); i++)                 // 문제 1
+         GenericMethod.swap(phoneL, i, rand.nextInt(phoneL.size()));
+
+//----------------------------------------------------------------------------
+// 그런 후 프로그램을 다시 실행하면 아래처럼 실행되어야 한다. seed[0~9] for random? 1
+//----------------------------------------------------------------------------
+0.exit 1.swap 2.makeVector 3.makeMap >> 1
+
+ID    List: [43, 38, 24, 25]                         // 원소들의 위치가 임의의 순서로 서로 바뀌었음
+Phone List: [569-8473, 606-9978, 254-4904, 588-1847] // 원소들의 위치가 임의의 순서로 서로 바뀌었음
+
+
+/******************************************************************************
+ * 문제 2
+ ******************************************************************************/
+// 프로그램 시작 후 아래처럼 바로 2번 메뉴항목을 선택하면 결과는 아래와 같다. seed[0~9] for random? 1
+//----------------------------------------------------------------------------
+...
+0.exit 1.swap 2.makeVector 3.makeMap >> 2 // 사용자 입력
+
+ID    Vector: [25, 43, 24, 38]   // ID List의 모든 원소를 삽입한 벡터 GVector_Int
+
+ID    Vector: [43, 24, 38, 25]   // 각 원소를 한 칸씩 왼쪽으로 이동
+
+//----------------------------------------------------------------------------
+// 위 GVector_Int 클래스는 정수형 값만 벡터에 저장할 수 있다.
+// 1) 이 클래스가 정수 뿐만 아니라 임의의 클래스 E의 객체들도 벡터의 원소로 저장할 수 있도록 
+//    제네릭 클래스 GVector< T>로 변경하라. 여기서 T는 타입 매개 변수이다.
+//
+// 제네릭 벡터가 정상적으로 구현되었는지 확인하기 위해
+// 2) main() 함수의 switch() case 2: 내의 
+//    모든 "// 문제 2"로 표시된 문장의 [맨 앞쪽]에 있는 주석을 모두 풀어라.
+
+// 3) Main 클래스의 아래 두 멤버 변수 선언를 아래처럼 수정하라.
+    static GVector< Integer> idV;                                    // 문제 2
+    static GVector< String>  phoneV;                                 // 문제 2
+
+// 4) main() 함수 내의 주석을 풀고 벡터를 생성하는 두 문장을 아래처럼 수정하라.
+    idV    = new GVector< >();                                       // 문제 2
+    phoneV = new GVector< >();                                       // 문제 2
+
+// 5) GenericMethod::toTreeMap()의 두번째 인자를 아래처럼 GVector< Integer>로 수정하라.
+    toTreeMap(List< String> keyList, GVector< Integer> valueV) {
+
+//----------------------------------------------------------------------------
+// 그런 후 프로그램을 실행하면 아래처럼 실행되어야 한다. seed[0~9] for random? 1
+//----------------------------------------------------------------------------
+...
+0.exit 1.swap 2.makeVector 3.makeMap >> 2
+
+ID    Vector: [25, 43, 24, 38]
+Phone Vector: [588-1847, 254-4904, 606-9978, 569-8473]
+
+ID    Vector: [43, 24, 38, 25]                         // 각 원소를 한 칸씩 왼쪽으로 이동
+Phone Vector: [254-4904, 606-9978, 569-8473, 588-1847] // 각 원소를 한 칸씩 왼쪽으로 이동
+
+
+/******************************************************************************
+ * 문제 3
+ ******************************************************************************/
+// 프로그램 시작 1번 메뉴를 선택하지 않고 아래처럼 2, 3번 메뉴항목을 선택하면 결과는 아래와 같다. 
+// seed[0~9] for random? 1
+//----------------------------------------------------------------------------
+...
+0.exit 1.swap 2.makeVector 3.makeMap >> 2
+// 위 문제 2 실행 결과와 동일
+
+0.exit 1.swap 2.makeVector 3.makeMap >> 3
+
+< Phone, ID> Map: {254-4904=24, 569-8473=25, 588-1847=43, 606-9978=38} // 전화번호 순으로 출력
+
+//----------------------------------------------------------------------------
+
+static public TreeMap< String,Integer> 
+toTreeMap(List< String> keyList,GVector< Integer> valueV) {  // 문제 3
+
+// 위 GenericMethod.toTreeMap()은 인자로 넘어 온 keyList의 각 원소를 키로 사용하고,
+// valueV의 각 원소를 값으로 사용하여 TreeMap 객체를 삽입한 후 이를 반환하는 메소드이다.
+// 현재는 문자열 리스트와 정수형 벡터, 즉 (List< String> keyList, GVector< Integer> valueV)
+// 인자에 대해서만 작동한다.
+// 1) 이 메소드가 서로 다른 타입인 K와 V에 대해 (List< K>, GVector< V>) 인자에 대해서도 호출되고,
+//    그에 상응하는 TreeMap< >을 반환할 수 있도록 toTreeMap() 메소드를 [제네릭 메소드]로 변경하라.
+
+// 제네릭 메소드 toTreeMap()이 정상적으로 구현되었는지 확인하기 위해
+// 2) main() 함수의 switch() case 3: 내의 모든 "// 문제 3"로 표시된 
+//    문장의 맨 앞쪽에 있는 주석을 모두 풀어라.
+
+//----------------------------------------------------------------------------
+// 그런 후 프로그램을 실행하면 아래처럼 실행되어야 한다. seed[0~9] for random? 1
+//----------------------------------------------------------------------------
+...
+0.exit 1.swap 2.makeVector 3.makeMap >> 2
+// 위 문제 2 실행 결과와 동일
+
+0.exit 1.swap 2.makeVector 3.makeMap >> 3
+
+< Phone, ID> Map: {254-4904=24, 569-8473=25, 588-1847=43, 606-9978=38} // 전화번호 순으로 출력
+< ID, Phone> Map: {24=569-8473, 25=254-4904, 38=588-1847, 43=606-9978} // id 순으로 출력
+
+
+//----------------------------------------------------------------------------
+// 또한 처음부터 아래처럼 순서적으로 실행했을 때 동일한 결과가 나와야 한다.
+//----------------------------------------------------------------------------
+seed[0~9] for random? 2
+
+ID    List: [68, 47, 16, 88]
+Phone List: [372-4040, 389-3350, 719-9847, 94-1086]
+
+0.exit 1.swap 2.makeVector 3.makeMap >> 1
+
+ID    List: [47, 16, 68, 88]
+Phone List: [389-3350, 719-9847, 372-4040, 94-1086]
+
+0.exit 1.swap 2.makeVector 3.makeMap >> 2
+
+ID    Vector: [47, 16, 68, 88]
+Phone Vector: [389-3350, 719-9847, 372-4040, 94-1086]
+
+ID    Vector: [16, 68, 88, 47]
+Phone Vector: [719-9847, 372-4040, 94-1086, 389-3350]
+
+0.exit 1.swap 2.makeVector 3.makeMap >> 3
+
+< Phone, ID> Map: {372-4040=88, 389-3350=16, 719-9847=68, 94-1086=47}
+< ID, Phone> Map: {16=372-4040, 47=719-9847, 68=94-1086, 88=389-3350}
+
+0.exit 1.swap 2.makeVector 3.makeMap >> 0
+
+Good bye!
