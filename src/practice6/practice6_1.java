@@ -1,9 +1,5 @@
 package practice6;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
 import java.util.*;
 
 class Customer {
@@ -80,7 +76,7 @@ class Customer {
     }
 }
 
-public class Main {
+public class practice6_1 {
     public static void main(String[] args) {
         Scanner scn = new Scanner(System.in);
         String line;
