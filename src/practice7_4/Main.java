@@ -65,7 +65,7 @@ class GenericMethod<T> {
     }
 }
 
-class Executer {
+class exe {
     public static Scanner scanner = new Scanner(System.in);
     public static boolean autoCheck = false;
     public static int seed;
@@ -150,8 +150,8 @@ class Executer {
 
 public class Main {
     public static void main(String[] args) {
-        while (Executer.getInput())
-            Executer.run();
+        while (exe.getInput())
+            exe.run();
 		new AutoCheck(false);
     }
 }
@@ -161,12 +161,12 @@ class AutoCheck {
     private Scanner scanner;
     private PrintStream out;
     private PrintStream outBackup = System.out;
-    private Scanner scannerBackup = Executor.scanner;
+    private Scanner scannerBackup = exe.scanner;
     private Diff diff;
 
     public AutoCheck(boolean debug) {
         System.out.println();
-        Executor.autoCheck = true;
+        exe.autoCheck = true;
         diff = new Diff(debug);
         InputStream in = new ByteArrayInputStream(InputOutput.getInput());
         scanner = new Scanner(in);
@@ -179,8 +179,8 @@ class AutoCheck {
     private void simaulate() {
         int scores[] = {0};
         setStreams();
-        while (Executor.getInput()) {
-            Executor.run();
+        while (exe.getInput()) {
+            exe.run();
             scores[0] += evaluate();
             if (InputOutput.eof()) break;
         }
@@ -191,13 +191,13 @@ class AutoCheck {
     }
 
     private void setStreams() {
-        Executor.scanner = scanner;
+        exe.scanner = scanner;
         outStream.reset();
         System.setOut(out);
     }
 
     private void restoreStreams() {
-        Executor.scanner = scannerBackup;
+        exe.scanner = scannerBackup;
         System.setOut(outBackup);
     }
 
@@ -281,7 +281,7 @@ class Diff {
         System.out.println(correctLine + " [correct line]");
         System.out.println("User output(\"" + userToken + "\") is not equal to correct output(\"" + correctToken + "\")");
         System.out.print("continue[y/n]? ");
-        String next = Executor.scanner.next();
+        String next = exe.scanner.next();
         if (!next.equals("y") && !next.equals("Y")) {
             System.out.println("Good bye.");
             System.exit(0);
