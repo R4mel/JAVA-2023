@@ -2514,7 +2514,8 @@ class MyVectorTest extends BaseManager // ch7_3
         String name = UI.getNext("name to find? ");
         for (int i = 0; i < nameVct.size(); i++) {
             if (name.equals(nameVct.get(i))) {
-                System.out.println("[" + i + "] " + nameVct.get(i) + " " + idVct.get(i) + " " + weightVct.get(i) + " " + marriedVct.get(i) + " :" + addressVct.get(i) + ":");
+                System.out.println("[" + i + "] " + nameVct.get(i) + " " + idVct.get(i) + " " + weightVct.get(i)
+                        + " " + marriedVct.get(i) + " :" + addressVct.get(i) + ":");
                 return;
             }
         }
